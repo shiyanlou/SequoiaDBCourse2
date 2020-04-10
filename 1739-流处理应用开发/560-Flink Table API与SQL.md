@@ -358,7 +358,3 @@ tbEnv.connect(
       "trans_name )"
   );
   ```
-
-  
-
-
