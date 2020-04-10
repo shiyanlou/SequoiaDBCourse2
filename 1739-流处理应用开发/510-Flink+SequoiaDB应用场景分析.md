@@ -16,8 +16,6 @@
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2
 
 
-
-
 ## Flink简介
 
 #### Flink是什么
