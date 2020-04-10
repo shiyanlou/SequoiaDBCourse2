@@ -22,29 +22,29 @@ version: 1.0
 
 #### 2.1 Spark 简介
 
-![1738-410-01](https://doc.shiyanlou.com/courses/1738/1207281/efd6b5049d176e5d5218e2c97f569412-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/efd6b5049d176e5d5218e2c97f569412-0" alt="1738-410-01" style="zoom: 50%;" />
 
 Spark 是加州大学伯克利分校AMP实验室开发的通用大数据处理框架。Spark 在 2013 年 6 月进入 Apache 成为孵化项目，8 个之后成为了 Apache 的顶级项目，很快 Spark 就成为了社区的热门，围绕 Spark 推出了 Spark SQL、Spark Streaming、MLlib、GraphX 和 SparkR 等丰富的组件。
 
-![1738-410-02](https://doc.shiyanlou.com/courses/1738/1207281/22f9c4ffc35617c67cd74bf7b3442c7d-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/22f9c4ffc35617c67cd74bf7b3442c7d-0" alt="1738-410-02" style="zoom:50%;" />
 
 Spark 使用 Scala 语言实现，具有易用性的特点，除 Scala 以外，Spark 还提供了 Java、Python、R 甚至是 SQL 的 API 。Spark 还具有很强的适应性，可以在 Hadoop，Apache Mesos，Kubernetes，standalone 模式或是云端中运行。
 
-![1738-410-03](https://doc.shiyanlou.com/courses/1738/1207281/e299e0e052d994f0007e3a3950bb3c46-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/e299e0e052d994f0007e3a3950bb3c46-0" alt="1738-410-03" style="zoom:50%;" />
 
 此外，Spark 还可以访问各种数据源。
 
-![1738-410-04](https://doc.shiyanlou.com/courses/1738/1207281/dd07c822301331de05f709c01fb71ba1-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/dd07c822301331de05f709c01fb71ba1-0" alt="1738-410-04" style="zoom:50%;" />
 
 #### 2.2 Spark 集群模式工作原理
 
-![1738-410-05](https://doc.shiyanlou.com/courses/1738/1207281/622e8e88eda39e756d96e58fe9fd5ea1-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/622e8e88eda39e756d96e58fe9fd5ea1-0" alt="1738-410-05" style="zoom: 67%;" />
 
 在集群中，Spark应用以独立的进程集合的方式运行，并由主程序（driver program）中的 SparkContext  对象进行统一的调度。当需要在集群上运行时，SparkContext 会连接到几个不同类的 ClusterManager（集群管理器）上（Spark  自己的 Standalone/Mesos/YARN）, 集群管理器将给各个应用分配资源。连接成功后，Spark  会请求集群各个节点的Executor（执行器），它是为应用执行计算和存储数据的进程的总称。之后，Spark会将应用提供的代码（应用已经提交给  SparkContext 的 JAR 或 Python 文件）交给 executor。最后，由SparkContext 发送tasks提供给 executor 执行（多线程）。
 
 #### 2.3 Spark + SequoiaSQL-MySQL + SequoiaDB
 
-![1738-410-06](https://doc.shiyanlou.com/courses/1738/1207281/19d04ba47ed6c6579724d464c280528c-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/19d04ba47ed6c6579724d464c280528c-0" alt="1738-410-06" style="zoom:67%;" />
 
 Spark 具有访问多种外部数据源的特性。在 SequoiaDB 分布式存储架构中，Spark 可以像访问 MySQL 数据库那样访问 SequoiaDB 分布式存储的 MySQL 实例，也可以通过 SequoiaDB 的 Spark 连接器直接访问底层的 SequoiaDB 存储集群。
 
