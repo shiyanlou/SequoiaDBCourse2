@@ -22,29 +22,29 @@ version: 1.0
 
 #### 2.1 Spark 简介
 
-![1738-410-01](https://doc.shiyanlou.com/courses/1738/1207281/efd6b5049d176e5d5218e2c97f569412-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/efd6b5049d176e5d5218e2c97f569412-0" alt="1738-410-01" style="zoom: 50%;" />
 
 Spark 是加州大学伯克利分校AMP实验室开发的通用大数据处理框架。Spark 在 2013 年 6 月进入 Apache 成为孵化项目，8 个之后成为了 Apache 的顶级项目，很快 Spark 就成为了社区的热门，围绕 Spark 推出了 Spark SQL、Spark Streaming、MLlib、GraphX 和 SparkR 等丰富的组件。
 
-![1738-410-02](https://doc.shiyanlou.com/courses/1738/1207281/22f9c4ffc35617c67cd74bf7b3442c7d-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/22f9c4ffc35617c67cd74bf7b3442c7d-0" alt="1738-410-02" style="zoom:50%;" />
 
 Spark 使用 Scala 语言实现，具有易用性的特点，除 Scala 以外，Spark 还提供了 Java、Python、R 甚至是 SQL 的 API 。Spark 还具有很强的适应性，可以在 Hadoop，Apache Mesos，Kubernetes，standalone 模式或是云端中运行。
 
-![1738-410-03](https://doc.shiyanlou.com/courses/1738/1207281/e299e0e052d994f0007e3a3950bb3c46-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/e299e0e052d994f0007e3a3950bb3c46-0" alt="1738-410-03" style="zoom:50%;" />
 
 此外，Spark 还可以访问各种数据源。
 
-![1738-410-04](https://doc.shiyanlou.com/courses/1738/1207281/dd07c822301331de05f709c01fb71ba1-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/dd07c822301331de05f709c01fb71ba1-0" alt="1738-410-04" style="zoom:50%;" />
 
 #### 2.2 Spark 集群模式工作原理
 
-![1738-410-05](https://doc.shiyanlou.com/courses/1738/1207281/622e8e88eda39e756d96e58fe9fd5ea1-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/622e8e88eda39e756d96e58fe9fd5ea1-0" alt="1738-410-05" style="zoom: 67%;" />
 
 在集群中，Spark应用以独立的进程集合的方式运行，并由主程序（driver program）中的 SparkContext  对象进行统一的调度。当需要在集群上运行时，SparkContext 会连接到几个不同类的 ClusterManager（集群管理器）上（Spark  自己的 Standalone/Mesos/YARN）, 集群管理器将给各个应用分配资源。连接成功后，Spark  会请求集群各个节点的Executor（执行器），它是为应用执行计算和存储数据的进程的总称。之后，Spark会将应用提供的代码（应用已经提交给  SparkContext 的 JAR 或 Python 文件）交给 executor。最后，由SparkContext 发送tasks提供给 executor 执行（多线程）。
 
 #### 2.3 Spark + SequoiaSQL-MySQL + SequoiaDB
 
-![1738-410-06](https://doc.shiyanlou.com/courses/1738/1207281/19d04ba47ed6c6579724d464c280528c-0)
+<img src="https://doc.shiyanlou.com/courses/1738/1207281/19d04ba47ed6c6579724d464c280528c-0" alt="1738-410-06" style="zoom:67%;" />
 
 Spark 具有访问多种外部数据源的特性。在 SequoiaDB 分布式存储架构中，Spark 可以像访问 MySQL 数据库那样访问 SequoiaDB 分布式存储的 MySQL 实例，也可以通过 SequoiaDB 的 Spark 连接器直接访问底层的 SequoiaDB 存储集群。
 
@@ -54,19 +54,17 @@ Hive on spark 是一个Hive的发展计划，由 Cloudera 发起，由 Intel、M
 
 Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也将围绕这一方式进行展开。
 
-## 3 JDBC 连接 Hive
+## 3 Maven 工程介绍
 
-#### 3.1 Maven 工程介绍
-
-* 打开 SCDD-Spark 工程
+* #### 打开 SCDD-Spark 工程
 
   ![1738-410-07](https://doc.shiyanlou.com/courses/1738/1207281/8af3109f14cdde63375c463dc0a985d0-0)
 
-* 工程结构
+* #### 工程结构
 
   ![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/c3f2631ce168fdce625762fcb21498f3-0)
 
-* 当前实验使用到的 Maven 依赖
+* #### 当前实验使用到的 Maven 依赖
 
   ```xml
           <dependency>
@@ -77,13 +75,13 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
           </dependency>
   ```
 
-#### 3.2 Hive jdbc 代码
+## 4 Hive jdbc 代码
 
-* 打开 HiveUtil 类
+* #### 打开 HiveUtil 类
 
   ![1738-410-09](https://doc.shiyanlou.com/courses/1738/1207281/646917523d9ea29d4777f5cf6168727f-0)
 
-* 定义 jdbc 连接信息
+* #### 定义 jdbc 连接信息
 
   ```java
       // hive on spark url
@@ -97,7 +95,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
   ![1738-410-10](https://doc.shiyanlou.com/courses/1738/1207281/48958bf5a56d4a7d5126e582f4b46808-0)
 
-* 创建 jdbc 连接
+* #### 创建 jdbc 连接
 
   ```java
           // 初始化连接
@@ -120,7 +118,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
   ![1738-410-11](https://doc.shiyanlou.com/courses/1738/1207281/b4a78881dbc29f968498d6ecb16c508a-0)
 
-* jdbc 创建数据库对象
+* #### jdbc 创建数据库对象
 
   ```java
           // 获取 jdbc 连接
@@ -143,7 +141,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
   ![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/6af60c8834460a4e89041482cde862a6-0)
 
-* jdbc 操作数据库记录
+* #### jdbc 操作数据库记录
 
   ```java
           // 获取 jdbc 连接
@@ -166,7 +164,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
   ![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/496a2223790497d4a72e353a04fd472f-0)
 
-* jdbc 查询数据库记录结果集
+* #### jdbc 查询数据库记录结果集
 
   ```java
           // 获取 jdbc 连接
@@ -192,7 +190,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
   ![1738-410-14](https://doc.shiyanlou.com/courses/1738/1207281/287588fc3fa41d197d4e8d11b73a9eb9-0)
 
-* 释放 jdbc 资源
+* #### 释放 jdbc 资源
 
   ```java
           // 释放 resultset
@@ -225,13 +223,13 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
   ![1738-410-15](https://doc.shiyanlou.com/courses/1738/1207281/98c863721175f2feb204e83d1ab39cb8-0)
 
-#### 3.3 程序样例
+## 5 程序样例
 
-* 打开 JdbcSample 类
+* #### 打开 JdbcSample 类
 
   ![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/2c61b57d9378043a7bc7c3eca37e50e3-0)
 
-* 样例程序内容
+* #### 样例程序内容
 
   ```java
            // 初始化表
@@ -271,26 +269,26 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
   ![1738-410-17](https://doc.shiyanlou.com/courses/1738/1207281/7ca32825a207645f069e2da92927c135-0)
 
-#### 3.4 运行样例
+## 6 运行样例
 
-* 运行程序
+* #### 编辑调用程序入参
 
   右键点击 Entry 类，选择编辑主函数
 
   ![1738-410-18](https://doc.shiyanlou.com/courses/1738/1207281/ae208a779dac05ad300db5157bc99a58-0)
 
-* 配置运行时参数为 `lesson1 sample`
+* #### 配置运行时参数为 `lesson1 sample`
 
   ![1738-410-19](https://doc.shiyanlou.com/courses/1738/1207281/1567ccc6332a35aa063bcaa0a1cbb2ea-0)
   
-* 右键点击 Entry 类选择执行程序
+* #### 右键点击 Entry 类选择执行程序
 
   ![1738-410-19](https://doc.shiyanlou.com/courses/1738/1207281/decbbf4d11f6d2262b636eb81414cec7-0)
   
-* 查看运行结果
+* #### 查看运行结果
 
   ![1738-410-19](https://doc.shiyanlou.com/courses/1738/1207281/10821c88e2993b06e7371c67d4d6aacb-0)
 
-## 1.4 总结
+## 7 总结
 
 通过本实验，我们对 Spark 技术架构和工作原理有了大致的了解，以及 Spark 是如何和 SequoiaDB 分布式存储集群交互工作的。此外，通过简单的实践练习我们可以通过 jdbc 访问 Hive on Spark 并提交 SQL 任务，后续的若干章节会根据本章节的基础继续展开。
