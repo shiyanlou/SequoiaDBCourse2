@@ -1,63 +1,71 @@
-## 创建Flink-Maven项目
+---
+show: step
+version: 1.0
+---
 
-本实验示例模拟了一个不断产生一个单词串的源头,需要使用Flink通过一些处理逻辑最终统计出每个单词出现的次数.
+## 课程介绍
+
+本实验示例模拟了一个不断产生一个单词串的源头,需要使用Flink通过一些处理逻辑最终统计出每个单词出现的次数。
+
+#### 请点击右侧选择使用的实验环境
+
+通过IDEA打开项目```flink-developer```。
 
 #### 认识依赖
 
-查看pom.xml文件，认识下列依赖
+查看pom.xml文件，认识下列依赖。
 
 ```xml
+<properties>
+    <flink.version>1.9.2</flink.version>
+    <scala.binary.version>2.11</scala.binary.version>
+    <scala.version>2.11.12</scala.version>
+    <java.version>1.8</java.version>
+    <sequoiadb.version>3.2.4</sequoiadb.version>
+</properties>
 <dependencies>
     <!--flink runtime包，本地环境运行需要-->
     <dependency>
         <groupId>org.apache.flink</groupId>
         <artifactId>flink-core</artifactId>
         <version>${flink.version}</version>
-        <scope>${flink.scope}</scope>
     </dependency>
     <!--flink 流处理scala版，本地环境运行需要-->
     <dependency>
         <groupId>org.apache.flink</groupId>
         <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
         <version>${flink.version}</version>
-        <scope>${flink.scope}</scope>
     </dependency>
     <!--flink sequoiadb 连接驱动包-->
     <dependency>
         <groupId>com.sequoiadb.flink</groupId>
         <artifactId>flink-connector-sequoiadb-${sequoiadb.version}_${scala.binary.version}</artifactId>
         <version>${flink.version}</version>
-        <scope>${flink.scope}</scope>
     </dependency>
     <!--日志包-->
     <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <version>1.7.7</version>
-        <scope>${flink.scope}</scope>
     </dependency>
 </dependencies>
 ```
 
-点击图中（1）或（2）位置让idea将jar包自动引入到当前项目环境中
-
-![1585564635592](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585564635592.png)
-
-## 通过flatmap算子解析数据
+## flatmap算子
 
 #### flatmap算子的作用
 
 flatmap算子就是上一小节讲到的Transformation的其中一种，它可以将一行数据转换为多行数据。
 
-首先执行WordCountMain的主函数查看一下原始数据的格式
+首先执行WordCountMain的主函数查看一下原始数据的格式。
 
-![1585575485899](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585575485899.png)
+![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
 
 可以看到是一些数据行，每行有多个单词构成，首先想到的就是将其切分为单个的单词。
 
 #### flatmap算子的使用
 
-注释上一步的打印操作，添加flatmap转换逻辑
+注释上一步的打印操作，添加flatmap转换逻辑。
 
 ```scala
 val flatMapData: DataStream[String] = lineData.flatMap(_.split(" "))
@@ -65,23 +73,23 @@ val flatMapData: DataStream[String] = lineData.flatMap(_.split(" "))
 flatMapData.print();
 ```
 
-flatmap算子中需要传递一个函数，"_"表示原始数据。
+flatmap算子中需要传递一个函数，在Scala中此处的"_"表示原始数据。
 
 #### 查看数据的结果
 
-可以看到已经变成了一个一个的单词
+可以看到已经变成了一个一个的单词。
 
-![1585617105439](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585617105439.png)
+![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/cb7cb4d2f65581057b8f4650d37b7a42-0)
 
-## filter算子实现数据的过滤
+## filter算子
 
 #### filter算子的作用
 
-fliter算子可以帮助我们去除掉某些数据行，该内部需要一个函数，函数返回一个布尔类型，当其值为false时当前数据行被丢弃
+fliter算子可以帮助我们去除掉某些数据行，该内部需要一个函数，函数返回一个布尔类型，当其值为false时当前数据行被丢弃。
 
 #### filter的使用
 
-现在我们想把数据行中“java”单词去掉
+现在我们想把数据行中“java”单词去掉。
 
 ```scala
 val filterData: DataStream[String] = flatMapData.filter(!_.equals("java"))
@@ -89,11 +97,11 @@ val filterData: DataStream[String] = flatMapData.filter(!_.equals("java"))
 filterData.print();
 ```
 
-## 实现Map算子的转换逻辑
+## map算子
 
 #### map算子的作用
 
-map算子可以将原来的数据做一定转换之后输出新的一条数据
+map算子可以将原来的数据做一定转换之后输出新的一条数据。
 
 #### map算子的使用
 
@@ -109,7 +117,7 @@ val mapData: DataStream[(String, Int)] = filterData.map((_, 1))
 
 #### keyBy算子的作用
 
-keyBy算子可以通过指定key对数据进行分组，类似于sql中的“group by”. 值得注意的是，使用keyBy算子之后我们将得到一个KeyedStream对象，表示我们无法在keyBy之后再次使用keyBy.
+keyBy算子可以通过指定key对数据进行分组，类似于sql中的“group by”。值得注意的是，使用keyBy算子之后我们将得到一个KeyedStream对象，表示我们无法在keyBy之后再次使用keyBy。
 
 #### sum算子的作用
 
@@ -123,7 +131,7 @@ val sumData: DataStream[(String, Int)] = mapData.keyBy(0).sum(1)
 
 本示例中使用了第一个字段(单词)进行分组，第二个字段(单词个数进行求和)。
 
-![1585703949687](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585703949687.png)
+![1739-520-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/5c0e1096418b2c32e3d09b69190be4e5-0)
 
 ## reduce算子
 
@@ -154,22 +162,22 @@ val reduceData: DataStream[(String, Int)] = mapData.keyBy(0).reduce((x, y) => (x
 
 点击maven侧边栏中的package打包
 
-![1585704634656](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585704634656.png)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/37946ad7e0012704490e2d0bde233908-0)
 
 打包成功后包会在我们的项目目录的target目录下
 
-![1585795442094](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585795442094.png)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/eeaa23a35f2e41e8dfc49f78de5613a6-0)
 
 #### 提交到集群环境
 
 我们可以通过UI界面 > submit new job > add new(上传jar包) > 选择jar > 添加入口类 > submit(提交任务)
 
-![1585705179987](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585705179987.png)
+![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/e61441a7c28b896e9dc3923bd6d832b2-0)
 发现任务已经成功提交，并且已经在运行，可以在界面上看到程序的执行结果
 
-![1585705373859](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585705373859.png)
+![1739-520-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/3388299b06e7b517e58e93925c9e1879-0)
 
-![1585705488307](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585705488307.png)
+![1739-520-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/85b316e7d239a486ff553efa5cc41c7a-0)
 
 ## Flink工程打包与参数的获取
 
@@ -190,7 +198,7 @@ val lineNum = tool.getInt("lineNum", 10)
 val lineData: DataStream[String] = env.addSource(new RandomSource(lineNum))
 ```
 
-- 接下来重新提交集群，红色区域便是传入的参数。
+- 接下来重新提交集群，红色区域便是传入的参数
 
-![1585706389687](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585706389687.png)
+![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/133d00735186b728f871b9c9e26e4ab9-0)
 

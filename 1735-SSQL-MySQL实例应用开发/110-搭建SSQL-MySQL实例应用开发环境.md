@@ -1,4 +1,8 @@
-# 1.1搭建SSQL-MySQL开发环境
+---
+show: step
+version: 1.0 
+
+---
 
 ## 课程介绍
 
@@ -170,18 +174,21 @@ public static void close(ResultSet rs, Statement state, Connection conn){
 
 ```java
 Connection conn = UtilsC3P0.getConnection();
+
 ```
 
 在第14行，获得执行者对象
 
 ```java
 Statement state = conn.createStatement();
+
 ```
 
 在第16行，执行SQL语句
 
 ```java
 ResultSet rs = state.executeQuery("SELECT * FROM employee");
+
 ```
 
 在第20~25行，遍历输出结果
@@ -193,12 +200,14 @@ while (rs.next()){
 	}
 	System.out.println();
 }
+
 ```
 
 在第27行，关闭资源
 
 ```java
 UtilsC3P0.close(rs,state,conn);
+
 ```
 
 单击第5行左侧的三角，执行
@@ -219,6 +228,7 @@ UtilsC3P0.close(rs,state,conn);
 
 ```java
 String sql = "select now();";
+
 ```
 
 修改第10~17行，创建statement接口，执行sql，遍历结果
@@ -232,6 +242,7 @@ while (rs.next()) {
     }
     System.out.println();
 }
+
 ```
 
 打开EnvBuildingMainTest.java，单击第6行的三角，选择Edit 'EnvBuildingMain....main()',修改参数为function
@@ -256,6 +267,7 @@ while (rs.next()) {
 
 ```java
 String sql = "select user();";
+
 ```
 
 #### Version
@@ -266,5 +278,6 @@ String sql = "select user();";
 
 ```java
 String sql = "select version();";
+
 ```
 
