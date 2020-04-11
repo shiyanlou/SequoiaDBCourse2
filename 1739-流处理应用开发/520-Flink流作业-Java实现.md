@@ -53,7 +53,7 @@ flatmap算子就是上一小节讲到的Transformation的其中一种，它可�
 
 首先执行WordCountMain的主函数查看一下原始数据的格式
 
-![1585575485899](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585575485899.png)
+![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
 
 可以看到是一些数据行，每行有多个单词构成，首先想到的就是将其切分为单个的单词。
 
@@ -85,7 +85,7 @@ flatmap算子中需要传递一个对象，该对象有一个抽象方法flatmap
 
 可以看到已经变成了一个一个的单词
 
-![1585617105439](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585617105439.png)
+![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/cb7cb4d2f65581057b8f4650d37b7a42-0)
 
 ## filter算子
 
@@ -147,7 +147,7 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> sumData = mapData.keyBy(0).s
 
 本示例中使用了第一个字段(单词)进行分组，第二个字段(单词个数进行求和)。
 
-![1585703949687](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585703949687.png)
+![1739-520-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/5c0e1096418b2c32e3d09b69190be4e5-0)
 
 ## reduce算子
 
@@ -179,22 +179,22 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> reduceData = mapData.keyBy(0
 
 点击maven侧边栏中的package打包
 
-![1585704634656](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585704634656.png)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/37946ad7e0012704490e2d0bde233908-0)
 
 打包成功后包会在我们的项目目录的target目录下
 
-![1585795442094](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585795442094.png)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/eeaa23a35f2e41e8dfc49f78de5613a6-0)
 
 #### 提交到集群环境
 
 我们可以通过UI界面 > submit new job > add new(上传jar包) > 选择jar > 添加入口类 > submit(提交任务)
 
-![1585705179987](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585705179987.png)
+![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/e61441a7c28b896e9dc3923bd6d832b2-0)
 发现任务已经成功提交，并且已经在运行，可以在界面上看到程序的执行结果
 
-![1585705373859](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585705373859.png)
+![1739-520-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/3388299b06e7b517e58e93925c9e1879-0)
 
-![1585705488307](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585705488307.png)
+![1739-520-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/85b316e7d239a486ff553efa5cc41c7a-0)
 
 ## Flink工程打包与参数的获取
 
@@ -219,4 +219,4 @@ DataStreamSource<String> lineData = env.addSource(new RandomSource(lineNum));
 
 - 接下来重新提交集群，红色区域便是传入的参数。
 
-![1585706389687](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585706389687.png)
+![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/133d00735186b728f871b9c9e26e4ab9-0)
