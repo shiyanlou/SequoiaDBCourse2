@@ -6,19 +6,21 @@ version: 1.0
 ## 课程介绍
 
 本课程将带领您了解与学习当下非常火热的大数据实时计算框架Flink，并分析一下Sequoiadb再实时计算场景的应用。
- 
+
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
 
-![系统架构](C:\Users\chac\Desktop\实验楼FLINK课程设计\001\assets\1585489647812.png)
+![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
 详细了解 SequoiaDB 巨杉数据库系统架构：
 * [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2
+
+
 
 
 ## Flink简介
@@ -33,13 +35,13 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 #### Flink的应用场景
 
-![1585492531494](C:\Users\chac\Desktop\实验楼FLINK课程设计\001\assets\1585492531494.png)
+![1739-510-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/e97d07fb063c8e68e7935e6901d5561f-0)
 
 从这里可以看到常见的项目分析流程，首先数据（可以是业务数据，日志，物联网，点击行为等）直接进入或经转一些存储设备后进入Flink；Flink通常用于事件驱动型应用处理，流批处理与ETL场景。其可运行在k8s，Yarn，Mesos等资源调度平台，状态可存储在HDFS，S3，NFS等存储平台；最终数据结果可落地到多种平台。
 
 #### Flink Demo示例
 
-此处会先展示一个经典案例wordCount，先帮助您了解一下Flink的开发，下面请使用IDEA打开工程"introductory-demonstration"，找到FirstDemo运行主函数即可。此处只做演示，后续会有详细的开发课程。
+此处会先展示一个经典案例wordCount，先帮助您了解一下Flink的开发，下面请使用IDEA打开工程包"lesson1_intro"，找到IntroDemoMain运行主函数即可。此处只做演示，后续会有详细的开发课程。
 
 结果如下图：
 
@@ -78,9 +80,6 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 
 
-#### Sequoiadb在流场景中的应用
+## Sequoiadb在流场景中的应用
 
-#### Flink UI的认识
-
-最后截图吧
-
+## Flink UI的认识
