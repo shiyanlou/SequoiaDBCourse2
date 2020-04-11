@@ -6,7 +6,7 @@ version: 1.0
 ## 课程介绍
 
 本课程将带领您了解与学习当下非常火热的大数据实时计算框架Flink，并分析一下Sequoiadb再实时计算场景的应用。
- 
+
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
@@ -19,6 +19,8 @@ version: 1.0
 
 #### 实验环境
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2
+
+
 
 
 ## Flink简介
@@ -39,7 +41,7 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 #### Flink Demo示例
 
-此处会先展示一个经典案例wordCount，先帮助您了解一下Flink的开发，下面请使用IDEA打开工程"introductory-demonstration"，找到FirstDemo运行主函数即可。此处只做演示，后续会有详细的开发课程。
+此处会先展示一个经典案例wordCount，先帮助您了解一下Flink的开发，下面请使用IDEA打开工程包"lesson1_intro"，找到IntroDemoMain运行主函数即可。此处只做演示，后续会有详细的开发课程。
 
 结果如下图：
 
@@ -78,9 +80,6 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 
 
-#### Sequoiadb在流场景中的应用
+## Sequoiadb在流场景中的应用
 
-#### Flink UI的认识
-
-最后截图吧
-
+## Flink UI的认识
