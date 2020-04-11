@@ -12,7 +12,7 @@ version: 1.0
 #### 部署架构：
 本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
 
-![系统架构](C:\Users\chac\Desktop\实验楼FLINK课程设计\001\assets\1585489647812.png)
+![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
 详细了解 SequoiaDB 巨杉数据库系统架构：
 * [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
