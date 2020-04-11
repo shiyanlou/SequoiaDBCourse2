@@ -212,6 +212,7 @@ int lineNum = tool.getInt("lineNum", 10);
 ```
 
 - lineNum便是我们传入的函数，我们需要通过RandomSource的构造器传入该值
+
 ```java
 // 修改获取数据的写法
 DataStreamSource<String> lineData = env.addSource(new RandomSource(lineNum));
