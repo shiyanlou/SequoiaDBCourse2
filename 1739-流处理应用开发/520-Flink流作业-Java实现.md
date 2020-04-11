@@ -44,11 +44,8 @@ version: 1.0
 </dependencies>
 ```
 
-点击图中（1）或（2）位置让idea将jar包自动引入到当前项目环境中
 
-![1585564635592](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585564635592.png)
-
-## 通过flatmap算子解析数据
+## flatmap算子
 
 #### flatmap算子的作用
 
@@ -90,7 +87,7 @@ flatmap算子中需要传递一个对象，该对象有一个抽象方法flatmap
 
 ![1585617105439](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585617105439.png)
 
-## filter算子实现数据的过滤
+## filter算子
 
 #### filter算子的作用
 
@@ -203,6 +200,8 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> reduceData = mapData.keyBy(0
 
 编写的程序在提交到集群后的jar如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink同样支持动态参数的获取，下面来改造一下吧。
 
+#### 参数获取
+
 - 首先可以在main函数的开头添加下列代码
 
 ```java
@@ -221,5 +220,3 @@ DataStreamSource<String> lineData = env.addSource(new RandomSource(lineNum));
 - 接下来重新提交集群，红色区域便是传入的参数。
 
 ![1585706389687](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585706389687.png)
-
-- 完整的示例代码在example目录中,您可以当作参考
