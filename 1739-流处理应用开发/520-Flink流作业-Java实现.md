@@ -3,43 +3,50 @@ show: step
 version: 1.0
 ---
 
-## 创建Flink-Maven项目
+## 课程介绍
 
-本实验示例模拟了一个不断产生一个单词串的源头,需要使用Flink通过一些处理逻辑最终统计出每个单词出现的次数.
+本实验示例模拟了一个不断产生一个单词串的源头,需要使用Flink通过一些处理逻辑最终统计出每个单词出现的次数。
+
+#### 请点击右侧选择使用的实验环境
+
+通过IDEA打开项目```flink-developer```。
 
 #### 认识依赖
 
-查看pom.xml文件，认识下列依赖
+查看pom.xml文件，认识下列依赖。
 
 ```xml
+<properties>
+    <flink.version>1.9.2</flink.version>
+    <scala.binary.version>2.11</scala.binary.version>
+    <scala.version>2.11.12</scala.version>
+    <java.version>1.8</java.version>
+    <sequoiadb.version>3.2.4</sequoiadb.version>
+</properties>
 <dependencies>
     <!--flink runtime包，本地环境运行需要-->
     <dependency>
         <groupId>org.apache.flink</groupId>
         <artifactId>flink-core</artifactId>
         <version>${flink.version}</version>
-        <scope>${flink.scope}</scope>
     </dependency>
     <!--flink 流处理java版，本地环境运行需要-->
     <dependency>
         <groupId>org.apache.flink</groupId>
         <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
         <version>${flink.version}</version>
-        <scope>${flink.scope}</scope>
     </dependency>
     <!--flink sequoiadb 连接驱动包-->
     <dependency>
         <groupId>com.sequoiadb.flink</groupId>
         <artifactId>flink-connector-sequoiadb-${sequoiadb.version}_${scala.binary.version}</artifactId>
         <version>${flink.version}</version>
-        <scope>${flink.scope}</scope>
     </dependency>
     <!--日志包-->
     <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <version>1.7.7</version>
-        <scope>${flink.scope}</scope>
     </dependency>
 </dependencies>
 ```
@@ -51,7 +58,7 @@ version: 1.0
 
 flatmap算子就是上一小节讲到的Transformation的其中一种，它可以将一行数据转换为多行数据。
 
-首先执行WordCountMain的主函数查看一下原始数据的格式
+首先执行WordCountMain的主函数查看一下原始数据的格式。
 
 ![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
 
@@ -59,7 +66,7 @@ flatmap算子就是上一小节讲到的Transformation的其中一种，它可�
 
 #### flatmap算子的使用
 
-注释上一步的打印操作，添加flatmap转换逻辑
+注释上一步的打印操作，添加flatmap转换逻辑。
 
 ```java
 SingleOutputStreamOperator<String> flatMapData = lineData.flatMap(new FlatMapFunction<String, String>() {
@@ -79,11 +86,11 @@ flatmap算子中需要传递一个对象，该对象有一个抽象方法flatmap
 
 >Note:
 >
->此处请不要使用java1.8中的函数式接口实现，会导致程序无法获取返回类型。但是在返回类型可以确定的算子中可以使用这种写法，例如下面会讲到的filter算子，reduce算子都属于返回类型可以确定的算子
+>此处请不要使用java1.8中的函数式接口实现，会导致程序无法获取返回类型。但是在返回类型可以确定的算子中可以使用这种写法，例如下面会讲到的filter算子，reduce算子都属于返回类型可以确定的算子。
 
 #### 查看数据的结果
 
-可以看到已经变成了一个一个的单词
+可以看到已经变成了一个一个的单词。
 
 ![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/cb7cb4d2f65581057b8f4650d37b7a42-0)
 
@@ -91,11 +98,11 @@ flatmap算子中需要传递一个对象，该对象有一个抽象方法flatmap
 
 #### filter算子的作用
 
-fliter算子可以帮助我们去除掉某些数据行，该内部实现返回一个布尔类型，当其值为false时当前数据行被丢弃
+fliter算子可以帮助我们去除掉某些数据行，该内部实现返回一个布尔类型，当其值为false时当前数据行被丢弃。
 
 #### filter的使用
 
-现在我们想把数据行中“java”单词去掉
+现在我们想把数据行中“java”单词去掉。
 
 ```java
 SingleOutputStreamOperator<String> filterData = flatMapData.filter(new FilterFunction<String>() {
@@ -108,11 +115,11 @@ SingleOutputStreamOperator<String> filterData = flatMapData.filter(new FilterFun
 filterData.print();
 ```
 
-## 实现Map算子的转换逻辑
+## map算子
 
 #### map算子的作用
 
-map算子可以将原来的数据做一定转换之后输出新的一条数据
+map算子可以将原来的数据做一定转换之后输出新的一条数据。
 
 #### map算子的使用
 
@@ -133,7 +140,7 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> mapData = filterData.map(new
 
 #### keyBy算子的作用
 
-keyBy算子可以通过指定key对数据进行分组，类似于sql中的“group by”. 值得注意的是，使用keyBy算子之后我们将得到一个KeyedStream对象，表示我们无法在keyBy之后再次使用keyBy.
+keyBy算子可以通过指定key对数据进行分组，类似于sql中的“group by”.。值得注意的是，使用keyBy算子之后我们将得到一个KeyedStream对象，表示我们无法在keyBy之后再次使用keyBy。
 
 #### sum算子的作用
 
@@ -167,7 +174,7 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> reduceData = mapData.keyBy(0
 
 >Note:
 >
->sum,reduce等算子都属于聚合类算子，其必须使用在keyby之后
+>sum,reduce等算子都属于聚合类算子，其必须使用在keyby之后。
 
 ## Flink作业的执行
 
@@ -177,20 +184,20 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> reduceData = mapData.keyBy(0
 
 #### 项目打包
 
-点击maven侧边栏中的package打包
+点击maven侧边栏中的package打包。
 
 ![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/37946ad7e0012704490e2d0bde233908-0)
 
-打包成功后包会在我们的项目目录的target目录下
+打包成功后包会在我们的项目目录的target目录下。
 
 ![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/eeaa23a35f2e41e8dfc49f78de5613a6-0)
 
 #### 提交到集群环境
 
-我们可以通过UI界面 > submit new job > add new(上传jar包) > 选择jar > 添加入口类 > submit(提交任务)
+我们可以通过UI界面 > submit new job > add new(上传jar包) > 选择jar > 添加入口类 > submit(提交任务)。
 
 ![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/e61441a7c28b896e9dc3923bd6d832b2-0)
-发现任务已经成功提交，并且已经在运行，可以在界面上看到程序的执行结果
+发现任务已经成功提交，并且已经在运行，可以在界面上看到程序的执行结果。
 
 ![1739-520-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/3388299b06e7b517e58e93925c9e1879-0)
 
@@ -211,13 +218,13 @@ ParameterTool tool = ParameterTool.fromArgs(args);
 int lineNum = tool.getInt("lineNum", 10);
 ```
 
-- lineNum便是我们传入的函数，我们需要通过RandomSource的构造器传入该值
+- lineNum便是入的函数，我们需要通过RandomSource的构造器传入该值
 
 ```java
 // 修改获取数据的写法
 DataStreamSource<String> lineData = env.addSource(new RandomSource(lineNum));
 ```
 
-- 接下来重新提交集群，红色区域便是传入的参数。
+- 接下来重新提交集群，红色区域便是传入的参数
 
 ![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/133d00735186b728f871b9c9e26e4ab9-0)

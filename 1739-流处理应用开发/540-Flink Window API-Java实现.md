@@ -1,4 +1,11 @@
-## Window的概念与使用window的原因
+---
+show: step
+version: 1.0
+---
+
+## 课程介绍
+
+本实验将带领学习Window的概念与使用window的原因。
 
 #### window是什么
 
@@ -21,19 +28,19 @@ window按照可以划分为Tumbling Windows（翻滚窗口）、Sliding Windows�
 #### 翻滚窗口
 
 翻滚窗口会将数据流切分成不重叠的窗口，每一个事件只能属于一个窗口。只受控于窗口的大小
-![1585720341163](C:\Users\chac\Desktop\实验楼FLINK课程设计\004\assets\1585720341163.png)
+![1739-540-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c848a3b17c2b516f31b917091aa3cffc-0)
 
 #### 滑动窗口
 
 滑动窗口和翻滚窗口类似，区别在于：滑动窗口可以有重叠的部分。受控于窗口的大小于滑动步长。
 
-![1585720351990](C:\Users\chac\Desktop\实验楼FLINK课程设计\004\assets\1585720351990.png)
+![1739-540-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/418b1ccc4f62116aa686664aa6d50aed-0)
 
 #### 会话窗口
 
 会话窗口不重叠，没有固定的开始和结束时间。当较长时间没有数据输入时窗口结束。
 
-![1585720376281](C:\Users\chac\Desktop\实验楼FLINK课程设计\004\assets\1585720376281.png)
+![1739-540-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/860e8fee3c9bf459fef816d959c59f59-0)
 
 
 
@@ -310,7 +317,7 @@ return dataStream.addSink(new SequoiadbSink(option));
 
 Flink 在流程序中支持不同的时间概念，下图为各个时间在整个流处理中的位置。
 
-![1586437217324](C:\Users\chac\Desktop\实验楼FLINK课程设计\004\assets\1586437217324.png)
+![1739-540-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/75bb63af679fe5acefdb4056f364be31-0)
 
 - Processing time（处理时间），指正在执行相应操作时当前系统的时间。
 
@@ -322,15 +329,15 @@ Flink 在流程序中支持不同的时间概念，下图为各个时间在整�
 
 Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用于处理乱序事件的手段。Watermark是流的一部分，它维护一个时间戳，作为流中特殊的事件穿插在其中。它宣布事件的达到时间，这意味着当遇到Watermark时将认为晚于其内部时间戳的事件已经全部到达。
 
-![1586427611519](C:\Users\chac\Desktop\实验楼FLINK课程设计\004\assets\1586427611519.png)
+![1739-540-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/fe11a3482860ce0ca2210541df1c0f47-0)
 
 而在分布式环境中，当多个上级算子生成不同的Watermark时，window算子将采用最小的一个。
 
-![1586427832943](C:\Users\chac\Desktop\实验楼FLINK课程设计\004\assets\1586427832943.png)
+![1739-540-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/084bd88bce6705d90628b57123e0ee6a-0)
 
 在window中，watermark的作用可从下图看出，当watermark的值大于或等于window结束时间时将触发window操作（当然当前window中必须有数据存在）。
 
-![1586440190277](C:\Users\chac\Desktop\实验楼FLINK课程设计\004\assets\1586440190277.png)
+![1739-540-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/81094ea976c12aadfcb859953b7809c2-0)
 
 #### 如何生成Watermark
 
@@ -339,5 +346,110 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 - AssignerWithPeriodicWatermarks可以每隔一段时间向事件流中插入一个watermark，间隔时间可通过ExecutionConfig.setAutoWatermarkInterval(...)指定，默认100ms
 - AssignerWithPunctuatedWatermarks每个事件上都可以生成一个watermark，返回null时表示不生成
 
-#### Watermark和SlidingTimeWindow的使用
+## Watermark和SlidingTimeWindow的使用
+
+请使用D$SlidingTimeWindowWithWatermarkerMain完成当前演示，使用EventTime完成需求。
+
+#### SequoiadbSource的使用
+
+通过SequoiadbSource完成soucre函数
+
+```java
+// 构建连接Option
+SequoiadbOption option = SequoiadbOption.bulider()
+  .host("192.168.0.111:11810")
+  .username("sdbadmin")
+  .password("sdbadmin")
+  .collectionSpaceName("test")
+  .collectionName("test7")
+  .build();
+return env.addSource(new SequoiadbSource(option, "create_time"));
+```
+
+#### 类型转换
+
+通过map算子获取到交易名，交易金额
+
+```java
+return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
+	@Override
+    public Tuple3<String, Double, Integer> map(BSONObject object) throws Exception {
+      return Tuple3.of(object.get("trans_name").toString(),((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
+      }
+});
+```
+
+#### 分组
+
+keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值
+
+```java
+return dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>() {
+    @Override
+    public String getKey(Tuple3<String, Double, Integer> t) throws Exception {
+        return t.f0;
+    }
+});
+```
+
+#### 在keyedStream上使用window
+
+```java
+return keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(2)));
+```
+
+#### 聚合求和
+
+```java
+return windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {
+    /**
+      * @param s key
+      * @param context 上下文对象，本算子的精华
+      * @param iterable 当前window中的事件引用
+      * @param collector 事件收集器
+      * @throws Exception
+      */
+    @Override
+    public void process(String s, Context context, Iterable<Tuple3<String, Double, Integer>> iterable, Collector<Result> collector) throws Exception {
+        double sum = 0;
+        int count = 0;
+        Iterator<Tuple3<String, Double, Integer>> iterator = iterable.iterator();
+        while (iterator.hasNext()) {
+            Tuple3<String, Double, Integer> next = iterator.next();
+            count += next.f2;
+            sum += next.f1;
+        }
+        collector.collect(new Result(s, sum, count, new java.sql.Time(context.window().getEnd())));
+    }
+});
+```
+
+#### 将元组转换为BsonObject
+
+```java
+ return dataStream.map(new MapFunction<Result, BSONObject>() {
+     @Override
+     public BSONObject map(Result result) throws Exception {
+         BasicBSONObject object = new BasicBSONObject();
+         object.append("count", result.getCount());
+         object.append("money", result.getMoney());
+         object.append("trans_name", result.getTransName());
+         object.append("time", result.getWindowTime());
+         return object;
+     }
+ });
+```
+
+#### 通过SequoiadbSink完成sink函数
+
+```java
+SequoiadbOption option = SequoiadbOption.bulider()
+     .host("192.168.0.111:11810")
+     .username("sdbadmin")
+     .password("sdbadmin")
+     .collectionSpaceName("test")
+     .collectionName("test7")
+     .build();
+return dataStream.addSink(new SequoiadbSink(option));
+```
 
