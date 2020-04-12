@@ -43,16 +43,6 @@ version: 1.0
 
 ![1735-110-003.png](https://doc.shiyanlou.com/courses/1735/1207281/f7114c2ac226b040eecb0b900d03f559-0)
 
-## 搭建开发环境
-
-用idea搭建基础开发环境，打开项目 SSQL-MySQL项目下的**com.sequoiadb.lesson.mysql.lesson1_environmentBuilding**包
-
-导入项目需要的jar包 （mysql驱动包，sequoiadb驱动包）
-
-> 环境中已经导入
-
-在包下创建JdbcDEV.java类
-
 ## 配置连接属性
 
 #### 导入项目需要的jar包 （mysql驱动包，sequoiadb驱动包）
