@@ -1,7 +1,6 @@
 ---
 show: step
 version: 1.0 
-
 ---
 
 ## 课程介绍
@@ -24,6 +23,26 @@ version: 1.0
 
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎以及 SequoiaSQL-MySQL 实例均为 3.4 版本。
 
+## 打开项目
+
+#### 打开idea
+
+打开idea代码开发工具
+
+![1735-110-001.png](https://doc.shiyanlou.com/courses/1735/1207281/d4e42612107582a7afa85e65d2e1fa3a-0)
+
+#### 打开SSQL-MySQL项目
+
+打开SSQL-MySQL项目，在该课程中完成后续试验
+
+![1735-110-002.png](https://doc.shiyanlou.com/courses/1735/1207281/b8f39173109be95b3a12e0df20258f8d-0)
+
+#### 打开lesson1_environmentBuilding包
+
+打开lesson1_environmentBuilding packge，在该packge中完成后续课程。
+
+![1735-110-003.png](https://doc.shiyanlou.com/courses/1735/1207281/f7114c2ac226b040eecb0b900d03f559-0)
+
 ## 搭建开发环境
 
 用idea搭建基础开发环境，打开项目 SSQL-MySQL项目下的**com.sequoiadb.lesson.mysql.lesson1_environmentBuilding**包
@@ -35,6 +54,10 @@ version: 1.0
 在包下创建JdbcDEV.java类
 
 ## 配置连接属性
+
+#### 导入项目需要的jar包 （mysql驱动包，sequoiadb驱动包）
+
+> 环境中已经导入
 
 #### 打开JdbcDEV.java类
 
@@ -56,7 +79,7 @@ String url = "jdbc:mysql://sdb:3306/mysqlTest";
 
 > sdb是主机名，mysqlTest是数据库名
 
-在第23~25行，建立JDBC和数据库之间的Connection连接,创建Statement接口，执行SQL语句，查看表employee的数据
+在第23~25行，建立JDBC和数据库之间的Connection连接，创建Statement接口，执行SQL语句，查看表employee的数据
 
 ```java
 Connection conn = DriverManager.getConnection(url, user, password);
@@ -68,7 +91,7 @@ ResultSet rs = stmt.executeQuery("SELECT * FROM employee");
 
 #### 编写代码，遍历查询到的结果
 
-在29~44行，写入如下代码,遍历rs的结果
+在29~44行，写入如下代码，遍历rs的结果
 
 ```java
 boolean isHeaderPrint = false;
@@ -93,11 +116,11 @@ while (rs.next()) {
 
 单击第5行，左侧的三角，选择Run 'JdbcDEV.main()'，运行
 
-​	![1586397234851](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586397234851.png)
+![1735-110-004.png](https://doc.shiyanlou.com/courses/1735/1207281/936ab29fd4a3f975ada9a44f44a8483d-0)
 
 查看结果：
 
-![1586397286857](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586397286857.png)
+![1735-110-005.png](https://doc.shiyanlou.com/courses/1735/1207281/3564f5acd21abf00347ccc36b3d4dee4-0)
 
 ## 配置连接池
 
@@ -174,21 +197,18 @@ public static void close(ResultSet rs, Statement state, Connection conn){
 
 ```java
 Connection conn = UtilsC3P0.getConnection();
-
 ```
 
 在第14行，获得执行者对象
 
 ```java
 Statement state = conn.createStatement();
-
 ```
 
 在第16行，执行SQL语句
 
 ```java
 ResultSet rs = state.executeQuery("SELECT * FROM employee");
-
 ```
 
 在第20~25行，遍历输出结果
@@ -200,21 +220,19 @@ while (rs.next()){
 	}
 	System.out.println();
 }
-
 ```
 
 在第27行，关闭资源
 
 ```java
 UtilsC3P0.close(rs,state,conn);
-
 ```
 
 单击第5行左侧的三角，执行
 
 查看结果
 
-![1586398064706](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586398064706.png)
+![1735-110-006.png](https://doc.shiyanlou.com/courses/1735/1207281/0d03c1250f44c8297b3046cecebf1f1b-0)
 
 
 
@@ -228,7 +246,6 @@ UtilsC3P0.close(rs,state,conn);
 
 ```java
 String sql = "select now();";
-
 ```
 
 修改第10~17行，创建statement接口，执行sql，遍历结果
@@ -242,22 +259,21 @@ while (rs.next()) {
     }
     System.out.println();
 }
-
 ```
 
 打开EnvBuildingMainTest.java，单击第6行的三角，选择Edit 'EnvBuildingMain....main()',修改参数为function
 
-![1586398731067](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586398731067.png)
+![1735-110-007.png](https://doc.shiyanlou.com/courses/1735/1207281/555e0ff876b43a9cf8b05919f87c2349-0)
 
-## ![1586398747050](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586398747050.png)
+![1735-110-008.png](https://doc.shiyanlou.com/courses/1735/1207281/bb60e353678c510f82139a47901fde6f-0)
 
 单击第6行的三角，选择Run 'EnvBuildingMain....main()
 
-![1586398731067](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586398731067.png)
+![1735-110-009.png](https://doc.shiyanlou.com/courses/1735/1207281/aca483db3af7316c385717e65ae850a2-0)
 
 查看结果
 
-![1586398835420](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586398835420.png)
+![1735-110-010.png](https://doc.shiyanlou.com/courses/1735/1207281/f18aab665a623fceebc68dd43ce72b6a-0)
 
 #### User()
 
@@ -267,7 +283,6 @@ while (rs.next()) {
 
 ```java
 String sql = "select user();";
-
 ```
 
 #### Version
@@ -278,6 +293,7 @@ String sql = "select user();";
 
 ```java
 String sql = "select version();";
-
 ```
+
+> 其余操作步骤同now（）一致
 
