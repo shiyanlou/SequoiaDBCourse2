@@ -1,6 +1,7 @@
 ---
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
@@ -50,6 +51,8 @@ version: 1.0
 > 环境中已经导入
 
 #### 打开JdbcDEV.java类
+
+![1735-110-005.png](<https://doc.shiyanlou.com/courses/1735/1207281/3564f5acd21abf00347ccc36b3d4dee4-0)
 
 #### 在JdbcDEV类下编写连接属性。
 
@@ -113,6 +116,20 @@ while (rs.next()) {
 ![1735-110-011.png](https://doc.shiyanlou.com/courses/1735/1207281/778fefe582b036cebbe76cd829de966f-0)
 
 ## 配置连接池
+
+#### 什么是连接池？ 
+
+数据库连接池（Database Connection Pooling）在程序初始化时创建一定数量的数据库连接对象并将其保存在一块内存区中，它允许应用程序重复使用一个现有的数据库连接，而不是重新建立一个；释放空闲时间超过最大空闲时间的数据库连接以避免因为没有释放数据库连接而引起的数据库连接遗漏。
+
+​     即在程序初始化的时候创建一定数量的数据库连接，用完可以放回去，下一个在接着用，通过配置连接池的参数来控制连接池中的初始连接数、最小连接、最大连接、最大空闲时间这些参数保证访问数据库的数量在一定可控制的范围类，防止系统崩溃，使用户的体验好。
+
+#### 为什么要用连接池？
+
+​    数据库连接是一种**关键、有限且昂贵的**资源，创建和释放数据库连接是一个很耗时的操作，频繁地进行这样的操作将占用大量的性能开销，进而导致网站的响应速度下降，严重的时候可能导致服务器崩溃；数据库连接池可以节省系统许多开销。
+
+#### C3P0连接池
+
+C3P0是一个开源的JDBC连接池，它实现了数据源与JNDI绑定，支持JDBC3规范和实现了JDBC2的标准扩展说明的Connection和Statement池的DataSources对象。
 
 在项目中导入c3p0的jar包和mchange-commons-java-0.2.15 jar包
 
@@ -228,7 +245,7 @@ UtilsC3P0.close(rs,state,conn);
 
 ## 使用常用函数
 
-#### now()
+#### now() 返回当前的日期和时间。
 
 打开FuncTest.java
 
@@ -265,7 +282,7 @@ while (rs.next()) {
 
 ![1735-110-010.png](https://doc.shiyanlou.com/courses/1735/1207281/f18aab665a623fceebc68dd43ce72b6a-0)
 
-#### User()
+#### User() 返回用户信息
 
 打开FuncTest.java
 
@@ -275,7 +292,7 @@ while (rs.next()) {
 String sql = "select user();";
 ```
 
-#### Version
+#### Version() 返回当前数据库版本信息
 
 打开FuncTest.java
 
