@@ -1,7 +1,6 @@
 ---
 show: step
 version: 1.0 
-
 ---
 
 ## 课程介绍
@@ -62,7 +61,7 @@ version: 1.0
 
 #### 打开JdbcDEV.java类
 
-![1586669448256](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586669448256.png)
+![1735-110-005.png](<https://doc.shiyanlou.com/courses/1735/1207281/3564f5acd21abf00347ccc36b3d4dee4-0)
 
 #### 在JdbcDEV类下编写连接属性。
 
@@ -200,21 +199,18 @@ public static void close(ResultSet rs, Statement state, Connection conn){
 
 ```java
 Connection conn = UtilsC3P0.getConnection();
-
 ```
 
 在第14行，获得执行者对象
 
 ```java
 Statement state = conn.createStatement();
-
 ```
 
 在第16行，执行SQL语句
 
 ```java
 ResultSet rs = state.executeQuery("SELECT * FROM employee");
-
 ```
 
 在第20~25行，遍历输出结果
@@ -226,14 +222,12 @@ while (rs.next()){
 	}
 	System.out.println();
 }
-
 ```
 
 在第27行，关闭资源
 
 ```java
 UtilsC3P0.close(rs,state,conn);
-
 ```
 
 单击第5行左侧的三角，执行
