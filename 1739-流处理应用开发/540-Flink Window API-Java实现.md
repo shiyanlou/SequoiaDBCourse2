@@ -5,7 +5,27 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领学习Window的概念与使用window的原因。
+本实验将带领学习Window，Flink的Time以及watermark机制。
+
+## 打开项目
+
+#### 打开idea
+
+打开idea代码开发工具
+
+![桌面截图，指定需要选择的idea图标](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+#### 打开flink-developer项目
+打开flink-developer项目，在该课程中完成后续试验。
+
+![项目选择截图](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+#### 打开lesson1 packge
+打开```com.sequoiadb.scdd.lesson1_intro```packge，在该package中完成后续课程。
+
+![packge选择截图](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+## Window简介
 
 #### window是什么
 
@@ -365,6 +385,42 @@ SequoiadbOption option = SequoiadbOption.bulider()
   .build();
 return env.addSource(new SequoiadbSource(option, "create_time"));
 ```
+
+#### 添加Watermark
+
+向流中添加watermark
+
+```java
+return transData.assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermarks<BSONObject>() {
+    // 延迟时间 (ms)
+    private final static int maxOutOfOrderness = 3000;
+    private long maxTimestamp = 0L;
+    /**
+     * 获取当前数据中的rowtime
+     * @param object 当前数据行
+     * @param timestamp 上一条数据的时间戳
+     * @return 当前时间戳
+     */
+    @Override
+    public long extractTimestamp(BSONObject object, long timestamp) {
+        int currentTimestamp = ((BSONTimestamp) object.get("timestamp")).getTime();
+        if (maxTimestamp < currentTimestamp) maxTimestamp = currentTimestamp;
+        return currentTimestamp;
+    }
+
+    /**
+     * 获取watermark
+     * @return watermark对象
+     */
+    @Nullable
+    @Override
+    public Watermark getCurrentWatermark() {
+        return new Watermark(maxTimestamp - maxOutOfOrderness);
+    }
+});
+```
+
+
 
 #### 类型转换
 
