@@ -61,8 +61,6 @@ version: 1.0
 
 #### 打开JdbcDEV.java类
 
-![1735-110-005.png](<https://doc.shiyanlou.com/courses/1735/1207281/3564f5acd21abf00347ccc36b3d4dee4-0)
-
 #### 在JdbcDEV类下编写连接属性。
 
 在第9行，加载mysql驱动
