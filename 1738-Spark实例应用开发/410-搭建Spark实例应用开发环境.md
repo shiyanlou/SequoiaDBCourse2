@@ -7,7 +7,7 @@ version: 1.0
 
 本课程将介绍 Spark 的技术架构，以及通过 Spark SQL 访问 SequoiaDB 外部数据源的原理等有关知识，并通过简单的实验介绍如何通过 jdbc 访问 Spark SQL。
 
-### 1.1实验环境
+#### 1.1实验环境
 
 当前实验的系统和软件环境如下：
 
@@ -18,9 +18,9 @@ version: 1.0
 * spark version: 2.4.3
 * IntelliJ IDEA Community Version: 2019.3.4
 
-### 1.2 知识点
+#### 1.2 知识点
 
-#### 1.2.1 Spark 简介
+**Spark 简介**
 
 <img src="https://doc.shiyanlou.com/courses/1738/1207281/efd6b5049d176e5d5218e2c97f569412-0" alt="1738-410-01" style="zoom: 50%;" />
 
@@ -36,19 +36,19 @@ Spark 使用 Scala 语言实现，具有易用性的特点，除 Scala 以外，
 
 <img src="https://doc.shiyanlou.com/courses/1738/1207281/dd07c822301331de05f709c01fb71ba1-0" alt="1738-410-04" style="zoom:50%;" />
 
-#### 1.2.2 Spark 集群模式工作原理
+**Spark 集群模式工作原理**
 
 <img src="https://doc.shiyanlou.com/courses/1738/1207281/622e8e88eda39e756d96e58fe9fd5ea1-0" alt="1738-410-05" style="zoom: 67%;" />
 
 在集群中，Spark应用以独立的进程集合的方式运行，并由主程序（driver program）中的 SparkContext  对象进行统一的调度。当需要在集群上运行时，SparkContext 会连接到几个不同类的 ClusterManager（集群管理器）上（Spark  自己的 Standalone/Mesos/YARN）, 集群管理器将给各个应用分配资源。连接成功后，Spark  会请求集群各个节点的Executor（执行器），它是为应用执行计算和存储数据的进程的总称。之后，Spark会将应用提供的代码（应用已经提交给  SparkContext 的 JAR 或 Python 文件）交给 executor。最后，由SparkContext 发送tasks提供给 executor 执行（多线程）。
 
-#### 1.2.3 Spark + SequoiaSQL-MySQL + SequoiaDB
+**Spark + SequoiaSQL-MySQL + SequoiaDB**
 
 <img src="https://doc.shiyanlou.com/courses/1738/1207281/19d04ba47ed6c6579724d464c280528c-0" alt="1738-410-06" style="zoom:67%;" />
 
 Spark 具有访问多种外部数据源的特性。在 SequoiaDB 分布式存储架构中，Spark 可以像访问 MySQL 数据库那样访问 SequoiaDB 分布式存储的 MySQL 实例，也可以通过 SequoiaDB 的 Spark 连接器直接访问底层的 SequoiaDB 存储集群。
 
-#### 1.2.4 Hive on Spark
+**Hive on Spark**
 
 Hive on spark 是一个Hive的发展计划，由 Cloudera 发起，由 Intel、MapR 等公司共同参与的开源项目，其目的是把 Spark 作为 Hive 的一个计算引擎，将 Hive 的查询作为 Spark 的任务提交到 Spark 集群上进行计算。
 
