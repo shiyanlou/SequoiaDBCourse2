@@ -20,7 +20,23 @@ version: 1.0
 #### 实验环境
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2
 
+## 打开项目
 
+#### 打开idea
+
+打开idea代码开发工具
+
+![桌面截图，指定需要选择的idea图标](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+#### 打开flink-developer项目
+打开flink-developer项目，在该课程中完成后续试验。
+
+![项目选择截图](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+#### 打开lesson1 packge
+打开```com.sequoiadb.scdd.lesson1_intro```packge，在该package中完成后续课程。
+
+![packge选择截图](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
 
 
 ## Flink简介

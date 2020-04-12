@@ -5,8 +5,27 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领学习Window的概念与使用window的原因。
+本实验将带领学习Window，Flink的Time以及watermark机制。
 
+## 打开项目
+
+#### 打开idea
+
+打开idea代码开发工具
+
+![桌面截图，指定需要选择的idea图标](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+#### 打开flink-developer项目
+打开flink-developer项目，在该课程中完成后续试验。
+
+![项目选择截图](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+#### 打开lesson1 packge
+打开```com.sequoiadb.scdd.lesson1_intro```packge，在该package中完成后续课程。
+
+![packge选择截图](C:\Users\chac\Desktop\实验楼FLINK课程设计\002\assets\1585561767462.png)
+
+## Window简介
 #### window是什么
 
 Windows是处理无限流的核心。Windows将流分成有限大小的“桶”，我们可以在其上应用计算。
@@ -80,38 +99,29 @@ env.addSource(new SequoiadbSource(option, "timestamp"))
 >
 > 批次的大小采用时间间隔控制，构建该对象时可传入一个int表示批次大小，默认为10s.
 
-#### Map算子的使用
+#### map算子
 
-使用map算子对流上的数据类型进行转换，该方法中接收一个DataStrem<BSONObject>，返回一个DataStream<Tuple2<Double, Integer>>.
+使用map算子对流上的数据类型进行转换，该方法中接收一个DataStrem[BSONObject]，返回一个DataStream[(Double, Integer)].
 
-```java
-return transData.map(new MapFunction<BSONObject, Tuple2<Double, Integer>>() {
-    @Override
-    public Tuple2<Double, Integer> map(BSONObject object) throws Exception {
-    	return Tuple2.of(((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
-    }
-});
+```scala
+transData.map(obj => (obj.get("money").asInstanceOf[BSONDecimal].toBigDecimal.doubleValue(), 1))
+
 ```
 
 #### Window划分
 
-使用windowAll对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow>对象，表示Window中的数据类型，以及window的引用，在CountWindow中引用是一个全局的window对象。
+使用windowAll对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个AllWindowedStream[(Double, Integer)， GlobalWindow]对象，表示Window中的数据类型，以及window的引用，在CountWindow中引用是一个全局的window对象。
 
-```java
-return moneyData.countWindowAll(100);
+```scala
+moneyData.countWindowAll(100)
 ```
 
 #### 聚合结果
 
-使用reduce对数据进行聚合求和，此处将的聚合结果为Tuple2<Double, Integer>，分别表示总金额和总交易量
+使用reduce对数据进行聚合求和，此处将的聚合结果为元组(Double, Integer)，分别表示总金额和总交易量
 
-```java
-return dataStream.reduce(new ReduceFunction<Tuple2<Double, Integer>>() {
-    @Override
-    public Tuple2<Double, Integer> reduce(Tuple2<Double, Integer> t1, Tuple2<Double, Integer> t2) throws Exception {
-    return Tuple2.of(t1.f0 + t2.f0, t1.f1 + t2.f1);
-    }
-});
+```scala
+windowData.reduce((x, y) => (x._1 + y._1, x._2 + y._2))
 ```
 
 ## Tumbling Time Window的实现
@@ -133,81 +143,62 @@ return dataStream.reduce(new ReduceFunction<Tuple2<Double, Integer>>() {
 
 ```java
 // 构建连接Option
-SequoiadbOption option = SequoiadbOption.bulider()
-.host("192.168.0.111:11810")
-.username("sdbadmin")
-.password("sdbadmin")
-.collectionSpaceName("test")
-.collectionName("test7")
-.build();
+val option: SequoiadbOption = SequoiadbOption.bulider
+      .host("192.168.0.111:11810")
+      .username("sdbadmin")
+      .password("sdbadmin")
+      .collectionSpaceName("test")
+      .collectionName("test7")
+      .build
 // 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
-return env.addSource(new SequoiadbSource(option, "create_time"));
+env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
 #### 类型转换
 
 通过map算子获取到交易名，交易金额
 
-```java
- return dataStream.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
-	@Override
-	public Tuple3<String, Double, Integer> map(BSONObject object) throws Exception {
-    	return Tuple3.of(object.get("trans_name").toString(), ((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
-    }
-});
+```scala
+transData.map(obj => {
+      (obj.get("trans_name").asInstanceOf[String], obj.get("money").asInstanceOf[BSONDecimal].toBigDecimal.doubleValue, 1)
+    })
 ```
 
 #### 分组
 
-keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, String>对象，泛型中包含数据行和一个分组字段值
+keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream[(String, Double, Integer), String]对象，泛型中包含数据行和一个分组字段值
 
-```java
-return dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>() {
-    /**
-     * 分组函数，使用KeySelector 可以显示获取到分组字段的类型
-     * @param t 分组前的数据集
-     * @return 分组字段值
-     * @throws Exception
-     */
-    @Override
-    public String getKey(Tuple3<String, Double, Integer> t) throws Exception {
-        return t.f0;
-    }
-});
+```scala
+moneyData.keyBy(_._1)
 ```
 
 #### 在keyedStream上使用window
 
-```java
-return keyedData.timeWindow(Time.seconds(5));
+```scala
+keyedData.timeWindow(Time.seconds(5))
 ```
 
 #### 聚合求和
 
-```java
-return windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>,
-                Tuple4<String, Double, Integer,java.sql.Time>, String, TimeWindow>() {
-	/**
-     * 在每个window中执行一次 
+```scala
+value.apply(new WindowFunction[(String, Double, Int), (String, Double, Int, java.sql.Time), String, TimeWindow] {
+    /**
+     * 在每个window中执行一次
      * @param key 分组字段值
-     * @param timeWindow 当前window对象
-     * @param iterable 当前window中所有数据的迭代器
-     * @param collector 返回结果收集器
-     * @throws Exception
+     * @param window 当前window对象
+     * @param input 当前window中所有数据的迭代器
+     * @param out 返回结果收集器
      */
-      @Override
-      public void apply(String key, TimeWindow timeWindow, Iterable<Tuple3<String, Double, Integer>> iterable, Collector<Tuple4<String, Double, Integer,java.sql.Time>> collector) throws Exception {
-          double sum = 0;
-          int count = 0;
-          Iterator<Tuple3<String, Double, Integer>> iterator = iterable.iterator();
-          while (iterator.hasNext()) {
-              Tuple3<String, Double, Integer> next = iterator.next();
-              sum += next.f1;
-              count += next.f2;
-          }
-          collector.collect(Tuple4.of(key, sum, count, new java.sql.Time(timeWindow.getEnd())));
-      }
-});
+    override def apply(key: String, window: TimeWindow, input: Iterable[(String, Double, Int)], out: Collector[(String, Double, Int, sql.Time)]): Unit = {
+        var sum: Double = 0
+        var count: Int = 0
+        input.foreach(item => {
+        	sum += item._2
+            count += item._3
+        })
+        out.collect((key, sum, count, new java.sql.Time(window.getEnd)))
+    }
+})
 ```
 
 ## Sliding Count Window的实现
@@ -220,93 +211,84 @@ return windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>,
 
 ```java
 // 构建连接Option
-SequoiadbOption option = SequoiadbOption.bulider()
-  .host("192.168.0.111:11810")
-  .username("sdbadmin")
-  .password("sdbadmin")
-  .collectionSpaceName("test")
-  .collectionName("test7")
-  .build();
-return env.addSource(new SequoiadbSource(option, "create_time"));
+val option: SequoiadbOption = SequoiadbOption.bulider
+      .host("192.168.0.111:11810")
+      .username("sdbadmin")
+      .password("sdbadmin")
+      .collectionSpaceName("test")
+      .collectionName("test7")
+      .build
+// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
 #### 类型转换
 
-通过map算子获取到交易名，交易金额
+通过map算子获取到交易名，交易金额，此处使用了scala中的样例类Trans
 
 ```java
-return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
-	@Override
-    public Tuple3<String, Double, Integer> map(BSONObject object) throws Exception {
-      return Tuple3.of(object.get("trans_name").toString(),((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
-      }
-});
+value.map(obj => {
+      Trans(obj.get("trans_name").asInstanceOf[String], obj.get("money").asInstanceOf[Double], 1)
+})
 ```
 
 #### 分组
 
-keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值
+keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream[Trans, Tuple]对象，泛型中包含数据行和一个Tuple类型的分组字段值
 
-```java
-return moneyData.keyBy(0);
+```scala
+value.keyBy("name")
 ```
 
 #### 在keyedStream上使用window
 
 ```java
-return keyedData.countWindow(100, 50);
+// 返回一个Tuple 为分组字段，由于使用了下标进行分组，无法获取到具体的数据类型，故此处使用Tuple抽象表示
+value.countWindow(100)
 ```
 
 #### 聚合求和
 
-```java
-return countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer>, Tuple2<String, Double>, Tuple, GlobalWindow>() {
-     /**
-      * 在窗口满足条件时执行，类似于flatMap算子
-      * @param tuple 分组字段值，由于使用了下标进行分组，无法获取到具体的数据类型，故此处使用Tuple抽象表示
-      * @param globalWindow 全局的window引用
-      * @param iterable 当前window中所有数据集的引用
-      * @param collector 结果收集器
-      * @throws Exception
-      */
-    @Override
-    public void apply(Tuple tuple, GlobalWindow globalWindow, Iterable<Tuple3<String, Double, Integer>> iterable,
-                      Collector<Tuple2<String, Double>> collector) throws Exception {
-        double sum = 0;
-        Iterator<Tuple3<String, Double, Integer>> iterator = iterable.iterator();
-        while (iterator.hasNext()) {
-            sum += iterator.next().f1;
-        }
-        collector.collect(Tuple2.of(tuple.getField(0), sum));
+```scala
+value.apply(new WindowFunction[Trans, (String, Double), Tuple, GlobalWindow] {
+    /**
+     * 在窗口满足条件时执行
+     * @param key 分组字段
+     * @param window 全局的window引用
+     * @param input 当前window中所有数据集的引用
+     * @param out 结果收集器
+     */
+    override def apply(key: Tuple, window: GlobalWindow, input: Iterable[Trans],
+                       out: Collector[(String, Double)]): Unit = {
+        var sum: Double = 0
+        input.foreach(sum += _.money)
+        out.collect((key.getField[String](0), sum))
     }
-});
+})
 ```
 
 #### 将元组转换为BsonObject
 
-```java
-return dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() {
-    @Override
-    public BSONObject map(Tuple2<String, Double> value) throws Exception {
-        BasicBSONObject obj = new BasicBSONObject();
-        obj.append("trans_name", value.f0);
-        obj.append("money", value.f1);
-        return obj;
-    }
-});
+```scala
+value.map(item => {
+    val nObject = new BasicBSONObject
+    nObject.append("trans_name", item._1)
+    nObject.append("money", item._2)
+    nObject
+})
 ```
 
 #### 通过SequoiadbSink完成sink函数
 
-```java
-SequoiadbOption option = SequoiadbOption.bulider()
-     .host("192.168.0.111:11810")
-     .username("sdbadmin")
-     .password("sdbadmin")
-     .collectionSpaceName("test")
-     .collectionName("test7")
-     .build();
-return dataStream.addSink(new SequoiadbSink(option));
+```scala
+val option = SequoiadbOption.bulider
+      .host("192.168.0.111:11810")
+      .username("sdbadmin")
+      .password("sdbadmin")
+      .collectionSpaceName("test")
+      .collectionName("test7")
+      .build
+value.addSink(new SequoiadbSink(option))
 ```
 
 ## Flink中的Time和Watermark
@@ -352,102 +334,126 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 通过SequoiadbSource完成soucre函数
 
-```java
+```scala
 // 构建连接Option
-SequoiadbOption option = SequoiadbOption.bulider()
-  .host("192.168.0.111:11810")
-  .username("sdbadmin")
-  .password("sdbadmin")
-  .collectionSpaceName("test")
-  .collectionName("test7")
-  .build();
-return env.addSource(new SequoiadbSource(option, "create_time"));
+val option: SequoiadbOption = SequoiadbOption.bulider
+      .host("192.168.0.111:11810")
+      .username("sdbadmin")
+      .password("sdbadmin")
+      .collectionSpaceName("test")
+      .collectionName("test7")
+      .build
+// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+env.addSource(new SequoiadbSource(option, "create_time"));
 ```
+
+#### 添加Watermark
+
+向流中插入watermark
+
+```scala
+value.assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermarks[BSONObject] {
+      // 最大的乱序时间
+      private val maxOutOfOrderness: Long = 5000
+      private var maxTimestamp: Long = 0
+
+      /**
+        * 返回一个watermark
+        *
+        * @return
+        */
+      override def getCurrentWatermark: Watermark = {
+        new Watermark(maxTimestamp - maxOutOfOrderness)
+      }
+
+      /**
+        * 抽取当前数据的时间戳
+        *
+        * @param t 当前的数据
+        * @param l 上一条数据的时间戳
+        * @return 当前数据的时间戳
+        */
+      override def extractTimestamp(t: BSONObject, l: Long): Long = {
+        val currentTimestamp: Long = t.get("timestamp").asInstanceOf[BSONTimestamp].getTime
+        maxTimestamp = if (maxTimestamp > currentTimestamp) maxTimestamp else currentTimestamp
+        currentTimestamp
+      }
+})
+```
+
+
 
 #### 类型转换
 
 通过map算子获取到交易名，交易金额
 
-```java
-return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
-	@Override
-    public Tuple3<String, Double, Integer> map(BSONObject object) throws Exception {
-      return Tuple3.of(object.get("trans_name").toString(),((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
-      }
-});
+```scala
+value.map(obj => {
+      (obj.get("trans_name").asInstanceOf[String], obj.get("money").asInstanceOf[BSONDecimal].toBigDecimal.doubleValue, 1)
+    })
 ```
 
 #### 分组
 
-keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值
+keyBy算子通过元组中第一个字段进行分组，keyBy返回一个KeyedStream[(String, Double, Int), String]对象，泛型中包含数据行和一个String类型的分组字段值
 
-```java
-return dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>() {
-    @Override
-    public String getKey(Tuple3<String, Double, Integer> t) throws Exception {
-        return t.f0;
-    }
-});
+```scala
+value.keyBy(_._1)
 ```
 
 #### 在keyedStream上使用window
 
-```java
-return keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(2)));
+```scala
+value.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(2)));
 ```
 
 #### 聚合求和
 
-```java
-return windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {
+```scala
+value.process(new ProcessWindowFunction[(String, Double, Int), Trans, String, TimeWindow] {
     /**
-      * @param s key
-      * @param context 上下文对象，本算子的精华
-      * @param iterable 当前window中的事件引用
-      * @param collector 事件收集器
-      * @throws Exception
-      */
-    @Override
-    public void process(String s, Context context, Iterable<Tuple3<String, Double, Integer>> iterable, Collector<Result> collector) throws Exception {
-        double sum = 0;
-        int count = 0;
-        Iterator<Tuple3<String, Double, Integer>> iterator = iterable.iterator();
-        while (iterator.hasNext()) {
-            Tuple3<String, Double, Integer> next = iterator.next();
-            count += next.f2;
-            sum += next.f1;
-        }
-        collector.collect(new Result(s, sum, count, new java.sql.Time(context.window().getEnd())));
+     * window 聚合方法，每个window调用一次
+     * @param key 分组字段值
+     * @param context 上下文对象，本算子的精华
+     * @param elements 当前window中的事件引用
+     * @param out 事件收集器
+     */
+    override def process(key: String, context: Context, elements: Iterable[(String, Double, Int)],
+                         out: Collector[Trans]): Unit = {
+    var sum: Double = 0
+    var count: Int = 0
+    elements.foreach(i => {
+        sum += i._2
+        count += i._3
+    })
+    out.collect(Trans(key, sum, count))
     }
-});
+})
 ```
 
 #### 将元组转换为BsonObject
 
-```java
- return dataStream.map(new MapFunction<Result, BSONObject>() {
-     @Override
-     public BSONObject map(Result result) throws Exception {
-         BasicBSONObject object = new BasicBSONObject();
-         object.append("count", result.getCount());
-         object.append("money", result.getMoney());
-         object.append("trans_name", result.getTransName());
-         object.append("time", result.getWindowTime());
-         return object;
-     }
- });
+```scala
+value.map(item => {
+    val nObject = new BasicBSONObject
+    nObject.append("trans_name", item.name)
+    nObject.append("money", item.money)
+    nObject.append("count", item.name)
+    nObject.append("trans_name", item.name)
+    nObject
+})
 ```
 
 #### 通过SequoiadbSink完成sink函数
 
-```java
-SequoiadbOption option = SequoiadbOption.bulider()
-     .host("192.168.0.111:11810")
-     .username("sdbadmin")
-     .password("sdbadmin")
-     .collectionSpaceName("test")
-     .collectionName("test7")
-     .build();
-return dataStream.addSink(new SequoiadbSink(option));
+```scala
+val option = SequoiadbOption.bulider
+      .host("192.168.0.111:11810")
+      .username("sdbadmin")
+      .password("sdbadmin")
+      .collectionSpaceName("test")
+      .collectionName("test7")
+      .build
+value.addSink(new SequoiadbSink(option))
 ```
 
