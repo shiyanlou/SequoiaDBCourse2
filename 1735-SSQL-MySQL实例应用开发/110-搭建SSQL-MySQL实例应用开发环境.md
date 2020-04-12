@@ -110,7 +110,7 @@ while (rs.next()) {
 
 查看结果：
 
-![1735-110-005.png](https://doc.shiyanlou.com/courses/1735/1207281/3564f5acd21abf00347ccc36b3d4dee4-0)
+![1735-110-011.png](https://doc.shiyanlou.com/courses/1735/1207281/778fefe582b036cebbe76cd829de966f-0)
 
 ## 配置连接池
 
