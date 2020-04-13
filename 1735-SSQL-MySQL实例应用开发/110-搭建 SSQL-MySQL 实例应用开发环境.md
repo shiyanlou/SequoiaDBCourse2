@@ -36,7 +36,7 @@ version: 1.0
 
 打开SSQL-MySQL项目，在该课程中完成后续试验
 
-![1586783543622](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1586783543622.png)
+![1735-110-13.png](https://doc.shiyanlou.com/courses/1735/1207281/40a9e7b6fbd5c3853dc09f69d0a06c86-0)
 
 #### 打开lesson1_environmentBuilding包
 
