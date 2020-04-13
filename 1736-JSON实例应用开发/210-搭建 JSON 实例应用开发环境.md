@@ -102,7 +102,7 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行数据库操作�
 
 在 idea 输出窗口查看运行效果
 
-![// TODO 贴图](C:\Users\SequoiaDB\Desktop\开发者课程\img\connection_result.png)
+![// TODO 贴图呀](C:\Users\SequoiaDB\Desktop\开发者课程\img\connection_result.png)
 
 ## 总结
 
