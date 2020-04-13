@@ -1,3 +1,8 @@
+---
+show: step
+version: 1.0 
+---
+
 ## 课程介绍
 
 本课程将介绍 Spark 的 RDD、DataSet 等有关概念，通过程序实现 word count 来简要说明 Spark RDD 操作。本章之前都是通过 JDBC 访问 Hive on Spark 的方式实现 Spark 和 数据源的交互，本章将通过 DataSet 读写 MySQL 实例的数据表的例子展示如何通过 Spark SQL 操作数据集的方式访问 MySQL 实例。
