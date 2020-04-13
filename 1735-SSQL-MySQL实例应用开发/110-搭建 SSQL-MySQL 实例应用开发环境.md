@@ -106,7 +106,7 @@ while (rs.next()) {
 #### 执行JdbcDEV
 
 执行之前初始化数据库环境
-
+ 
 右键JdbcDEV.java，选择Run，执行Init.java
 
 ![1735-110-4.png](https://doc.shiyanlou.com/courses/1735/1207281/8b3c687da8ad3dbfd88eab227f16fcdc-0)
