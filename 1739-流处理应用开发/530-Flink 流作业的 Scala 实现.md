@@ -17,9 +17,9 @@ version: 1.0
 
 ## 打开项目
 
-#### 打开idea
+#### 打开IDEA
 
-打开idea代码开发工具。
+打开IDEA代码开发工具。
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
@@ -36,9 +36,9 @@ version: 1.0
 
 #### 认识依赖
 
-查看pom.xml文件，认识下列依赖。
+查看pom.xml文件，认识下列依赖。本案例使用了flink的runtime依赖flink-core和流作业Scala开发依赖flink-streaming-scala包。
 
-![1730-530-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/57b2cd0bd35c393170af3316d42b3415-0)
+![1730-530-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/8a4039344d1aa5cbe1c4a1de4fef8aba-0)
 
 ## flatmap算子
 
@@ -64,23 +64,16 @@ flatmap算子是Transformation的其中一种。该算子接收一个DataStream�
 
 #### flatmap算子的使用
 
-- 注释原始数据的打印操作，在当前类的第24行
+编写flatmap转换逻辑，在当前类的flatmap函数中粘贴下列代码块
 
-  ![1730-530-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/ebb11db235359570f13c3ac1a610a9bd-0)
-
-- 编写flatmap转换逻辑，在当前类的flatmap函数中粘贴下列代码块
-
-  ```scala
+```scala
 // "_"为每个数据行
-  flatmapData = dataStream.flatMap(_.split(" "))
-  // 打印出来看一下效果,执行下一步前为了避免干扰请注释或删除
-  flatmapData.print()
-  ```
-  
-  flatmap算子中需要传递一个对象，该对象有两个泛型，分别为输入数据的类型及输出数据的类型，其有一个抽象方法flatmap，用于实现转换的具体逻辑。
-  
+flatmapData = dataStream.flatMap(_.split(" "))
+```
 
-#### 查看数据的结果
+flatmap算子中需要传递一个对象，该对象有两个泛型，分别为输入数据的类型及输出数据的类型，其有一个抽象方法flatmap，用于实现转换的具体逻辑。
+
+#### 查看结果
 
 再次运行该程序，可以看到在每个数据行上仅有一个单词
 
@@ -99,11 +92,9 @@ filter算子是Transformation的其中一种。该算子在每个数据行上被
 ```scala
 // 去除单词"java"
 filterData = dataStream.filter(!_.equals("java"))
-// 打印出来看一下效果,执行下一步前为了避免干扰请注释或删除
-filterData.print()
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 再次运行该程序，可以看到数据中已经没有“java”单词了。
 
@@ -122,11 +113,9 @@ map算子也是Transformation的其中一种。map算子同样在每个数据行
 ```scala
 // 将数据转化为元组，1表示当前数据行有一个单词
 mapData = dataStream.map((_, 1))
-// 打印出来看一下效果,执行下一步前为了避免干扰请注释或删除
-mapData.print()
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 再次运行该程序，可以看到每个数据行上都是一个Tuple，包含一个单词和1
 
@@ -155,7 +144,7 @@ sum算子接收一个KeyedStream，可以对指定的字段进行求和操作，
 sumData = dataStream.keyBy(0).sum(1)
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 再次运行该程序，可以看到单词统计的结果。
 

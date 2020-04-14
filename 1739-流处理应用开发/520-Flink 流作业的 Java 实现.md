@@ -15,9 +15,9 @@ version: 1.0
 
 ## 打开项目
 
-#### 打开idea
+#### 打开IDEA
 
-打开idea代码开发工具。
+打开IDEA代码开发工具。
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
@@ -34,8 +34,8 @@ version: 1.0
 
 #### 认识依赖
 
-查看pom.xml文件，认识下列依赖。
-![1739-520-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/71501b23355f6b96274d1b288c67dc65-0)
+查看pom.xml文件，认识下列依赖。本案例使用了flink的runtime依赖flink-core和流作业开发依赖flink-streaming-java包。
+![1739-520-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/874953cf1510ccc9a14a15d2fd0f689b-0)
 
 
 ## flatmap算子
@@ -62,14 +62,11 @@ flatmap算子是Transformation的其中一种。该算子接收一个DataStream�
 
 #### flatmap算子的使用
 
-- 注释原始数据的打印操作，在当前类的第24行
 
-  ![1739-520-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/aa4b43f01679815e34d05f4876fc07c7-0)
-
-- 编写flatmap转换逻辑，在当前类的flatmap函数中粘贴下列代码块
+- 编写flatmap转换逻辑，在当前类的flatmap函数中粘贴下列代码块。flatmap算子中需要传递一个对象，该对象有两个泛型，分别为输入数据的类型及输出数据的类型，其有一个抽象方法flatmap，用于实现转换的具体逻辑。
 
   ```java
-SingleOutputStreamOperator<String> flatMapData = dataStreamSource.flatMap(new FlatMapFunction<String, String>() {
+  SingleOutputStreamOperator<String> flatMapData = dataStreamSource.flatMap(new FlatMapFunction<String, String>() {
     /**
      * 每个数据行上执行一次，可输出多条数据
      * @param s 原始数据
@@ -85,13 +82,9 @@ SingleOutputStreamOperator<String> flatMapData = dataStreamSource.flatMap(new Fl
             collector.collect(strings[i]);
         }
     }
-});
-// 打印出来看一下效果,执行下一步前为了避免干扰请注释或删除
-flatMapData.print();
+  });
   ```
-  
-  flatmap算子中需要传递一个对象，该对象有两个泛型，分别为输入数据的类型及输出数据的类型，其有一个抽象方法flatmap，用于实现转换的具体逻辑。
-  
+
 - 注意:
   此处请不要使用1.8中的函数式接口实现，由于其没有显式指定输出数据的类型会导致程序无法获取返回类型而抛出异常。
 
@@ -124,8 +117,6 @@ filterData = dataStream.filter(new FilterFunction<String>() {
         return !s.equals("java");
     }
 });
-// 打印出来看一下效果,执行下一步前为了避免干扰请注释或删除
-filterData.print();
 ```
 
 #### 查看数据的结果
@@ -141,7 +132,6 @@ filterData.print();
 ```java
 filterData = dataStream.filter(i -> !i.equals("java"));
 ```
-
 
 
 ## map算子
@@ -167,9 +157,8 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
         return Tuple2.of(s, 1);
     }
 });
-// 打印出来看一下效果,执行下一步前为了避免干扰请注释或删除
-mapData.print();
 ```
+
 
 #### 查看数据的结果
 
