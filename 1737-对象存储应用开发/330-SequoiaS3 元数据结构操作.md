@@ -5,63 +5,122 @@ version: 1.0
 
 ## 课程介绍
 
+元数据是对象的组成部分。对象由对象数据和元数据组成，对象数据是要存储的具体内容，而元数据是包含了对该内容的描述。
 
+#### SequoiaS3 开发简介
 
-## 环境查看
+SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行S3操作的接口。
 
-展示包
+#### 实验流程简述：
 
-## 更新元数据
+- 用户通过 IDEA 编辑器编写 Java 源码
+- 实验相关核心代码，可从文档中的代码示例粘贴到项目指定文件的 TODO 标记处
+- 通过编译、运行 Java 代码，操作 SequoiaS3实例
 
-双击打开 ObjectMetadataTest类，找到引导行**TODO 1 更新元数据**，在该行下方粘贴代码
+![](https://doc.shiyanlou.com/courses/1736/1207281/7b1731fc121e3b460dcd9841eb0218a6-0)
 
-引导行所在位置
+#### 实验环境
 
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本。IDEA 编辑器为 16.0 版本。JDK 为 1.8 版本。
 
+## 打开项目
 
-将下方代码粘贴到引导行下方
+#### 打开 IDEA
 
-```
-        //设定对象元数据对象属性
-        objectMetadata.setContentLanguage("CH");
-        objectMetadata.setContentEncoding("utf8");
-        objectMetadata.setContentType("text/plain");
-        //更新对象元数据
-        result.setObjectMetadata(objectMetadata);
+打开 IDEA 代码开发工具。
+
+![](https://doc.shiyanlou.com/courses/1736/1207281/06650396616c742995bb63fcf933fac5-0)
+
+#### 打开项目
+
+打开object-java项目
+
+![image-20200414091915064](https://doc.shiyanlou.com/courses/1737/1207281/79e3fad2d27f14cfcbc94eadd646d88d-0)
+
+#### 打开 Package
+
+打开lesson3_s3ObjectMetadata包，在该Package完成后续课程
+
+![image-20200414130200381](https://doc.shiyanlou.com/courses/1737/1207281/979a09b4ad85545df79a300adeb65425-0)
+
+## 设置元数据
+
+在将文件上传为S3对象时，可以在上传的同时设定元数据参数，然后再上传。
+
+1）双击打开 ObjectMetadataUtil类，在setMetadata()函数内找到行**TODO 设置对象元数据**
+
+![image-20200414004236083](https://doc.shiyanlou.com/courses/1737/1207281/d8af43f53e2e61019194edf31bde1bbc-0)
+
+2）将下方代码粘贴到TODO ~ TODO END区域内第33行
+
+```java
+    //获取s3连接
+    AmazonS3 s3 = this.getS3();
+    //创建要用到的存储桶
+    s3.createBucket(bucketName);
+    //创建文件输入流
+    File file = new File("/opt/sequoiadb/version.conf");
+    InputStream inputStream = new FileInputStream(file);
+    //获得元数据对象
+    ObjectMetadata objectMetadata = new ObjectMetadata();
+    //设置元数据属性
+    objectMetadata.setContentLength(file.length());
+    objectMetadata.setContentLanguage("CH");
+    objectMetadata.setContentEncoding("utf8");
+    objectMetadata.setContentType("text/plain");
+    //上传文件保存为对象，并设置对象元数据
+    s3.putObject(bucketName,objectName,inputStream,objectMetadata);
 ```
 
 
 
 ## 查看元数据
 
-双击打开 ObjectMetadataTest类，找到引导行**TODO 2 查看元数据**，在该行下方粘贴代码
+在一个已有的S3实例中，可以通过getObjectMetadata(String str,String str1)函数获得指定对象的元数据对象。
 
-引导行所在位置
+1）双击打开 ObjectMetadataUtil类，找到queryMetadata()函数内行**TODO 查询对象元数据**
 
+![image-20200414012751420](https://doc.shiyanlou.com/courses/1737/1207281/ad124a1a30b91e5a4149c57fa588c709-0)
 
+2）将下方代码粘贴到TODO ~ TODO END区域内第61行
 
-将下方代码粘贴到引导行下方
-
-```
+```java
+        //获取s3连接
+        AmazonS3 s3 = this.getS3();
+        //获取指定对象的元数据对象
+        ObjectMetadata objectMetadata =
+        				s3.getObjectMetadata(bucketName,objectName);
+        //获取元数据属性
         String contentLanguage = objectMetadata.getContentLanguage();
         String contentEncoding = objectMetadata.getContentEncoding();
         String contentType = objectMetadata.getContentType();
-
-        System.out.println(contentLanguage);
-        System.out.println(contentEncoding);
-        System.out.println(contentType);
+		//打印元数据属性
+        System.out.println("contentLanguage:"+contentLanguage);
+        System.out.println("contentEncoding:"+contentEncoding);
+        System.out.println("contentType:"+contentType);
+		//清理环境
+        s3.deleteObject(bucketName,objectName);
+        s3.deleteBucket(bucketName);
 ```
 
-## 验证元数据更新查询操作
+## 执行代码
 
-选择位于屏幕左边的小三角
+1）鼠标移动到屏幕左边ObjectMetadataTest类，右键点击，出现如图所示的选项条，左键单击**Edit 'ObjectMetadataTest'**选项
 
+![image-20200414005415883](https://doc.shiyanlou.com/courses/1737/1207281/5aa784d9a86d1bcfc46b2db1870d1712-0)
 
+2）在出现下图所示界面后，将**SetAndQuery填入红框所选位置，然后点击**OK**按钮
 
-单击后出现下图，单击箭头所指的第一项编译执行代码
+![image-20200414011543183](https://doc.shiyanlou.com/courses/1737/1207281/9b0e9a0733b4efd0cf05edaedfbc6a05-0)
 
+3）鼠标移动到屏幕左边ObjectMetadataTest类上，右键点击，出现如图所示的选项条，左键单击**Run 'ObjectMetadataTest'**选项
 
+![image-20200414005608353](https://doc.shiyanlou.com/courses/1737/1207281/be73c5860b9238a4b2ac502165809309-0)
 
-在屏幕下方查看执行结果
+4）在屏幕下方查看结果输出，enter代表开始此项操作，exit代表结束这项操作，两者中间是执行中的输出信息，可以看到在queryMetadata区域出现了在设置元数据时设置的属性
 
+![image-20200414013041014](https://doc.shiyanlou.com/courses/1737/1207281/06c02c8569841998663502253b495c13-0)
 
+## 总结
+
+在该节课中，我们学到了如何在上传对象时设置对象的元数据，和查询已有对象的元数据。元数据是一种描述性信息，可以让我们更好的管理对象。
