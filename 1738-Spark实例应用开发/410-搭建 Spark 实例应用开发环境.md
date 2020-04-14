@@ -140,7 +140,7 @@ try {
 
 将 JDBC 创建数据库对象代码粘贴至HiveUtil 类 doDDL方法的 `TODO -- lesson1_sample:code2` 注释处（54 行），粘贴后效果如下：
 
-![1738-410-13](C:\Users\14620\Desktop\Spark开发课程\图片\lesson1\1738-410-13.png)
+![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/ae3c1b2fda11899990745c1566363077-0)
 
 #### JDBC 操作数据库记录
 
@@ -297,4 +297,5 @@ HiveUtil.doDQL(getResultSet);
 ## 总结
 
 通过本实验，我们对 Spark 技术架构和工作原理有了大致的了解，以及 Spark 是如何和 SequoiaDB 分布式存储集群交互工作的。此外，通过简单的实践练习我们可以通过 JDBC访问 Hive on Spark 并提交 SQL 任务，后续的若干章节会根据本章节的基础继续展开。
+
 
