@@ -40,11 +40,15 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行数据库操作�
 
 打开指定项目，在该项目中完成所有实验步骤。
 
-![](https://doc.shiyanlou.com/courses/1736/1207281/bffb8d689ce4531ce8ac96a00832cefb-0)
+![](https://doc.shiyanlou.com/courses/1736/1207281/9f17386c8098e8f4e46634f208fcd36b-0)
 
-检查 POM 依赖。
+#### 检查 POM 依赖
 
 关于 JSON 实例开发的实验，会用到 fastjson-1.2.67.jar 和 sequoiadb-driver-3.4.jar 两个 jar 包依赖。其中 sequoiadb-driver 为 Java 驱动包，属于必要依赖，fastjson 为市面常见 JSON 字符串格式化工具类，仅为了实验中调试方便，添加的非必要依赖。实验中依赖的形式采用 Maven 本地依赖的方式，将依赖包添加到 POM 文件中去。实验初始环境已经修改 POM 文件完毕，用户核实即可。
+
+POM 文件位置：
+
+![](https://doc.shiyanlou.com/courses/1736/1207281/30b1f7ba3794815a0498e9a4c9f74760-0)
 
 具体 POM 内容如下：
 
@@ -76,25 +80,25 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行数据库操作�
 
 ```java
 // 创建数据库链接
-Sequoiadb db = new Sequoiadb(Constants.SDB_HOST, Constants
-	.SDB_PORT, Constants.SDB_USERNAME, Constants.SDB_PASSWORD);
+Sequoiadb db = new Sequoiadb("sdbserver1", 11810,
+                             "sdbadmin", "sdbadmin");
 try {
-	// 获取数据组信息
-	DBCursor rgs = db.listReplicaGroups();
-	System.out.println("连接数据库后查询到的数据组信息为：");
-	// 格式化打印数据组信息
-	JsonUtil.formatPrint(rgs);
-	// 关闭cursor结果集
-	rgs.close();
+    // 获取数据组信息
+    DBCursor rgs = db.listReplicaGroups();
+    System.out.println("连接数据库后查询到的数据组信息为：");
+    // 格式化打印数据组信息
+    JsonUtil.formatPrint(rgs);
+    // 关闭cursor结果集
+    rgs.close();
 } finally {
-	// 关闭数据库链接
-	db.close();
+    // 关闭数据库链接
+    db.close();
 }
 ```
 
 将代码样例粘贴到第 17 行的 TODO ~ TODO END 位置区间内。
 
-![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/f431f7561df175a62a0799b375944ef3-0)
+![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/210c37dfeecbdcc1f58bf4f3858aaf8b-0)
 
 右键点击 BaseMainTest 类，创建/编辑主类运行环境。
 
