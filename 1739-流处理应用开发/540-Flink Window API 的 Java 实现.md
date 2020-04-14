@@ -7,13 +7,13 @@ version: 1.0
 
 本实验将带领学习Window，Flink的Time以及watermark机制。
 
-本实验中使用了flink-connect-sequoiadb依赖，该依赖由巨杉开源社区提供。
+本实验中使用了flink-connect-sequoiadb依赖（flink连接sequoiadb驱动包），该依赖来自巨杉开源社区。
 
 * [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
 
-#### 打开idea
+#### 打开IDEA
 
-打开idea代码开发工具。
+打开IDEA代码开发工具。
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
@@ -26,6 +26,11 @@ version: 1.0
 打开```com.sequoiadb.flink.scdd.lesson4_window```，在该package中完成本课程。
 
 ![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/fc0819b8e1c521dff7cd9c578e453398-0)
+
+#### 认识依赖
+
+查看pom.xml文件，认识下列依赖。本案例新增了flink连接sequoiadb的驱动包。
+![1739-540-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/6719e761e20edcdf9205b15252856610-0)
 
 ## Window简介
 
@@ -66,6 +71,8 @@ flink内部提供了三种window，分布是Tumbling Windows（翻滚窗口）�
 
 ## Tumbling Count Window的实现
 
+本案例通过Tumbling Count Window统计一个交易流水中每100次交易中的总交易额。
+
 #### 打开类
 
 在当前包下，打开类```TumblingCountWindowMain```
@@ -83,7 +90,7 @@ flink内部提供了三种window，分布是Tumbling Windows（翻滚窗口）�
 
 #### SequoiadbSource的使用
 
-SequoiadbSource可以非常容易地从Sequoiadb中读取一个流。
+SequoiadbSource可以非常容易地从Sequoiadb中读取一个流。在当前类中的source方法中粘贴下列代码块。
 
 ```java
  // 构建连接Option
@@ -95,17 +102,29 @@ SequoiadbSource可以非常容易地从Sequoiadb中读取一个流。
  .collectionName("TRANSACTION_FLOW")
  .build();
  // 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"timestamp"构建流）
- env.addSource(new SequoiadbSource(option, "create_time"));
+ sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
 以上示例为SequoiadbSource的使用，需要构建一个Option，包含巨杉数据库的连接信息。而且由于数据库中录入数据无法像消息队列做到时间态的有序，其还需要一个时间字段名用于构建流，该字段值必须是时间戳类型。
 
+#### 查看原始数据格式
+
+- 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该Flink程序。
+
+![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/83617d1fa1ab77f38247868bd0cd7b17-0)
+
+执行结果如下图，可以看到数据库中的原始数据。
+
+![1739-540-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/0e2a071608abcb5c16effccba29a284f-0)
+
+
+
 #### Map算子的使用
 
-使用map算子对流上的数据类型进行转换，该方法中接收一个DataStrem<BSONObject>，返回一个DataStream<Tuple2<Double, Integer>>。在本实验中，流中的每条数据均有实际意义，flink中将其称为一个事件。
+使用map算子对流上的数据类型进行转换，该方法中接收一个DataStrem<BSONObject>，返回一个DataStream<Tuple2<Double, Integer>>。在本实验中，流中的每条数据均有实际意义，flink中将其称为一个事件。在当前类中的map方法中粘贴下列代码块。
 
 ```java
-return dataStream.map(new MapFunction<BSONObject, Tuple2<Double, Integer>>() {
+resultData = dataStream.map(new MapFunction<BSONObject, Tuple2<Double, Integer>>() {
     /**
      * 在每个事件上调用一次
      * @param object 原始事件
@@ -122,18 +141,18 @@ return dataStream.map(new MapFunction<BSONObject, Tuple2<Double, Integer>>() {
 
 #### Window划分
 
-使用windowAll对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow>对象，表示Window中的数据类型，以及window的引用，在CountWindow中引用是一个全局的window对象。
+使用windowAll对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow>对象，表示Window中的数据类型，以及window的引用，在CountWindow中引用是一个全局的window对象。在当前类中的windowAll方法中粘贴下列代码块。
 
 ```java
-return moneyData.countWindowAll(100);
+resultData = moneyData.countWindowAll(100);
 ```
 
 #### 聚合结果
 
-使用reduce对数据进行聚合求和，此处将的聚合结果为Tuple2<Double, Integer>，分别表示总金额和总交易量
+使用reduce对数据进行聚合求和，此处将的聚合结果为Tuple2<Double, Integer>，分别表示总金额和总交易量。在当前类中的reduce方法中粘贴下列代码块。
 
 ```java
-return dataStream.reduce(new ReduceFunction<Tuple2<Double, Integer>>() {
+resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double, Integer>>() {
     /**
      * 聚合操作
      * @param t1 流上的其中一个事件
@@ -157,9 +176,11 @@ return dataStream.reduce(new ReduceFunction<Tuple2<Double, Integer>>() {
 
 - 查看结果。
 
-
+![1739-540-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/8f50992a6a7522e48c4156c30c52b931-0)
 
 ## Tumbling Time Window的实现
+
+本案例通过Tumbling Time Window统计一个交易流水中每5秒中，每种交易的总交易额，总交易量。
 
 #### 打开类
 
@@ -179,27 +200,27 @@ return dataStream.reduce(new ReduceFunction<Tuple2<Double, Integer>>() {
 
 #### SequoiadbSource的使用
 
-通过SequoiadbSource完成soucre函数
+通过SequoiadbSource完成soucre函数。在当前类中的source方法中粘贴下列代码块。
 
 ```java
 // 构建连接Option
 SequoiadbOption option = SequoiadbOption.bulider()
-.host("192.168.0.111:11810")
-.username("sdbadmin")
-.password("sdbadmin")
-.collectionSpaceName("test")
-.collectionName("test7")
-.build();
+ .host("localhost:11810")
+ .username("sdbadmin")
+ .password("sdbadmin")
+ .collectionSpaceName("VIRTUAL_BANK")
+ .collectionName("TRANSACTION_FLOW")
+ .build();
 // 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
-return env.addSource(new SequoiadbSource(option, "create_time"));
+sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
 #### 类型转换
 
-通过map算子获取到交易名，交易金额
+通过map算子获取到交易名，交易金额。在当前类中的map方法中粘贴下列代码块。
 
 ```java
- return dataStream.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
+resultData = dataStream.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
 	@Override
 	public Tuple3<String, Double, Integer> map(BSONObject object) throws Exception {
     	return Tuple3.of(object.get("trans_name").toString(), ((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
@@ -209,10 +230,10 @@ return env.addSource(new SequoiadbSource(option, "create_time"));
 
 #### 分组
 
-keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, String>对象，泛型中包含数据行和一个分组字段值
+keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, String>对象，泛型中包含数据行和一个分组字段值。在当前类中的map方法中粘贴下列代码块。
 
 ```java
-return dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>() {
+resultData = dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>() {
     /**
      * 分组函数，使用KeySelector 可以显示获取到分组字段的类型
      * @param t 分组前的数据集
@@ -228,14 +249,18 @@ return dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>
 
 #### 在keyedStream上使用window
 
+本案例使用时间进行划分窗口，窗口大小为5秒。在当前类中的window方法中粘贴下列代码块。
+
 ```java
-return keyedData.timeWindow(Time.seconds(5));
+resultData = keyedData.timeWindow(Time.seconds(5));
 ```
 
 #### 聚合求和
 
+通过聚合算子求出每个时间窗口中的交易名称，总交易额，总交易量，以及每个window的结束时间。在当前类中的reduce方法中粘贴下列代码块。
+
 ```java
-return windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>,
+resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>,
                 Tuple4<String, Double, Integer,java.sql.Time>, String, TimeWindow>() {
 	/**
      * 在每个window中执行一次 
@@ -262,30 +287,37 @@ return windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>,
 
 ## Sliding Count Window的实现
 
-请使用C$SlidingCountWindowMain完成当前演示，统计一个交易流水中每100次交易中的总交易额。
+本案例使用Sliding Count Window统计一个交易流水中每中交易类型中100次交易的总交易额。
+
+#### 打开类
+
+在当前包下，打开类```SlidingCountWindowMain```
+
+![1739-540-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/28e3ed435f489b1574d4c102e1289c44-0)
 
 #### SequoiadbSource的使用
 
-通过SequoiadbSource完成soucre函数
+通过SequoiadbSource完成soucre函数。在当前类的source方法中粘贴下列代码段。
 
 ```java
 // 构建连接Option
 SequoiadbOption option = SequoiadbOption.bulider()
-  .host("192.168.0.111:11810")
-  .username("sdbadmin")
-  .password("sdbadmin")
-  .collectionSpaceName("test")
-  .collectionName("test7")
-  .build();
-return env.addSource(new SequoiadbSource(option, "create_time"));
+    .host("192.168.0.111:11810")
+    .username("sdbadmin")
+    .password("sdbadmin")
+    .collectionSpaceName("VIRTUAL_BANK")
+    .collectionName("TRANSACTION_FLOW")
+    .build();
+// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
 #### 类型转换
 
-通过map算子获取到交易名，交易金额
+通过map算子获取到交易名，交易金额。在当前类的map方法中粘贴下列代码段。
 
 ```java
-return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
+resultData = transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
 	@Override
     public Tuple3<String, Double, Integer> map(BSONObject object) throws Exception {
       return Tuple3.of(object.get("trans_name").toString(),((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
@@ -295,22 +327,26 @@ return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>
 
 #### 分组
 
-keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值
+keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值。在当前类的keyBy方法中粘贴下列代码段。
 
 ```java
-return moneyData.keyBy(0);
+resultData = moneyData.keyBy(0);
 ```
 
 #### 在keyedStream上使用window
 
+案例中使用Sliding Count Window，窗口大小100，滑动步长50。在当前类的window方法中粘贴下列代码段。
+
 ```java
-return keyedData.countWindow(100, 50);
+resultData = keyedData.countWindow(100, 50);
 ```
 
 #### 聚合求和
 
+使用reduce对数据进行聚合求和，此处将的聚合结果为Tuple3<String, Double, Integer>，分别表示交易名称，总金额和总交易量。在当前类的reduce方法中粘贴下列代码段。
+
 ```java
-return countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer>, Tuple2<String, Double>, Tuple, GlobalWindow>() {
+resultData = countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer>, Tuple2<String, Double>, Tuple, GlobalWindow>() {
      /**
       * 在窗口满足条件时执行，类似于flatMap算子
       * @param tuple 分组字段值，由于使用了下标进行分组，无法获取到具体的数据类型，故此处使用Tuple抽象表示
@@ -334,8 +370,10 @@ return countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer>, Tup
 
 #### 将元组转换为BsonObject
 
+将元组转换为BSONObject。在当前类的toBson方法中粘贴下列代码段。
+
 ```java
-return dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() {
+bsonData = dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() {
     @Override
     public BSONObject map(Tuple2<String, Double> value) throws Exception {
         BasicBSONObject obj = new BasicBSONObject();
@@ -348,15 +386,18 @@ return dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() {
 
 #### 通过SequoiadbSink完成sink函数
 
+在当前类的sink方法中粘贴下列代码段。
+
 ```java
+// 构建连接Option
 SequoiadbOption option = SequoiadbOption.bulider()
-     .host("192.168.0.111:11810")
-     .username("sdbadmin")
-     .password("sdbadmin")
-     .collectionSpaceName("test")
-     .collectionName("test7")
-     .build();
-return dataStream.addSink(new SequoiadbSink(option));
+    .host("192.168.0.111:11810")
+    .username("sdbadmin")
+    .password("sdbadmin")
+    .collectionSpaceName("test")
+    .collectionName("test7")
+    .build();
+streamSink = dataStream.addSink(new SequoiadbSink(option));
 ```
 
 ## Flink中的Time和Watermark
@@ -396,11 +437,17 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 ## Watermark和SlidingTimeWindow的使用
 
-请使用D$SlidingTimeWindowWithWatermarkerMain完成当前演示，使用EventTime完成需求。
+本案例使用Sliding Time Window统计一个交易流水中每5秒中，每种交易的总交易额，总交易量。本例使用EventTime，且使用Watermark解决数据延迟问题。
+
+#### 打开类
+
+在当前包下，打开类```SlidingTimeWindowWithWatermarkerMain```
+
+![1739-540-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/85d9ad373ea2ab9c45ff9f15c838dd39-0)
 
 #### SequoiadbSource的使用
 
-通过SequoiadbSource完成soucre函数
+通过SequoiadbSource完成soucre函数。在当前类的source方法中粘贴下列代码段。
 
 ```java
 // 构建连接Option
@@ -416,7 +463,7 @@ return env.addSource(new SequoiadbSource(option, "create_time"));
 
 #### 添加Watermark
 
-向流中添加watermark
+向流中添加watermark。在当前类的watermark方法中粘贴下列代码段。
 
 ```java
 return transData.assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermarks<BSONObject>() {
@@ -452,7 +499,7 @@ return transData.assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermark
 
 #### 类型转换
 
-通过map算子获取到交易名，交易金额
+通过map算子获取到交易名，交易金额。在当前类的map方法中粘贴下列代码段。
 
 ```java
 return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
@@ -465,7 +512,7 @@ return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>
 
 #### 分组
 
-keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值
+keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值。在当前类的keyBy方法中粘贴下列代码段。
 
 ```java
 return dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>() {
@@ -478,11 +525,15 @@ return dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, String>
 
 #### 在keyedStream上使用window
 
+在当前类的window方法中粘贴下列代码段。
+
 ```java
 return keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(2)));
 ```
 
 #### 聚合求和
+
+在当前类的reduce方法中粘贴下列代码段。
 
 ```java
 return windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {
@@ -510,8 +561,10 @@ return windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, I
 
 #### 将元组转换为BsonObject
 
+将元组转换为BSONObject。在当前类的toBson方法中粘贴下列代码段。
+
 ```java
- return dataStream.map(new MapFunction<Result, BSONObject>() {
+return dataStream.map(new MapFunction<Result, BSONObject>() {
      @Override
      public BSONObject map(Result result) throws Exception {
          BasicBSONObject object = new BasicBSONObject();
@@ -521,10 +574,12 @@ return windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, I
          object.append("time", result.getWindowTime());
          return object;
      }
- });
+});
 ```
 
 #### 通过SequoiadbSink完成sink函数
+
+在当前类的sink方法中粘贴下列代码段。
 
 ```java
 SequoiadbOption option = SequoiadbOption.bulider()

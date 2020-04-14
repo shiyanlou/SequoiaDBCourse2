@@ -86,13 +86,68 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 ## Flink Demo示例
 
-为了帮助您更好的理解flink的工作原理及开发流程，本小节将展示一个Demo示例，一个经典案例单词统计，统计原始数据行中各个单词出现的次数。
+为了帮助您更好的理解flink的工作原理及开发流程，本小节将展示一个Demo示例，一个经典案例单词统计，统计原始数据行中各个单词出现的次数。本案例仅做了解，算子的具体使用见下一小节。
 
 #### 打开Demo类
 
 在当前工程包下打开类```IntroDemoMain```。
 
 ![1739-510-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/a33b303a8f34959f2bca2ae07ebc6ddd-0)
+
+#### 编写程序
+
+一个flink程序分为Source，Transformation，Sink三部分组成。首先需要获取到Flink的流作业的执行环境，添加转换逻辑。
+
+- 获取flink的执行环境，在本类的environment方法中粘贴下列代码块。
+
+```java
+// 获取执行环境
+env = StreamExecutionEnvironment.getExecutionEnvironment();
+```
+
+- 使用Source获取一个DataStream，在本类的source方法中粘贴下列代码块。
+
+```java
+// 通过RandomSource生成一些随机的数据行
+dataSource = env.addSource(new RandomSource());
+```
+
+- Transformation对数据做转换操作，在本类的transformation方法中粘贴下列代码块。代码中的算子使用规则详见下一小节，此处仅做演示。
+
+```java
+// 转换算子
+SingleOutputStreamOperator<String> flatMapData = lineData.flatMap(new FlatMapFunction<String, String>() {
+    @Override
+    public void flatMap(String s, Collector<String> collector) throws Exception {
+        Arrays.stream(s.split(" ")).forEach(collector::collect);
+    }
+});
+// 过滤算子
+SingleOutputStreamOperator<String> filterData = flatMapData.filter(s -> !s.equals("java"));
+// 转换算子
+SingleOutputStreamOperator<Tuple2<String, Integer>> mapData = filterData.map(new MapFunction<String, Tuple2<String, Integer>>() {
+    @Override
+    public Tuple2<String, Integer> map(String s) throws Exception {
+        return Tuple2.of(s, 1);
+    }
+});
+// 分组聚合算子
+sumData = mapData.keyBy(0).sum(1);
+```
+
+- 使用Sink将结果输出，请在当前类的sink方法中粘贴下列代码。
+
+```java
+// 此处将结果sink到控制台
+sumData.print();
+```
+
+- 执行该flink流作业，请在当前类的exec方法中粘贴下列代码。
+
+```java
+// 参数为当前作业的名字
+env.execute("flink intro demo");
+```
 
 #### 运行程序
 
