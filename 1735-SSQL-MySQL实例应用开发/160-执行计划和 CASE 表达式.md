@@ -1,39 +1,52 @@
 ---
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉MySQL的执行计划和SQL表达式
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉MySQL的执行计划和CASE表达式
 
 #### 请点击右侧选择使用的实验环境
-
-#### 部署架构：
-
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 SequoiaSQL-MySQL 数据库实例节点、1个引擎协调节点，1个编目节点与3个数据节点。
-
-![图片描述](https://doc.shiyanlou.com/courses/1469/1207281/8d88e6faed223a26fcdc66fa2ef8d3c5)
-
-详细了解 SequoiaDB 巨杉数据库系统架构：
-
-- [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
 
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎以及 SequoiaSQL-MySQL 实例均为 3.4 版本。
 
+#### 概述
+
+**执行计划**
+
+我们知道，不管是哪种数据库，或者是哪种数据库引擎，在对一条SQL语句进行执行的过程中都会做很多相关的优化，对于查询语句，最重要的优化方式就是使用索引。而执行计划，就是显示数据库引擎对于SQL语句的执行的详细情况，其中包含了是否使用索引，使用什么索引，使用的索引的相关信息等。
+
+**CASE表达式**
+
+CASE表达式是一个流程控制结构，用在在SELECT、WHERE等语句中根据条件动态构造内容。
+
+## 打开项目
+
+#### 打开idea
+
+打开idea代码开发工具
+
+![1735-110-1.png](https://doc.shiyanlou.com/courses/1735/1207281/6f87a8c93937c3c51f6d4839559de710-0)
+
+#### 打开SSQL-MySQL项目
+
+打开SSQL-MySQL项目，在该课程中完成后续试验
+
+![1735-110-13.png](https://doc.shiyanlou.com/courses/1735/1207281/40a9e7b6fbd5c3853dc09f69d0a06c86-0)
+
+#### 打开lesson6_explainAndCase包
+
+打开lesson6_explainAndCase packge，在该packge中完成后续课程。
+
+![1735-160-1.png](https://doc.shiyanlou.com/courses/1735/1207281/68397f159f4e8f581e42d2e680ba7182-0)
+
 ## 查看和理解执行计划
 
-查看执行计划
-
-```sql
-explain select * from employee;
-```
-
-在MySQL 5.7，可以查看select，delete，insert，replace和update语句的执行计划。
-
-输出字段说明
+#### 执行计划说明
 
 | 字段          | 说明                                                         |
 | ------------- | ------------------------------------------------------------ |
@@ -51,42 +64,191 @@ explain select * from employee;
 
 > **select_type**常见和常用的值有如下几种：
 >
-> 1.SIMPLE 简单的select查询，查询中不包含子查询或者UNION
->
-> 2.PRIMARY 查询中若包含任何复杂的子部分，最外层查询则被标记为PRIMARY
->
-> 3.SUBQUERY 在select或where列表中包含了子查询
->
-> 4.DERIVED 在from列表中包含的子查询被标记为DERIVED(衍生),MySQL会递归执行这些子查询，把结果放在临时表中
->
-> 5.UNION 若第二个SELECT出现在UNION之后，则被标记为UNION;若UNION包含在FROM子句的子查询中，外层SELECT将被标记为：DERIVED
->
-> 6.UNION RESULT 从UNION表获取结果的SELECT
+> SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT 从UNION表获取结果的SELECT
 >
 > **type**包含的类型包括如下几种，从最好到最差依次是：
 >
 > system > const > eq_ref > ref > range > index > all
->
-> 1.system 表只有一行记录（等于系统表），这是const类型的特列，平时不会出现，这个也可以忽略不计
-> 2.const 表示通过索引一次就找到了，const用于比较primary key 或者unique索引。因为只匹配一行数据，所以很快。如将主键置于where列表中，MySQL就能将该查询转换为一个常量。
-> 3.eq_ref 唯一性索引扫描，对于每个索引键，表中只有一条记录与之匹配。常见于主键或唯一索引扫描
->
-> 4.ref 非唯一性索引扫描，返回匹配某个单独值的所有行，本质上也是一种索引访问，它返回所有匹配某个单独值的行，然而，它可能会找到多个符合条件的行，所以他应该属于查找和扫描的混合体。 
->
-> 5.range 只检索给定范围的行，使用一个索引来选择行，key列显示使用了哪个索引，一般就是在你的where语句中出现between、< 、>、in等的查询，这种范围扫描索引比全表扫描要好，因为它只需要开始于索引的某一点，而结束于另一点，不用扫描全部索引。
->
-> 6.index Full Index Scan，Index与All区别为index类型只遍历索引树。这通常比ALL快，因为索引文件通常比数据文件小。（也就是说虽然all和Index都是读全表，但index是从索引中读取的，而all是从硬盘读取的）
->
-> 7.all Full Table Scan 将遍历全表以找到匹配的行 
+
+#### 初始化数据库
+
+右键ExplainAndCaseMainTest，选择Edit修改参数为init，初始化数据库环境
+
+![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
+
+修改参数为init
+
+![1735-160-3.png](https://doc.shiyanlou.com/courses/1735/1207281/2940826a192ce8ff27e1cc82204c729b-0)
+
+右键ExplainAndCaseMainTest，选择Run，运行初始化数据库环境代码
+
+![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+
+#### 查看执行计划
+
+查看select * from employee的执行计划
+
+打开UpdateTest.java，修改第11行TODO中的内容为
+
+```java
+stmt = conn.createStatement();
+String sql3 = "explain select * from employee where ename ='Parto'";
+rs = stmt.executeQuery(sql3);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+右键ExplainAndCaseMainTest，选择Edit修改参数为test
+
+![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
+
+![1735-160-5.png](https://doc.shiyanlou.com/courses/1735/1207281/7afb00d2fe88dd408acb4c0cb58dd601-0)
+
+右键ExplainAndCaseMainTest，选择Run，运行代码
+
+![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+
+查看结果为：
+
+| id   | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra                                                        |
+| ---- | ----------- | -------- | ---------- | ---- | ------------- | ---- | ------- | ---- | ---- | -------- | ------------------------------------------------------------ |
+| 1    | SIMPLE      | employee | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 6    | 16.67    | Using where with pushed condition (`mysqlTest`.`employee`.`ename` = 'Parto') |
+
+> 在MySQL 5.7，可以查看select，delete，insert，replace和update语句的执行计划。
 
 ## 创建索引，改变执行计划
 
+为表employee的列ename创建索引，再次查看执行计划
 
+打开UpdateTest.java，修改第11行TODO中的内容为
 
-#### SQL表达式
+```java
+stmt = conn.createStatement();
+String sql = "alter table employee add index(ename)";
+stmt.executeUpdate(sql);
+String sql3 = "explain select * from employee where ename = 'Parto'";
+rs = stmt.executeQuery(sql3);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
 
-#### 简单表达式
+右键ExplainAndCaseMainTest，选择Run，运行代码
 
-#### 复合表达式
+![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-#### Case表达式
+查看结果为：
+
+| id   | select_type | table    | partitions | type | possible_keys | key   | key_len | ref   | rows | filtered | Extra |
+| ---- | ----------- | -------- | ---------- | ---- | ------------- | ----- | ------- | ----- | ---- | -------- | ----- |
+| 1    | SIMPLE      | employee | NULL       | ref  | ename         | ename | 515     | const | 1    | 100.00   | NULL  |
+
+## Case表达式
+
+MySQL CASE表达式是一个流程控制结构，用在在SELECT、WHERE等语句中根据条件动态构造内容。
+
+MySQL的CASE表达式有2种形式，一种更像是编程语言当中的CASE语句，拿一个给定的值（变量）跟一系列特定的值作比较,称之为CASE类型。另一种则更像是编程语言中的if语句，当满足某些条件的时候取特定值，称之为IF类型。
+
+#### case类型
+
+此类型的语句结构如下：
+
+```sql
+CASE value
+WHEN compare_value_1 THEN result_1
+WHEN compare_value_2 THEN result_2
+…
+ELSE result END
+```
+
+此情况下，拿value与各个compare_value比较，相等时取对应的值，都不相等时取最后的result。
+
+打开UpdateTest.java，修改第11行TODO中的内容为
+
+```java
+stmt = conn.createStatement();
+String sql3 = "SELECT ename,\n" +
+    "    CASE ename\n" +
+    "        WHEN 'Parto' THEN 'P'\n" +
+    "        WHEN 'Georgi' THEN 'G'\n" +
+    "        WHEN 'Chirs' THEN 'C'\n" +
+    "        ELSE 'XX'\n" +
+    "    END AS mark\n" +
+    "FROM\n" +
+    "    employee";
+rs = stmt.executeQuery(sql3);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+右键ExplainAndCaseMainTest，选择Run，运行代码
+
+![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+
+查看结果为：
+
+​			Georgi	G	
+​			Bezalel	XX	
+​			Parto	P		
+​			Chirs	C	
+​			Kyoichi	XX	
+​			Anneke	XX
+
+#### IF类型
+
+此类型的CASE表达式如下：
+
+```sql
+CASE
+WHEN condition_1 THEN result_1
+WHEN condition_2 THEN result_2
+…
+ELSE result END
+```
+
+此时自上而下根据condition判断，取对应的值，都不满足的时候取最后的result。
+
+打开UpdateTest.java，修改第11行TODO中的内容为
+
+```java
+stmt = conn.createStatement();
+String sql3 = "SELECT \n" +
+    "    *\n" +
+    "FROM\n" +
+    "    employee\n" +
+    "ORDER BY (CASE\n" +
+    "    WHEN empno IS NULL THEN age\n" +
+    "    ELSE empno\n" +
+    "END);";
+rs = stmt.executeQuery(sql3);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+右键ExplainAndCaseMainTest，选择Run，运行代码
+
+![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+
+查看结果为：
+
+​			10001	Georgi	48	
+​			10002	Bezalel	21	
+​			10003	Parto	33	
+​			10004	Chirs	40	
+​			10005	Kyoichi	23	
+​			10006	Anneke	19	

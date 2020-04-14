@@ -30,31 +30,27 @@ version: 1.0
 
 打开idea代码开发工具
 
-![1735-110-001.png](https://doc.shiyanlou.com/courses/1735/1207281/d4e42612107582a7afa85e65d2e1fa3a-0)
+![1735-110-1.png](https://doc.shiyanlou.com/courses/1735/1207281/6f87a8c93937c3c51f6d4839559de710-0)
 
 #### 打开SSQL-MySQL项目
 
 打开SSQL-MySQL项目，在该课程中完成后续试验
 
-![1735-110-002.png](https://doc.shiyanlou.com/courses/1735/1207281/b8f39173109be95b3a12e0df20258f8d-0)
+![1735-110-13.png](https://doc.shiyanlou.com/courses/1735/1207281/40a9e7b6fbd5c3853dc09f69d0a06c86-0)
 
 #### 打开lesson1_environmentBuilding包
 
 打开lesson1_environmentBuilding packge，在该packge中完成后续课程。
 
-![1735-110-003.png](https://doc.shiyanlou.com/courses/1735/1207281/f7114c2ac226b040eecb0b900d03f559-0)
+![1735-110-2.png](https://doc.shiyanlou.com/courses/1735/1207281/f5ec2ca3949feed5c2a1c22262fa7619-0)
 
 ## 配置连接属性
 
-#### 导入项目需要的jar包 （mysql驱动包，sequoiadb驱动包）
+#### 配置连接数据库的相关属性，访问MySQL数据库。
 
-> 环境中已经导入
+打开JdbcDEV.java类
 
-#### 打开JdbcDEV.java类
-
-![1735-110-005.png](<https://doc.shiyanlou.com/courses/1735/1207281/3564f5acd21abf00347ccc36b3d4dee4-0)
-
-#### 在JdbcDEV类下编写连接属性。
+![1735-110-3.png](https://doc.shiyanlou.com/courses/1735/1207281/1b614ee23c8c3d4d02a218eaf34a81ae-0)
 
 在第9行，加载mysql驱动
 
@@ -62,15 +58,13 @@ version: 1.0
 Class.forName("com.mysql.jdbc.Driver");
 ```
 
-在第17~19行，配置mysql的url，username，password
+在第17~19行，配置mysql的url，username，password，连接到sdbserver1的mysqlTest数据库
 
 ```java
 String user = "root";
 String password = "root";
-String url = "jdbc:mysql://sdb:3306/mysqlTest";
+String url = "jdbc:mysql://sdbserver1:3306/mysqlTest";
 ```
-
-> sdb是主机名，mysqlTest是数据库名
 
 在第23~25行，建立JDBC和数据库之间的Connection连接，创建Statement接口，执行SQL语句，查看表employee的数据
 
@@ -84,36 +78,46 @@ ResultSet rs = stmt.executeQuery("SELECT * FROM employee");
 
 #### 编写代码，遍历查询到的结果
 
-在29~44行，写入如下代码，遍历rs的结果
+在29~48行，写入如下代码，遍历rs的结果
 
 ```java
 boolean isHeaderPrint = false;
+//遍历结果集
 while (rs.next()) {
+    //获得表结构
 	ResultSetMetaData md = rs.getMetaData();
+    //取得列数
 	int col_num = md.getColumnCount();
 	if (!isHeaderPrint){
+        //遍历数据库字段名
 		for (int i = 1; i  <= col_num; i++) {
 			System.out.print(md.getColumnName(i) + "\t");
 		}
 		isHeaderPrint = true;
 	}
 	System.out.println();
-
+	//遍历每一行查询到的信息
 	for (int i = 1; i <= col_num; i++) {
 		System.out.print(rs.getString(i) + "\t");
 	}
 }
 ```
 
-#### 执行jdbcDEV
+#### 执行JdbcDEV
 
-单击第5行，左侧的三角，选择Run 'JdbcDEV.main()'，运行
+执行之前初始化数据库环境
+ 
+右键JdbcDEV.java，选择Run，执行Init.java
 
-![1735-110-004.png](https://doc.shiyanlou.com/courses/1735/1207281/936ab29fd4a3f975ada9a44f44a8483d-0)
+![1735-110-4.png](https://doc.shiyanlou.com/courses/1735/1207281/8b3c687da8ad3dbfd88eab227f16fcdc-0)
+
+右键JdbcDEV.java，选择Run，执行JdbcDEV.java
+
+![1735-110-5.png](https://doc.shiyanlou.com/courses/1735/1207281/1807a51b5815cc33e6a5c6c05f53bf85-0)
 
 查看结果：
 
-![1735-110-011.png](https://doc.shiyanlou.com/courses/1735/1207281/778fefe582b036cebbe76cd829de966f-0)
+![1735-110-6.png](https://doc.shiyanlou.com/courses/1735/1207281/6bf4e7b063c2f2e01bda3bf5d938da79-0)
 
 ## 配置连接池
 
@@ -131,10 +135,6 @@ while (rs.next()) {
 
 C3P0是一个开源的JDBC连接池，它实现了数据源与JNDI绑定，支持JDBC3规范和实现了JDBC2的标准扩展说明的Connection和Statement池的DataSources对象。
 
-在项目中导入c3p0的jar包和mchange-commons-java-0.2.15 jar包
-
-> 项目中已导入
-
 打开c3p0工具类UtilsC3P0，使用c3p0获得连接对象
 
 在第9行，创建一个静态ComboPooledDataSource对象
@@ -149,7 +149,7 @@ private static ComboPooledDataSource dataSource=new ComboPooledDataSource();
 //设置注册驱动
 dataSource.setDriverClass("com.mysql.jdbc.Driver");
 //url
-dataSource.setJdbcUrl("jdbc:mysql://sdb:3306/mysqlTest");
+dataSource.setJdbcUrl("jdbc:mysql://sdbserver1:3306/mysqlTest");
 //数据库用户名
 dataSource.setUser("root");
 //数据库密码
@@ -235,15 +235,17 @@ while (rs.next()){
 UtilsC3P0.close(rs,state,conn);
 ```
 
-单击第5行左侧的三角，执行
+右键JdbcDEV.java，选择Run，执行TestUtilsC3P0.java
+
+![1735-110-7.png](https://doc.shiyanlou.com/courses/1735/1207281/2eecbffdfb70a5c0af788a86c26a629e-0)
 
 查看结果
 
-![1735-110-006.png](https://doc.shiyanlou.com/courses/1735/1207281/0d03c1250f44c8297b3046cecebf1f1b-0)
-
-
+![1735-110-8.png](https://doc.shiyanlou.com/courses/1735/1207281/f4509b033025bf54cfb6f85831e89999-0)
 
 ## 使用常用函数
+
+MySQL 有很多内置的函数,这里简单讲解三个函数（now、version、user）,更多的MySQL函数请前往第七章《常用函数》学习。
 
 #### now() 返回当前的日期和时间。
 
@@ -268,19 +270,19 @@ while (rs.next()) {
 }
 ```
 
-打开EnvBuildingMainTest.java，单击第6行的三角，选择Edit 'EnvBuildingMain....main()',修改参数为function
+右键EnvBuildingMainTest.java，选择Edit 'EnvBuildingMain....main()'，修改参数为function
 
-![1735-110-007.png](https://doc.shiyanlou.com/courses/1735/1207281/555e0ff876b43a9cf8b05919f87c2349-0)
+![1735-110-9.png](https://doc.shiyanlou.com/courses/1735/1207281/4f2e6e8dde86ee4694fc668ba569240d-0)
 
-![1735-110-008.png](https://doc.shiyanlou.com/courses/1735/1207281/bb60e353678c510f82139a47901fde6f-0)
+![1735-110-10.png](https://doc.shiyanlou.com/courses/1735/1207281/b84401ee488c773a4baa449b67b17977-0)
 
-单击第6行的三角，选择Run 'EnvBuildingMain....main()
+右键EnvBuildingMainTest.java，选择Run，运行代码
 
-![1735-110-009.png](https://doc.shiyanlou.com/courses/1735/1207281/aca483db3af7316c385717e65ae850a2-0)
+![1735-110-11.png](https://doc.shiyanlou.com/courses/1735/1207281/bca48948ed03e3e6abf5d55307ba2c1f-0)
 
 查看结果
 
-![1735-110-010.png](https://doc.shiyanlou.com/courses/1735/1207281/f18aab665a623fceebc68dd43ce72b6a-0)
+![1735-110-12.png](https://doc.shiyanlou.com/courses/1735/1207281/3d09511576c5cc29ad873cd970f3210f-0)
 
 #### User() 返回用户信息
 
