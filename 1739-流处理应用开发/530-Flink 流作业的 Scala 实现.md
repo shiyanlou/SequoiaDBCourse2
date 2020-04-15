@@ -29,7 +29,7 @@ version: 1.0
 ![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
 
 #### 打开lesson3 packge
-打开```com.sequoiadb.scdd.lesson3_word_count```，在该package中完成本课程。注意：该包位于scala源码包下。
+打开com.sequoiadb.scdd.lesson3_word_count，在该package中完成本课程。注意：该包位于scala源码包下。
 
 ![1730-530-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/4f9788c0136df45e1312bc4cd911acaf-0)
 
@@ -44,27 +44,31 @@ version: 1.0
 
 ![1730-530-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/8a4039344d1aa5cbe1c4a1de4fef8aba-0)
 
+## 查看原始数据格式
+
+#### 打开类
+
+在当前包下，打开类WordCountMain
+
+![1730-530-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/ac7f94c25e627be26f98111e28c39431-0)
+
+#### 运行程序
+
+通过在当前类文件上右键 > Run 'WordCountMain' 运行该Flink程序
+
+![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
+
+#### 查看结果
+
+执行结果如下图。可以看到是一些数据行，每行有多个单词构成，此时如果想要统计每个单词出现的次数首先需要使用该算子对数据行进行切分成单个单词的数据行。
+
+![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
+
 ## flatmap算子
 
 #### flatmap算子的作用
 
 flatmap算子是Transformation的其中一种。该算子接收一个DataStream对象，返回一个DataStream对象，它在每个数据行上被调用一次，可以将一个数据行转换为多个数据行。
-
-#### 查看原始数据格式
-
-在当前包下，打开类```WordCountMain```
-
-![1730-530-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/ac7f94c25e627be26f98111e28c39431-0)
-
-通过在当前类文件上右键 > Run 'WordCountMain' 运行该Flink程序。
-
-![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
-
-执行结果如下图。
-
-![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
-
-可以看到是一些数据行，每行有多个单词构成，此时如果想要统计每个单词出现的次数首先需要使用该算子对数据行进行切分成单个单词的数据行。
 
 #### flatmap算子的使用
 
@@ -208,7 +212,7 @@ reduce算子定义任意两个数据行合并为一个的数据行的逻辑。�
 
 将下列代码粘贴到 TODO code 5区间内。
 
-```java
+```scala
 // x和y分别表示两条数据，输出结果为 x中的单词，个数为x与y中的单词总和
 sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 ```
@@ -252,7 +256,7 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 - 首先可以在main函数的 TODO code 6添加下列代码。
 
-```java
+```scala
 // 将args传入ParameterTool, ParameterTool可以帮助我们解析参数
 val tool = ParameterTool.fromArgs(args)
 // 通过名字获取一个整数值，10为默认值，如果参数未发现则启用默认值

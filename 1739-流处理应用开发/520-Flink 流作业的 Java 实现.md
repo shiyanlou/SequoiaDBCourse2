@@ -41,28 +41,31 @@ version: 1.0
 本案例使用了flink的runtime依赖flink-core和流作业开发依赖flink-streaming-java包。
 ![1739-520-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/874953cf1510ccc9a14a15d2fd0f689b-0)
 
+## 查看原始数据格式
+
+#### 打开类
+
+在当前包下，打开类WordCountMain
+
+![1739-520-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/fc8659e9cf5b73c0b03c44f7ca3a8dfc-0)
+
+#### 运行程序
+
+通过在当前类文件上右键 > Run 'WordCountMain' 运行该Flink程序
+
+![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/cdf1469cfd0cebce488982655e8f7d04-0)
+
+#### 查看结果
+
+执行结果如下图。可以看到是一些数据行，每行有多个单词构成，此时如果想要统计每个单词出现的次数首先需要使用该算子对数据行进行切分成单个单词的数据行。
+
+![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
 
 ## flatmap算子
 
 #### flatmap算子的作用
 
 flatmap算子是Transformation的其中一种。该算子接收一个DataStream对象，返回一个DataStream对象，它在每个数据行上被调用一次，可以将一个数据行转换为多个数据行。
-
-#### 查看原始数据格式
-
-在当前包下，打开类```WordCountMain```
-
-![1739-520-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/fc8659e9cf5b73c0b03c44f7ca3a8dfc-0)
-
-通过在当前类文件上右键 > Run 'WordCountMain' 运行该Flink程序
-
-![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/cdf1469cfd0cebce488982655e8f7d04-0)
-
-执行结果如下图
-
-![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
-
-可以看到是一些数据行，每行有多个单词构成，此时如果想要统计每个单词出现的次数首先需要使用该算子对数据行进行切分成单个单词的数据行。
 
 #### flatmap算子的使用
 

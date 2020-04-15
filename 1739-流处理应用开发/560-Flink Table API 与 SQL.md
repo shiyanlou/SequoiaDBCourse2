@@ -21,7 +21,7 @@ Flink Table是Flink中的高级api, Table api将大大降低开发Flink程序的
 
 #### 打开flink-developer项目
 打开flink-developer项目，在该课程中完成本试验。
- 
+
 ![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
 
 #### 打开lesson6 packge
@@ -202,14 +202,14 @@ tbEnv.connect(
     .username("sdbadmin")                              // 用户名
     .password("sdbadmin")                              // 密码
     .collectionSpace("VIRTUAL_BANK")                   // 集合空间
-    .collection("TABLE_ANALYSIS")                      // 集合
+    .collection("LESSON_6_CONNECT")                    // 集合
 ).withFormat(
   new Bson()                                           // 使用Bson数据格式
     .deriveSchema()                                    // 自动映射同名数据字段
     .failOnMissingField()                              // 当获取不到某个字段值时任务失败
 ).withSchema(
   new Schema()                                         // 定义table的结构
-    .field("sum", Types.BIG_DEC)
+    .field("total_sum", Types.BIG_DEC)
     .field("trans_name", Types.STRING)
 ).inUpsertMode()
     .registerTableSink("LESSON_6_CONNECT");             // 注册为一个数据来源表
@@ -229,7 +229,7 @@ tbEnv.connect(
 tbEnv.sqlUpdate(
     "INSERT INTO LESSON_6_CONNECT " +
     "SELECT " +
-        "SUM(money) AS `sum`, " +
+        "SUM(money) AS `total_sum`, " +
         "trans_name " +
     "FROM TRANSACTION_FLOW " +
     "GROUP BY " +
@@ -242,7 +242,7 @@ tbEnv.sqlUpdate(
 
 ![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/954f646639b519256fc2b7262402357f-0)
 
-通过SAC页面查看数据结果。
+通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_6_CONNECT集合下。
 
 
 
@@ -302,7 +302,7 @@ tbEnv.sqlUpdate(
 tbEnv.sqlUpdate(
     "CREATE TABLE LESSON_6_DDL (" +
     "  trans_name STRING, " +                           // 交易名称
-    "  `sum` DECIMAL(10, 2)" +                          // 交易总额
+    "  `total_sum` DECIMAL(10, 2)" +                    // 交易总额
     ") WITH (" +
     "  'connector.type' = 'sequoiadb', " +
     "  'connector.hosts' = 'localhost:11810', " +
@@ -331,8 +331,8 @@ tbEnv.sqlUpdate(
  tbEnv.sqlUpdate(
      "INSERT INTO LESSON_6_DDL " +
      "SELECT " +
-         "trans_name, " +
-         "SUM(money) AS `sum` " +
+         "SUM(money) AS `total_sum` " +
+     	 "trans_name, " +
      "FROM TRANSACTION_FLOW " +
      "GROUP BY " +
      	"trans_name");
@@ -344,7 +344,7 @@ tbEnv.sqlUpdate(
 
 ![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/702cef0700359287d448cbee0e0aab34-0)
 
-通过SAC页面查看数据结果。
+通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_6_DDL集合下。
 
 ## TableAPI中Watermark与Window的使用
 
@@ -440,4 +440,4 @@ tbEnv.sqlUpdate(
 
 ![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/4896c1688098596aa7559ef4fc86b3d4-0)
 
-通过SAC页面查看数据结果。
+通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_6_SQL集合下。

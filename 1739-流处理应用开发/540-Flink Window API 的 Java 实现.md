@@ -136,7 +136,7 @@ SequoiadbSource可以非常容易地从Sequoiadb中读取一个流。
 
 使用map算子对流上的数据类型进行转换，该方法中接收一个DataStrem<BSONObject>，返回一个DataStream<Tuple2<Double, Integer>>。
 
-在当前类中找到filter方法，找到 TODO code 2。
+在当前类中找到map方法，找到 TODO code 2。
 
 ![1730-530-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/91129a76a83d77828c7e86d3f83acd79-0)
 
@@ -176,7 +176,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 使用windowAll对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow>对象，表示Window中的数据类型，以及window的引用，在CountWindow中引用是一个全局的window对象。
 
-在当前类中找到filter方法，找到 TODO code 3。
+在当前类中找到window方法，找到 TODO code 3。
 
 ![1739-540-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/e9b6ea391397bd0f6af72394aced1fd8-0)
 
@@ -202,7 +202,7 @@ resultData = dataStream.countWindowAll(100);
 
 使用reduce对数据进行聚合求和，此处将的聚合结果为Tuple2<Double, Integer>，分别表示总金额和总交易量。
 
-在当前类中找到filter方法，找到 TODO code 4。
+在当前类中找到reduce方法，找到 TODO code 4。
 
 ![1739-540-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/6c8c2eda6828803ce912b411bd600e89-0)
 
@@ -294,7 +294,7 @@ sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 
 通过map算子获取到交易名，交易金额，将BsonObject转换为Tuple2。
 
-在当前类中找到source方法，找到 TODO code 2。
+在当前类中找到map方法，找到 TODO code 2。
 
 ![1739-540-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/3cfc823aa5267fb7c36907f51fbf5827-0)
 
@@ -333,7 +333,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, String>对象，泛型中包含数据行和一个分组字段值。
 
-在当前类中找到source方法，找到 TODO code 3。
+在当前类中找到keyBy方法，找到 TODO code 3。
 
 ![1739-540-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/6bbb600d5a1ec69c5d37cf14202c4ee5-0)
 
@@ -394,7 +394,7 @@ resultData = keyedData.timeWindow(Time.seconds(5));
 
 通过聚合算子求出每个时间窗口中的交易名称，总交易额，总交易量，以及每个window的结束时间。
 
-在当前类中找到source方法，找到 TODO code 5。
+在当前类中找到reduce方法，找到 TODO code 5。
 
 ![1739-540-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/33034e7ec740e0506c9605fd65061815-0)
 
@@ -576,15 +576,13 @@ bsonData = dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() 
     public BSONObject map(Tuple2<String, Double> value) throws Exception {
         BasicBSONObject obj = new BasicBSONObject();
         obj.append("trans_name", value.f0);
-        obj.append("money", value.f1);
+        obj.append("total_sum", value.f1);
         return obj;
     }
 });
 ```
 
 #### 通过SequoiadbSink完成sink函数
-
-在当前类的sink方法中粘贴下列代码段。
 
 在当前类中找到sink方法，找到 TODO code 7。
 
@@ -610,7 +608,7 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 
 ![1739-540-00040.png](https://doc.shiyanlou.com/courses/1739/1207281/d37e874540ed0c7ee764a2be9454aa14-0)
 
-通过SAC查看结果数据
+通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_4_COUNT集合下。
 
 ![1739-540-00039.png](https://doc.shiyanlou.com/courses/1739/1207281/f12fe61a1c93cb641e6de523a2de7805-0)
 
@@ -672,13 +670,14 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 ```java
 // 构建连接Option
 SequoiadbOption option = SequoiadbOption.bulider()
-  .host("192.168.0.111:11810")
-  .username("sdbadmin")
-  .password("sdbadmin")
-  .collectionSpaceName("test")
-  .collectionName("test7")
-  .build();
-transData = env.addSource(new SequoiadbSource(option, "create_time"));
+    .host("localhost:11810")
+    .username("sdbadmin")
+    .password("sdbadmin")
+    .collectionSpaceName("VIRTUAL_BANK")
+    .collectionName("TRANSACTION_FLOW")
+    .build();
+// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
 #### 添加Watermark
@@ -826,9 +825,9 @@ resultData = dataStream.map(new MapFunction<Result, BSONObject>() {
      public BSONObject map(Result result) throws Exception {
          BasicBSONObject object = new BasicBSONObject();
          object.append("count", result.getCount());
-         object.append("money", result.getMoney());
+         object.append("total_sum", result.getTotalSum());
          object.append("trans_name", result.getTransName());
-         object.append("time", result.getWindowTime());
+         object.append("win_time", result.getWindowTime());
          return object;
      }
 });
@@ -844,11 +843,11 @@ resultData = dataStream.map(new MapFunction<Result, BSONObject>() {
 
 ```java
 SequoiadbOption option = SequoiadbOption.bulider()
-     .host("192.168.0.111:11810")
+     .host("localhost:11810")
      .username("sdbadmin")
      .password("sdbadmin")
-     .collectionSpaceName("test")
-     .collectionName("test7")
+     .collectionSpaceName("VIRTUAL_BANK")
+     .collectionName("LESSON_4_TIME")
      .build();
 streamSink = dataStream.addSink(new SequoiadbSink(option));
 ```
@@ -858,6 +857,4 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 
 ![1739-540-00048.png](https://doc.shiyanlou.com/courses/1739/1207281/a8e6d8f8475fc663a77a6820841f4a6f-0)
 
-通过SAC查看结果数据
-
-![1739-540-00039.png](https://doc.shiyanlou.com/courses/1739/1207281/f12fe61a1c93cb641e6de523a2de7805-0)
+通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_4_TIME集合下。
