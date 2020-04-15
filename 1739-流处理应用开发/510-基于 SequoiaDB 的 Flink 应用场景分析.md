@@ -22,7 +22,7 @@ version: 1.0
 
 ## 打开项目
 
-#### 打开idea
+#### 打开IDEA
 
 打开idea代码开发工具。
 
@@ -88,31 +88,53 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 为了帮助您更好的理解flink的工作原理及开发流程，本小节将展示一个Demo示例，一个经典案例单词统计，统计原始数据行中各个单词出现的次数。本案例仅做了解，算子的具体使用见下一小节。
 
-#### 打开Demo类
+#### 打开类
 
 在当前工程包下打开类```IntroDemoMain```。
 
 ![1739-510-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/a33b303a8f34959f2bca2ae07ebc6ddd-0)
 
-#### 编写程序
 
-一个flink程序分为Source，Transformation，Sink三部分组成。首先需要获取到Flink的流作业的执行环境，添加转换逻辑。
 
-- 获取flink的执行环境，在本类的environment方法中粘贴下列代码块。
+#### 获取执行环境
+
+一个flink程序由Source，Transformation，Sink三部分组成。首先需要获取到Flink的流作业的执行环境，添加转换逻辑。
+
+在当前类中找到environment方法，找到 TODO code 1。
+
+![1739-510-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/6f8d37c1e639225dd360f1c469400358-0)
+
+将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 // 获取执行环境
 env = StreamExecutionEnvironment.getExecutionEnvironment();
 ```
 
-- 使用Source获取一个DataStream，在本类的source方法中粘贴下列代码块。
+#### 使用Source获取DataStream
+
+Source算子用于产生一个DataStream。
+
+在当前类中找到source方法，找到 TODO code 2。
+
+![1739-510-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/70d53c17390cbd9e57fde3eed307547b-0)
+
+将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 // 通过RandomSource生成一些随机的数据行
 dataSource = env.addSource(new RandomSource());
 ```
 
-- Transformation对数据做转换操作，在本类的transformation方法中粘贴下列代码块。代码中的算子使用规则详见下一小节，此处仅做演示。
+#### Transformation的使用
+
+Transformation可以对数据做转换操作，代码中的算子使用规则详见下一小节，此处仅做演示。
+
+在当前类中找到transformate方法，找到 TODO code 3。
+
+![1739-510-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/d0224bfa01c602e43e1a396420850ee9-0)
+
+将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 // 转换算子
@@ -135,14 +157,29 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> mapData = filterData.map(new
 sumData = mapData.keyBy(0).sum(1);
 ```
 
-- 使用Sink将结果输出，请在当前类的sink方法中粘贴下列代码。
+#### Sink算子的使用
+
+使用Sink将结果输出到控制台。此处使用的print方法实则调用了一个ConsoleSink，会将结果sink到控制台。
+
+在当前类中找到sink方法，找到 TODO code 4。
+
+![1739-510-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/5c066bcb15d49c6c196d625b80e7578d-0)
+
+将下列代码粘贴到 TODO code 4区间内。
 
 ```java
-// 此处将结果sink到控制台
 sumData.print();
 ```
 
-- 执行该flink流作业，请在当前类的exec方法中粘贴下列代码。
+#### 执行流作业
+
+上述代码仅仅只是定义了一个流的转换逻辑，如果想让该流作业执行，还需要一个调用一个执行函数。
+
+在当前类中找到exec方法，找到 TODO code 5。
+
+![1739-510-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/beaff442291e00a599c5bf20614af7f8-0)
+
+将下列代码粘贴到 TODO code 5区间内。
 
 ```java
 // 参数为当前作业的名字
@@ -171,7 +208,7 @@ env.execute("flink intro demo");
 
 在很多情况下，大数据应用需要NoSQL与Hadoop技术相结合以满足三个V的全部需求，以搭建能够承载批量分析与实时查询的混合大数据平台。作为国内首家通过Cloudera技术认证的NewSQL数据库产品企业，SequoiaDB与Hadoop不论在功能、性能、安全性还是稳定性上均通过了国际领先的Hadoop企业的官方认证，能够完全满足企业级用户与互联网用户对大数据的需求。
 
-## Flink UI的认识
+## 总结
 
-Flink官方提供了一个可供管理与监控集群及作业使用的UI平台，大大方便了对flink平台的管理。
+本小节讲述了flink的使用场景，flink的执行流程，一个flink程序的结构。
 

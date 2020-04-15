@@ -11,7 +11,7 @@ version: 1.0
 
 * [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
 
-#### 打开idea
+#### 打开IDEA
 
 打开idea代码开发工具。
 
@@ -95,13 +95,13 @@ SequoiadbSource可以非常容易地从Sequoiadb中读取一个流。在当前�
 ```scala
 // 构建连接Option
 val option: SequoiadbOption = SequoiadbOption.bulider
-      .host("192.168.0.111:11810")
+      .host("localhost:11810")
       .username("sdbadmin")
       .password("sdbadmin")
-      .collectionSpaceName("test")
-      .collectionName("test7")
+      .collectionSpaceName("VIRTUAL_BANK")
+      .collectionName("TRANSACTION_FLOW")
       .build
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"timestamp"构建流）
+// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
 sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
