@@ -70,14 +70,22 @@ table的使用需要依赖于table的执行环境，table的执行环境可以�
 
 #### 常见SQL算子
 
-- groupby： 分组
-- select: 查询
-- as: 重命名字段
-- where: 过滤
+| SQL算子 | 用处       |
+| ------- | ---------- |
+| groubBy | 分组       |
+| select  | 查询       |
+| as      | 重命名字段 |
+| where   | 数据过滤   |
 
 #### 从已有的DataStream中创建Table
 
-本案例中已存在一个DataStream<Tuple2<String, Integer>>，格式为（'单词', 1）。现在将其转换为Table，请将createTableFromDataStream中粘贴下列代码段。tbEnv.fromDataStream函数接收两个参数，分别为DataStream与一个字符串，表示字段名，多个字段用逗号分隔。
+本案例中已存在一个DataStream<Tuple2<String, Integer>>，格式为（'单词', 1）。tbEnv.fromDataStream函数接收两个参数，分别为DataStream与一个字符串，表示字段名，多个字段用逗号分隔。
+
+在当前类中找到createTableFromDataStream方法，找到 TODO code 1。
+
+![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/8d6d4a2772416779f23777f280d2198f-0)
+
+将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 table = tbEnv.fromDataStream(wordData, "name, num");
@@ -85,7 +93,13 @@ table = tbEnv.fromDataStream(wordData, "name, num");
 
 #### SQL算子的使用
 
-SQL算子的用途与标准sql中关键字一致。请将createTableFromDataStream中粘贴下列代码段。
+SQL算子的用途与标准sql中关键字一致。
+
+在当前类中找到select方法，找到 TODO code 2。
+
+![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/32dbe649c789ce563ab671432d7dc739-0)
+
+将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 /**
@@ -108,13 +122,29 @@ resultTable = initTable.as("word, num")         // 重命名字段
 当对table查询之后，向输出到控制台则需要将Table转换为DataStream
 
 - 要点一：在此处需要传入一个TypeInformation，描述一个具体Flink的对象类型，Flink会将Table中的记录封装为该对象，此处为Tuple2<String, Integer>类型，当类型带有泛型时需要借助TypeHint对象获取。
-- 要点二：由于使用了groupby算子，返回时必须使用toRetractStream，使用toAppendStream将会抛出异常。
+- 要点二：由于使用了groupby算子，返回时必须使用toRetractStream。
 - 要点三：toRetractStream返回一个RetractStream对象，实则就是一个在每个时间上均带有布尔类型的的DataStream。该布尔值为true时表示当前事件需要被删除。
+
+在当前类中找到converTable2DataStream方法，找到 TODO code 3。
+
+![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/90b44f48ee4fcec3d10c43f936484de5-0)
+
+将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
     new TypeHint<Tuple2<String, Integer>>() {}));
 ```
+
+#### 执行当前作业
+
+通过在当前类文件上右键 > Run 'CreateTableFromDataStreamMain.main()' 运行该Flink程序。
+
+![1739-560-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/937f1de18e6772d9f0887caabb65432a-0)
+
+查看结果。
+
+![1739-560-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/81b61de6b2094ddd79e5fbd1b92c059b-0)
 
 ## 通过表描述器注册表
 
@@ -128,10 +158,16 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 #### 通过描述器创建一个Source表
 
+在当前类中找到createSourceTable方法，找到 TODO code 1。
+
+![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
+
+将下列代码粘贴到 TODO code 1区间内。
+
 ```java
 tbEnv.connect(
   new Sdb()
-    .hosts("192.168.0.111:11810")                      // sdb 的连接地址
+    .hosts("localhost:11810")                          // sdb 的连接地址
     .username("sdbadmin")                              // 用户名
     .password("sdbadmin")                              // 密码
     .collectionSpace("VIRTUAL_BANK")                   // 集合空间
@@ -143,20 +179,26 @@ tbEnv.connect(
     .failOnMissingField()                              // 当获取不到某个字段值时任务失败
 ).withSchema(
   new Schema()                                         // 定义table的结构
-    .field("account", Types.STRING)
-    .field("trans_name", Types.STRING)
-    .field("money", Types.BIG_DEC)
-    .field("create_time", Types.SQL_TIMESTAMP)
+    .field("account", Types.STRING)					   // 账户
+    .field("trans_name", Types.STRING)				   // 交易名
+    .field("money", Types.BIG_DEC)					   // 交易金额
+    .field("create_time", Types.SQL_TIMESTAMP)		   // 交易时间
 ).inAppendMode()
 .registerTableSource("TRANSACTION_FLOW");              // 注册为一个数据来源表
 ```
 
 #### 通过描述器创建一个Sink表
 
+在当前类中找到createSinkTable方法，找到 TODO code 2。
+
+![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4bf3b08d1de0ef68b97a65fa3e221744-0)
+
+将下列代码粘贴到 TODO code 2区间内。
+
 ```java
 tbEnv.connect(
-  new Sdb()
-    .hosts("192.168.0.111:11810")                      // sdb 的连接地址
+  new Sdb() 
+    .hosts("localhost:11810")                          // sdb 的连接地址
     .username("sdbadmin")                              // 用户名
     .password("sdbadmin")                              // 密码
     .collectionSpace("VIRTUAL_BANK")                   // 集合空间
@@ -170,14 +212,22 @@ tbEnv.connect(
     .field("sum", Types.BIG_DEC)
     .field("trans_name", Types.STRING)
 ).inUpsertMode()
-    .registerTableSink("TABLE_ANALYSIS");              // 注册为一个数据来源表
+    .registerTableSink("LESSON_6_CONNECT");             // 注册为一个数据来源表
 ```
 
-#### 执行数据统计，并将结果输出到巨杉数据库，统计每种交易的交易总额
+#### 编写统计SQL
+
+编写sql统计结果并将结果输出到巨杉数据库，统计每种交易的交易总额。
+
+在当前类中找到select方法，找到 TODO code 3。
+
+![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/19e2bda1a605f3f4bde299edf5ad3e0c-0)
+
+将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 tbEnv.sqlUpdate(
-    "INSERT INTO TABLE_ANALYSIS " +
+    "INSERT INTO LESSON_6_CONNECT " +
     "SELECT " +
         "SUM(money) AS `sum`, " +
         "trans_name " +
@@ -192,7 +242,9 @@ tbEnv.sqlUpdate(
 
 ![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/954f646639b519256fc2b7262402357f-0)
 
-#### 通过SAC页面查看数据结果
+通过SAC页面查看数据结果。
+
+
 
 ## 通过DDL创建表
 
@@ -206,46 +258,58 @@ tbEnv.sqlUpdate(
 
 #### 创建source表
 
-通过DDL创建flink source表。请在当前类的createSourceTable方法中粘贴下列代码段。
+通过DDL创建flink source表。
+
+在当前类中找到createSourceTable方法，找到 TODO code 1。
+
+![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
+
+将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 tbEnv.sqlUpdate(
-    "CREATE TABLE test1 (" +
-    "  account STRING, " +                              // 账户号
-    "  trans_name STRING, " +                           // 交易名称
-    "  money DECIMAL(10, 2), " +                        // 交易金额
-    "  `timestamp` TIMESTAMP(3)" +                      // 交易世家
+    "CREATE TABLE TRANSACTION_FLOW (" +
+    "  account STRING, " +                                 // 账户号
+    "  trans_name STRING, " +                              // 交易名称
+    "  money DECIMAL(10, 2), " +                           // 交易金额
+    "  `timestamp` TIMESTAMP(3)" +                         // 交易世家
     ") WITH (" +
-    "  'connector.type' = 'sequoiadb', " +              // 连接介质类型
-    "  'connector.hosts' = '192.168.0.111:11810', " +   // 连接地址
-    "  'connector.username' = 'sdbadmin', " +           // 用户名
-    "  'connector.password' = 'sdbadmin', " +           // 密码
-    "  'connector.collection-space' = 'test', " +       // 集合空间名
-    "  'connector.collection' = 'test7', " +            // 集合名
-    "  'connector.timestamp-field' = 'timestamp', " +   // 流标识字段
-    "  'format.type' = 'bson', " +                      // 数据类型 bson
-    "  'format.derive-schema' = 'true', " +             // 自动映射同名字段
-    "  'format.fail-on-missing-field' = 'true', " +     // 当某个字段获取不到时任务失败
-    "  'update-mode' = 'append'" +                      // append模式
+    "  'connector.type' = 'sequoiadb', " +                 // 连接介质类型
+    "  'connector.hosts' = 'localhost:11810', " +          // 连接地址
+    "  'connector.username' = 'sdbadmin', " +              // 用户名
+    "  'connector.password' = 'sdbadmin', " +              // 密码
+    "  'connector.collection-space' = 'VIRTUAL_BANK', " +  // 集合空间名
+    "  'connector.collection' = 'TRANSACTION_FLOW', " +    // 集合名
+    "  'connector.timestamp-field' = 'create_time', " +    // 流标识字段
+    "  'format.type' = 'bson', " +                         // 数据类型 bson
+    "  'format.derive-schema' = 'true', " +                // 自动映射同名字段
+    "  'format.fail-on-missing-field' = 'true', " +   // 当某个字段获取不到时任务失败
+    "  'update-mode' = 'append'" +                    // append模式
     ")");
 ```
 
 #### 创建sink表
 
-通过DDL创建flink sink表。请在当前类的createSinkTable方法中粘贴下列代码段。
+通过DDL创建flink sink表。
+
+在当前类中找到createSinkTable方法，找到 TODO code 2。
+
+![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4bf3b08d1de0ef68b97a65fa3e221744-0)
+
+将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 tbEnv.sqlUpdate(
-    "CREATE TABLE test2(" +
+    "CREATE TABLE LESSON_6_DDL (" +
     "  trans_name STRING, " +                           // 交易名称
     "  `sum` DECIMAL(10, 2)" +                          // 交易总额
     ") WITH (" +
     "  'connector.type' = 'sequoiadb', " +
-    "  'connector.hosts' = '192.168.0.111:11810', " +
+    "  'connector.hosts' = 'localhost:11810', " +
     "  'connector.username' = 'sdbadmin', " +
     "  'connector.password' = 'sdbadmin', " +
-    "  'connector.collection-space' = 'test', " +
-    "  'connector.collection' = 'test8', " +
+    "  'connector.collection-space' = 'VIRTUAL_BANK', " +
+    "  'connector.collection' = 'LESSON_6_DDL', " +
     "  'format.type' = 'bson', " +
     "  'format.derive-schema' = 'true', " +
     "  'format.fail-on-missing-field' = 'true', " +
@@ -255,11 +319,17 @@ tbEnv.sqlUpdate(
 
 #### 编写查询SQL
 
-执行统计，统计每种交易的交易总额。请在当前类的select方法中粘贴下列代码段。
+执行统计，统计每种交易的交易总额。
+
+在当前类中找到select方法，找到 TODO code 3。
+
+![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/19e2bda1a605f3f4bde299edf5ad3e0c-0)
+
+将下列代码粘贴到 TODO code 3区间内。
 
 ```java
  tbEnv.sqlUpdate(
-     "INSERT INTO SQL_ANALYSIS " +
+     "INSERT INTO LESSON_6_DDL " +
      "SELECT " +
          "trans_name, " +
          "SUM(money) AS `sum` " +
@@ -268,7 +338,13 @@ tbEnv.sqlUpdate(
      	"trans_name");
 ```
 
-#### 通过SAC页面查看数据结果
+#### 执行当前作业
+
+通过在当前类文件上右键 > Run 'CreateTableByDDLMain.main()' 运行该Flink程序。
+
+![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/702cef0700359287d448cbee0e0aab34-0)
+
+通过SAC页面查看数据结果。
 
 ## TableAPI中Watermark与Window的使用
 
@@ -278,17 +354,23 @@ tbEnv.sqlUpdate(
 
 #### 使用描述器中定义一个使用EventTime和Watermark
 
-使用描述器定义一个使用EventTime和Watermark的source表。请在当前类的createSourceTable方法中粘贴下列代码段。
+使用描述器定义一个使用EventTime和Watermark的source表。
+
+在当前类中找到createSourceTable方法，找到 TODO code 1。
+
+![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
+
+将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 // 通过描述器连接表
 tbEnv.connect(
    new Sdb()
-    .hosts("192.168.0.111:11810")                           // sdb 的连接地址
+    .hosts("localhost:11810")                               // sdb 的连接地址
     .username("sdbadmin")                                   // 用户名
     .password("sdbadmin")                                   // 密码
-    .collectionSpace("test")                                // 集合空间
-    .collection("test7")                                    // 集合
+    .collectionSpace("VIRTUAL_BANK")                        // 集合空间
+    .collection("TRANSACTION_FLOW")                         // 集合
     .timestampField("create_time")                          // 流标识字段名
 ).withFormat(
    new Bson()                           // 使用Bson数据格式, 当使用rowtime时必须显示指定format
@@ -313,7 +395,7 @@ tbEnv.connect(
         .watermarksPeriodicAscending()          // 设置watermark生成规则
     )
 ).inAppendMode()                                
-.registerTableSource("test1");
+.registerTableSource("LESSON_6_SQL");
 ```
 
 #### Flink SQL中的函数
@@ -330,22 +412,32 @@ tbEnv.connect(
 
   该方法可以将时间戳格式化为固定格式的时间字符串。接收两个参数，第一个参数为一个Timestamp类型的字段名，为待转换的时间戳字段，第二个参数为格式化的字符串。
 
-#### 执行统计，统计每种交易的交易总额
+#### 编写SQL
+
+执行统计，统计每种交易的交易总额。
+
+![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/542a6ee56b6da51cb1736ecdedfd7b3a-0)
 
 ```java
 // 执行sql 数据统计
 tbEnv.sqlUpdate(
-    "INSERT INTO test2 ( " +
+    "INSERT INTO LESSON_6_SQL ( " +
     "SELECT " +
-    "trans_name, " +
-    "SUM(money) AS `sum`, " +
-    "TUMBLE_START(`rowtime`, INTERVAL '5' SECOND) AS win_start_time, " +
-    "DATA_FORMAT(TUMBLE_END(`rowtime`, INTERVAL '5' SECOND), 'HH:mm:ss') AS format_win_end_time " +
-    "FROM test1 " +
+        "trans_name, " +
+        "SUM(money) AS total_sum, " +
+        "DATA_FORMAT(TUMBLE_END(`rowtime`, INTERVAL '5' SECOND), " +
+    				"'HH:mm:ss') AS win_time " +
+    "FROM TRANSACTION_FLOW " +
     "GROUP BY " +
-    "TUMBLE(rowtime, INTERVAL '5' SECOND), " +
-    "trans_name )"
+        "TUMBLE(`rowtime`, INTERVAL '5' SECOND), " +
+        "trans_name )"
 );
 ```
 
-#### 通过SAC页面查看数据结果
+#### 执行当前作业
+
+通过在当前类文件上右键 > Run 'ExecuteSqlWithWatermakerAndWindowMain.main()' 运行该Flink程序。
+
+![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/4896c1688098596aa7559ef4fc86b3d4-0)
+
+通过SAC页面查看数据结果。
