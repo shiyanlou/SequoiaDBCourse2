@@ -5,14 +5,30 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领学习Window，Flink的Time以及watermark机制。
+本实验将带领您了解与学习Flink中Window，Time以及watermark机制。
+
+#### 请点击右侧选择使用的实验环境
+
+#### 部署架构：
+
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+
+![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
+
+详细了解 SequoiaDB 巨杉数据库系统架构：
+
+- [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
+
+#### 实验环境
+
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
 本实验中使用了flink-connect-sequoiadb依赖（flink连接sequoiadb驱动包），该依赖来自巨杉开源社区。
 
 * [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
 
 ## 打开项目
- 
+
 #### 打开IDEA
 
 打开IDEA代码开发工具。
@@ -25,7 +41,7 @@ version: 1.0
 ![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
 
 #### 打开lesson4 packge
-打开```com.sequoiadb.flink.scdd.lesson4_window```，在该package中完成本课程。
+打开com.sequoiadb.flink.scdd.lesson4_window，在该package中完成本课程。
 
 ![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/fc0819b8e1c521dff7cd9c578e453398-0)
 
@@ -82,7 +98,7 @@ flink内部提供了三种window，分布是Tumbling Windows（翻滚窗口）�
 
 #### 打开类
 
-在当前包下，打开类```TumblingCountWindowMain```
+在当前包下，打开类TumblingCountWindowMain
 
 ![1739-540-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/e3287d6c7d800c2f108b940ba4000c7e-0)
 
@@ -243,7 +259,7 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 #### 打开类
 
-在当前包下，打开类```TumblingTimeWindowMain```
+在当前包下，打开类TumblingTimeWindowMain
 
 ![1739-540-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/491d0cda3aca588ab10545802d44986f-0)
 
@@ -370,7 +386,7 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 
 本案例使用时间进行划分窗口，窗口大小为5秒。
 
-在当前类中找到source方法，找到 TODO code 4。
+在当前类中找到window方法，找到 TODO code 4。
 
 ![1739-540-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/4837719b17666b59f1c3bd762e257d01-0)
 
@@ -450,7 +466,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 #### 打开类
 
-在当前包下，打开类```SlidingCountWindowMain```
+在当前包下，打开类SlidingCountWindowMain
 
 ![1739-540-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/28e3ed435f489b1574d4c102e1289c44-0)
 
@@ -653,7 +669,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 #### 打开类
 
-在当前包下，打开类```SlidingTimeWindowWithWatermarkerMain```
+在当前包下，打开类SlidingTimeWindowWithWatermarkerMain
 
 ![1739-540-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/85d9ad373ea2ab9c45ff9f15c838dd39-0)
 
@@ -745,7 +761,7 @@ return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>
 
 keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值。
 
-在当前类中找到map方法，找到 TODO code 4。
+在当前类中找到keyBy方法，找到 TODO code 4。
 
 ![1739-540-00043.png](https://doc.shiyanlou.com/courses/1739/1207281/2f14f4794f4e730959f88fb0a7b239a3-0)
 
@@ -765,7 +781,7 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>,
 
 此处使用了SlidingEventTimeWindow，窗口大小为5秒，滑动步长为2秒。
 
-在当前类中找到map方法，找到 TODO code 5。
+在当前类中找到window方法，找到 TODO code 5。
 
 ![1739-540-00044.png](https://doc.shiyanlou.com/courses/1739/1207281/5b97b02c1cd6928cbbe1be1a4b797915-0)
 
@@ -813,7 +829,7 @@ restultData = windowedStream.process(new ProcessWindowFunction<Tuple3<String, Do
 
 将POJO转换为BSONObject。
 
-在当前类中找到reduce方法，找到 TODO code 7。
+在当前类中找到toBson方法，找到 TODO code 7。
 
 ![1739-540-00046.png](https://doc.shiyanlou.com/courses/1739/1207281/7ce471307afa5e95995e90a6de6bc8f2-0)
 
@@ -835,7 +851,7 @@ resultData = dataStream.map(new MapFunction<Result, BSONObject>() {
 
 #### 通过SequoiadbSink完成sink函数
 
-在当前类中找到reduce方法，找到 TODO code 8。
+在当前类中找到sink方法，找到 TODO code 8。
 
 ![1739-540-00047.png](https://doc.shiyanlou.com/courses/1739/1207281/4dfb6a66829323eecad34a25350333f5-0)
 

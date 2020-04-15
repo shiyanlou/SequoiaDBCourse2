@@ -5,13 +5,23 @@ version: 1.0
 
 ## 课程介绍
 
-本实验示例模拟了一个不断产生一个单词串的源头，需要使用Flink通过一些处理逻辑最终统计出每个单词出现的次数。
-
-本实验将带领您学习flink的常用算子的使用，帮助您快速入门；同时学习如何将工程打包发布到集群环境。
-
-
+本实验将带领您学习flink的常用算子的使用，帮助您快速入门；同时学习如何将工程打包发布到集群环境。本实验采用经典案例WordCount单词统计进行演示。
 
 #### 请点击右侧选择使用的实验环境
+
+#### 部署架构：
+
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+
+![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
+
+详细了解 SequoiaDB 巨杉数据库系统架构：
+
+- [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
+
+#### 实验环境
+
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
 ## 打开项目
 
@@ -151,7 +161,7 @@ filterData = dataStream.filter(new FilterFunction<String>() {
 
 可以看到数据中已经没有“java”单词了。
 
-![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/cb7cb4d2f65581057b8f4650d37b7a42-0)
+![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/c7ff3f7afc7e5dc5c6a912e95373ab49-0)
 
 #### 拓展提高（可选）
 
@@ -223,7 +233,7 @@ sum算子接收一个KeyedStream，可以对指定的字段进行求和操作，
 
 在DataStream的泛型为Tuple时，可以通过下标索引进行keyBy与sum，当前实验使用第一个字段进行分组，对第二个字段进行求和。
 
-在当前类中找到map方法，找到 TODO code 4。
+在当前类中找到sum方法，找到 TODO code 4。
 
 ![1739-520-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/cc4b824f1ba64f57ec68a1b3c22ac468-0)
 
