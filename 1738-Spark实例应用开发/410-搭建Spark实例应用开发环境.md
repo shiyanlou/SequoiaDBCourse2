@@ -76,7 +76,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
 #### Maven 依赖
 
-当前课程使用到的 Maven 依赖如下：
+在 pom.xml 文件中可以找到当前课程使用到的 Maven 依赖：
 
 ![1738-410-10](https://doc.shiyanlou.com/courses/1738/1207281/6051f6b91a19df45bb674dd7fe1a8e0a-0)
 
@@ -86,7 +86,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
 如图找到 com.sequoiadb.lesson.spark.base.util.HiveUtil 类，打开类准备编写代码
 
-![1738-410-11](https://doc.shiyanlou.com/courses/1738/1207281/4326c67698d61128a54a4804b0e165cf-0)
+![1738-410-11](https://doc.shiyanlou.com/courses/1738/1207281/468f08b2bf65a63031867c5c6d6ab3fd-0)
 
 #### 创建 JDBC 连接
 
@@ -113,9 +113,9 @@ try {
 return connection;
 ```
 
-将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 `TODO -- lesson1_sample:code1` 注释处（65 行），粘贴后效果如下：
+将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 TODO -- lesson1_sample:code1 注释处（65 行），
 
-![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/a446d8decbf2dacf4dced8fc12595f64-0)
+![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/efdc3ac548c2cd8d4c862786fa5ed569-0)
 
 #### JDBC 创建数据库对象
 
@@ -138,9 +138,9 @@ try {
 }
 ```
 
-将 JDBC 创建数据库对象代码粘贴至HiveUtil 类 doDDL方法的 `TODO -- lesson1_sample:code2` 注释处（54 行），粘贴后效果如下：
+将 JDBC 创建数据库对象代码粘贴至HiveUtil 类 doDDL方法的 TODO -- lesson1_sample:code2 注释处（54 行），粘贴后效果如下：
 
-![1738-410-13](C:\Users\14620\Desktop\Spark开发课程\图片\lesson1\1738-410-13.png)
+![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/cb7264dca5b2170e2d7feb4d04ef047f-0)
 
 #### JDBC 操作数据库记录
 
@@ -163,9 +163,9 @@ try {
 }
 ```
 
-将 JDBC 操作数据库记录语句粘贴至 HiveUtil 类 doDML 方法的 `TODO -- lesson1_sample:code3` 注释处（43行），粘贴后效果如下：
+将 JDBC 操作数据库记录语句粘贴至 HiveUtil 类 doDML 方法的 TODO -- lesson1_sample:code3 注释处（43行）：
 
-![1738-410-14](https://doc.shiyanlou.com/courses/1738/1207281/7837bf0f64a0e7106478fdf3909750f9-0)
+![1738-410-14](https://doc.shiyanlou.com/courses/1738/1207281/46a107dfb6f809cf72d4cb760593a3b8-0)
 
 #### JDBC 查询数据库记录结果集
 
@@ -191,13 +191,13 @@ try {
 }
 ```
 
-将 JDBC 查询数据库记录的语句粘贴至 HiveUtil 类 doDQL 方法的 `TODO -- lesson1_sample:code4` 注释处（ 32 行），粘贴后效果如下：
+将 JDBC 查询数据库记录的语句粘贴至 HiveUtil 类 doDQL 方法的 TODO -- lesson1_sample:code4 注释处（ 32 行）：
 
-![1738-410-15](https://doc.shiyanlou.com/courses/1738/1207281/4654fdcef8d17f7f17a9b4aee308e9cd-0)
+![1738-410-15](https://doc.shiyanlou.com/courses/1738/1207281/4bb6b4cb95ef4ad0491724f57552be91-0)
 
 #### 释放 JDBC 资源
 
-releaseSource() 为 HiveUtil 的一个公用方法，用于释放各种 JDBC 操作中使用到的 resultset、statement 和 connection 等资源。代码内容如下：
+releaseSource() 为 HiveUtil 的一个公用方法，用于释放各种 JDBC 操作中使用到的 resultset、statement 和 connection 等资源：
 
 ```java
 // 释放 resultset
@@ -226,9 +226,9 @@ if (null != connection) {
 }
 ```
 
-将释放 jdbc 资源代码粘贴至 HiveUtil 类 releaseSource() 方法的 `!TODO -- lesson1_sample:code5` 注释处（21 行），粘贴后效果如下图所示：
+将释放 jdbc 资源代码粘贴至 HiveUtil 类 releaseSource() 方法的 TODO -- lesson1_sample:code5 注释处（21 行）：
 
-![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/3e1ce2edbee15c61ca99e0d79c758ad8-0)
+![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/43340b1446261c123a02360b1248ad44-0)
 
 ## 样例程序
 
@@ -245,9 +245,7 @@ if (null != connection) {
 ```java
 // 初始化表
 String dropTable =
-        "DROP TABLE " +
-                "IF " +
-                "EXISTS jdbc_sample";
+        "DROP TABLE IF EXISTS jdbc_sample";
 // 调用HiveUtil类doDDL()方法通过jdbc执行drop语句
 HiveUtil.doDDL(dropTable);
 // 创建表
@@ -258,27 +256,21 @@ System.out.println("正在创建表……");
 HiveUtil.doDDL(createTable);
 // 插入数据
 String insertDate =
-        "INSERT INTO jdbc_sample " +
-                "VALUES " +
-                "( 1, \"abc\" )";
+        "INSERT INTO jdbc_sample VALUES ( 1, \"abc\" )";
 // 调用HiveUtildoDML()方法通过jdbc执行插入语句
 System.out.println("正在写入记录……");
 HiveUtil.doDML(insertDate);
 // 查询结果集
 String getResultSet =
-        "SELECT " +
-                "id, " +
-                "val  " +
-                "FROM " +
-                "jdbc_sample";
+        "SELECT id,val FROM jdbc_sample";
 // 通过HiveUtil类doDQL()方法通过jdbc获得结果集
 System.out.println("正在查询记录……");
 HiveUtil.doDQL(getResultSet);
 ```
 
-将运行样例代码粘贴至 JdbcSample  类 sample 方法的 `!TODO -- lesson1_sample:code6` 注释处（20 行）。粘贴后效果如下图所示：
+将运行样例代码粘贴至 JdbcSample  类 sample 方法的 TODO -- lesson1_sample:code6 注释处（20 行）：
 
-![1738-410-18](https://doc.shiyanlou.com/courses/1738/1207281/1b19b5c6a64a52c28c155e04be0410a0-0)
+![1738-410-18](https://doc.shiyanlou.com/courses/1738/1207281/c7082e901bfe8fcbc8d80ef48472c44a-0)
 
 ## 运行样例
 
@@ -296,4 +288,4 @@ HiveUtil.doDQL(getResultSet);
 
 ## 总结
 
-通过本实验，我们对 Spark 技术架构和工作原理有了大致的了解，以及 Spark 是如何和 SequoiaDB 分布式存储集群交互工作的。此外，通过简单的实践练习我们可以通过 JDBC访问 Hive on Spark 并提交 SQL 任务，后续的若干章节会根据本章节的基础继续展开。
+通过本实验，可以对 Spark 技术架构和工作原理有了大致的了解，以及 Spark 是如何和 SequoiaDB 分布式存储集群交互工作的。此外，通过简单的实践练习可以使用标准 JDBC 访问 Hive on Spark 并提交 SQL 任务，后续的若干章节会根据本章节的基础继续展开。
