@@ -5,7 +5,7 @@ version: 1.0
 
 ## 课程介绍
 
-本课程将介绍 Spark 另一个热门组件——Spark Streaming。并通过 word count 的例子简单展示了 Spark Streaming 的用法。
+本课程将介绍 Spark 另一个热门组件——Spark Streaming。并通过 word count 的例子简单展示 Spark Streaming 的用法。
 
 #### 实验环境
 
