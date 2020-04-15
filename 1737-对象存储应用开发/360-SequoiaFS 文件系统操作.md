@@ -5,84 +5,125 @@ version: 1.0
 
 ## 课程介绍
 
+SequoiaFS文件系统是基于FUSE在Linux系统下实现的一套文件系统，支持通用的文件操作API。SequoiaFS利用SequoiaDB的元数据集合存储文件和目录的属性信息，lob对象存储文件的数据内容，从而实现了类似NFS分布式网络文件系统。用户可以将远程SequoiaDB的某个目标集合通过映射的方式挂载到本地FS节点，在FS节点的挂载目录下实现通过通用文件系统API对文件和目录进行操作。
+
+下面为其基本逻辑结构图：
 
 
-## 环境查看
 
+![img](http://doc.sequoiadb.com/cn/index/Public/Home/images/302/sequoiafs/model.png)
 
+#### SequoiaFS 开发简介
+
+使用Java语言，通过通用文件系统API对文件和目录进行操作。
+
+#### 实验流程简述：
+
+- 用户通过 IDEA 编辑器编写 Java 源码
+- 实验相关核心代码，可从文档中的代码示例粘贴到项目指定文件的 TODO 标记处
+- 通过编译、运行 Java 代码，操作 SequoiaDB 数据库 JSON 实例
+
+![](https://doc.shiyanlou.com/courses/1736/1207281/7b1731fc121e3b460dcd9841eb0218a6-0)
+
+#### 实验环境
+
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本。IDEA 编辑器为 16.0 版本。JDK 为 1.8 版本。
+
+## 打开项目
+
+#### 打开 IDEA
+
+打开 IDEA 代码开发工具。
+
+![](https://doc.shiyanlou.com/courses/1736/1207281/06650396616c742995bb63fcf933fac5-0)
+
+#### 打开项目
+
+打开object-java项目
+
+![image-20200414091915064](https://doc.shiyanlou.com/courses/1737/1207281/79e3fad2d27f14cfcbc94eadd646d88d-0)
+
+#### 打开 Package
+
+打开lesson6_lob_partion包，在该Package完成后续课程
+
+![image-20200415012112580](https://doc.shiyanlou.com/courses/1737/1207281/e3140fed5e89bbf16fd3ce31c6297f24-0)
 
 ## 在SequoiaFS上写入文件
 
+SequoiaFS支持通用文件系统API，使用Java IO类对SequoiaFS的挂载目录进行操作。
+
 #### 代码编写
 
-双击打开SequoiaFSWrite类，找到引导行 **TODO 1 通过java api 写入数据**
+1）双击打开SequoiaFSWrite类，找到main()方法内行 **TODO  通过java api 写入数据**
 
-引导行图示
+![image-20200415013416784](https://doc.shiyanlou.com/courses/1737/1207281/8bf47c3fce31ae205234af2281eecbfd-0)
 
 
 
-复制下方代码到引导行下方
+2）将下方代码粘贴到TODO ~ TODO END区域的第13行
 
+```java
+    InputStream put = new FileInputStream("/home/sdbadmin/sequoiadb.txt");
+    OutputStream out  = new FileOutputStream("/opt/sequoiafs/mountpoint/sequoiadb.txt");
+    byte[] cbuf = new byte[1024];
+    int len = 1024;
+    //一次读取多少字节的文件
+    while((len = put.read(cbuf))!= -1){
+        out.write(cbuf,0,len);
+        out.flush();
+    }
+    put.close();
 ```
-        FileInputStream fis = new FileInputStream("/home/sdbadmin/tmp.txt");
-        FileOutputStream fos = new FileOutputStream("/home/sdbadmin/tmp2.txt");
-        int len=0;
-        //一次读取多少字节的文件,这里可以选择tmp.txt的所有字节长度
-        byte[] b = new byte[fis.available()];
-        while((len=fis.read(b))!=-1){
-        //对字节进行排序
-        Arrays.sort(b);
-        fos.write(b,0,len);
-        fos.flush();
-        }
-```
 
-#### 打包
+#### 执行代码
 
+1）鼠标移动到屏幕左边SequoiaFSWrite类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项
 
+![image-20200415013625601](https://doc.shiyanlou.com/courses/1737/1207281/17be31c6f7fcbd90a079e7a0465a9e24-0)
 
-#### 运行
+2）在屏幕下方查看结果输出。无输出，无报错。
 
-复制jar包
+![image-20200415193806468](https://doc.shiyanlou.com/courses/1737/1207281/94ffd505eff6f66ed8b396965c4c0eda-0)
 
+3）通过可视化界面进入 /opt/sequoiafs/mountpoint/ 目录，查看文件已被写入到sequoiafs中，同时查看文件内容。
 
-
-运行
+![image-20200415200958485](https://doc.shiyanlou.com/courses/1737/1207281/790fb7b0e8332734f3ae4e11c030c385-0)
 
 ## 在SequoiaFS上读取文件
 
+SequoiaFS支持通用文件系统API，使用Java IO类对SequoiaFS的挂载目录进行操作。
+
 #### 代码编写
 
-双击打开SequoiaFSRead类，找到引导行 **TODO 1 通过java api 读取数据**
+1）双击打开SequoiaFSWrite类，找到main()方法内行 **TODO  通过java api 读取数据**
 
-引导行图示
+![image-20200415013904075](https://doc.shiyanlou.com/courses/1737/1207281/bb01ba093d96700045ec6a27d6449262-0)
 
+2）将下方代码粘贴到TODO ~ TODO END区域的第8行
 
+```java
+//获取文件输入流
+InputStreamReader put = new InputStreamReader(new FileInputStream("/opt/sequoiafs/mountpoint/version.conf"), "utf-8");
 
-复制下方代码到引导行下方
+char[] cbuf = new char[1024];
 
+int len = 1024;
+//读取文件内容并输出到控制台
+while((len = put.read(cbuf))!= -1){
+	System.out.println(new String(cbuf, 0, len));
+}
+
+put.close();
 ```
-       InputStreamReader put = new InputStreamReader(new FileInputStream("/opt/sequoiadb/sequoiafs/mountpoint/u_8.txt"), "utf-8");
 
-        char[] cbuf = new char[1024];
+#### 执行代码
 
-        int len = 0;
+1）鼠标移动到屏幕左边SequoiaFSWrite类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项
 
-        while((len = put.read(cbuf))!= -1){
-            System.out.println(new String(cbuf, 0, len));
-        }
+![image-20200415014035554](https://doc.shiyanlou.com/courses/1737/1207281/04777d9aa3321edbd0005ec52535d519-0)
 
-        put.close();
-```
+2）在屏幕下方查看结果输出。
 
-#### 打包
+![image-20200415201106328](https://doc.shiyanlou.com/courses/1737/1207281/08e91c5ef3cdc80a1b18d93eb3f37bf2-0)
 
-
-
-#### 运行
-
-复制jar包
-
-
-
-运行
