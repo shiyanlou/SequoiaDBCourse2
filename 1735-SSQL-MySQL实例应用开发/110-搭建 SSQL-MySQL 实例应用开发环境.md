@@ -44,7 +44,7 @@ version: 1.0
 
 ![1735-110-2.png](https://doc.shiyanlou.com/courses/1735/1207281/f5ec2ca3949feed5c2a1c22262fa7619-0)
 
-## 配置连接属性
+## 配置连接属性，执行SQL
 
 #### 配置连接数据库的相关属性，访问MySQL数据库。
 
@@ -52,61 +52,43 @@ version: 1.0
 
 ![1735-110-3.png](https://doc.shiyanlou.com/courses/1735/1207281/1b614ee23c8c3d4d02a218eaf34a81ae-0)
 
-在第9行，加载mysql驱动
-
-```java
-Class.forName("com.mysql.jdbc.Driver");
-```
-
-在第17~19行，配置mysql的url，username，password，连接到sdbserver1的mysqlTest数据库
+修改TODO中的内容，配置连接信息，查询employee表
 
 ```java
 String user = "root";
 String password = "root";
 String url = "jdbc:mysql://sdbserver1:3306/mysqlTest";
-```
-
-在第23~25行，建立JDBC和数据库之间的Connection连接，创建Statement接口，执行SQL语句，查看表employee的数据
-
-```java
 Connection conn = DriverManager.getConnection(url, user, password);
 Statement stmt = conn.createStatement();
 ResultSet rs = stmt.executeQuery("SELECT * FROM employee");
-```
-
-## 执行SQL，查看结果
-
-#### 编写代码，遍历查询到的结果
-
-在29~48行，写入如下代码，遍历rs的结果
-
-```java
 boolean isHeaderPrint = false;
 //遍历结果集
 while (rs.next()) {
     //获得表结构
-	ResultSetMetaData md = rs.getMetaData();
+    ResultSetMetaData md = rs.getMetaData();
     //取得列数
-	int col_num = md.getColumnCount();
-	if (!isHeaderPrint){
+    int col_num = md.getColumnCount();
+    if (!isHeaderPrint){
         //遍历数据库字段名
-		for (int i = 1; i  <= col_num; i++) {
-			System.out.print(md.getColumnName(i) + "\t");
-		}
-		isHeaderPrint = true;
-	}
-	System.out.println();
-	//遍历每一行查询到的信息
-	for (int i = 1; i <= col_num; i++) {
-		System.out.print(rs.getString(i) + "\t");
-	}
+        for (int i = 1; i  <= col_num; i++) {
+            System.out.print(md.getColumnName(i) + "\t");
+        }
+        isHeaderPrint = true;
+    }
+    System.out.println();
+    //遍历每一行查到得信息
+    for (int i = 1; i <= col_num; i++) {
+        System.out.print(rs.getString(i) + "\t");
+    }
 }
 ```
+
+![1735-110-14.png](https://doc.shiyanlou.com/courses/1735/1207281/6d6cc3c5a8e1111b4c7c6962e1c57de8-0)
 
 #### 执行JdbcDEV
 
 执行之前初始化数据库环境
- 
+
 右键JdbcDEV.java，选择Run，执行Init.java
 
 ![1735-110-4.png](https://doc.shiyanlou.com/courses/1735/1207281/8b3c687da8ad3dbfd88eab227f16fcdc-0)
@@ -137,13 +119,13 @@ C3P0是一个开源的JDBC连接池，它实现了数据源与JNDI绑定，支�
 
 打开c3p0工具类UtilsC3P0，使用c3p0获得连接对象
 
-在第9行，创建一个静态ComboPooledDataSource对象
+创建一个静态ComboPooledDataSource对象，配置数据库连接信息
 
 ```java
 private static ComboPooledDataSource dataSource=new ComboPooledDataSource();
 ```
 
-在第14~21行，在静态代码块中设置数据库连接信息
+在静态代码块中设置数据库连接信息
 
 ```java
 //设置注册驱动
@@ -156,84 +138,75 @@ dataSource.setUser("root");
 dataSource.setPassword("root");
 ```
 
-在第28~34行，定义一个静态方法从ComboPooledDataSource对象中获得数据库连接Connection
+![1735-110-15.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6f06795cf0e7a8201b3fc43facb2a1-0)
+
+在方法getConnection()的TODO中，编写代码获取连接
 
 ```java
- public static Connection getConnection(){
-        try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException("数据库连接失败"+e);
-        }
- }
-```
-
-在37~59行，编写代码释放资源
-
-```java
-public static void close(ResultSet rs, Statement state, Connection conn){
-	if (rs!=null){
-		try {
-			rs.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		}
-	if (state!=null){
-		try {
-			state.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	if (conn!=null){
-		try {
-			conn.close();//归还
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+try {
+    return dataSource.getConnection();
+} catch (SQLException e) {
+    throw new RuntimeException("数据库连接失败"+e);
 }
 ```
+
+![1735-110-16.png](https://doc.shiyanlou.com/courses/1735/1207281/336353c57a305af8090f9b1ea63eeb73-0)
+
+在close方法的TODO中，编写代码释放资源
+
+```java
+if (rs!=null){
+    try {
+        rs.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+if (state!=null){
+    try {
+        state.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+if (conn!=null){
+    try {
+        conn.close();//归还
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+```
+
+![1735-110-17.png](https://doc.shiyanlou.com/courses/1735/1207281/6a8b2ec00da48cdf43b28b895ea64ab6-0)
 
 ## 验证连接池
 
 打开验证连接池的TestUtilsC3P0类
 
-在第11行，使用c3p0工具类获取connection连接
+修改test01方法TODO中的内容
 
 ```java
+// 使用c3p0工具类获得getConnection
 Connection conn = UtilsC3P0.getConnection();
-```
-
-在第14行，获得执行者对象
-
-```java
+System.out.println(conn);
+// 获得执行者对象
 Statement state = conn.createStatement();
-```
-
-在第16行，执行SQL语句
-
-```java
+// 执行SQL语句
 ResultSet rs = state.executeQuery("SELECT * FROM employee");
-```
-
-在第20~25行，遍历输出结果
-
-```java
+ResultSetMetaData metaData = rs.getMetaData();
+int columnCount = metaData.getColumnCount();
 while (rs.next()){
-	for (int i = 1; i <= columnCount; i++) {
-		System.out.print(rs.getString(i) + "\t");
-	}
-	System.out.println();
+    for (int i = 1; i <= columnCount; i++) {
+        System.out.print(rs.getString(i) + "\t");
+    }
+    System.out.println();
 }
-```
-
-在第27行，关闭资源
-
-```java
+// 关闭资源
 UtilsC3P0.close(rs,state,conn);
 ```
+
+![1735-110-18.png](https://doc.shiyanlou.com/courses/1735/1207281/e4a37a121a343aa585c89cbacd89978f-0)
 
 右键JdbcDEV.java，选择Run，执行TestUtilsC3P0.java
 
@@ -251,24 +224,21 @@ MySQL 有很多内置的函数,这里简单讲解三个函数（now、version、
 
 打开FuncTest.java
 
-修改第8行内容为：
+修改TODO中内容为：
 
 ```java
 String sql = "select now();";
-```
-
-修改第10~17行，创建statement接口，执行sql，遍历结果
-
-```java
 stmt = conn.createStatement();
 rs = stmt.executeQuery(sql);
 while (rs.next()) {
-	for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-		System.out.print(rs.getString(i)+"\t");
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
     }
     System.out.println();
 }
 ```
+
+
 
 右键EnvBuildingMainTest.java，选择Edit 'EnvBuildingMain....main()'，修改参数为function
 
