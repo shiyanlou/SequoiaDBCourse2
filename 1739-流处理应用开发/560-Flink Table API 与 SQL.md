@@ -21,7 +21,7 @@ Flink Table是Flink中的高级api, Table api将大大降低开发Flink程序的
 
 #### 打开flink-developer项目
 打开flink-developer项目，在该课程中完成本试验。
-
+ 
 ![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
 
 #### 打开lesson6 packge

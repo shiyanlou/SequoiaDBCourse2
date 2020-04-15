@@ -4,7 +4,7 @@ version: 1.0
 ---
 
 ## 课程介绍
-
+ 
 本实验将带领学习Window，Flink的Time以及watermark机制。
 
 本实验中使用了flink-connect-sequoiadb依赖（flink连接sequoiadb驱动包），该依赖来自巨杉开源社区。
