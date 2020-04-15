@@ -8,7 +8,7 @@ version: 1.0
 本课程将带领您了解与学习当下非常火热的大数据实时计算框架Flink，并分析一下Sequoiadb再实时计算场景的应用。
 
 #### 请点击右侧选择使用的实验环境
- 
+
 #### 部署架构：
 本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
 
@@ -18,7 +18,7 @@ version: 1.0
 * [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
 ## 打开项目
 

@@ -5,9 +5,25 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领学习Flink Table与Flink SQL。
+本实验将带领您了解与学习Flink Table API与Flink SQL。
 
-Flink Table是Flink中的高级api, Table api将大大降低开发Flink程序的难度。本实验将使用Flink Table Api与Flink SQL来实现流作业的逻辑。
+Flink Table是Flink中的高级API, Table API将大大降低开发Flink程序的难度。本实验将使用Flink Table Api与Flink SQL来实现流作业的逻辑。
+
+#### 请点击右侧选择使用的实验环境
+
+#### 部署架构：
+
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+
+![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
+
+详细了解 SequoiaDB 巨杉数据库系统架构：
+
+- [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
+
+#### 实验环境
+
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
 本实验中使用了flink-connect-sequoiadb依赖（flink连接sequoiadb驱动包），该依赖来自巨杉开源社区。
 
@@ -252,7 +268,7 @@ tbEnv.sqlUpdate(
 
 #### 打开类
 
-打开类```CreateTableByDDLMain```
+打开类CreateTableByDDLMain
 
 ![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/f9164f40d2b38d658d8d7c5708dba55a-0)
 
@@ -348,7 +364,7 @@ tbEnv.sqlUpdate(
 
 ## TableAPI中Watermark与Window的使用
 
-打开类```ExecuteSqlWithWatermakerAndWindowMain```
+打开类ExecuteSqlWithWatermakerAndWindowMain
 
 ![1739-560-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/042069c9598290fb4feb8903dc14a470-0)
 
@@ -416,7 +432,11 @@ tbEnv.connect(
 
 执行统计，统计每种交易的交易总额。
 
+在当前类中找到select方法，找到 TODO code 2。
+
 ![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/542a6ee56b6da51cb1736ecdedfd7b3a-0)
+
+将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 // 执行sql 数据统计

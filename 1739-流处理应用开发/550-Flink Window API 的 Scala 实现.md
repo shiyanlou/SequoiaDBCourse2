@@ -4,16 +4,34 @@ version: 1.0
 ---
 
 ## 课程介绍
- 
-本实验将带领学习Window，Flink的Time以及watermark机制。
+
+本实验为Flink Window API Scala版本的实现，与Java版的讲述相同，如果不感兴趣可以跳到下一小节。
+
+本实验将带领您了解与学习Flink中Window，Time以及watermark机制。
+
+#### 请点击右侧选择使用的实验环境
+
+#### 部署架构：
+
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+
+![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
+
+详细了解 SequoiaDB 巨杉数据库系统架构：
+
+- [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
+
+#### 实验环境
+
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
 本实验中使用了flink-connect-sequoiadb依赖（flink连接sequoiadb驱动包），该依赖来自巨杉开源社区。
 
-* [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
+- [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
 
 #### 打开IDEA
 
-打开idea代码开发工具。
+打开IDEA代码开发工具。
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
@@ -23,7 +41,7 @@ version: 1.0
 ![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
 
 #### 打开lesson5 packge
-打开```com.sequoiadb.flink.scdd.lesson5_window```，在该package中完成本课程。注意：包在scala源码包下。
+打开com.sequoiadb.flink.scdd.lesson5_window，在该package中完成本课程。注意：包在scala源码包下。
 
 ![1739-550-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/7fd36371db75fbdaacc0754081477385-0)
 
@@ -79,7 +97,7 @@ flink内部提供了三种window，分布是Tumbling Windows（翻滚窗口）�
 
 #### 打开类
 
-在当前包下，打开类```TumblingCountWindowMain```
+在当前包下，打开类TumblingCountWindowMain
 
 ![1739-550-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/5c243a2aa1d4d9d90091cbdba0eecd92-0)
 
@@ -150,7 +168,7 @@ resultData = transData.map(obj => (obj.get("money")
 
 ![1739-550-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/991bd84db57188a4e374b4609f955ef9-0)
 
-执行结果如下图，，可以看到一个元组，包含交易额和1。
+执行结果如下图，可以看到一个元组，包含交易额和1。
 
 ![1739-540-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/1e19ed6e0e99eccdb350b21138c05e7b-0)
 
@@ -208,7 +226,7 @@ resultData = windowData.reduce((x, y) => (x._1 + y._1, x._2 + y._2))
 
 #### 打开类
 
-在当前包下，打开类```TumblingTimeWindowMain```
+在当前包下，打开类TumblingTimeWindowMain
 
 ![1739-550-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b5316a2c19616f82447e9bb10ba941f7-0)
 
@@ -309,7 +327,7 @@ resultData = moneyData.keyBy(_._1)
 
 本案例使用时间进行划分窗口，窗口大小为5秒。
 
-在当前类中找到source方法，找到 TODO code 4。
+在当前类中找到window方法，找到 TODO code 4。
 
 ![1739-550-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/f54ea085d6e2ee35decde25ce57c2f70-0)
 
@@ -441,7 +459,7 @@ resultData = value.keyBy("name")
 
 案例中使用Sliding Count Window，窗口大小100，滑动步长50。
 
-在当前类中找到source方法，找到 TODO code 4。
+在当前类中找到countWindow方法，找到 TODO code 4。
 
 ![1739-550-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/21709dd0cc9d2a144c6b8500461b9489-0)
 
@@ -568,7 +586,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 #### 打开类
 
-在当前包下，打开类```SlidingTimeWindowWithWatermarkerMain```
+在当前包下，打开类SlidingTimeWindowWithWatermarkerMain
 
 ![1739-540-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/85d9ad373ea2ab9c45ff9f15c838dd39-0)
 
@@ -669,7 +687,7 @@ resultData = value.keyBy(_._1)
 
 #### 在keyedStream上使用window
 
-在当前类中找到keyBy方法，找到 TODO code 5。
+在当前类中找到window方法，找到 TODO code 5。
 
 ![1739-550-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/8c9f60ad31838ceef630419b360a72f8-0)
 
@@ -681,7 +699,7 @@ resultData = value.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.secon
 
 #### 聚合求和
 
-在当前类中找到keyBy方法，找到 TODO code 6。
+在当前类中找到reduce方法，找到 TODO code 6。
 
 ![1739-550-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/cb64880218b6d7122c88b9a82500aed4-0)
 
@@ -718,7 +736,7 @@ resultData = value.process(new ProcessWindowFunction[(String, Double, Int),
 
 #### 通过SequoiadbSink完成sink函数
 
-在当前类中找到keyBy方法，找到 TODO code 7。
+在当前类中找到sink方法，找到 TODO code 7。
 
 ![1739-550-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/8401c6aa441b14be2d1b933046836f7b-0)
 
