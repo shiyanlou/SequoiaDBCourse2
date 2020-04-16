@@ -76,7 +76,7 @@ while (rs.next()) {
         isHeaderPrint = true;
     }
     System.out.println();
-    //遍历每一行查到得信息
+    //遍历每一行查到得信息  
     for (int i = 1; i <= col_num; i++) {
         System.out.print(rs.getString(i) + "\t");
     }
