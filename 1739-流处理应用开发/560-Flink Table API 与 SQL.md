@@ -288,7 +288,7 @@ tbEnv.sqlUpdate(
     "  account STRING, " +                                 // 账户号
     "  trans_name STRING, " +                              // 交易名称
     "  money DECIMAL(10, 2), " +                           // 交易金额
-    "  `timestamp` TIMESTAMP(3)" +                         // 交易世家
+    "  create_time TIMESTAMP(3)" +                         // 交易世家
     ") WITH (" +
     "  'connector.type' = 'sequoiadb', " +                 // 连接介质类型
     "  'connector.hosts' = 'localhost:11810', " +          // 连接地址
