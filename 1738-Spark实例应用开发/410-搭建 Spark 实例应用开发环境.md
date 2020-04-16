@@ -86,7 +86,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
 如图找到 com.sequoiadb.lesson.spark.base.util.HiveUtil 类，打开类准备编写代码
 
-![1738-410-11](https://doc.shiyanlou.com/courses/1738/1207281/468f08b2bf65a63031867c5c6d6ab3fd-0)
+![1738-410-11](https://doc.shiyanlou.com/courses/1738/1207281/cfd69ce99d15bc6b0605c697652d2b49-0)
 
 #### 创建 JDBC 连接
 
@@ -109,9 +109,9 @@ try {
 }
 ```
 
-将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 TODO -- lesson1_sample:code1 注释处（67 行），
+将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 TODO -- lesson1_sample:code1 注释处（69 行）：
 
-![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/d777f5deaec4d4adc4ce4eb70133a802-0)
+![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/5cc82cbd784601606c669d4f45b5ac42-0)
 
 #### JDBC 创建数据库对象
 
@@ -134,9 +134,9 @@ try {
 }
 ```
 
-将 JDBC 创建数据库对象代码粘贴至HiveUtil 类 doDDL方法的 TODO -- lesson1_sample:code2 注释处（54 行），粘贴后效果如下：
+将 JDBC 创建数据库对象代码粘贴至HiveUtil 类 doDDL方法的 TODO -- lesson1_sample:code2 注释处（56 行）：
 
-![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/cb7264dca5b2170e2d7feb4d04ef047f-0)
+![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/ccf219c515863a87a36cf96906819147-0)
 
 #### JDBC 操作数据库记录
 
@@ -159,9 +159,9 @@ try {
 }
 ```
 
-将 JDBC 操作数据库记录语句粘贴至 HiveUtil 类 doDML 方法的 TODO -- lesson1_sample:code3 注释处（43行）：
+将 JDBC 操作数据库记录语句粘贴至 HiveUtil 类 doDML 方法的 TODO -- lesson1_sample:code3 注释处（45行）：
 
-![1738-410-14](https://doc.shiyanlou.com/courses/1738/1207281/46a107dfb6f809cf72d4cb760593a3b8-0)
+![1738-410-14](https://doc.shiyanlou.com/courses/1738/1207281/99f702bcef254ac740127494c83bdee2-0)
 
 #### JDBC 查询数据库记录结果集
 
@@ -187,9 +187,9 @@ try {
 }
 ```
 
-将 JDBC 查询数据库记录的语句粘贴至 HiveUtil 类 doDQL 方法的 TODO -- lesson1_sample:code4 注释处（ 32 行）：
+将 JDBC 查询数据库记录的语句粘贴至 HiveUtil 类 doDQL 方法的 TODO -- lesson1_sample:code4 注释处（ 34 行）：
 
-![1738-410-15](https://doc.shiyanlou.com/courses/1738/1207281/4bb6b4cb95ef4ad0491724f57552be91-0)
+![1738-410-15](https://doc.shiyanlou.com/courses/1738/1207281/2c80a1291e95d90249d96e69f4cb2c34-0)
 
 #### 释放 JDBC 资源
 
@@ -222,9 +222,9 @@ if (null != connection) {
 }
 ```
 
-将释放 jdbc 资源代码粘贴至 HiveUtil 类 releaseSource() 方法的 TODO -- lesson1_sample:code5 注释处（21 行）：
+将释放 jdbc 资源代码粘贴至 HiveUtil 类 releaseSource() 方法的 TODO -- lesson1_sample:code5 注释处（23 行）：
 
-![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/43340b1446261c123a02360b1248ad44-0)
+![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/08620fbc6bf6a00420ef7256715ca3a7-0)
 
 ## 样例程序
 
@@ -232,7 +232,7 @@ if (null != connection) {
 
 如图所示打开 com.sequoiadb.lesson.spark.lesson1_sample.JdbcSample 类
 
-![1738-410-17](https://doc.shiyanlou.com/courses/1738/1207281/9011d918220fff8e7947de39f0d8c68a-0)
+![1738-410-17](https://doc.shiyanlou.com/courses/1738/1207281/2f65df33feacaf3fa902b1d9d68a4119-0)
 
 #### JDBC 访问 Hive on Spark 样例
 
@@ -266,7 +266,7 @@ HiveUtil.doDQL(getResultSet);
 
 将运行样例代码粘贴至 JdbcSample  类 sample 方法的 TODO -- lesson1_sample:code6 注释处（20 行）：
 
-![1738-410-18](https://doc.shiyanlou.com/courses/1738/1207281/c7082e901bfe8fcbc8d80ef48472c44a-0)
+![1738-410-18](https://doc.shiyanlou.com/courses/1738/1207281/c4e0ac9f67908d5c74e1db9ec2e90bfe-0)
 
 ## 运行样例
 
