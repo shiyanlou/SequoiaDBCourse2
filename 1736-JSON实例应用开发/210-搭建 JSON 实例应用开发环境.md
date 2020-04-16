@@ -79,19 +79,19 @@ POM 文件位置：
 复制以下代码样例。样例中会创建一个数据库链接，然后通过获取数据库的数据组信息，通过这种方式验证数据库的连通性。每次使用完数据库链接，都需要在 finally 代码块中将链接关闭。
 
 ```java
-// 创建数据库链接
+// Create a database link.
 Sequoiadb db = new Sequoiadb("sdbserver1", 11810,
                              "sdbadmin", "sdbadmin");
 try {
-    // 获取数据组信息
+    // Get the information from data set.
     DBCursor rgs = db.listReplicaGroups();
-    System.out.println("连接数据库后查询到的数据组信息为：");
-    // 格式化打印数据组信息
+    System.out.println("The data group information queried after connecting to the database is：");
+    // Formatted print the information of data set.
     JsonUtil.formatPrint(rgs);
-    // 关闭cursor结果集
+    // Close the cursor result set.
     rgs.close();
 } finally {
-    // 关闭数据库链接
+    // Close the database link.
     db.close();
 }
 ```
