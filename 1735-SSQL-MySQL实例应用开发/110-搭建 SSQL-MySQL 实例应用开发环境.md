@@ -76,7 +76,7 @@ while (rs.next()) {
         isHeaderPrint = true;
     }
     System.out.println();
-    //遍历每一行查到得信息  
+    //遍历每一行查到得信息
     for (int i = 1; i <= col_num; i++) {
         System.out.print(rs.getString(i) + "\t");
     }
@@ -88,12 +88,6 @@ conn.close();
 ![1735-110-14.png](https://doc.shiyanlou.com/courses/1735/1207281/6d6cc3c5a8e1111b4c7c6962e1c57de8-0)
 
 #### 执行JdbcDEV
-
-执行之前初始化数据库环境
-
-右键JdbcDEV.java，选择Run，执行Init.java
-
-![1735-110-4.png](https://doc.shiyanlou.com/courses/1735/1207281/8b3c687da8ad3dbfd88eab227f16fcdc-0)
 
 右键JdbcDEV.java，选择Run，执行JdbcDEV.java
 
@@ -146,13 +140,13 @@ dataSource.setPassword("root");
 
 ```java
 try {
-    return dataSource.getConnection();
+    conn = dataSource.getConnection();
 } catch (SQLException e) {
     throw new RuntimeException("数据库连接失败"+e);
 }
 ```
 
-![1735-110-16.png](https://doc.shiyanlou.com/courses/1735/1207281/336353c57a305af8090f9b1ea63eeb73-0)
+![1735-110-19.png](https://doc.shiyanlou.com/courses/1735/1207281/f3f7fe2a595124566c42febd1f7231e4-0)
 
 在close方法的TODO中，编写代码释放资源
 
