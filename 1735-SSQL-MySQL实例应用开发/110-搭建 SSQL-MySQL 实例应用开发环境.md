@@ -81,6 +81,8 @@ while (rs.next()) {
         System.out.print(rs.getString(i) + "\t");
     }
 }
+stmt.close();
+conn.close();
 ```
 
 ![1735-110-14.png](https://doc.shiyanlou.com/courses/1735/1207281/6d6cc3c5a8e1111b4c7c6962e1c57de8-0)
