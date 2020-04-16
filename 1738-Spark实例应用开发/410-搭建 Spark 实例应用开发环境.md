@@ -93,8 +93,6 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 使用 Hive JDBC 驱动创建 Hive 的 JDBC 连接代码如下：
 
 ```java
-// 初始化连接
-Connection connection = null;
 try {
     // 获取 jdbc 驱动类
     Class.forName("org.apache.hive.jdbc.HiveDriver");
@@ -109,13 +107,11 @@ try {
 } catch (SQLException e) {
     e.printStackTrace();
 }
-// 返回 jdbc 连接
-return connection;
 ```
 
-将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 TODO -- lesson1_sample:code1 注释处（65 行），
+将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 TODO -- lesson1_sample:code1 注释处（67 行），
 
-![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/efdc3ac548c2cd8d4c862786fa5ed569-0)
+![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/d777f5deaec4d4adc4ce4eb70133a802-0)
 
 #### JDBC 创建数据库对象
 
