@@ -204,7 +204,7 @@ UtilsC3P0.close(rs,state,conn);
 
 ![1735-110-18.png](https://doc.shiyanlou.com/courses/1735/1207281/e4a37a121a343aa585c89cbacd89978f-0)
 
-右键JdbcDEV.java，选择Run，执行TestUtilsC3P0.java
+右键TestUtilsC3P0.java，选择Run，执行TestUtilsC3P0.java
 
 ![1735-110-7.png](https://doc.shiyanlou.com/courses/1735/1207281/2eecbffdfb70a5c0af788a86c26a629e-0)
 
