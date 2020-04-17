@@ -80,7 +80,7 @@ table的使用需要依赖于table的执行环境，table的执行环境可以�
 
 #### 打开类
 
-在当前包下，打开类 CreateTableFromDataStreamMain 
+在当前包下，打开类```CreateTableFromDataStreamMain```
 
 ![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/93610689ea1667f04c9db3e463ba04c6-0)
 
@@ -119,18 +119,18 @@ SQL算子的用途与标准sql中关键字一致。
 
 ```java
 /**
- * 等同于sql中的 
+ * Equivalent to sql
  * select word, sum(num)
  * from 
  *  ( select name as word, num 
- *   from 当前表 )
+ *   from current table )
  * where word != 'java'
  * group by word 
  */
-resultTable = initTable.as("word, num")         // 重命名字段
-    .where("word != 'java'")                    // where算子过滤
-    .groupBy("word")                            // 通过groupby 聚合
-    .select("word, sum(num)");                  // 求和
+resultTable = initTable.as("word, num")         // Rename field
+    .where("word != 'java'")                    // where operator filtering
+    .groupBy("word")                            // Aggregate by groupby
+    .select("word, sum(num)");                  // Sum
 ```
 
 #### Table转换为DataStream
@@ -183,25 +183,25 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 ```java
 tbEnv.connect(
   new Sdb()
-    .version("3.4")									   // sdb 的版本
-    .hosts("localhost:11810")                          // sdb 的连接地址
-    .username("sdbadmin")                              // 用户名
-    .password("sdbadmin")                              // 密码
-    .collectionSpace("VIRTUAL_BANK")                   // 集合空间
-    .collection("TRANSACTION_FLOW")                    // 集合
-    .timestampField("create_time")                     // 流标识字段名
+    .version("3.4")									   // Version of sdb
+    .hosts("localhost:11810")                          // Connection address of sdb
+    .username("sdbadmin")                              // Username
+    .password("sdbadmin")                              // Password
+    .collectionSpace("VIRTUAL_BANK")                   // CollectionSpace
+    .collection("TRANSACTION_FLOW")                    // Collection
+    .timestampField("create_time")                     // Stream Timestamp field
 ).withFormat(
-  new Bson()                                           // 使用Bson数据格式
-    .deriveSchema()                                    // 自动映射同名数据字段
-    .failOnMissingField()                              // 当获取不到某个字段值时任务失败
+  new Bson()                                           // Use Bson data format
+    .deriveSchema()                                    //  Map data fields with the same name automatically
+    .failOnMissingField()                              // When a field value cannot be obtained, the task fails
 ).withSchema(
-  new Schema()                                         // 定义table的结构
-    .field("account", Types.STRING)					   // 账户
-    .field("trans_name", Types.STRING)				   // 交易名
-    .field("money", Types.BIG_DEC)					   // 交易金额
-    .field("create_time", Types.SQL_TIMESTAMP)		   // 交易时间
+  new Schema()                                         // Define the structure of the table
+    .field("account", Types.STRING)					   // Account
+    .field("trans_name", Types.STRING)				   // Transaction name
+    .field("money", Types.BIG_DEC)					   // Transaction amount
+    .field("create_time", Types.SQL_TIMESTAMP)		   // Transaction hour
 ).inAppendMode()
-.registerTableSource("TRANSACTION_FLOW");              // 注册为一个数据来源表
+.registerTableSource("TRANSACTION_FLOW");              // Register as a data source table
 ```
 
 #### 通过描述器创建一个Sink表
@@ -215,22 +215,22 @@ tbEnv.connect(
 ```java
 tbEnv.connect(
   new Sdb() 
-    .version("3.4")									   // SequoiaDB 的版本
-    .hosts("localhost:11810")                          // SequoiaDB 的连接地址
-    .username("sdbadmin")                              // 用户名
-    .password("sdbadmin")                              // 密码
-    .collectionSpace("VIRTUAL_BANK")                   // 集合空间
-    .collection("LESSON_6_CONNECT")                    // 集合
+    .version("3.4")									   // Version of sdb
+    .hosts("localhost:11810")                          // Connection address of sdb
+    .username("sdbadmin")                              // Username
+    .password("sdbadmin")                              // Password
+    .collectionSpace("VIRTUAL_BANK")                   // CollectionSpace
+    .collection("LESSON_6_CONNECT")                    // Collection
 ).withFormat(
-  new Bson()                                           // 使用Bson数据格式
-    .deriveSchema()                                    // 自动映射同名数据字段
-    .failOnMissingField()                              // 当获取不到某个字段值时任务失败
+  new Bson()                                           // Use Bson data format
+    .deriveSchema()                                    //  Map data fields with the same name automatically
+    .failOnMissingField()                              // When a field value cannot be obtained, the task fails
 ).withSchema(
-  new Schema()                                         // 定义table的结构
+  new Schema()                                         // Define the structure of the table
     .field("total_sum", Types.BIG_DEC)
     .field("trans_name", Types.STRING)
 ).inUpsertMode()
-    .registerTableSink("LESSON_6_CONNECT");             // 注册为一个数据来源表
+    .registerTableSink("LESSON_6_CONNECT");             // Register as a data source table
 ```
 
 #### 编写统计SQL
@@ -287,23 +287,23 @@ tbEnv.sqlUpdate(
 ```java
 tbEnv.sqlUpdate(
     "CREATE TABLE TRANSACTION_FLOW (" +
-    "  account STRING, " +                                 // 账户号
-    "  trans_name STRING, " +                              // 交易名称
-    "  money DECIMAL(10, 2), " +                           // 交易金额
-    "  create_time TIMESTAMP(3)" +                         // 交易世家
+    "  account STRING, " +                                 // Account number
+    "  trans_name STRING, " +                              // Name of transaction
+    "  money DECIMAL(10, 2), " +                           // Transaction amount
+    "  create_time TIMESTAMP(3)" +                         // Transaction time
     ") WITH (" +
-    "  'connector.type' = 'sequoiadb', " +                 // 连接介质类型
-    "  'connector.version' = '3.4', " +					   // SequoiaDB 版本
-    "  'connector.hosts' = 'localhost:11810', " +          // 连接地址
-    "  'connector.username' = 'sdbadmin', " +              // 用户名
-    "  'connector.password' = 'sdbadmin', " +              // 密码
-    "  'connector.collection-space' = 'VIRTUAL_BANK', " +  // 集合空间名
-    "  'connector.collection' = 'TRANSACTION_FLOW', " +    // 集合名
-    "  'connector.timestamp-field' = 'create_time', " +    // 流标识字段
-    "  'format.type' = 'bson', " +                         // 数据类型 bson
-    "  'format.derive-schema' = 'true', " +                // 自动映射同名字段
-    "  'format.fail-on-missing-field' = 'true', " +   // 当某个字段获取不到时任务失败
-    "  'update-mode' = 'append'" +                    // append模式
+    "  'connector.type' = 'sequoiadb', " +                 // Connection media type
+    "  'connector.version' = '3.4', " +					   // Version of SequoiaDB
+    "  'connector.hosts' = 'localhost:11810', " +          // Connection address
+    "  'connector.username' = 'sdbadmin', " +              // Username
+    "  'connector.password' = 'sdbadmin', " +              // Password
+    "  'connector.collection-space' = 'VIRTUAL_BANK', " +  // CollectionSpace
+    "  'connector.collection' = 'TRANSACTION_FLOW', " +    // CollectionName
+    "  'connector.timestamp-field' = 'create_time', " +    // Stream Timestamp field
+    "  'format.type' = 'bson', " +                         // Data type bson
+    "  'format.derive-schema' = 'true', " +                //  Map data fields with the same name automatically
+    "  'format.fail-on-missing-field' = 'true', " +   // When a field cannot be obtained, the task fails
+    "  'update-mode' = 'append'" +                    // append mode
     ")");
 ```
 
@@ -320,11 +320,11 @@ tbEnv.sqlUpdate(
 ```java
 tbEnv.sqlUpdate(
     "CREATE TABLE LESSON_6_DDL (" +
-    "  trans_name STRING, " +                           // 交易名称
-    "  `total_sum` DECIMAL(10, 2)" +                    // 交易总额
+    "  trans_name STRING, " +                           // Transaction name
+    "  `total_sum` DECIMAL(10, 2)" +                    // Transaction sum
     ") WITH (" +
     "  'connector.type' = 'sequoiadb', " +
-    "  'connector.version' = '3.4', " +					  
+    "  'connector.version' = '3.4', " +					// Version of SequoiaDB
     "  'connector.hosts' = 'localhost:11810', " +
     "  'connector.username' = 'sdbadmin', " +
     "  'connector.password' = 'sdbadmin', " +
@@ -333,7 +333,7 @@ tbEnv.sqlUpdate(
     "  'format.type' = 'bson', " +
     "  'format.derive-schema' = 'true', " +
     "  'format.fail-on-missing-field' = 'true', " +
-    "  'update-mode' = 'upsert'" +                      // upsert模式，该模式可执行聚合语句
+    "  'update-mode' = 'upsert'" +                      // upsert mode, which can execute aggregate statements
     ")");
 ```
 
@@ -383,37 +383,37 @@ tbEnv.sqlUpdate(
 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
-// 通过描述器连接表
+// Connection table via descriptor
 tbEnv.connect(
    new Sdb()
-    .version("3.4")									        // SequoiaDB 的版本
-    .hosts("localhost:11810")                               // SequoiaDB 的连接地址
-    .username("sdbadmin")                                   // 用户名
-    .password("sdbadmin")                                   // 密码
-    .collectionSpace("VIRTUAL_BANK")                        // 集合空间
-    .collection("TRANSACTION_FLOW")                         // 集合
-    .timestampField("create_time")                          // 流标识字段名
+    .version("3.4")									        // Version of sdb
+    .hosts("localhost:11810")                               // Connection address of sdb
+    .username("sdbadmin")                                   // Username
+    .password("sdbadmin")                                   // Password
+    .collectionSpace("VIRTUAL_BANK")                        // CollectionSpace
+    .collection("TRANSACTION_FLOW")                         // Collection
+    .timestampField("create_time")                          // Stream Timestamp field
 ).withFormat(
-   new Bson()                           // 使用Bson数据格式, 当使用rowtime时必须显示指定format
-    .bsonSchema(                        // Bson序列化器允许使用一个json串表示BsonFormat
+   new Bson()                           // Use Bson data format, when using rowtime, users must display the specified format
+    .bsonSchema(                        // Bson serializer allows BsonFormat to be represented using a json string
         "{" +
             "account: 'string', " +
             "trans_name: 'string', " +
             "money: 'decimal', " +
             "create_time: 'timestamp'" +
         "}")
-    .failOnMissingField()                       // 当获取不到某个字段值时抛出异常
+    .failOnMissingField()                       // Exception thrown when a field value cannot be obtained
 ).withSchema(
-   new Schema()                                 // 定义table的结构
-    .field("account", Types.STRING)             // 账户号
-    .field("trans_name", Types.STRING)          // 交易名称，例如：结息，取款等
-    .field("money", Types.BIG_DEC)              // 交易金额
-    .field("create_time", Types.SQL_TIMESTAMP)  // 交易的时间
-    .field("rowtime", Types.SQL_TIMESTAMP)      // EventTime字段
+   new Schema()                                 // Define the structure of the table
+    .field("account", Types.STRING)             // Account
+    .field("trans_name", Types.STRING)          // Transaction name, for example: interest settlement, withdrawal, and etc.
+    .field("money", Types.BIG_DEC)              // Transaction amount
+    .field("create_time", Types.SQL_TIMESTAMP)  // Transaction time
+    .field("rowtime", Types.SQL_TIMESTAMP)      // EventTime field
     .rowtime(
        new Rowtime()
-        .timestampsFromField("create_time")     // 从字段中提取时间戳
-        .watermarksPeriodicAscending()          // 设置watermark生成规则
+        .timestampsFromField("create_time")     // Extract timestamp from field
+        .watermarksPeriodicAscending()          // Set watermark generation rules
     )
 ).inAppendMode()                                
 .registerTableSource("LESSON_6_SQL");
@@ -444,7 +444,7 @@ tbEnv.connect(
 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
-// 执行sql 数据统计
+// Execute sql data statistics
 tbEnv.sqlUpdate(
     "INSERT INTO LESSON_6_SQL ( " +
     "SELECT " +
