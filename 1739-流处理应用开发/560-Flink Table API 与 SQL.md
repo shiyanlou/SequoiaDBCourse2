@@ -29,62 +29,62 @@ Flink Table是Flink中的高级API, Table API将大大降低开发Flink程序的
 
 * [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
 
-#### 打开IDEA
+#### 打开 IDEA
 
-打开IDEA代码开发工具。
+打开 IDEA 代码开发工具。
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
-#### 打开flink-developer项目
-打开flink-developer项目，在该课程中完成本试验。
+#### 打开 flink-developer 项目
+打开 flink-developer 项目，在该课程中完成本试验。
 
 ![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
 
-#### 打开lesson6 packge
-打开```com.sequoiadb.flink.scdd.lesson6_table```，在该package中完成本课程。
+#### 打开 lesson6 packge
+打开 com.sequoiadb.flink.scdd.lesson6_table ，在该 package 中完成本课程。
 
 ![1739-560-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/8da2d09a94a1c75ba2c70342ec16c7f3-0)
 
 #### 认识依赖
 
-查看pom.xml文件，认识下列依赖。本案例新增了flink table的驱动包。
+查看 pom.xml 文件，认识下列依赖。本案例新增了flink table的驱动包。
 ![1739-560-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/d66701bcb93d7343fb94b9269a243b3c-0)
 
 
 
-## Table的简介
+## Table 的简介
 
-#### Table是什么
+#### Table 是什么
 
-table是一个逻辑概念，其映射具体的DataStream或DataSet。可以通过sql操作table来达到操作具体的DataStream和DataSet。
+Table 是一个逻辑概念，其映射具体的 DataStream 或 DataSet 。可以通过 sql 操作 Table 来达到操作具体的DataStream和DataSet。
 
-#### Table环境
+#### Table 环境
 
-table的使用需要依赖于table的执行环境，table的执行环境可以通过现有的流环境进行创建
+Table 的使用需要依赖于table的执行环境，table的执行环境可以通过现有的流环境进行创建
 
 #### 如何创建一个表
 
-- 从现有的StreamData中转换表
+- 从现有的 StreamData 中转换表
 
-- 通过tableEnv 表描述器注册表
+- 通过 TableEnv 表描述器注册表
 
-- 通过DDL（建表语句）创建表
+- 通过 DDL（建表语句）创建表
 
-#### TableDataStream模式
+#### TableDataStream 模式
 
-在flink中，模式分为Append, Retract和Upsert，Append表示仅有查询。Retract和Upsert将带有修改，每条数据均增加了一个Boolean字段。在Retract模式中，当该字段为false时，表示该条数据需要被删除。
+在 flink中，模式分为 Append, Retract 和 Upsert，Append 表示仅有查询。Retract 和 Upsert 将带有修改，每条数据均增加了一个Boolean字段。在 Retract 模式中，当该字段为 false 时，表示该条数据需要被删除。
 
-## DataStream与表的转换
+## DataStream 与表的转换
 
-本例使用Flink Table实现word count。演示从DataStream转换Table，经中间转换过程后将在Table转换为DataStream，最后输出结果到控制台。
+本例使用 Flink Table 实现 word count。演示从 DataStream转换 Table，经中间转换过程后将在 Table 转换为DataStream，最后输出结果到控制台。
 
 #### 打开类
 
-在当前包下，打开类```CreateTableFromDataStreamMain```
+在当前包下，打开类 CreateTableFromDataStreamMain 
 
 ![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/93610689ea1667f04c9db3e463ba04c6-0)
 
-#### 常见SQL算子
+#### 常见 SQL 算子
 
 | SQL算子 | 用处       |
 | ------- | ---------- |
@@ -93,11 +93,11 @@ table的使用需要依赖于table的执行环境，table的执行环境可以�
 | as      | 重命名字段 |
 | where   | 数据过滤   |
 
-#### 从已有的DataStream中创建Table
+#### 从已有的 DataStream 中创建 Table
 
-本案例中已存在一个DataStream<Tuple2<String, Integer>>，格式为（'单词', 1）。tbEnv.fromDataStream函数接收两个参数，分别为DataStream与一个字符串，表示字段名，多个字段用逗号分隔。
+本案例中已存在一个 DataStream<Tuple2<String, Integer>>，格式为（'单词', 1）。tbEnv.fromDataStream 函数接收两个参数，分别为 DataStream 与一个字符串，表示字段名，多个字段用逗号分隔。
 
-在当前类中找到createTableFromDataStream方法，找到 TODO code 1。
+在当前类中找到 createTableFromDataStream 方法，找到 TODO code 1。
 
 ![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/8d6d4a2772416779f23777f280d2198f-0)
 
@@ -107,11 +107,11 @@ table的使用需要依赖于table的执行环境，table的执行环境可以�
 table = tbEnv.fromDataStream(wordData, "name, num");
 ```
 
-#### SQL算子的使用
+#### SQL 算子的使用
 
-SQL算子的用途与标准sql中关键字一致。
+SQL 算子的用途与标准sql中关键字一致。
 
-在当前类中找到select方法，找到 TODO code 2。
+在当前类中找到 select 方法，找到 TODO code 2。
 
 ![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/32dbe649c789ce563ab671432d7dc739-0)
 
@@ -123,7 +123,7 @@ SQL算子的用途与标准sql中关键字一致。
  * select word, sum(num)
  * from 
  *  ( select name as word, num 
- *   from current table )
+ *   from "current table" )
  * where word != 'java'
  * group by word 
  */
@@ -133,15 +133,15 @@ resultTable = initTable.as("word, num")         // Rename field
     .select("word, sum(num)");                  // Sum
 ```
 
-#### Table转换为DataStream
+#### Table 转换为 DataStream
 
 当对table查询之后，向输出到控制台则需要将Table转换为DataStream
 
-- 要点一：在此处需要传入一个TypeInformation，描述一个具体Flink的对象类型，Flink会将Table中的记录封装为该对象，此处为Tuple2<String, Integer>类型，当类型带有泛型时需要借助TypeHint对象获取。
-- 要点二：由于使用了groupby算子，返回时必须使用toRetractStream。
-- 要点三：toRetractStream返回一个RetractStream对象，实则就是一个在每个时间上均带有布尔类型的的DataStream。该布尔值为true时表示当前事件需要被删除。
+- 要点一：在此处需要传入一个 TypeInformation，描述一个具体 Flink 的对象类型，Flink 会将 Table 中的记录封装为该对象，此处为 Tuple2<String, Integer> 类型，当类型带有泛型时需要借助 TypeHint 对象辅助获取。
+- 要点二：由于使用了 groupby 算子，返回时必须使用 toRetractStream。
+- 要点三：toRetractStream 返回一个 RetractStream 对象，实则就是一个在每个时间上均带有布尔类型的的DataStream。该布尔值为 false 时表示当前事件需要被删除。
 
-在当前类中找到converTable2DataStream方法，找到 TODO code 3。
+在当前类中找到 converTable2DataStream 方法，找到 TODO code 3。
 
 ![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/90b44f48ee4fcec3d10c43f936484de5-0)
 
@@ -154,7 +154,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'CreateTableFromDataStreamMain.main()' 运行该Flink程序。
+通过在当前类文件上右键 > Run 'CreateTableFromDataStreamMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/937f1de18e6772d9f0887caabb65432a-0)
 
@@ -164,17 +164,17 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 ## 通过表描述器注册表
 
-本例将通过描述器创建Source表与Sink表，实现从巨杉数据库读入数据，经Flink统计后实时写入结果到巨杉数据库。统计一个交易流水表中的总交易额。
+本例将通过描述器创建 Source 表与 Sink 表，实现从巨杉数据库读入数据，经Flink统计后实时写入结果到巨杉数据库。统计一个交易流水表中的总交易额。
 
 #### 打开类
 
-在当前包下，打开类```CreateTableByConnectTableSourceMain```
+在当前包下，打开类 CreateTableByConnectTableSourceMain 
 
 ![1739-560-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/d8bfee1316715692b09b738ba8269f2e-0)
 
-#### 通过描述器创建一个Source表
+#### 通过描述器创建一个 Source 表
 
-在当前类中找到createSourceTable方法，找到 TODO code 1。
+在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
 ![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
 
@@ -204,9 +204,9 @@ tbEnv.connect(
 .registerTableSource("TRANSACTION_FLOW");              // Register as a data source table
 ```
 
-#### 通过描述器创建一个Sink表
+#### 通过描述器创建一个 Sink 表
 
-在当前类中找到createSinkTable方法，找到 TODO code 2。
+在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
 ![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4bf3b08d1de0ef68b97a65fa3e221744-0)
 
@@ -233,11 +233,11 @@ tbEnv.connect(
     .registerTableSink("LESSON_6_CONNECT");             // Register as a data source table
 ```
 
-#### 编写统计SQL
+#### 编写统计 SQL
 
-编写sql统计结果并将结果输出到巨杉数据库，统计每种交易的交易总额。
+编写 sql 统计结果并将结果输出到巨杉数据库，统计每种交易的交易总额。
 
-在当前类中找到select方法，找到 TODO code 3。
+在当前类中找到 select 方法，找到 TODO code 3。
 
 ![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/19e2bda1a605f3f4bde299edf5ad3e0c-0)
 
@@ -256,29 +256,29 @@ tbEnv.sqlUpdate(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'CreateTableByConnectTableSourceMain.main()' 运行该Flink程序。
+通过在当前类文件上右键 > Run 'CreateTableByConnectTableSourceMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/954f646639b519256fc2b7262402357f-0)
 
-通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_6_CONNECT集合下。
+通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_CONNECT 集合下。
 
 
 
-## 通过DDL创建表
+## 通过 DDL 创建表
 
-本案例通过DDL创建Flink流表。实现从巨杉数据库读入数据，经Flink统计后实时写入结果到巨杉数据库。统计一个交易流水表中的总交易额。
+本案例通过 DDL 创建 Flink 流表。实现从巨杉数据库读入数据，经 Flink 统计后实时写入结果到巨杉数据库。统计一个交易流水表中的总交易额。
 
 #### 打开类
 
-打开类CreateTableByDDLMain
+打开类 CreateTableByDDLMain
 
 ![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/f9164f40d2b38d658d8d7c5708dba55a-0)
 
-#### 创建source表
+#### 创建 Source 表
 
-通过DDL创建flink source表。
+通过 DDL 创建 Flink Source 表。
 
-在当前类中找到createSourceTable方法，找到 TODO code 1。
+在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
 ![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
 
@@ -307,11 +307,11 @@ tbEnv.sqlUpdate(
     ")");
 ```
 
-#### 创建sink表
+#### 创建 Sink 表
 
-通过DDL创建flink sink表。
+通过 DDL 创建 Flink Sink 表。
 
-在当前类中找到createSinkTable方法，找到 TODO code 2。
+在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
 ![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4bf3b08d1de0ef68b97a65fa3e221744-0)
 
@@ -337,11 +337,11 @@ tbEnv.sqlUpdate(
     ")");
 ```
 
-#### 编写查询SQL
+#### 编写查询 SQL
 
 执行统计，统计每种交易的交易总额。
 
-在当前类中找到select方法，找到 TODO code 3。
+在当前类中找到 select 方法，找到 TODO code 3。
 
 ![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/19e2bda1a605f3f4bde299edf5ad3e0c-0)
 
@@ -360,23 +360,23 @@ tbEnv.sqlUpdate(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'CreateTableByDDLMain.main()' 运行该Flink程序。
+通过在当前类文件上右键 > Run 'CreateTableByDDLMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/702cef0700359287d448cbee0e0aab34-0)
 
-通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_6_DDL集合下。
+通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_DDL 集合下。
 
-## TableAPI中Watermark与Window的使用
+## Table API 中 Watermark 与 Window 的使用
 
-打开类ExecuteSqlWithWatermakerAndWindowMain
+打开类 ExecuteSqlWithWatermakerAndWindowMain
 
 ![1739-560-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/042069c9598290fb4feb8903dc14a470-0)
 
-#### 使用描述器中定义一个使用EventTime和Watermark
+#### 使用描述器中定义一个使用 EventTime 和 Watermark
 
-使用描述器定义一个使用EventTime和Watermark的source表。
+使用描述器定义一个使用 EventTime 和 Watermark 的 Source 表。
 
-在当前类中找到createSourceTable方法，找到 TODO code 1。
+在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
 ![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
 
@@ -419,7 +419,7 @@ tbEnv.connect(
 .registerTableSource("LESSON_6_SQL");
 ```
 
-#### Flink SQL中的函数
+#### Flink SQL 中的函数
 
 - TUMBLE_START()
 
@@ -433,11 +433,11 @@ tbEnv.connect(
 
   该方法可以将时间戳格式化为固定格式的时间字符串。接收两个参数，第一个参数为一个Timestamp类型的字段名，为待转换的时间戳字段，第二个参数为格式化的字符串。
 
-#### 编写SQL
+#### 编写 SQL
 
 执行统计，统计每种交易的交易总额。
 
-在当前类中找到select方法，找到 TODO code 2。
+在当前类中找到 select 方法，找到 TODO code 2。
 
 ![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/542a6ee56b6da51cb1736ecdedfd7b3a-0)
 
@@ -461,8 +461,8 @@ tbEnv.sqlUpdate(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'ExecuteSqlWithWatermakerAndWindowMain.main()' 运行该Flink程序。
+通过在当前类文件上右键 > Run 'ExecuteSqlWithWatermakerAndWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/4896c1688098596aa7559ef4fc86b3d4-0)
 
-通过SAC查看结果数据，结果在VIRTUAL_BANK.LESSON_6_SQL集合下。
+通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_SQL 集合下。
