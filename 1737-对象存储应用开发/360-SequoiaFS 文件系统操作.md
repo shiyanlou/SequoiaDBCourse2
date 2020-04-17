@@ -68,7 +68,7 @@ SequoiaFS支持通用文件系统API，使用Java IO类对SequoiaFS的挂载目�
     OutputStream out  = new FileOutputStream("/opt/sequoiafs/mountpoint/sequoiadb.txt");
     byte[] cbuf = new byte[1024];
     int len = 1024;
-    //一次读取多少字节的文件
+    //How many bytes of file are read at a time
     while((len = put.read(cbuf))!= -1){
         out.write(cbuf,0,len);
         out.flush();
@@ -103,13 +103,13 @@ SequoiaFS支持通用文件系统API，使用Java IO类对SequoiaFS的挂载目�
 2）将下方代码粘贴到TODO ~ TODO END区域的第8行
 
 ```java
-//获取文件输入流
+//Get the file input stream
 InputStreamReader put = new InputStreamReader(new FileInputStream("/opt/sequoiafs/mountpoint/version.conf"), "utf-8");
 
 char[] cbuf = new char[1024];
 
 int len = 1024;
-//读取文件内容并输出到控制台
+//Read the file content and output to console
 while((len = put.read(cbuf))!= -1){
 	System.out.println(new String(cbuf, 0, len));
 }

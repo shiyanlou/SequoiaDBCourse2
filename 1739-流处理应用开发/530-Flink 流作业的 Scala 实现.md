@@ -91,7 +91,7 @@ flatmap 算子中需传入一个函数或 FlatmapFunction 对象，简单的操�
 将下列代码粘贴到 TODO code 1区间内。
 
 ```scala
-// "_"为每个数据行
+// "_" means each data row
 flatmapData = dataStream.flatMap(_.split(" "))
 ```
 
@@ -122,7 +122,7 @@ filter 算子是 Transformation 的其中一种。该算子在每个数据行上
 将下列代码粘贴到 TODO code 2区间内。
 
 ```scala
-// 去除单词"java"
+// Remove the word "java"
 filterData = dataStream.filter(!_.equals("java"))
 ```
 
@@ -153,7 +153,7 @@ map 算子也是 Transformation 的其中一种。map算子同样在每个数据
 将下列代码粘贴到 TODO code 3区间内。
 
 ```scala
-// 将数据转化为元组，1表示当前数据行有一个单词
+// Convert data into tuples. 1 means there is a word in the current data row.
 mapData = dataStream.map((_, 1))
 ```
 
@@ -192,7 +192,7 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 将下列代码粘贴到 TODO code 4区间内。
 
 ```scala
-// 此处通过元组中第一个字段（单词）进行分组，第二个字段（单词数）进行求和
+// Users can group by the first field (words) in the tuple, and sum the second field (number of words).
 sumData = dataStream.keyBy(0).sum(1)
 ```
 
@@ -223,7 +223,7 @@ reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。�
 将下列代码粘贴到 TODO code 5区间内。
 
 ```scala
-// x和y分别表示两条数据，输出结果为 x中的单词，个数为x与y中的单词总和
+// x and y respectively represent two pieces of data. The output is the words in x, and the number is the sum of the words in x and y.
 sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 ```
 
@@ -260,23 +260,23 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 ## Flink 工程打包与参数的获取（可选）
 
-编写的程序在提交到集群后的jar如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink 同样支持动态参数的获取，下面来改造一下吧。
+编写的程序在提交到集群后的 jar 如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink 同样支持动态参数的获取，下面来改造一下吧。
 
 #### 参数获取
 
 - 首先可以在 main 函数的 TODO code 6添加下列代码。
 
 ```scala
-// 将args传入ParameterTool, ParameterTool可以帮助我们解析参数
+// Transfer args to ParameterTool, and the ParameterTool can help us parse parameters
 val tool = ParameterTool.fromArgs(args)
-// 通过名字获取一个整数值，10为默认值，如果参数未发现则启用默认值
+// Get an integer value by name. 10 is the default value, and the default value is enabled if the parameter is not found.
 val lineNum = tool.getInt("lineNum", 10)
 ```
 
 - lineNum 便是入的函数，需要通过 RandomSource 的构造器传入该值。
 
 ```scala
-// 修改获取数据的写法
+// Modify the method to get data
 val lineData: DataStream[String] = env.addSource(new RandomSource(lineNum))
 ```
 

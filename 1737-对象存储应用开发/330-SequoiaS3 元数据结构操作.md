@@ -54,21 +54,21 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行S3操作的接口
 2）将下方代码粘贴到TODO ~ TODO END区域内第33行
 
 ```java
-    //获取s3连接
+    //Get the S3 connection
     AmazonS3 s3 = this.getS3();
-    //创建要用到的存储桶
+    //Create a bucket to use
     s3.createBucket(bucketName);
-    //创建文件输入流
+    //Create file input stream
     File file = new File("/opt/sequoiadb/version.conf");
     InputStream inputStream = new FileInputStream(file);
-    //获得元数据对象
+    //Get metadata object
     ObjectMetadata objectMetadata = new ObjectMetadata();
-    //设置元数据属性
+    //Set metadata properties
     objectMetadata.setContentLength(file.length());
     objectMetadata.setContentLanguage("CH");
     objectMetadata.setContentEncoding("utf8");
     objectMetadata.setContentType("text/plain");
-    //上传文件保存为对象，并设置对象元数据
+    //Save the uploaded file as an object and set the object metadata
     s3.putObject(bucketName,objectName,inputStream,objectMetadata);
 ```
 
@@ -85,20 +85,20 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行S3操作的接口
 2）将下方代码粘贴到TODO ~ TODO END区域内第61行
 
 ```java
-        //获取s3连接
+        //Get the S3 connection
         AmazonS3 s3 = this.getS3();
-        //获取指定对象的元数据对象
+        //Get metadata object of the specified object
         ObjectMetadata objectMetadata =
         				s3.getObjectMetadata(bucketName,objectName);
-        //获取元数据属性
+        //Get metadata properties
         String contentLanguage = objectMetadata.getContentLanguage();
         String contentEncoding = objectMetadata.getContentEncoding();
         String contentType = objectMetadata.getContentType();
-		//打印元数据属性
+		//Print metadata properties
         System.out.println("contentLanguage:"+contentLanguage);
         System.out.println("contentEncoding:"+contentEncoding);
         System.out.println("contentType:"+contentType);
-		//清理环境
+		//Clean up the environment
         s3.deleteObject(bucketName,objectName);
         s3.deleteBucket(bucketName);
 ```

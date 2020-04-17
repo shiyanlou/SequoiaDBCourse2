@@ -121,7 +121,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 将下列代码粘贴到 TODO code 1区间内。
 
 ```scala
-// 构建连接Option
+// Build the connection Option
 val option: SequoiadbOption = SequoiadbOption.bulider
       .host("localhost:11810")
       .username("sdbadmin")
@@ -129,15 +129,15 @@ val option: SequoiadbOption = SequoiadbOption.bulider
       .collectionSpaceName("VIRTUAL_BANK")
       .collectionName("TRANSACTION_FLOW")
       .build
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+// Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
 resultData = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
-以上示例为 SequoiadbSource 的使用，需要构建一个 Option，包含巨杉数据库的连接信息。而且由于数据库中录入数据无法像消息队列做到时间态的有序，其还需要一个时间字段名用于构建流，该字段值必须是时间戳类型。
+以上示例为SequoiadbSource的使用，需要构建一个Option，包含巨杉数据库的连接信息。而且由于数据库中录入数据无法像消息队列做到时间态的有序，其还需要一个时间字段名用于构建流，该字段值必须是时间戳类型。
 
 #### 查看原始数据格式
 
-通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
+通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该Flink程序。
 
 ![1739-550-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/991bd84db57188a4e374b4609f955ef9-0)
 
@@ -258,7 +258,7 @@ val option: SequoiadbOption = SequoiadbOption.bulider
     .collectionSpaceName("VIRTUAL_BANK")
     .collectionName("TRANSACTION_FLOW")
     .build
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+// Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
 resultData = env.addSource(new SequoiadbSource(option, "crate_time"))
 ```
 
@@ -361,12 +361,12 @@ resultData = keyedData.timeWindow(Time.seconds(5))
 resultData = value.apply(new WindowFunction[(String, Double, Int),
         (String, Double, Int, java.sql.Time), String, TimeWindow] {
     /**
-     * 在每个window中执行一次
+     * Execute once in each window
      *
-     * @param key    分组字段值
-     * @param window 当前window对象
-     * @param input  当前window中所有数据的迭代器
-     * @param out    返回结果收集器
+     * @param key    Group field value
+     * @param window Current window object
+     * @param input  Iterator of all data in the current window
+     * @param out    Returned result collector
      */
     override def apply(key: String, window: TimeWindow, 
             input: Iterable[(String, Double, Int)],
@@ -420,7 +420,11 @@ val option: SequoiadbOption = SequoiadbOption.bulider
     .collectionSpaceName("VIRTUAL_BANK")
     .collectionName("TRANSACTION_FLOW")
     .build
+<<<<<<< HEAD
+// Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
+=======
 // 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+>>>>>>> a0d39cf562f7523fcaf2cce96964d4d1726a6afe
 resultData = env.addSource(new SequoiadbSource(option, "crate_time"))
 ```
 
@@ -483,11 +487,11 @@ resultData = keyedData.countWindow(100, 50);
 resultData = value.apply(new WindowFunction[Trans, (String, Double), 
                                             Tuple, GlobalWindow] {
     /**
-     * 在窗口满足条件时执行
-     * @param key 分组字段
-     * @param window 全局的window引用
-     * @param input 当前window中所有数据集的引用
-     * @param out 结果收集器
+     * Execute when the window meets the conditions
+     * @param key Group field
+     * @param window Global window reference
+     * @param input References to all data sets in the current window
+     * @param out Result collector
      */
     override def apply(key: Tuple, window: GlobalWindow, input: Iterable[Trans],
                        out: Collector[(String, Double)]): Unit = {
@@ -526,7 +530,7 @@ resultData = value.map(item => {
 将下列代码粘贴到 TODO code 7区间内。
 
 ```scala
-// 构建连接Option
+// Build the connection Option
 val option = SequoiadbOption.bulider
     .host("localhost:11810")
     .username("sdbadmin")
@@ -608,7 +612,7 @@ val option: SequoiadbOption = SequoiadbOption.bulider
     .collectionSpaceName("VIRTUAL_BANK")
     .collectionName("TRANSACTION_FLOW")
     .build
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+// Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
 resultData = env.addSource(new SequoiadbSource(option, "crate_time"))
 ```
 
@@ -624,12 +628,12 @@ resultData = env.addSource(new SequoiadbSource(option, "crate_time"))
 
 ```scala
 resultData = value.assignTimestampsAndWatermarks(new AssignerWithPeriodicWatermarks[BSONObject] {
-    // 最大的乱序时间
+    // Maximum out-of-order time
     private val maxOutOfOrderness: Long = 5000
     private var maxTimestamp: Long = 0
 
     /**
-     * 返回一个watermark
+     * Return a watermark
      *
      * @return
      */
@@ -638,11 +642,11 @@ resultData = value.assignTimestampsAndWatermarks(new AssignerWithPeriodicWaterma
      }
     
     /**
-     * 抽取当前数据的时间戳
+     * Extract the timestamp of the current data
      *
-     * @param t 当前的数据
-     * @param l 上一条数据的时间戳
-     * @return 当前数据的时间戳
+     * @param t Current data
+     * @param l Timestamp of the previous data
+     * @return Timestamp of the current data
      */
     override def extractTimestamp(t: BSONObject, l: Long): Long = {
         val currentTimestamp: Long = t.get("create_time")
@@ -709,11 +713,11 @@ resultData = value.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.secon
 resultData = value.process(new ProcessWindowFunction[(String, Double, Int), 
                                                      BSONObject, String, TimeWindow] {
     /**
-     * window 聚合方法，每个window调用一次
-     * @param key 分组字段值
-     * @param context 上下文对象，本算子的精华
-     * @param elements 当前window中的事件引用
-     * @param out 事件收集器
+     * window Aggregation method, call once per window
+     * @param key Group field value
+     * @param context Context objects, the essence of this operator
+     * @param elements Event reference in current window
+     * @param out Event collector
      */
     override def process(key: String, context: Context, 
                          elements: Iterable[(String, Double, Int)],
@@ -724,7 +728,7 @@ resultData = value.process(new ProcessWindowFunction[(String, Double, Int),
             sum += i._2
             count += i._3
         })
-        // 构建BsonObject对象
+        // Construct a BsonObject object
         val nObject = new BasicBSONObject
         nObject.append("trans_name", key)
         nObject.append("total_sum", sum)

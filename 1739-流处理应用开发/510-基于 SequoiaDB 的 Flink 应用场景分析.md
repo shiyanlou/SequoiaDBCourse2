@@ -107,61 +107,61 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
-// 获取执行环境
+// Get the execution environment
 env = StreamExecutionEnvironment.getExecutionEnvironment();
 ```
 
-#### 使用 Source 获取 DataStream
+#### 使用Source获取DataStream
 
-Source算子用于产生一个 DataStream。
+Source算子用于产生一个DataStream。
 
-在当前类中找到 source 方法，找到 TODO code 2。
+在当前类中找到source方法，找到 TODO code 2。
 
 ![1739-510-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/70d53c17390cbd9e57fde3eed307547b-0)
 
 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
-// 通过RandomSource生成一些随机的数据行
+// Generate some random data rows through RandomSource
 dataSource = env.addSource(new RandomSource());
 ```
 
-#### Transformation 的使用
+#### Transformation的使用
 
-Transformation 可以对数据做转换操作，代码中的算子使用规则详见下一小节，此处仅做演示。
+Transformation可以对数据做转换操作，代码中的算子使用规则详见下一小节，此处仅做演示。
 
-在当前类中找到 transformate 方法，找到 TODO code 3。
+在当前类中找到transformate方法，找到 TODO code 3。
 
 ![1739-510-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/d0224bfa01c602e43e1a396420850ee9-0)
 
 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
-// 转换算子
+// Conversion the operator
 SingleOutputStreamOperator<String> flatMapData = lineData.flatMap(new FlatMapFunction<String, String>() {
     @Override
     public void flatMap(String s, Collector<String> collector) throws Exception {
         Arrays.stream(s.split(" ")).forEach(collector::collect);
     }
 });
-// 过滤算子
+// Filter the operator 
 SingleOutputStreamOperator<String> filterData = flatMapData.filter(s -> !s.equals("java"));
-// 转换算子
+// Conversion the operator
 SingleOutputStreamOperator<Tuple2<String, Integer>> mapData = filterData.map(new MapFunction<String, Tuple2<String, Integer>>() {
     @Override
     public Tuple2<String, Integer> map(String s) throws Exception {
         return Tuple2.of(s, 1);
     }
 });
-// 分组聚合算子
+// Group aggregation the operator
 sumData = mapData.keyBy(0).sum(1);
 ```
 
-#### Sink 算子的使用
+#### Sink算子的使用
 
-使用 Sink 将结果输出到控制台。此处使用的print方法实则调用了一个 ConsoleSink，会将结果 sink 到控制台。
+使用Sink将结果输出到控制台。此处使用的print方法实则调用了一个ConsoleSink，会将结果sink到控制台。
 
-在当前类中找到 sink 方法，找到 TODO code 4。
+在当前类中找到sink方法，找到 TODO code 4。
 
 ![1739-510-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/5c066bcb15d49c6c196d625b80e7578d-0)
 
@@ -182,7 +182,7 @@ sumData.print();
 将下列代码粘贴到 TODO code 5区间内。
 
 ```java
-// 参数为当前作业的名字
+// The parameter is the name of the current work
 env.execute("flink intro demo");
 ```
 

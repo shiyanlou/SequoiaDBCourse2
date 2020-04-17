@@ -122,7 +122,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
- // 构建连接Option
+ // Build the connection Option
  SequoiadbOption option = SequoiadbOption.bulider()
  .host("localhost:11810")
  .username("sdbadmin")
@@ -130,7 +130,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
  .collectionSpaceName("VIRTUAL_BANK")
  .collectionName("TRANSACTION_FLOW")
  .build();
- // 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"timestamp"构建流）
+ // Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
  sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
@@ -162,14 +162,14 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 resultData = dataStream.map(new MapFunction<BSONObject, 
                             Tuple2<Double, Integer>>() {
     /**
-     * 在每个事件上调用一次
-     * @param object 原始事件
-     * @return 转换后的事件
+     * Call once on each event
+     * @param object Original event
+     * @return Converted event
      * @throws Exception
      */
     @Override
     public Tuple2<Double, Integer> map(BSONObject object) throws Exception {
-        // 此处将事件中的money字段抽取出来，1表示当前事件中包含1笔交易
+        // The money field in the event is extracted here. 1 means that the current event contains 1 transaction.
         return Tuple2.of(((BSONDecimal) object.get("money"))
                          .toBigDecimal().doubleValue(), 1);
     }
@@ -228,16 +228,16 @@ resultData = dataStream.countWindowAll(100);
 resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
                                Integer>>() {
     /**
-     * 聚合操作
-     * @param t1 流上的其中一个事件
-     * @param t2 流上的另一个事件
-     * @return 合并后的事件
+     * Aggregation operation
+     * @param t1 One of the events on the stream
+     * @param t2 Another event on the stream
+     * @return Merged event
      * @throws Exception
      */
     @Override
     public Tuple2<Double, Integer> reduce(Tuple2<Double, Integer> t1, 
                  Tuple2<Double, Integer> t2) throws Exception {
-        // 此处将统计总交易额和总交易量
+        // The total transaction amount and total transaction volume will be counted here
         return Tuple2.of(t1.f0 + t2.f0, t1.f1 + t2.f1);
     }
 });
@@ -284,7 +284,7 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
-// 构建连接Option
+// Build the connection Option
 SequoiadbOption option = SequoiadbOption.bulider()
  .host("localhost:11810")
  .username("sdbadmin")
@@ -292,7 +292,7 @@ SequoiadbOption option = SequoiadbOption.bulider()
  .collectionSpaceName("VIRTUAL_BANK")
  .collectionName("TRANSACTION_FLOW")
  .build();
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+// Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
 sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
@@ -320,15 +320,15 @@ sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 resultData = dataStream.map(new MapFunction<BSONObject, 
                             Tuple3<String, Double, Integer>>() {
     /**
-     * 在每个事件上执行
-     * @param object 原始事件
+     * Execute on every event
+     * @param object Original event
      * @return
      * @throws Exception
      */
     @Override
     public Tuple3<String, Double, Integer> map(BSONObject object) 
         throws Exception {
-        // 抽取出需要的字段
+        // Extract the required fields
         return Tuple3.of(object.get("trans_name").toString(),                      			((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
     }
 });
@@ -359,9 +359,9 @@ keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<
 resultData = dataStream.keyBy(new KeySelector<Tuple3<String, 
                               Double, Integer>, String>() {
     /**
-     * 分组函数，使用KeySelector 可以显示获取到分组字段的类型
-     * @param t 分组前的数据集
-     * @return 分组字段值
+     * Grouping function. Use KeySelector to display the type of the grouped field
+     * @param t Data set before grouping
+     * @return Group field value
      * @throws Exception
      */
     @Override
@@ -420,11 +420,11 @@ resultData = keyedData.timeWindow(Time.seconds(5));
 resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>,
         Tuple4<String, Double, Integer, java.sql.Time>, String, TimeWindow>() {
 	/**
-     * 在每个window中执行一次
-     * @param key 分组字段值
-     * @param timeWindow 当前window对象
-     * @param iterable 当前window中所有事件
-     * @param collector 返回结果收集器
+     * Execute once in each window
+     * @param key Group field value
+     * @param timeWindow Current window object
+     * @param iterable All events in the current window
+     * @param collector Returned result collector
      * @throws Exception
      */
      @Override
@@ -436,13 +436,13 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
          int count = 0;
          Iterator<Tuple3<String, Double, Integer>> iterator = 
              iterable.iterator();
-         // 遍历当前window中的所有事件
+         // Traverse all events in the current window
          while (iterator.hasNext()) {
              Tuple3<String, Double, Integer> next = iterator.next();
              sum += next.f1;
              count += next.f2;
          }
-         // 向每个事件中添加事件所在Window的结束事件
+         // Add the end event of the Window where the event is to each event
          collector.collect(Tuple4.of(key, sum, count, 
                   new java.sql.Time(timeWindow.getEnd())));
      }
@@ -481,7 +481,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
-// 构建连接Option
+// Build the connection Option
 SequoiadbOption option = SequoiadbOption.bulider()
     .host("localhost:11810")
     .username("sdbadmin")
@@ -489,7 +489,7 @@ SequoiadbOption option = SequoiadbOption.bulider()
     .collectionSpaceName("VIRTUAL_BANK")
     .collectionName("TRANSACTION_FLOW")
     .build();
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+// Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
 dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
@@ -556,11 +556,11 @@ resultData = keyedData.countWindow(100, 50);
 ```java
 resultData = countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer>, Tuple2<String, Double>, Tuple, GlobalWindow>() {
      /**
-      * 在窗口满足条件时执行，类似于flatMap算子
-      * @param tuple 分组字段值，由于使用了下标进行分组，无法获取到具体的数据类型，故此处使用Tuple抽象表示
-      * @param globalWindow 全局的window引用
-      * @param iterable 当前window中所有数据集的引用
-      * @param collector 结果收集器
+      * Execute when the window meets the conditions, which similar to the flatMap operator
+      * @param tuple Group field value. Since the subscript was used for grouping, the specific data type cannot be obtained, so the Tuple abstract representation is used here.
+      * @param globalWindow Global window reference
+      * @param iterable References to all data sets in the current window
+      * @param collector Result collector
       * @throws Exception
       */
     @Override
@@ -607,7 +607,7 @@ bsonData = dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() 
 将下列代码粘贴到 TODO code 7区间内。
 
 ```java
-// 构建连接Option
+// Build the connection Option
 SequoiadbOption option = SequoiadbOption.bulider()
     .host("localhost:11810")
     .username("sdbadmin")
@@ -684,7 +684,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
-// 构建连接Option
+// Build the connection Option
 SequoiadbOption option = SequoiadbOption.bulider()
     .host("localhost:11810")
     .username("sdbadmin")
@@ -692,15 +692,15 @@ SequoiadbOption option = SequoiadbOption.bulider()
     .collectionSpaceName("VIRTUAL_BANK")
     .collectionName("TRANSACTION_FLOW")
     .build();
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
+// Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
 dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
-#### 添加 Watermark
+#### 添加Watermark
 
-向流中添加 Watermark。
+向流中添加watermark。
 
-在当前类中找到 Watermark 方法，找到 TODO code 2。
+在当前类中找到watermark方法，找到 TODO code 2。
 
 ![1739-540-00041.png](https://doc.shiyanlou.com/courses/1739/1207281/e14f96f1a0c9f9f82a8f7c730aebe892-0)
 
@@ -709,14 +709,14 @@ dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 ```java
 resultData = transData.assignTimestampsAndWatermarks(
     new AssignerWithPeriodicWatermarks<BSONObject>() {
-    // 延迟时间 (ms)
+    // Delay time (ms)
     private final static int maxOutOfOrderness = 3000;
     private long maxTimestamp = 0L;
     /**
-     * 获取当前数据中的rowtime
-     * @param object 当前数据行
-     * @param timestamp 上一条数据的时间戳
-     * @return 当前时间戳
+     * Get rowtime in current data
+     * @param object Current data row
+     * @param timestamp Timestamp of the previous data
+     * @return Current timestamp
      */
     @Override
     public long extractTimestamp(BSONObject object, long timestamp) {
@@ -725,8 +725,8 @@ resultData = transData.assignTimestampsAndWatermarks(
         return currentTimestamp;
     }
     /**
-     * 获取watermark
-     * @return watermark对象
+     * Get watermark
+     * @return watermark object
      */
     @Nullable
     @Override
@@ -805,9 +805,9 @@ resultData = keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time
 restultData = windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {
     /**
       * @param s key
-      * @param context 上下文对象，本算子的精华
-      * @param iterable 当前window中的事件引用
-      * @param collector 事件收集器
+      * @param context Context objects，the essence of this operator
+      * @param iterable Event reference in current window
+      * @param collector Event collector
       * @throws Exception
       */
     @Override
