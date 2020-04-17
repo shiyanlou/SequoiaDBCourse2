@@ -80,7 +80,7 @@ table的使用需要依赖于table的执行环境，table的执行环境可以�
 
 #### 打开类
 
-在当前包下，打开类```CreateTableFromDataStreamMain```
+在当前包下，打开类 CreateTableFromDataStreamMain 
 
 ![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/93610689ea1667f04c9db3e463ba04c6-0)
 
@@ -183,6 +183,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 ```java
 tbEnv.connect(
   new Sdb()
+    .version("3.4")									   // sdb 的版本
     .hosts("localhost:11810")                          // sdb 的连接地址
     .username("sdbadmin")                              // 用户名
     .password("sdbadmin")                              // 密码
@@ -214,7 +215,8 @@ tbEnv.connect(
 ```java
 tbEnv.connect(
   new Sdb() 
-    .hosts("localhost:11810")                          // sdb 的连接地址
+    .version("3.4")									   // SequoiaDB 的版本
+    .hosts("localhost:11810")                          // SequoiaDB 的连接地址
     .username("sdbadmin")                              // 用户名
     .password("sdbadmin")                              // 密码
     .collectionSpace("VIRTUAL_BANK")                   // 集合空间
@@ -291,6 +293,7 @@ tbEnv.sqlUpdate(
     "  create_time TIMESTAMP(3)" +                         // 交易世家
     ") WITH (" +
     "  'connector.type' = 'sequoiadb', " +                 // 连接介质类型
+    "  'connector.version' = '3.4', " +					   // SequoiaDB 版本
     "  'connector.hosts' = 'localhost:11810', " +          // 连接地址
     "  'connector.username' = 'sdbadmin', " +              // 用户名
     "  'connector.password' = 'sdbadmin', " +              // 密码
@@ -321,6 +324,7 @@ tbEnv.sqlUpdate(
     "  `total_sum` DECIMAL(10, 2)" +                    // 交易总额
     ") WITH (" +
     "  'connector.type' = 'sequoiadb', " +
+    "  'connector.version' = '3.4', " +					  
     "  'connector.hosts' = 'localhost:11810', " +
     "  'connector.username' = 'sdbadmin', " +
     "  'connector.password' = 'sdbadmin', " +
@@ -382,7 +386,8 @@ tbEnv.sqlUpdate(
 // 通过描述器连接表
 tbEnv.connect(
    new Sdb()
-    .hosts("localhost:11810")                               // sdb 的连接地址
+    .version("3.4")									        // SequoiaDB 的版本
+    .hosts("localhost:11810")                               // SequoiaDB 的连接地址
     .username("sdbadmin")                                   // 用户名
     .password("sdbadmin")                                   // 密码
     .collectionSpace("VIRTUAL_BANK")                        // 集合空间
