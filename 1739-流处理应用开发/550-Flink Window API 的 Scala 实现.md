@@ -27,7 +27,7 @@ version: 1.0
 
 本实验中使用了 flink-connect-sequoiadb 依赖（ Flink 连接 SequoiaDB 驱动包），该依赖来自巨杉开源社区。
 
-- [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
+- [下载地址](https://github.com/chaochaoc/flink-connector-sequoiadb/)
 
 #### 打开IDEA
 

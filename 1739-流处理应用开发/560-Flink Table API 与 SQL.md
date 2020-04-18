@@ -27,7 +27,7 @@ Flink Table是Flink中的高级API, Table API将大大降低开发Flink程序的
 
 本实验中使用了flink-connect-sequoiadb依赖（flink连接sequoiadb驱动包），该依赖来自巨杉开源社区。
 
-* [下载地址](https://github.com/chaochaoc/flink-connect-sequoiadb)
+* [下载地址](https://github.com/chaochaoc/flink-connector-sequoiadb/)
 
 #### 打开 IDEA
 
