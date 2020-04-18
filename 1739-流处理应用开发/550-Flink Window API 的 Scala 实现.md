@@ -29,6 +29,8 @@ version: 1.0
 
 - [下载地址](https://github.com/chaochaoc/flink-connector-sequoiadb/)
 
+## 打开项目
+
 #### 打开IDEA
 
 打开IDEA代码开发工具。

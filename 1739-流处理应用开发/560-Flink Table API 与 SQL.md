@@ -29,6 +29,8 @@ Flink Table是Flink中的高级API, Table API将大大降低开发Flink程序的
 
 * [下载地址](https://github.com/chaochaoc/flink-connector-sequoiadb/)
 
+## 打开项目
+
 #### 打开 IDEA
 
 打开 IDEA 代码开发工具。
