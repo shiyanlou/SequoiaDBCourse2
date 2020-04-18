@@ -49,7 +49,7 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行S3操作的接口
 
 1）双击打开 ObjectMetadataUtil类，在setMetadata()函数内找到行**TODO 设置对象元数据**
 
-![image-20200418182740385](https://doc.shiyanlou.com/courses/1737/1207281/4fa4054656ee9b19a94b6480fcb0be0c-0)
+![image-20200418182740385](https://doc.shiyanlou.com/courses/1737/1207281/30eeeb1146ef269b55e0b31de23431b5-0)
 
 2）将下方代码粘贴到TODO ~ TODO END区域内第46行
 
@@ -80,7 +80,7 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行S3操作的接口
 
 1）双击打开 ObjectMetadataUtil类，找到queryMetadata()函数内行**TODO 查询对象元数据**
 
-![image-20200418182849402](https://doc.shiyanlou.com/courses/1737/1207281/4ab1144c1ae23ce011412bebf6d55b5b-0)
+![image-20200418182849402](https://doc.shiyanlou.com/courses/1737/1207281/03b31e659ac5ee5dc1dc711d6c9f66e0-0)
 
 2）将下方代码粘贴到TODO ~ TODO END区域内第33行
 
