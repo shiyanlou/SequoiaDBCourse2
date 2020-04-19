@@ -76,7 +76,9 @@ POM 文件位置：
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/812e1a2eddc2096ba4df5fc491986425-0)
 
-复制以下代码样例。样例中会创建一个数据库链接，然后通过获取数据库的数据组信息，通过这种方式验证数据库的连通性。每次使用完数据库链接，都需要在 finally 代码块中将链接关闭。
+复制以下代码样例。样例中会创建一个数据库链接，然后使用链接获取数据库的数据组信息，通过这种方式验证数据库的连通性。每次使用完数据库链接，都需要在 finally 代码块中将链接关闭。
+
+JsonUtil.formatPrint 方法为本次实验封装好用于格式化打印 JSON 字符串的工具类，此处不做赘述，深入了解可点开源码查看。此方法只是为了控制台打印出更方便用户直观查看的数据格式，对查询结果集无任何影响。
 
 ```java
 // Create a database link.
@@ -96,7 +98,7 @@ try {
 }
 ```
 
-将代码样例粘贴到第 17 行的 TODO ~ TODO END 位置区间内。
+将代码样例粘贴到 Connection 类 connect 方法第 17 行的 TODO ~ TODO END 位置区间内。
 
 ![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/210c37dfeecbdcc1f58bf4f3858aaf8b-0)
 
@@ -104,7 +106,7 @@ try {
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/83df5b68653c29e9b5ad072f3d796319-0)
 
-配置 Configuration 页中的 Program arguments 选项，写入指定的参数，点击”OK“。
+配置 Configuration 页中的 Program arguments 选项，写入指定的参数 connect，点击”OK“。
 
 ![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/92654200ea5f6c60ba2675e471281325-0) 
 
