@@ -25,7 +25,7 @@ Flink Table是Flink中的高级API, Table API将大大降低开发Flink程序的
 
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
-本实验中使用了flink-connect-sequoiadb依赖（flink连接sequoiadb驱动包），该依赖来自巨杉开源社区。
+本实验中使用了 flink-connect-sequoiadb 依赖（Flink连接 SequoiaDB 驱动包），该依赖来自巨杉开源社区。
 
 * [下载地址](https://github.com/chaochaoc/flink-connector-sequoiadb/)
 
