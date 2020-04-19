@@ -58,7 +58,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
 #### 打开 IDEA
 
-打开 IDEA 代码开发工具。
+打开 IDEA 代码开发工具
 
 ![1738-410-07](https://doc.shiyanlou.com/courses/1738/1207281/5fd8d1853074d843bc97ac1cb8b0b581-0)
 
@@ -76,11 +76,17 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
 #### Maven 依赖
 
+如图所示找到 pom.xml 文件：
+
+![1738-410-pom](https://doc.shiyanlou.com/courses/1738/1207281/2096e77f8ff05283b1b51e9f5182b861-0)
+
 在 pom.xml 文件中可以找到当前课程使用到的 Maven 依赖：
 
 ![1738-410-10](https://doc.shiyanlou.com/courses/1738/1207281/6051f6b91a19df45bb674dd7fe1a8e0a-0)
 
-## Hive jdbc 代码
+## Hive JDBC 代码
+
+编写通过 JDBC 连接 Hive on Spark 进行数据操作的代码，在后文的样例程序中会调用本节定义的方法。在之后的课程中使用到 HiveUtil 类时会调用已有的该类，代码内容和本节叙述一致，将不再赘述。
 
 #### 打开 HiveUtil 类
 
@@ -94,13 +100,13 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
 ```java
 try {
-    // 获取 jdbc 驱动类
+    // Get JDBC driver class
     Class.forName("org.apache.hive.jdbc.HiveDriver");
-    // 获取 jdbc 连接
+    // Get JDBC connection
     connection = DriverManager.getConnection(
             "jdbc:hive2://sdbserver1:10000/default",// url
-            "sdbadmin",// Hive on Spark 用户名
-            ""// Hive on Spark 密码（默认未开启鉴权）
+            "sdbadmin",// Hive on Spark Username
+            ""// Hive on Spark password(Authentication is not enabled by default)
     );
 } catch (ClassNotFoundException e) {
     e.printStackTrace();
@@ -118,23 +124,23 @@ try {
 JDBC 创建数据库对象的代码内容如下：
 
 ```java
-// 获取 jdbc 连接
+// Get JDBC connection
 Connection connection = getConnection();
 Statement statement = null;
 try {
-    // 装载sql语句
+    // Load SQL statement
     statement = connection.createStatement();
-    // 提交sql语句
+    // Submit SQL statement
     statement.execute(sql);
 } catch (SQLException e) {
     e.printStackTrace();
 } finally {
-    // 释放资源
+    // Release resource
     releaseSource(null, statement, connection);
 }
 ```
 
-将 JDBC 创建数据库对象代码粘贴至HiveUtil 类 doDDL方法的 TODO -- lesson1_sample:code2 注释处（56 行）：
+将 JDBC 创建数据库对象代码粘贴至 HiveUtil 类 doDDL 方法的 TODO -- lesson1_sample:code2 注释处（56 行）：
 
 ![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/ccf219c515863a87a36cf96906819147-0)
 
@@ -143,18 +149,18 @@ try {
 JDBC 提交数据库记录操作语句代码内容如下：
 
 ```java
-// 获取 jdbc 连接
+// Get JDBC connection
 Connection connection = getConnection();
 Statement statement = null;
 try {
-    // 装载sql语句
+    // Load SQL statement
     statement = connection.createStatement();
-    // 提交sql语句
+    // Submit SQL statement
     statement.executeUpdate(sql);
 } catch (SQLException e) {
     e.printStackTrace();
 } finally {
-    // 释放资源
+    // Release source
     releaseSource(null, statement, connection);
 }
 ```
@@ -168,21 +174,21 @@ try {
 JDBC 查询数据库记录代码如下：
 
 ```java
-// 获取 jdbc 连接
+// Get JDBC connection
 Connection connection = getConnection();
 ResultSet resultSet = null;
 Statement statement = null;
 try {
-    // 装载sql语句
+    // Load SQL statement
     statement = connection.createStatement();
-    // 提交sql语句获取查询结果集
+    // Submit SQL statement to get query result set
     resultSet = statement.executeQuery(sql);
-    // 格式化打印返回结果集
+    // Format printing and return result set
     ResultFormat.printResultSet(resultSet);
 } catch (SQLException e) {
     e.printStackTrace();
 } finally {
-    // 释放资源
+    //  Release source
     releaseSource(resultSet, statement, connection);
 }
 ```
@@ -196,7 +202,7 @@ try {
 releaseSource() 为 HiveUtil 的一个公用方法，用于释放各种 JDBC 操作中使用到的 resultset、statement 和 connection 等资源：
 
 ```java
-// 释放 resultset
+// Release resultset
 if (null != resultSet) {
     try {
         resultSet.close();
@@ -204,7 +210,7 @@ if (null != resultSet) {
         e.printStackTrace();
     }
 }
-// 释放 statement
+// Release statement
 if (null != statement) {
     try {
         statement.close();
@@ -212,7 +218,7 @@ if (null != statement) {
         e.printStackTrace();
     }
 }
-// 释放 connection
+// Release connection
 if (null != connection) {
     try {
         connection.close();
@@ -222,11 +228,13 @@ if (null != connection) {
 }
 ```
 
-将释放 jdbc 资源代码粘贴至 HiveUtil 类 releaseSource() 方法的 TODO -- lesson1_sample:code5 注释处（23 行）：
+将释放 jdbc 资源代码粘贴至 HiveUtil 类 releaseSource 方法的 TODO -- lesson1_sample:code5 注释处（23 行）：
 
 ![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/08620fbc6bf6a00420ef7256715ca3a7-0)
 
 ## 样例程序
+
+样例程序将简单展示通过调用 HiveUtil 中的方法提交 SQL 语句的方式。
 
 #### 打开 JdbcSample 类
 
@@ -239,28 +247,28 @@ if (null != connection) {
 样例程序中调用了 HiveUtil 类中的方法，通过 JDBC 向 Hive on Spark 提交 SQL 语句。程序代码内容如下：
 
 ```java
-// 初始化表
+// Init table
 String dropTable =
         "DROP TABLE IF EXISTS jdbc_sample";
-// 调用HiveUtil类doDDL()方法通过jdbc执行drop语句
+// Call the method of the HiveUtil class to execute the drop statement through JDBC
 HiveUtil.doDDL(dropTable);
-// 创建表
+// Create table
 String createTable =
         "CREATE TABLE jdbc_sample ( id INT, val VARCHAR ( 10 ) )";
-// 调用HiveUtil类doDDL()方法通过jdbc执行建表语句
-System.out.println("正在创建表……");
+// Call the method of the HiveUtil class to execute the create statement through jdbc
+System.out.println("Creating table...");
 HiveUtil.doDDL(createTable);
-// 插入数据
+// Insert data
 String insertDate =
-        "INSERT INTO jdbc_sample VALUES ( 1, \"abc\" )";
-// 调用HiveUtildoDML()方法通过jdbc执行插入语句
-System.out.println("正在写入记录……");
+        "INSERT INTO jdbc_sample VALUES ( 1, \"SequoiaDB\" )";
+// Call the method of the HiveUtil class to execute the insert statement through jdbc
+System.out.println("Writing record...");
 HiveUtil.doDML(insertDate);
-// 查询结果集
+// Query result set
 String getResultSet =
         "SELECT id,val FROM jdbc_sample";
-// 通过HiveUtil类doDQL()方法通过jdbc获得结果集
-System.out.println("正在查询记录……");
+// Call the method of the HiveUtil class to get the result set through jdbc
+System.out.println("Query record...");
 HiveUtil.doDQL(getResultSet);
 ```
 
@@ -272,7 +280,7 @@ HiveUtil.doDQL(getResultSet);
 
 #### 运行程序
 
-右键点击 SampleMainTest 类，选择 `Run` 运行主函数：
+右键点击 SampleMainTest 类，选择 Run 运行主函数：
 
 ![1738-410-19](https://doc.shiyanlou.com/courses/1738/1207281/05ba1cfaaf96207aed32a4def121aaf7-0)
 
@@ -280,7 +288,7 @@ HiveUtil.doDQL(getResultSet);
 
 程序运行结果如下图所示：
 
-![1738-410-20](https://doc.shiyanlou.com/courses/1738/1207281/ced8b116cc695d4f65e8d81288fafa0d-0)
+![1738-410-20](https://doc.shiyanlou.com/courses/1738/1207281/9998c4015f44b613202d911c1ea157cc-0)
 
 ## 总结
 

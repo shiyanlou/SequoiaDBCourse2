@@ -63,6 +63,10 @@ DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解�
 
 #### Maven 依赖
 
+如图所示找到 pom.xml 文件：
+
+![1738-410-pom](https://doc.shiyanlou.com/courses/1738/1207281/2096e77f8ff05283b1b51e9f5182b861-0)
+
 在 pom.xml 中可以找到当前实验需要用到的 Maven 依赖：
 
 ![1738-460-05](https://doc.shiyanlou.com/courses/1738/1207281/72ddb27afd9118ddef82ca7aa3d56d39-0)
