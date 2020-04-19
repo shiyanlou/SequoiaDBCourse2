@@ -749,7 +749,7 @@ resultData = transData.assignTimestampsAndWatermarks(
 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
-return transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
+resultData = transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
 	@Override
     public Tuple3<String, Double, Integer> map(BSONObject object) throws Exception {
       return Tuple3.of(object.get("trans_name").toString(),((BSONDecimal) object.get("money")).toBigDecimal().doubleValue(), 1);
@@ -802,7 +802,7 @@ resultData = keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time
 将下列代码粘贴到 TODO code 6区间内。
 
 ```java
-restultData = windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {
+resultData = windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {
     /**
       * @param s key
       * @param context Context objects，the essence of this operator
