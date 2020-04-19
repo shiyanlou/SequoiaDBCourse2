@@ -73,32 +73,32 @@ Spark Streaming 在工作过程中，实时地接收输入的数据流，并将�
 #### 程序代码
 
   ```java
-// 配置 spark 的 master 和 appname
-// master必须为local[n],n>1,表示一个线程接收数据，n-1个线程处理数据
-// local[*] 意为使用可用线程处理数据
+// Configure master and appname of spark
+// Master must be local[n], n> 1(1 thread receives data and n-1 threads process data)
+// local [*] means using available threads to process data
 SparkConf sparkConf = new SparkConf().setMaster("local[*]").setAppName("streaming word count");
-// 创建 sparkcontext
+// Create sparkcontext
 JavaSparkContext javaSparkContext = new JavaSparkContext(sparkConf);
-// 创建 streamingcontext
-// Durations 为流计算的时间间隔
+// Create streamingcontext
+// "Durations" means the time intervals calculated for the stream
 JavaStreamingContext javaStreamingContext = new JavaStreamingContext(javaSparkContext, Durations.seconds(10));
-// 创建流通过 socket 获取指定端口输入(nc -lk 6789)
+// Creating stream gets the specified port input (nc -lk 6789) through socket.
 JavaReceiverInputDStream<String> lines =
         javaStreamingContext.socketTextStream("sdbserver1", 6789);
-// 创建匹配样式指定为空格
+// Create matching style specified as spaces
 Pattern SPACE = Pattern.compile(" ");
-// 将端口输入的每行按照 Pattern 切分为单词
+// Divide each line of the port input into words according to the Pattern
 JavaDStream<String> words = lines.flatMap(x -> Arrays.asList(SPACE.split(x)).iterator());
-// 将单词转化成键值对（key：单词，value：1），便于合并
+// Words are converted into key-value pairs (key: words, value: 1) for merging easily.
 JavaPairDStream<String, Integer> pairs = words.mapToPair(s -> new Tuple2<>(s, 1));
-// 合并相同的单词计数
+// Merge the same word count
 JavaPairDStream<String, Integer> wordCounts = pairs.reduceByKey((i1, i2) -> i1 + i2);
-// 将统计信息（10秒内）打印到控制台
+// Print statistics (within 10 seconds) to the console
 wordCounts.print();
 try {
-    // 开启流计算
+    // Start the stream computing
     javaStreamingContext.start();
-    // 等待结束
+    // Wait for the end
     javaStreamingContext.awaitTermination();
 } catch (InterruptedException e) {
     e.printStackTrace();
