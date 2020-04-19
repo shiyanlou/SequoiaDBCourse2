@@ -88,16 +88,16 @@ DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解�
 #### 程序代码
 
 ```java
-// 创建 SparkContext
+// Create SparkContext
 SparkConf conf = new SparkConf().setAppName("wordcount").setMaster("local[*]");
 JavaSparkContext sc = new JavaSparkContext(conf);
-// 读取文件生成 RDD
+// Read file to generate RDD
 JavaRDD<String> lines = sc.textFile("src/main/resources/txt/words.txt");
-// 将 JavaRDD 转化为键值对，key 为单词，value 为1
+// Convert JavaRDD into key-value pairs. Key is word, and value is 1.
 JavaPairRDD<String, Integer> pairs = lines.mapToPair(s -> new Tuple2(s, 1));
-// key 值相同的 pair 合并（value 为 1 求和计数）
+// The pair with the same key value is combined (the value is 1 and the sum is counted)
 JavaPairRDD<String, Integer> counts = pairs.reduceByKey((a, b) -> a + b);
-// 打印结果
+// Print the result
 System.out.println(counts.collect());
 ```
 
@@ -136,25 +136,25 @@ System.out.println(counts.collect());
 #### 程序代码
 
 ```java
-// 创建 SparkSession
+// Create SparkSession
 SparkSession spark = SparkSession.builder().master("local[*]").appName("Spark").getOrCreate();
-// 读取文件生成 RDD 后转化成 JavaRDD
+// Read the file to generate RDD and convert it to JavaRDD
 JavaRDD<Row> rows = spark.read().text("src/main/resources/txt/words.txt").toJavaRDD();
-// 创建存储字段类型的 ArrayList
+// Create an ArrayList that stores field types
 ArrayList<StructField> fields = new ArrayList<StructField>();
-// 创建名为 word 的字段类型为 StringType
+// Create a field named word with StringType
 StructField wordField = DataTypes.createStructField("word", DataTypes.StringType, true);
-// 将字段添加到 ArrayList 中
+// Add this field to ArrayList
 fields.add(wordField);
-// 通过保存了字段名和字段类型的的 ArrayList 创建 schema
+// Create a schema from an ArrayList that stores field names and field types
 StructType schema = DataTypes.createStructType(fields);
-// 为从文件读取到的 RDD 指定 shema 使其具有表结构
+// Specify the shema for the RDD read from the file, making it has a table structure
 Dataset<Row> wordCount = spark.createDataFrame(rows, schema);
-// 将 DataSet 创建为 临时表
+// Create DataSet as a temporary table
 wordCount.createOrReplaceTempView("wordcount");
-// 临时表分组查询实现单词数统计
-Dataset<Row> result = spark.sql("select word,count(0) as count from wordcount group by word");
-// 打印记录
+// Group query for temporary table to realize word count
+Dataset<Row> result = spark.sql("SELECT word,count(0) AS count FROM wordcount GROUP BY word");
+// Print the records
 result.show();
 ```
 
@@ -193,9 +193,9 @@ result.show();
 #### 创建 SparkSession
 
 ```java
-// 创建 SparkSession
+// Create SparkSession
 private static final SparkSession sparkSession = SparkSession.builder().master("local[*]").getOrCreate();
-// 全局 Dataset 便于在不同函数中分别使用
+// Global Dataset for using in different functions
 private static Dataset<Row> countBySex = null;
 private static Dataset<Row> employee = null;
 ```
@@ -207,17 +207,17 @@ private static Dataset<Row> employee = null;
 #### 读取 employee 表
 
 ```java
-// 从 MySQL 表创建数据集
+// Create a dataset from a MySQL table
 employee = sparkSession.read()
-        .format("jdbc")//使用 jdbc 连接
-        .option("url", "jdbc:mysql://localhost:3306/sample?useSSL=false")// MySQL 实例 url
-        .option("dbtable", "sample.employee")// 源表的库名和表名
-        .option("user", "root")// 用户名
-        .option("password", "root")// 密码
+        .format("jdbc")//Connect using jdbc
+        .option("url", "jdbc:mysql://localhost:3306/sample?useSSL=false")// MySQL instance url
+        .option("dbtable", "sample.employee")// Database name and table name of the source table
+        .option("user", "root")// username
+        .option("password", "root")// password
         .load();
-// 打印表结构
+// Print the structure of table
 employee.printSchema();
-// 打印结果集（部分）
+// Print the result set (partial)
 employee.show();
 ```
 
@@ -228,13 +228,13 @@ employee.show();
 #### 创建临时表
 
 ```java
-// 将 Spark SQL 读取到的数据集 employee 创建为临时表
+// Create the data set employee read by Spark SQL as a temporary table
 employee.createOrReplaceTempView("employee");
-// 通过 sparksession 执行 sql 语句进行分组查询
-countBySex = sparkSession.sql("select sex,count(1) as num from employee group by sex");
-// 打印统计表结构
+// Execute sql statement through sparksession
+countBySex = sparkSession.sql("SELECT sex,count(1) AS num FROM employee GROUP BY sex");
+// Print the structure of statistics table
 countBySex.printSchema();
-// 打印统计表数据
+// Print the data of statistics table
 countBySex.show();
 ```
 
@@ -245,21 +245,21 @@ countBySex.show();
 #### 将统计结果集写入 MySQL 实例表
 
 ```java
-// 删除已有 MySQL 实例表
+// Delete the existing MySQL instance table
 MySQLUtil.dropTable("sexcount");
-// 将统计后的数据集写入到 MySQL 实例
+// Write the statistical data set to the MySQL instance
 countBySex.write()
-        .format("jdbc")//使用 jdbc 连接
-        .option("url", "jdbc:mysql://sdbserver1:3306/sample?useSSL=false")// MySQL 实例 url
-        .option("dbtable", "sample.sexcount")// 源表的库名和表名
-        .option("user", "root")// 用户名
-        .option("password", "root")// 密码
+        .format("jdbc")//Connect using jdbc
+        .option("url", "jdbc:mysql://sdbserver1:3306/sample?useSSL=false")// MySQL instance url
+        .option("dbtable", "sample.sexcount")// Database name and table name of the source table
+        .option("user", "root")// Username
+        .option("password", "root")// Password
         .save();
-// 打印 MySQL 实例表结构
+// Print the structure of MySQL instance table
 MySQLUtil.getData("desc sexcount");
-// 打印MySQL 实例表结果集
+// Print the result set of MySQL instance table
 MySQLUtil.getData("select * from sexcount");
-// 关闭 SparkSession
+// Close SparkSession
 sparkSession.close();
 ```
 
@@ -283,7 +283,7 @@ sparkSession.close();
 
 * 运行结果如下：
 
-  ![1738-460-27](https://doc.shiyanlou.com/courses/1738/1207281/af3e959e6ed3b42488628170ef723f5f-0)
+  ![1738-460-27](https://doc.shiyanlou.com/courses/1738/1207281/15cb510c145979ee2f7fd142944a0030-0)
 
 ## 总结
 
