@@ -89,7 +89,7 @@ conn.close();
 
 #### 执行JdbcDEV
 
-右键JdbcDEV.java，选择Run，执行JdbcDEV.java
+右键EnvBuildingMainTest.java，选择Edit，修改参数为jdbcDEV,再次选择Run，执行JdbcDEV.java
 
 ![1735-110-5.png](https://doc.shiyanlou.com/courses/1735/1207281/1807a51b5815cc33e6a5c6c05f53bf85-0)
 
@@ -117,28 +117,30 @@ C3P0是一个开源的JDBC连接池，它实现了数据源与JNDI绑定，支�
 
 ![1735-110-20.png](https://doc.shiyanlou.com/courses/1735/1207281/97298ef854fd62d400633e8103656036-0)
 
-创建一个静态ComboPooledDataSource对象，配置数据库连接信息，在第34行TODO中添加
+创建一个静态ComboPooledDataSource对象，配置数据库连接信息，在第23行TODO中添加
 
 ```java
 private static ComboPooledDataSource dataSource=new ComboPooledDataSource();
+
+static {
+    try {
+        //设置注册驱动
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        //url
+        dataSource.setJdbcUrl("jdbc:mysql://sdbserver1:3306/mysqlTest");
+        //数据库用户名
+        dataSource.setUser("root");
+        //数据库密码
+        dataSource.setPassword("root");
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 ```
 
-![1735-110-21.png](https://doc.shiyanlou.com/courses/1735/1207281/3814e9549e74216b649914c1b65b9fb3-0)
+![1587289453495](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1587289453495.png)
 
-在静态代码块中设置数据库连接信息，在第26行TODO中添加
 
-```java
-//设置注册驱动
-dataSource.setDriverClass("com.mysql.jdbc.Driver");
-//url
-dataSource.setJdbcUrl("jdbc:mysql://sdbserver1:3306/mysqlTest");
-//数据库用户名
-dataSource.setUser("root");
-//数据库密码
-dataSource.setPassword("root");
-```
-
-![1735-110-22.png](https://doc.shiyanlou.com/courses/1735/1207281/df8886502ead5e6eb5fa0c3a08e6210d-0)
 
 在方法getConnection()的TODO中，编写代码获取连接，在第18行TODO中添加
 
@@ -150,9 +152,9 @@ try {
 }
 ```
 
-![1735-110-23.png](https://doc.shiyanlou.com/courses/1735/1207281/d998178cc3bcd71cd0160ee1ce14e631-0)
+![1587289494214](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1587289494214.png)
 
-在close方法的TODO中，编写代码释放资源，在第11行TODO中添加
+在close方法的TODO中，编写代码释放资源，在第10行TODO中添加
 
 ```java
 if (rs!=null){
@@ -178,13 +180,13 @@ if (conn!=null){
 }
 ```
 
-![1735-110-24.png](https://doc.shiyanlou.com/courses/1735/1207281/55eef87cee95807b3b66a5c10f244f87-0)
+![1587289588207](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1587289588207.png)
 
 ## 验证连接池
 
 打开验证连接池的TestUtilsC3P0类
 
-修改test01方法TODO中的内容
+修改第8行run方法TODO中的内容
 
 ```java
 // 使用c3p0工具类获得getConnection
@@ -206,11 +208,19 @@ while (rs.next()){
 UtilsC3P0.close(rs,state,conn);
 ```
 
-![1735-110-18.png](https://doc.shiyanlou.com/courses/1735/1207281/e4a37a121a343aa585c89cbacd89978f-0)
+![1587289672084](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1587289672084.png)
 
-右键TestUtilsC3P0.java，选择Run，执行TestUtilsC3P0.java
+右键EnvBuildingMainTest.java，选择Edit
 
-![1735-110-7.png](https://doc.shiyanlou.com/courses/1735/1207281/2eecbffdfb70a5c0af788a86c26a629e-0)
+![1735-110-9.png](https://doc.shiyanlou.com/courses/1735/1207281/4f2e6e8dde86ee4694fc668ba569240d-0)
+
+修改参数为testUtilsC3P0
+
+![1587289768900](C:\Users\ChengYueyi\AppData\Roaming\Typora\typora-user-images\1587289768900.png)
+
+右键EnvBuildingMainTest.java，选择Run，运行代码
+
+![1735-110-11.png](https://doc.shiyanlou.com/courses/1735/1207281/bca48948ed03e3e6abf5d55307ba2c1f-0)
 
 查看结果
 
@@ -274,5 +284,6 @@ String sql = "select user();";
 String sql = "select version();";
 ```
 
-> 其余操作步骤同now（）一致
+> 其余操作步骤同now（）一致 
 
+ 

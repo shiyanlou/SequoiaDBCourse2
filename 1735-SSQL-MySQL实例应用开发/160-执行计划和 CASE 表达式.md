@@ -1,7 +1,7 @@
 ---
+
 show: step
 version: 1.0 
-
 ---
 
 ## 课程介绍
@@ -69,26 +69,13 @@ CASE表达式是一个流程控制结构，用在在SELECT、WHERE等语句中�
 > **type**包含的类型包括如下几种，从最好到最差依次是：
 >
 > system > const > eq_ref > ref > range > index > all
-
-#### 初始化数据库
-
-右键ExplainAndCaseMainTest，选择Edit修改参数为init，初始化数据库环境
-
-![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
-
-修改参数为init
-
-![1735-160-3.png](https://doc.shiyanlou.com/courses/1735/1207281/2940826a192ce8ff27e1cc82204c729b-0)
-
-右键ExplainAndCaseMainTest，选择Run，运行初始化数据库环境代码
-
-![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+>
 
 #### 查看执行计划
 
 查看select * from employee的执行计划
 
-打开UpdateTest.java，修改第11行TODO中的内容为
+打开ExplainTest.java，修改第16行run1方法中的TODO
 
 ```java
 stmt = conn.createStatement();
@@ -102,11 +89,9 @@ while (rs.next()) {
 }
 ```
 
-右键ExplainAndCaseMainTest，选择Edit修改参数为test
+右键ExplainAndCaseMainTest，选择Edit修改参数为explain
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
-
-![1735-160-5.png](https://doc.shiyanlou.com/courses/1735/1207281/7afb00d2fe88dd408acb4c0cb58dd601-0)
 
 右键ExplainAndCaseMainTest，选择Run，运行代码
 
@@ -124,7 +109,7 @@ while (rs.next()) {
 
 为表employee的列ename创建索引，再次查看执行计划
 
-打开UpdateTest.java，修改第11行TODO中的内容为
+打开ExplainTest.java，修改第11行run2方法中的TODO
 
 ```java
 stmt = conn.createStatement();
@@ -139,6 +124,10 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
+右键ExplainAndCaseMainTest，选择Edit修改参数为alterExplain
+
+![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
 右键ExplainAndCaseMainTest，选择Run，运行代码
 
@@ -170,7 +159,7 @@ ELSE result END
 
 此情况下，拿value与各个compare_value比较，相等时取对应的值，都不相等时取最后的result。
 
-打开UpdateTest.java，修改第11行TODO中的内容为
+打开ExplainTest.java，修改第17行run1方法中的TODO
 
 ```java
 stmt = conn.createStatement();
@@ -191,6 +180,10 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
+右键ExplainAndCaseMainTest，选择Edit修改参数为caseTest
+
+![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
 右键ExplainAndCaseMainTest，选择Run，运行代码
 
@@ -219,7 +212,7 @@ ELSE result END
 
 此时自上而下根据condition判断，取对应的值，都不满足的时候取最后的result。
 
-打开UpdateTest.java，修改第11行TODO中的内容为
+打开ExplainTest.java，修改第11行run2方法中的TODO
 
 ```java
 stmt = conn.createStatement();
@@ -239,6 +232,9 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+右键ExplainAndCaseMainTest，选择Edit修改参数为caseIfTest
+
+![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
 右键ExplainAndCaseMainTest，选择Run，运行代码
 
@@ -252,3 +248,4 @@ while (rs.next()) {
 ​			10004	Chirs	40	
 ​			10005	Kyoichi	23	
 ​			10006	Anneke	19	
+
