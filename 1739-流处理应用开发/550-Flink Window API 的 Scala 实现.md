@@ -261,7 +261,7 @@ val option: SequoiadbOption = SequoiadbOption.bulider
     .collectionName("TRANSACTION_FLOW")
     .build
 // Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
-resultData = env.addSource(new SequoiadbSource(option, "crate_time"))
+resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 ```
 
 #### 查看数据的结果
@@ -422,12 +422,8 @@ val option: SequoiadbOption = SequoiadbOption.bulider
     .collectionSpaceName("VIRTUAL_BANK")
     .collectionName("TRANSACTION_FLOW")
     .build
-<<<<<<< HEAD
 // Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
-=======
-// 向当前环境中添加数据源（SequoiadbSource需要通过时间字段"create_time"构建流）
->>>>>>> a0d39cf562f7523fcaf2cce96964d4d1726a6afe
-resultData = env.addSource(new SequoiadbSource(option, "crate_time"))
+resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 ```
 
 #### 类型转换
@@ -615,7 +611,7 @@ val option: SequoiadbOption = SequoiadbOption.bulider
     .collectionName("TRANSACTION_FLOW")
     .build
 // Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
-resultData = env.addSource(new SequoiadbSource(option, "crate_time"))
+resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 ```
 
 #### 添加Watermark
