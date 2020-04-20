@@ -7,7 +7,7 @@ version: 1.0
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉并搭建 SSQL-MySQL 开发环境
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉并搭建 SSQL-MySQL 开发环境。
 
 #### 请点击右侧选择使用的实验环境
 
