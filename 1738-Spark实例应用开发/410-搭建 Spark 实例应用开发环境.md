@@ -133,7 +133,7 @@ try {
 >
 >   ![paste2](https://doc.shiyanlou.com/courses/1738/1207281/6b477101feb04b1db73e8f893ba3b334-0)
 >
-> * 在实验环境中到对应和位置粘贴
+> * 在实验环境中到对应的位置粘贴
 >
 >   ![paste3](https://doc.shiyanlou.com/courses/1738/1207281/14482e482cde033e4f78cca144abdcee-0)
 
