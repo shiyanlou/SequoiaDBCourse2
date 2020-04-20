@@ -45,7 +45,7 @@ version: 1.0
 
 ![1735-110-2.png](https://doc.shiyanlou.com/courses/1735/1207281/f5ec2ca3949feed5c2a1c22262fa7619-0)
 
-## 配置连接属性，执行SQL
+## 配置JDBC连接属性
 
 在 idea 操作数据库，可以通过 JDBC 配置相关连接属性连接 MySQL 数据库。  
 
@@ -120,7 +120,7 @@ conn.close();
 
 ## 执行JdbcDEV
 
-右键 EnvBuildingMainTest.java，选择 Edit 
+1）右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
 
 ![1735-110-101.png](https://doc.shiyanlou.com/courses/1735/1207281/fc34dacc10ff53011b7ec40e8ea43139-0)
 
@@ -228,7 +228,7 @@ if (conn!=null){
 
 ## 验证连接池
 
-打开验证连接池的 TestUtilsC3P0 类
+1）打开验证连接池的 TestUtilsC3P0 类
 
 ![1735-110-110.png](https://doc.shiyanlou.com/courses/1735/1207281/e149ac2fb587538051af4f3cb7ee0055-0)
 
@@ -270,7 +270,7 @@ try {
 
 ![1735-110-117.png](https://doc.shiyanlou.com/courses/1735/1207281/85dc747df7bd975a695d7cafe077d01a-0)
 
-3）执行代码，右键 EnvBuildingMainTest.java，选择 Edit
+3）执行代码，右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
 
 ![1735-110-9.png](https://doc.shiyanlou.com/courses/1735/1207281/4f2e6e8dde86ee4694fc668ba569240d-0)
 
