@@ -36,7 +36,7 @@ version: 1.0
 #### 打开 lesson1 packge
 打开 com.sequoiadb.scdd.lesson1_intro  packge ，在该 package 中完成本课程。
 
-![1739-510-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/a88d97c8a83e607911d85fa999712382-0)
+![1739-510-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/387eaa42ccc334912afc2fa1279aa2fe-0)
 
 
 ## Flink 简介
@@ -72,13 +72,13 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 从上图中可以看到，Flink 的核心（通常情况下我们称之为 Runtime ）可运行在常见的资源环境中，如本地 JVM，集群和云平台中。其基础API可以看到分为用于流场景的 DataStream 与批场景的 DataSet 的，基于这两种 API，Flink 又抽象出 Table API 与 CEP 和 ML 等高级接口，本次课程只演示 DataStream API 和 Table API 的使用。
 
-#### Flink的执行流程
+#### Flink 的执行流程
 
 ![1739-510-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/5509b69c586de4f3cff7ddac390cf55c-0)
 这是 Flink 的工作流程，首先了解 Flink 中的基本角色
 
 - JobManager 整个集群的 Master，负责接收客户端的消息和分配调度集群资源和分发任务给 TaskManager。
-- JobClient 负责向 JobManager 发送请求，在提交作业时负责将 Flink Program 组装为一个 JobGraph 发给JobManager。
+- JobClient 负责向 JobManager 发送请求，在提交作业时负责将 Flink Program 组装为一个 JobGraph 发给 JobManager。
 - TaskManager 负责具体任务的执行，Task Slot是其拥有资源（内存）的单位。
 - Flink Program 就是我们要编写的 Flink 程序， 在执行前会被映射成一个 Streaming Dataflow 结构。在下图中可以看到 Streaming Dataflow 的具体结构，可以分为三种， 分别为 Source、Transformation、Sink。Source 表示的是数据的来源，Sink 表示数据的落地，Transformation 表示的是数据的一系列转化流程。其中的map、keyBy 等都是 Flink 程序中具体的 Transformation 算子。
 
@@ -92,7 +92,7 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 在当前工程包下打开类 IntroDemoMain。
 
-![1739-510-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/a33b303a8f34959f2bca2ae07ebc6ddd-0)
+![1739-510-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/0078aed5a79cdf6e72d42beb520ade1e-0)
 
 
 
@@ -102,7 +102,7 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 在当前类中找到 environment 方法，找到 TODO code 1。
 
-![1739-510-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/6f8d37c1e639225dd360f1c469400358-0)
+![1739-510-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/949033f286613056a0103e36a4f75563-0)
 
 将下列代码粘贴到 TODO code 1区间内。
 
@@ -117,7 +117,7 @@ Source算子用于产生一个DataStream。
 
 在当前类中找到source方法，找到 TODO code 2。
 
-![1739-510-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/70d53c17390cbd9e57fde3eed307547b-0)
+![1739-510-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/32ed6ddaadd3f81b6bc750954c8bc443-0)
 
 将下列代码粘贴到 TODO code 2区间内。
 
@@ -132,7 +132,7 @@ Transformation可以对数据做转换操作，代码中的算子使用规则详
 
 在当前类中找到transformate方法，找到 TODO code 3。
 
-![1739-510-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/d0224bfa01c602e43e1a396420850ee9-0)
+![1739-510-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/0d49f28ca8e0fd4357420eed919f8d25-0)
 
 将下列代码粘贴到 TODO code 3区间内。
 
@@ -163,7 +163,7 @@ sumData = mapData.keyBy(0).sum(1);
 
 在当前类中找到sink方法，找到 TODO code 4。
 
-![1739-510-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/5c066bcb15d49c6c196d625b80e7578d-0)
+![1739-510-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/28415686da76f4eb482f3d6b62168cd7-0)
 
 将下列代码粘贴到 TODO code 4区间内。
 
@@ -177,7 +177,7 @@ sumData.print();
 
 在当前类中找到 exec 方法，找到 TODO code 5。
 
-![1739-510-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/beaff442291e00a599c5bf20614af7f8-0)
+![1739-510-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/b17f448e40546a199b9492c71d5cf895-0)
 
 将下列代码粘贴到 TODO code 5区间内。
 
@@ -196,7 +196,7 @@ env.execute("flink intro demo");
 
 统计结果如下图。
 
-![1739-510-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/597843c31ef8a551bc1bc19b019d374b-0)
+![1739-510-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/163c12ef2d70f6ed685be00c38991234-0)
 
 
 
@@ -210,5 +210,12 @@ env.execute("flink intro demo");
 
 ## 总结
 
-本小节讲述了 Flink 的使用场景，Flink 的执行流程，一个 Flink 程序的结构。
+本小节作为 Flink 的入门了解章节，讲述了 Flink 的使用场景以及 Flink 的执行流程。
 
+**知识点**
+
+- Flink 的简介
+- Flink 优势
+- Flink 的组成结构
+- Flink 作业的结构
+- SequoiaDB 在流处理场景中的应用
