@@ -284,11 +284,11 @@ sumData = keyedData.reduce((t1, t2) -> Tuple2.of(t1.f0, t1.f1 + t2.f1));
 
 #### 运行环境
 
-在IDEA中运行main函数，实则就是在本地启动了一个flink环境，并向本地环境提交了当前作业。而通常情况下完成任务的编写之后，会将该任务提交到集群环境。
+在IDEA中运行main函数，实则就是在本地启动了一个 Flink 环境，并向本地环境提交了当前作业。而通常情况下完成任务的编写之后，会将该任务提交到集群环境。
 
 #### 项目打包
 
-点击maven侧边栏中的package打包。
+点击 maven 侧边栏中的 package 打包。
 
 ![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/63114ba459947ae84b120802661be94c-0)
 
@@ -310,7 +310,7 @@ sumData = keyedData.reduce((t1, t2) -> Tuple2.of(t1.f0, t1.f1 + t2.f1));
 
 添加入口类的引用（如下），点击 submit 提交当前作业。
 
-```
+```xml
 com.sequoiadb.flink.scdd.lesson2_word_count.WordCountMain
 ```
 
@@ -326,7 +326,7 @@ com.sequoiadb.flink.scdd.lesson2_word_count.WordCountMain
 
 ## Flink 工程参数的获取（可选）
 
-编写的程序在提交到集群后的jar如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink 同样支持动态参数的获取，下面来改造一下。
+编写的程序在提交到集群后的 jar 如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink 同样支持动态参数的获取，下面来改造一下。
 
 #### 参数获取
 
