@@ -5,18 +5,7 @@ version: 1.0
 
 ## 课程介绍
 
-本课程将介绍 Spark 的技术架构，以及通过 Spark SQL 访问 SequoiaDB 外部数据源的原理等有关知识，并通过简单的实验介绍如何通过 JDBC 访问 Spark SQL。
-
-#### 实验环境
-
-当前实验的系统和软件环境如下：
-
-* Ubuntu 16.04.6 LTS
-* JDK version "1.8.0_172"
-* SequoiaDB version: 3.4
-* SequoiaSQL-MySQL version: 3.4
-* Spark version: 2.4.3
-* IntelliJ IDEA Community Version: 2019.3.4
+本课程将介绍 Spark 的技术架构，Spark 集群工作原理以及 Spark SQL 等有关概念，并通过简单的实验介绍如何通过 JDBC 访问 Spark SQL。
 
 #### 知识点
 
@@ -24,7 +13,7 @@ version: 1.0
 
 ![1738-410-01](https://doc.shiyanlou.com/courses/1738/1207281/0f9515037aa252fe897fe6e48f7f5ab1-0)
 
-Spark 是加州大学伯克利分校AMP实验室开发的通用大数据处理框架。Spark 在 2013 年 6 月进入 Apache 成为孵化项目，8 个之后成为了 Apache 的顶级项目，很快 Spark 就成为了社区的热门，围绕 Spark 推出了 Spark SQL、Spark Streaming、MLlib、GraphX 和 SparkR 等丰富的组件。
+Spark 是加州大学伯克利分校AMP实验室开发的通用大数据处理框架。Spark 在 2013 年 6 月进入 Apache 成为孵化项目，8 个月之后成为了 Apache 的顶级项目，很快 Spark 就成为了社区的热门，围绕 Spark 推出了 Spark SQL、Spark Streaming、MLlib、GraphX 和 SparkR 等丰富的组件。
 
 ![1738-410-02](https://doc.shiyanlou.com/courses/1738/1207281/e37fd6e7f082ad243ceea6faa9f53675-0)
 
@@ -40,7 +29,7 @@ Spark 使用 Scala 语言实现，具有易用性的特点，除 Scala 以外，
 
 ![1738-410-05](https://doc.shiyanlou.com/courses/1738/1207281/e47c46e4b2ea1a76598667284f644dda-0)
 
-在集群中，Spark应用以独立的进程集合的方式运行，并由主程序（driver program）中的 SparkContext  对象进行统一的调度。当需要在集群上运行时，SparkContext 会连接到几个不同类的 ClusterManager（集群管理器）上（Spark  自己的 Standalone/Mesos/YARN）, 集群管理器将给各个应用分配资源。连接成功后，Spark  会请求集群各个节点的Executor（执行器），它是为应用执行计算和存储数据的进程的总称。之后，Spark会将应用提供的代码（应用已经提交给  SparkContext 的 JAR 或 Python 文件）交给 executor。最后，由SparkContext 发送tasks提供给 executor 执行（多线程）。
+在集群中，Spark 应用以独立的进程组的方式运行，并由主程序（driver program）中的 SparkContext  对象进行统一的调度。当需要在集群上运行时，SparkContext 会连接到几个不同类的 ClusterManager（集群管理器）上（Spark  自己的 Standalone/Mesos/YARN）, 集群管理器将给各个应用分配资源。连接成功后，Spark  会请求集群各个节点的 Executor（执行器），它是为应用执行计算和存储数据的进程的总称。之后，Spark 会将应用提供的代码（应用已经提交给  SparkContext 的 JAR 或 Python 文件）交给 Executor。最后，由 SparkContext 发送Tasks 提供给 Executor 执行（多线程）。
 
 **Spark + SequoiaSQL-MySQL + SequoiaDB**
 
@@ -48,11 +37,20 @@ Spark 使用 Scala 语言实现，具有易用性的特点，除 Scala 以外，
 
 Spark 具有访问多种外部数据源的特性。在 SequoiaDB 分布式存储架构中，Spark 可以像访问 MySQL 数据库那样访问 SequoiaDB 分布式存储的 MySQL 实例，也可以通过 SequoiaDB 的 Spark 连接器直接访问底层的 SequoiaDB 存储集群。
 
-**Hive on Spark**
+**Spark SQL**
 
-Hive on spark 是一个Hive的发展计划，由 Cloudera 发起，由 Intel、MapR 等公司共同参与的开源项目，其目的是把 Spark 作为 Hive 的一个计算引擎，将 Hive 的查询作为 Spark 的任务提交到 Spark 集群上进行计算。
+Spark SQL 是 Spark 用于处理结构化数据的组件。可以通过 SQL API 和 DataSet API 两种方式和 Spark SQL 进行交互。在本课程的实验 1 至实验 5 中将介绍 SQL API 的方式和 Spark SQL 交互，可以通过 Hive JDBC 的方式访问 Spark SQL 并提交 SQL。通过 DataSet API 和 Spark SQL 交互的方式将在后续的实验 6 中进行介绍。
 
-Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也将围绕这一方式进行展开。
+#### 实验环境
+
+当前实验的系统和软件环境如下：
+
+* Ubuntu 16.04.6 LTS
+* JDK version "1.8.0_172"
+* SequoiaDB version: 3.4
+* SequoiaSQL-MySQL version: 3.4
+* Spark version: 2.4.3
+* IntelliJ IDEA Community Version: 2019.3.4
 
 ## 打开项目
 
@@ -86,7 +84,7 @@ Hive on spark 可以通过 Hive jdbc 的方式进行操作，本系列实验也�
 
 ## Hive JDBC 代码
 
-编写通过 JDBC 连接 Hive on Spark 进行数据操作的代码，在后文的样例程序中会调用本节定义的方法。在之后的课程中使用到 HiveUtil 类时会调用已有的该类，代码内容和本节叙述一致，将不再赘述。
+编写通过 JDBC 连接 Spark SQL 进行数据操作的代码，在后文的样例程序中会调用本节定义的方法。在之后的课程中使用到 HiveUtil 类时会调用已有的该类，代码内容和本节叙述一致，将不再赘述。
 
 #### 打开 HiveUtil 类
 
@@ -105,8 +103,8 @@ try {
     // Get JDBC connection
     connection = DriverManager.getConnection(
             "jdbc:hive2://sdbserver1:10000/default",// url
-            "sdbadmin",// Hive on Spark Username
-            ""// Hive on Spark password(Authentication is not enabled by default)
+            "sdbadmin",// Spark SQL Username
+            ""// Spark SQL password(Authentication is not enabled by default)
     );
 } catch (ClassNotFoundException e) {
     e.printStackTrace();
@@ -115,9 +113,9 @@ try {
 }
 ```
 
-将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 TODO -- lesson1_sample:code1 注释处（69 行）：
+将创建 JDBC 连接代码粘贴至 HiveUtil 类 getConnection 方法的 TODO code 1 注释区间内：
 
-![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/5cc82cbd784601606c669d4f45b5ac42-0)
+![1738-410-12](https://doc.shiyanlou.com/courses/1738/1207281/f081f5d82c433521b6f436f0ccc16cdc-0)
 
 > **说明**
 >
@@ -158,9 +156,9 @@ try {
 }
 ```
 
-将 JDBC 创建数据库对象代码粘贴至 HiveUtil 类 doDDL 方法的 TODO -- lesson1_sample:code2 注释处（56 行）：
+将 JDBC 创建数据库对象代码粘贴至 HiveUtil 类 doDDL 方法的 TODO code 2 注释区间内：
 
-![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/ccf219c515863a87a36cf96906819147-0)
+![1738-410-13](https://doc.shiyanlou.com/courses/1738/1207281/951c88fc33e53af19401bb4ded20ba58-0)
 
 #### JDBC 操作数据库记录
 
@@ -183,9 +181,9 @@ try {
 }
 ```
 
-将 JDBC 操作数据库记录语句粘贴至 HiveUtil 类 doDML 方法的 TODO -- lesson1_sample:code3 注释处（45行）：
+将 JDBC 操作数据库记录语句粘贴至 HiveUtil 类 doDML 方法的 TODO code 3 注释区间内：
 
-![1738-410-14](https://doc.shiyanlou.com/courses/1738/1207281/99f702bcef254ac740127494c83bdee2-0)
+![1738-410-14](https://doc.shiyanlou.com/courses/1738/1207281/563bdbd548c23dc1a6920611730d5a79-0)
 
 #### JDBC 查询数据库记录结果集
 
@@ -201,7 +199,7 @@ try {
     statement = connection.createStatement();
     // Submit SQL statement to get query result set
     resultSet = statement.executeQuery(sql);
-    // Format printing and return result set
+    // Format printing and return result set(ResultFormat is predefined)
     ResultFormat.printResultSet(resultSet);
 } catch (SQLException e) {
     e.printStackTrace();
@@ -211,9 +209,9 @@ try {
 }
 ```
 
-将 JDBC 查询数据库记录的语句粘贴至 HiveUtil 类 doDQL 方法的 TODO -- lesson1_sample:code4 注释处（ 34 行）：
+将 JDBC 查询数据库记录的语句粘贴至 HiveUtil 类 doDQL 方法的 TODO code 4 注释区间内：
 
-![1738-410-15](https://doc.shiyanlou.com/courses/1738/1207281/2c80a1291e95d90249d96e69f4cb2c34-0)
+![1738-410-15](https://doc.shiyanlou.com/courses/1738/1207281/7679c5c1d94580e98e2d113089c3dbe2-0)
 
 #### 释放 JDBC 资源
 
@@ -246,13 +244,13 @@ if (null != connection) {
 }
 ```
 
-将释放 jdbc 资源代码粘贴至 HiveUtil 类 releaseSource 方法的 TODO -- lesson1_sample:code5 注释处（23 行）：
+将释放 JDBC 资源代码粘贴至 HiveUtil 类 releaseSource 方法的 TODO code 5 注释区间内：
 
-![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/08620fbc6bf6a00420ef7256715ca3a7-0)
+![1738-410-16](https://doc.shiyanlou.com/courses/1738/1207281/4135ef1d131303468f99061103f612c9-0)
 
 ## 样例程序
 
-样例程序将简单展示通过调用 HiveUtil 中的方法提交 SQL 语句的方式。
+样例程序将简单展示通过调用 HiveUtil 中的方法向 Spark SQL 提交 SQL 语句。
 
 #### 打开 JdbcSample 类
 
@@ -260,9 +258,9 @@ if (null != connection) {
 
 ![1738-410-17](https://doc.shiyanlou.com/courses/1738/1207281/2f65df33feacaf3fa902b1d9d68a4119-0)
 
-#### JDBC 访问 Hive on Spark 样例
+#### JDBC 访问 Spark SQL 样例
 
-样例程序中调用了 HiveUtil 类中的方法，通过 JDBC 向 Hive on Spark 提交 SQL 语句。程序代码内容如下：
+样例程序中调用了 HiveUtil 类中的方法，通过 JDBC 向 Spark SQL 提交 SQL 语句。程序代码内容如下：
 
 ```java
 // Init table
@@ -290,9 +288,9 @@ System.out.println("Query record...");
 HiveUtil.doDQL(getResultSet);
 ```
 
-将运行样例代码粘贴至 JdbcSample  类 sample 方法的 TODO -- lesson1_sample:code6 注释处（20 行）：
+将运行样例代码粘贴至 JdbcSample  类 sample 方法的 TODO code 6 注释区间内：
 
-![1738-410-18](https://doc.shiyanlou.com/courses/1738/1207281/c4e0ac9f67908d5c74e1db9ec2e90bfe-0)
+![1738-410-18](https://doc.shiyanlou.com/courses/1738/1207281/15d19c9d9b24fac65a9765f8597db96f-0)
 
 ## 运行样例
 
@@ -310,4 +308,4 @@ HiveUtil.doDQL(getResultSet);
 
 ## 总结
 
-通过本实验，可以对 Spark 技术架构和工作原理有了大致的了解，以及 Spark 是如何和 SequoiaDB 分布式存储集群交互工作的。此外，通过简单的实践练习可以使用标准 JDBC 访问 Hive on Spark 并提交 SQL 任务，后续的若干章节会根据本章节的基础继续展开。
+通过本实验，可以对 Spark 技术架构和工作原理有了大致的了解，并通过简单的实践练习可以使用 Hive JDBC 访问 Spark SQL 并提交 SQL 任务，后续的若干章节会根据本章节的基础继续展开。
