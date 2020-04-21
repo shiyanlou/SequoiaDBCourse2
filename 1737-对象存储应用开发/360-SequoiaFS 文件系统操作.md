@@ -104,7 +104,7 @@ SequoiaFS支持通用文件系统API，使用Java IO类对SequoiaFS的挂载目�
 
 ```java
 //Get the file input stream
-InputStreamReader put = new InputStreamReader(new FileInputStream("/opt/sequoiafs/mountpoint/version.conf"), "utf-8");
+InputStreamReader put = new InputStreamReader(new FileInputStream("/opt/sequoiafs/mountpoint/sequoiadb.txt"), "utf-8");
 
 char[] cbuf = new char[1024];
 
