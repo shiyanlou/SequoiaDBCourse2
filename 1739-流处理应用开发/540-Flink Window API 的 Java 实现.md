@@ -243,7 +243,7 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 });
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
@@ -449,7 +449,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 });
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
