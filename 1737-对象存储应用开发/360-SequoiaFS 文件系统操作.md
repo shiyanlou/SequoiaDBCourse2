@@ -61,7 +61,7 @@ SequoiaFS支持通用文件系统API，使用Java IO类对SequoiaFS的挂载目�
 
 
 
-2）将下方代码粘贴到TODO ~ TODO END区域的第13行
+2）将下方代码粘贴到 TODO ~ TODO END区域。
 
 ```java
     InputStream put = new FileInputStream("/home/sdbadmin/sequoiadb.txt");
@@ -100,7 +100,7 @@ SequoiaFS支持通用文件系统API，使用Java IO类对SequoiaFS的挂载目�
 
 ![image-20200415013904075](https://doc.shiyanlou.com/courses/1737/1207281/bb01ba093d96700045ec6a27d6449262-0)
 
-2）将下方代码粘贴到TODO ~ TODO END区域的第8行
+2）将下方代码粘贴到 TODO ~ TODO END区域。
 
 ```java
 //Get the file input stream
