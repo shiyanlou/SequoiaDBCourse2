@@ -72,7 +72,7 @@ version: 1.0
 
 执行结果如下图。可以看到是一些数据行，每行有多个单词构成，此时如果想要统计每个单词出现的次数首先需要使用该算子对数据行进行切分成单个单词的数据行。
 
-![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/c4f49f737c7ddb0a52e56d679f40b93f-0)
+![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/da5c2a4f975c9d36254f9cddd9476ca3-0)
 
 ## flatmap 算子
 
@@ -86,7 +86,7 @@ flatmap 算子中需传入一个函数或 FlatmapFunction 对象，简单的操�
 
 在当前类中找到 flatmap 方法，找到 TODO code 1。
 
-![1730-530-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/a502cc2ef6797c2275030630bb0b1f90-0)
+![1730-530-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/66074b54e9c56eee316eba1454b72304-0)
 
 将下列代码粘贴到 TODO code 1区间内。
 
@@ -103,7 +103,7 @@ flatmapData = dataStream.flatMap(_.split(" "))
 
 可以看到在每个数据行上仅有一个单词。
 
-![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/cb7cb4d2f65581057b8f4650d37b7a42-0)
+![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/be28584578c4520b5c2d20d42ed96652-0)
 
 ## filter 算子
 
@@ -117,7 +117,7 @@ filter 算子是 Transformation 的其中一种。该算子在每个数据行上
 
 在当前类中找到 filter 方法，找到 TODO code 2。
 
-![1730-530-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/7d00631a1d984d45d36ffbb01407ce10-0)
+![1730-530-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/3f66e4fb6aed19821cbfefdc098248f2-0)
 
 将下列代码粘贴到 TODO code 2区间内。
 
@@ -134,7 +134,7 @@ filterData = dataStream.filter(!_.equals("java"))
 
 可以看到数据中已经没有“java”单词了。
 
-![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/c7ff3f7afc7e5dc5c6a912e95373ab49-0)
+![1739-520-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/473bb94278cfcff09c763af4dec5ff32-0)
 
 ## map 算子
 
@@ -148,7 +148,7 @@ map 算子也是 Transformation 的其中一种。map算子同样在每个数据
 
 在当前类中找到 map 方法，找到 TODO code 3。
 
-![1730-530-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/bd337314ead497d72cbe6e4ae304c539-0)
+![1730-530-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/b944a8e6b1211f6280b35e6dcc666e6f-0)
 
 将下列代码粘贴到 TODO code 3区间内。
 
@@ -163,9 +163,9 @@ mapData = dataStream.map((_, 1))
 
 ![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
 
-可以看到每个数据行上都是一个 Tuple，包含一个单词和1
+可以看到每个数据行上都是一个元组，包含一个单词和1
 
-![1739-520-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/69bf7d925bc6e8ecf950f5bc63d9c822-0)
+![1739-520-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/975df71ddf869638717272b792d48273-0)
 
 
 
@@ -187,7 +187,7 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 
 在当前类中找到 sum 方法，找到 TODO code 4。
 
-![1730-530-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/ff2b5f93e4a39b2c6d86e613cbb96d99-0)
+![1730-530-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/bb8085cb74ec1085393190530ccf4c25-0)
 
 将下列代码粘贴到 TODO code 4区间内。
 
@@ -204,7 +204,7 @@ sumData = dataStream.keyBy(0).sum(1)
 
 可以看到单词统计的结果。
 
-![1739-520-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/5c0e1096418b2c32e3d09b69190be4e5-0)
+![1739-520-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/e86809b9ec06de067b157e0fed498ef1-0)
 
 ## reduce 算子（可选）
 
@@ -218,7 +218,7 @@ reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。�
 
 在当前类中找到 reduce 方法，找到 TODO code 5。
 
-![1730-530-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/57c28e7242836a179c6a772bedf76db6-0)
+![1730-530-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/bfe6c441cda36101d2d4c501260544d6-0)
 
 将下列代码粘贴到 TODO code 5区间内。
 
@@ -241,30 +241,47 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 点击 maven 侧边栏中的 package 打包。
 
-![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/37946ad7e0012704490e2d0bde233908-0)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/63114ba459947ae84b120802661be94c-0)
 
 打包成功后 jar 包会在当前项目目录的 target 目录下。
 
-![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/eeaa23a35f2e41e8dfc49f78de5613a6-0)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/5c71f5421c834b0c51693d4f3a03726e-0)
 
 #### 提交到集群环境
 
-我们可以通过 UI 界面 > submit new job > add new (上传 jar 包) > 选择 jar > 添加入口类 > submit (提交任务)。
 
-![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/e61441a7c28b896e9dc3923bd6d832b2-0)
-发现任务已经成功提交，并且已经在运行，可以在界面上看到程序的执行结果。
+通过浏览器打开 localhost:9091进入FlinkUI，默认端口8081，实验环境由于端口冲突改为了9091。
 
-![1739-520-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/3388299b06e7b517e58e93925c9e1879-0)
+可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
 
-![1739-520-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/85b316e7d239a486ff553efa5cc41c7a-0)
+![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/065a67dd2edca2ff0d97f1df1c0a6242-0)
 
+上传成功后，选择刚刚上传好的 jar。
+
+![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/c79098a0c0b369cc233e84f323abcd95-0)
+
+添加入口类的引用（如下），点击 submit 提交当前作业。
+
+```xml
+com.sequoiadb.flink.scdd.lesson3_word_count.WordCountMain
+```
+
+![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/cf55c8e6662a34c69965a2f51d15f936-0)
+
+任务成功提交后，发现已经在运行，并且可以在 UI 界面上看到程序的 Dataflow。
+
+![1739-520-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/d62689be889e598eb78ddd1685e036fe-0)
+
+在对应的 Task Manager 中可以查看到当前作业的执行结果。
+
+![1739-520-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/fe9f48d360016724607850fdb35387f9-0)
 ## Flink 工程打包与参数的获取（可选）
 
 编写的程序在提交到集群后的 jar 如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink 同样支持动态参数的获取，下面来改造一下吧。
 
 #### 参数获取
 
-- 首先可以在 main 函数的 TODO code 6添加下列代码。
+首先可以在 main 函数的 TODO code 6添加下列代码。
 
 ```scala
 // Transfer args to ParameterTool, and the ParameterTool can help us parse parameters
@@ -273,13 +290,24 @@ val tool = ParameterTool.fromArgs(args)
 val lineNum = tool.getInt("lineNum", 10)
 ```
 
-- lineNum 便是入的函数，需要通过 RandomSource 的构造器传入该值。
+lineNum 便是入的函数，需要通过 RandomSource 的构造器传入该值。
 
 ```scala
 // Modify the method to get data
 val lineData: DataStream[String] = env.addSource(new RandomSource(lineNum))
 ```
 
-- 接下来重新提交集群，红色区域便是传入的参数。
+接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
 
-![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/133d00735186b728f871b9c9e26e4ab9-0)
+![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/d9787373b031a95f80d0933c993fc02a-0)
+
+## 总结
+
+本次实验讲述了在 Scala 语言中 Flink 中的常见算子的使用，以及如何提交作业到集群环境。
+
+**知识点**
+
+- 常见算子的作用
+- 常见算子的使用
+- 聚合求和的实现
+- Flink UI 的简单使用

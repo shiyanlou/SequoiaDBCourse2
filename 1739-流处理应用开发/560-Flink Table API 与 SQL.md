@@ -5,15 +5,15 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领您了解与学习Flink Table API与Flink SQL。
+本实验将带领您了解与学习 Flink Table API 与 Flink SQL。
 
-Flink Table是Flink中的高级API, Table API将大大降低开发Flink程序的难度。本实验将使用Flink Table Api与Flink SQL来实现流作业的逻辑。
+Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
 
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink 节点、1个引擎协调节点，1个编目节点与3个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
@@ -25,7 +25,7 @@ Flink Table是Flink中的高级API, Table API将大大降低开发Flink程序的
 
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
-本实验中使用了 flink-connect-sequoiadb 依赖（Flink连接 SequoiaDB 驱动包），该依赖来自巨杉开源社区。
+本实验中使用了 flink-connect-sequoiadb 依赖（Flink 连接 SequoiaDB 驱动包），该依赖来自巨杉开源社区。
 
 * [下载地址](https://github.com/chaochaoc/flink-connector-sequoiadb/)
 
@@ -101,7 +101,7 @@ Table 的使用需要依赖于table的执行环境，table的执行环境可以�
 
 在当前类中找到 createTableFromDataStream 方法，找到 TODO code 1。
 
-![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/8d6d4a2772416779f23777f280d2198f-0)
+![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/cfc89fac14d9e8f6f14c14756ac88021-0)
 
 将下列代码粘贴到 TODO code 1区间内。
 
@@ -115,7 +115,7 @@ SQL 算子的用途与标准sql中关键字一致。
 
 在当前类中找到 select 方法，找到 TODO code 2。
 
-![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/32dbe649c789ce563ab671432d7dc739-0)
+![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/b4677408557dd40313997bf67b6ad933-0)
 
 将下列代码粘贴到 TODO code 2区间内。
 
@@ -145,7 +145,7 @@ resultTable = initTable.as("word, num")         // Rename field
 
 在当前类中找到 converTable2DataStream 方法，找到 TODO code 3。
 
-![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/90b44f48ee4fcec3d10c43f936484de5-0)
+![1739-560-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/9f323afc171e9e56a0cd255b658ac41a-0)
 
 将下列代码粘贴到 TODO code 3区间内。
 
@@ -162,7 +162,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 查看结果。
 
-![1739-560-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/81b61de6b2094ddd79e5fbd1b92c059b-0)
+![1739-560-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/55a4b46011b5ebfcf0facdda51edeee7-0)
 
 ## 通过表描述器注册表
 
@@ -178,7 +178,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
-![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
+![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/cfd849d76dff56c152a418a8325a671a-0)
 
 将下列代码粘贴到 TODO code 1区间内。
 
@@ -210,7 +210,7 @@ tbEnv.connect(
 
 在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
-![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4bf3b08d1de0ef68b97a65fa3e221744-0)
+![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/2e8504672439a12fecaf8a46c91439d2-0)
 
 将下列代码粘贴到 TODO code 2区间内。
 
@@ -241,7 +241,7 @@ tbEnv.connect(
 
 在当前类中找到 select 方法，找到 TODO code 3。
 
-![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/19e2bda1a605f3f4bde299edf5ad3e0c-0)
+![1739-560-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/8e7324917ce37f3921d500e485d0ecc3-0)
 
 将下列代码粘贴到 TODO code 3区间内。
 
@@ -264,7 +264,21 @@ tbEnv.sqlUpdate(
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_CONNECT 集合下。
 
+通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
 
+![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
+
+点击数据菜单选择 "SequoiaDB" 分布式存储。
+
+![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
+
+选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+
+![1739-560-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/92c5204482abf40ee31401742534cffc-0)
+
+选中集合 "VIRTUAL_BANK.LESSON_6_CONNECT" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+
+![1739-560-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/ace404bcb5c1f55401ad8898e3cba7ea-0)
 
 ## 通过 DDL 创建表
 
@@ -282,7 +296,7 @@ tbEnv.sqlUpdate(
 
 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
-![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
+![1739-560-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/c968ddd8227ffe9eecd70a65a24e0c0d-0)
 
 将下列代码粘贴到 TODO code 1区间内。
 
@@ -315,7 +329,7 @@ tbEnv.sqlUpdate(
 
 在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
-![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4bf3b08d1de0ef68b97a65fa3e221744-0)
+![1739-560-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/371431aad08d2f54c49c301f9fd10359-0)
 
 将下列代码粘贴到 TODO code 2区间内。
 
@@ -345,7 +359,7 @@ tbEnv.sqlUpdate(
 
 在当前类中找到 select 方法，找到 TODO code 3。
 
-![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/19e2bda1a605f3f4bde299edf5ad3e0c-0)
+![1739-560-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/2c849f8a89a7c3d5375543d7df2355e4-0)
 
 将下列代码粘贴到 TODO code 3区间内。
 
@@ -353,8 +367,8 @@ tbEnv.sqlUpdate(
  tbEnv.sqlUpdate(
      "INSERT INTO LESSON_6_DDL " +
      "SELECT " +
+         "trans_name, " +
          "SUM(money) AS `total_sum` " +
-     	 "trans_name, " +
      "FROM TRANSACTION_FLOW " +
      "GROUP BY " +
      	"trans_name");
@@ -368,6 +382,22 @@ tbEnv.sqlUpdate(
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_DDL 集合下。
 
+通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+
+![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
+
+点击数据菜单选择 "SequoiaDB" 分布式存储。
+
+![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
+
+选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+
+![1739-560-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/24aa8965ff2e2f7cf7b1861c86f5f8fe-0)
+
+选中集合 "VIRTUAL_BANK.LESSON_6_DDL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+
+![1739-560-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/28767f91758cddabc6b25a097a763076-0)
+
 ## Table API 中 Watermark 与 Window 的使用
 
 打开类 ExecuteSqlWithWatermakerAndWindowMain
@@ -380,7 +410,7 @@ tbEnv.sqlUpdate(
 
 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
-![1739-560-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/04b23470bd4cc9f33a3f08a703e24f1a-0)
+![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/e5e8fee33b633dec50236b09dd8edec9-0)
 
 将下列代码粘贴到 TODO code 1区间内。
 
@@ -418,7 +448,7 @@ tbEnv.connect(
         .watermarksPeriodicAscending()          // Set watermark generation rules
     )
 ).inAppendMode()                                
-.registerTableSource("LESSON_6_SQL");
+.registerTableSource("TRANSACTION_FLOW");
 ```
 
 #### Flink SQL 中的函数
@@ -441,7 +471,7 @@ tbEnv.connect(
 
 在当前类中找到 select 方法，找到 TODO code 2。
 
-![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/542a6ee56b6da51cb1736ecdedfd7b3a-0)
+![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/25bbe70a395a238ba5f7a2f960cdffce-0)
 
 将下列代码粘贴到 TODO code 2区间内。
 
@@ -452,6 +482,7 @@ tbEnv.sqlUpdate(
     "SELECT " +
         "trans_name, " +
         "SUM(money) AS total_sum, " +
+    	"TUMBLE_END(`rowtime`, INTERVAL '5' SECOND) as `timestamp`, " +
         "DATA_FORMAT(TUMBLE_END(`rowtime`, INTERVAL '5' SECOND), " +
     				"'HH:mm:ss') AS win_time " +
     "FROM TRANSACTION_FLOW " +
@@ -468,3 +499,19 @@ tbEnv.sqlUpdate(
 ![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/4896c1688098596aa7559ef4fc86b3d4-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_SQL 集合下。
+
+通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+
+![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
+
+点击数据菜单选择 "SequoiaDB" 分布式存储。
+
+![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
+
+选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+
+![1739-560-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/916fff7511e8486026d51f0ad1829fab-0)
+
+选中集合 "VIRTUAL_BANK.LESSON_6_SQL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+
+![1739-560-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/ff8ef65a1b5fd01ff7763ad009be3d4f-0)
