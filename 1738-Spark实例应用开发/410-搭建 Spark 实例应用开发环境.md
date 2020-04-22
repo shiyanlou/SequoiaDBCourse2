@@ -68,17 +68,17 @@ Spark SQL 是 Spark 用于处理结构化数据的组件。可以通过 SQL API 
 
 #### 项目结构
 
-项目结构以及目录文件规划如下图所示：
+项目结构如下图所示：
 
-![1738-410-09](https://doc.shiyanlou.com/courses/1738/1207281/9bb783bcad1c10701a6c63219a8d0147-0)
+![1738-410-项目结构](https://doc.shiyanlou.com/courses/1738/1207281/e8476df32f148ad489acc8deb1c45f45-0)
 
 #### Maven 依赖
 
 如图所示找到 pom.xml 文件：
 
-![1738-410-pom](https://doc.shiyanlou.com/courses/1738/1207281/2096e77f8ff05283b1b51e9f5182b861-0)
+![pom](https://doc.shiyanlou.com/courses/1738/1207281/4474b7a73c5469e7315fc9a153d73ccc-0)
 
-在 pom.xml 文件中可以找到当前课程使用到的 Maven 依赖：
+在 pom.xml 文件中可以找到当前实验使用到的 Maven 依赖：
 
 ![1738-410-10](https://doc.shiyanlou.com/courses/1738/1207281/6051f6b91a19df45bb674dd7fe1a8e0a-0)
 
@@ -90,7 +90,7 @@ Spark SQL 是 Spark 用于处理结构化数据的组件。可以通过 SQL API 
 
 如图找到 com.sequoiadb.lesson.spark.base.util.HiveUtil 类，打开类准备编写代码
 
-![1738-410-11](https://doc.shiyanlou.com/courses/1738/1207281/cfd69ce99d15bc6b0605c697652d2b49-0)
+![1738-410-11](https://doc.shiyanlou.com/courses/1738/1207281/31581adb65d14c074311e46a64e59a36-0)
 
 #### 创建 JDBC 连接
 
@@ -256,7 +256,7 @@ if (null != connection) {
 
 如图所示打开 com.sequoiadb.lesson.spark.lesson1_sample.JdbcSample 类
 
-![1738-410-17](https://doc.shiyanlou.com/courses/1738/1207281/2f65df33feacaf3fa902b1d9d68a4119-0)
+![1738-410-17](https://doc.shiyanlou.com/courses/1738/1207281/ad21304a4795f593261b10ea39cfac65-0)
 
 #### JDBC 访问 Spark SQL 样例
 
@@ -298,7 +298,7 @@ HiveUtil.doDQL(getResultSet);
 
 右键点击 SampleMainTest 类，选择 Run 运行主函数：
 
-![1738-410-19](https://doc.shiyanlou.com/courses/1738/1207281/05ba1cfaaf96207aed32a4def121aaf7-0)
+![1738-410-19](https://doc.shiyanlou.com/courses/1738/1207281/461aa9ee818ed010fa48e712f2d5843a-0)
 
 #### 运行结果
 

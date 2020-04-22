@@ -11,7 +11,7 @@ version: 1.0
 
 ![1738-470-01](https://doc.shiyanlou.com/courses/1738/1207281/0ac1cf65cb1592f164e8d192beda79e3-0)
 
-Spark  Streaming 是 core Spark API 的一个拓展组件，可以实现实时数据流的可拓展、高吞吐和可容错流处理。上游数据可以来自于 Kafka、Flume、S3 等多种数据源，同时可以支持类似 map、reduce、join 等复杂的算法和高级语言处理数据流，最终量处理过后的数据推送至文件系统、数据库或 Dashboards。
+Spark  Streaming 是 Spark 的一个拓展组件，可以实现实时数据流的可拓展、高吞吐和可容错流处理。上游数据可以来自于 Kafka、Flume、S3 等多种数据源，同时可以支持类似 map、reduce、join 等复杂的算法和高级语言处理数据流，最终量处理过后的数据推送至文件系统、数据库或 Dashboards。
 
 ![1738-470-02](https://doc.shiyanlou.com/courses/1738/1207281/e27456ccdd41ab26289b5b714b5cef82-0)
 
@@ -46,15 +46,15 @@ Spark Streaming 在工作过程中，实时地接收输入的数据流，并将�
 
 如图所示找到当前实验使用的程序所在 Package
 
-![1738-470-05](https://doc.shiyanlou.com/courses/1738/1207281/ea7604b2cd9611a29e1956d34aed9b80-0)
+![1738-470-05](https://doc.shiyanlou.com/courses/1738/1207281/5b8d7f1b06afaf94fffaf089387804e4-0)
 
 #### Maven 依赖
 
 如图所示找到 pom.xml 文件：
 
-![1738-410-pom](https://doc.shiyanlou.com/courses/1738/1207281/2096e77f8ff05283b1b51e9f5182b861-0)
+![pom](https://doc.shiyanlou.com/courses/1738/1207281/4474b7a73c5469e7315fc9a153d73ccc-0)
 
-在 pom.xml 中可以找到当前实验需要用到的 Maven 依赖：
+在 pom.xml 文件中可以找到当前实验使用到的 Maven 依赖：
 
 ![1738-470-06](https://doc.shiyanlou.com/courses/1738/1207281/35d7b9dc1a5dcdc2bbcddf9799a6a143-0)
 
@@ -68,7 +68,7 @@ Spark Streaming 在工作过程中，实时地接收输入的数据流，并将�
 
 如图所示找到 com.sequoiadb.lesson.spark.lesson7_sparkstreaming.wordCount 类：
 
-![1738-470-07](https://doc.shiyanlou.com/courses/1738/1207281/ae7bce8e8ee892843cc8d43744baef53-0)
+![1738-470-07](https://doc.shiyanlou.com/courses/1738/1207281/9271945914bb965e8b575d0c706e4881-0)
 
 #### 程序代码
 
@@ -115,9 +115,15 @@ try {
 
   ![1738-470-09](https://doc.shiyanlou.com/courses/1738/1207281/4fb77dd9aea07e4276c68335df6aef51-0)
 
+  > **说明**
+  >
+  > 若出现下述情况重复执行 nc -lk 6789 即可
+  >
+  > ![1738-470-nc](https://doc.shiyanlou.com/courses/1738/1207281/e42c467a126a83ffa042a485140f6e69-0)
+
 * 右键点击 WordCountMainTest 类选择 `Run` 主函数
 
-  ![1738-470-10](https://doc.shiyanlou.com/courses/1738/1207281/615e68129524097a4c37749bf3ee2609-0)
+  ![1738-470-10](https://doc.shiyanlou.com/courses/1738/1207281/fb774fa1503e8966599c8293df593b02-0)
 
 * 点击 IDEA 下方 `Terminal`，在 nc -lk  6789 下连续输入多个单词
 
