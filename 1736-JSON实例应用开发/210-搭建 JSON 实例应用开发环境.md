@@ -64,7 +64,7 @@ POM 文件位置：
 
 #### 概述
 
-使用 Java SDK API 对 SequoiaDB 数据库进行操作，需要先创建数据库链接。
+用户针对 SequoiaDB 的 JSON 实例开发，可以直接使用Java SDK 中 API方法进行相应的数据库操作，使用 Java SDK API 对 SequoiaDB 数据库进行操作，需要先创建数据库链接。
 
 用户可以通过创建 com.sequoiadb.base.Sequoiadb 对象，创建一个数据库链接。创建链接的过程中，需要指定连接目标的 IP、端口号、用户名和密码。
 
@@ -78,7 +78,7 @@ POM 文件位置：
 
 复制以下代码样例。样例中会创建一个数据库链接，然后使用链接获取数据库的数据组信息，通过这种方式验证数据库的连通性。每次使用完数据库链接，都需要在 finally 代码块中将链接关闭。
 
-JsonUtil.formatPrint 方法为本次实验封装好用于格式化打印 JSON 字符串的工具类，此处不做赘述，深入了解可点开源码查看。此方法只是为了控制台打印出更方便用户直观查看的数据格式，对查询结果集无任何影响。
+JsonUtil.formatPrint 方法为本次实验封装好用于格式化打印 JSON 字符串的工具类，此处不做赘述。用户想深入了解，可点开源码查看。此方法只是为了控制台打印出更方便用户直观查看的数据格式，对查询结果集无任何影响。
 
 ```java
 // Create a database link.
@@ -87,7 +87,7 @@ Sequoiadb db = new Sequoiadb("sdbserver1", 11810,
 try {
     // Get the information from data set.
     DBCursor rgs = db.listReplicaGroups();
-    System.out.println("The data group information queried after connecting to the database is：");
+    System.out.println("The data group information queried after connecting to the database is:");
     // Formatted print the information of data set.
     JsonUtil.formatPrint(rgs);
     // Close the cursor result set.
@@ -98,7 +98,7 @@ try {
 }
 ```
 
-将代码样例粘贴到 Connection 类 connect 方法第 17 行的 TODO ~ TODO END 位置区间内。
+将代码样例粘贴到 Connection 类 connect 方法 code 1 的 TODO ~ TODO END 位置区间内。
 
 ![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/210c37dfeecbdcc1f58bf4f3858aaf8b-0)
 
@@ -126,4 +126,4 @@ try {
 
 ## 总结
 
-本课程介绍了在 Java 开发环境下如何连接 SequoiaDB 数据库的 JSON 实例。需要注意的是，无论通过何种语言操作数据库，创建数据库链接都是必要前提，Java 语言也不例外。成功创建数据库链接后，用户就可以进行数据库的详细操作了。有了数据库链接，用户可以操作集合空间或者集合，也可以对数据进行查询、插入、删除，或者是对数据库进行系统信息查询，配置。总之，数据库链接是所有操作的前提。
+本课程介绍了在 Java 开发环境下如何连接 SequoiaDB 数据库的 JSON 实例。需要注意的是，用户无论通过何种语言操作数据库，创建数据库链接都是必要前提，Java 语言也不例外。成功创建数据库链接后，用户就可以进行数据库的详细操作了。有了数据库链接，用户可以操作集合空间或者集合，也可以对数据进行查询、插入、删除，或者是对数据库进行系统信息查询，配置。总之，数据库链接是所有操作的前提。
