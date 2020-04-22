@@ -5,18 +5,7 @@ version: 1.0
 
 ## 课程介绍
 
-本课程将介绍 Spark 的 RDD、DataSet 等有关概念，通过程序实现 word count 来简要说明 Spark RDD 操作。本章之前都是通过 JDBC 访问 Hive on Spark 的方式实现 Spark 和 数据源的交互，本章将通过 DataSet 读写 MySQL 实例的数据表的例子展示如何通过 Spark SQL 操作数据集的方式访问 MySQL 实例。
-
-#### 实验环境
-
-当前实验的系统和软件环境如下：
-
-* Ubuntu 16.04.6 LTS
-* SequoiaDB version: 3.4
-* SequoiaSQL-MySQL version: 3.4
-* JDK version "1.8.0_172"
-* IntelliJ IDEA Community Version: 2019.3.4
-* Spark version: 2.4.3
+本课程将介绍 Spark 的 RDD、DataSet 等有关概念，通过程序实现 word count 来简要说明 Spark RDD 操作。本章之前都是通过 SQL API 的方式实现 Spark 和 SequoiaDB 的交互，本章将通过简单的例子展示如何使用 Spark SQL 的 DataSet API 和 SequoiaSQL-MySQL 实例进行交互。
 
 #### 知识点
 
@@ -40,6 +29,17 @@ DataFrame 是一种以 RDD 为基础的分布式数据集。和 RDD 相比，Dat
 **DataSet**
 
 DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解析。而 Dataset 中，每一行是什么类型是不一定的。
+
+#### 实验环境
+
+当前实验的系统和软件环境如下：
+
+* Ubuntu 16.04.6 LTS
+* SequoiaDB version: 3.4
+* SequoiaSQL-MySQL version: 3.4
+* JDK version "1.8.0_172"
+* IntelliJ IDEA Community Version: 2019.3.4
+* Spark version: 2.4.3
 
 ## 打开项目
 
@@ -101,9 +101,9 @@ JavaPairRDD<String, Integer> counts = pairs.reduceByKey((a, b) -> a + b);
 System.out.println(counts.collect());
 ```
 
-将上述代码粘贴至 RDDWordCount 类 RDDWordCount 方法的 TODO -- lesson6_rdd:code1 注释处（24 行）：
+将上述代码粘贴至 RDDWordCount 类 countWord 方法的 TODO code1 注释区间内：
 
-![1738-460-08](https://doc.shiyanlou.com/courses/1738/1207281/1077df56ec8e053cdb83733e91774429-0)
+![1738-460-08](https://doc.shiyanlou.com/courses/1738/1207281/d8b35031f88a90c89d71b87a1f8d18bd-0)
 
 #### 运行程序
 
@@ -121,7 +121,7 @@ System.out.println(counts.collect());
 
 * 运行结果如下：
 
-  ![1738-460-12](https://doc.shiyanlou.com/courses/1738/1207281/93b4cbc12388ee1d0f24b2e96b7de115-0)
+  ![1738-460-12](https://doc.shiyanlou.com/courses/1738/1207281/689b73b0eac40d46b3a4e534aabff0c7-0)
 
 ## Spark SQL 实现 word count
 
@@ -158,9 +158,9 @@ Dataset<Row> result = spark.sql("SELECT word,count(0) AS count FROM wordcount GR
 result.show();
 ```
 
-将上述代码粘贴至 SqlWordCount 类 countWord 方法的 TODO -- lesson6_rdd:code2 注释处（28 行）：
+将上述代码粘贴至 SqlWordCount 类 countWord 方法的 TODO code 2 注释区间内：
 
-![1738-460-14](https://doc.shiyanlou.com/courses/1738/1207281/24d767bd0a0969af6c2258f80482014e-0)
+![1738-460-14](https://doc.shiyanlou.com/courses/1738/1207281/31cc2d56da5c30de1f934d3ef123d59c-0)
 
 #### 运行程序
 
@@ -178,7 +178,7 @@ result.show();
 
 * 运行结果如下：
 
-  ![1738-460-18](https://doc.shiyanlou.com/courses/1738/1207281/83cf696c0501c5b6ef82acf3a62f7f82-0)
+  ![1738-460-18](https://doc.shiyanlou.com/courses/1738/1207281/c99cfe5a246dc9c581e258f826580f12-0)
 
 ## 通过 DataSet 读写 MySQL 实例表
 
@@ -200,9 +200,9 @@ private static Dataset<Row> countBySex = null;
 private static Dataset<Row> employee = null;
 ```
 
-将上述代码粘贴至 TableOperation 类的 TODO -- lesson6_rdd:code3 注释处（65 行）：
+将上述代码粘贴至 TableOperation 类的 TODO code 3 注释区间内：
 
-![1738-460-20](https://doc.shiyanlou.com/courses/1738/1207281/88dedcef9c77bd5a1fd747c6697af2af-0)
+![1738-460-20](https://doc.shiyanlou.com/courses/1738/1207281/60c869fa5001ddf8bbb5745114688dbe-0)
 
 #### 读取 employee 表
 
@@ -221,9 +221,9 @@ employee.printSchema();
 employee.show();
 ```
 
-将上述代码粘贴至 TableOperation 类 readTable 方法的 TODO -- lesson6_rdd:code4 注释处（45 行）：
+将上述代码粘贴至 TableOperation 类 readTable 方法的 TODO code 4 注释区间内：
 
-![1738-460-21](https://doc.shiyanlou.com/courses/1738/1207281/9fc16ee344a6724ec18f74d906c233b5-0)
+![1738-460-21](https://doc.shiyanlou.com/courses/1738/1207281/6176ce0dd7b8b5b3fdccae6636322390-0)
 
 #### 创建临时表
 
@@ -238,9 +238,9 @@ countBySex.printSchema();
 countBySex.show();
 ```
 
-将上述代码粘贴至 TableOperation 类 tmpOperation 方法的 TODO -- lesson6_rdd:code5 注释处（34 行）：
+将上述代码粘贴至 TableOperation 类 tmpOperation 方法的 TODO code 5 注释区间内：
 
-![1738-460-22](https://doc.shiyanlou.com/courses/1738/1207281/52301ada76382612ab3b33ee513adda2-0)
+![1738-460-22](https://doc.shiyanlou.com/courses/1738/1207281/b10b7091c67afc3ce8c2f9f5bb05e28d-0)
 
 #### 将统计结果集写入 MySQL 实例表
 
@@ -263,9 +263,9 @@ MySQLUtil.getData("select * from sexcount");
 sparkSession.close();
 ```
 
-将上述代码粘贴至 TableOperation 类 writeTable 方法的 TODO -- lesson6_rdd:code6 注释处（23 行）：
+将上述代码粘贴至 TableOperation 类 writeTable 方法的 TODO code 6 注释区间内：
 
-![1738-460-23](https://doc.shiyanlou.com/courses/1738/1207281/fc1789a0ca2b1330ed47171cb95c9d52-0)
+![1738-460-23](https://doc.shiyanlou.com/courses/1738/1207281/f877d50c6361f4cc18f2b9491c874ed5-0)
 
 #### 运行程序
 
@@ -283,8 +283,8 @@ sparkSession.close();
 
 * 运行结果如下：
 
-  ![1738-460-27](https://doc.shiyanlou.com/courses/1738/1207281/15cb510c145979ee2f7fd142944a0030-0)
+  ![1738-460-27](https://doc.shiyanlou.com/courses/1738/1207281/57993866339a6b42174d1ebf1ea3347e-0)
 
 ## 总结
 
-通过本课程的学习，可以了解 Spark 中 RDD、DataFrame 和 DataSet 的区别和联系。在实验中使用 RDD 和 DataSet 分别实现 word count 来展示的 Spark RDD 的简单操作，并通过 DataSet 读写 MySQL 实例展示了通过 Spark SQL 是如何与 MySQL 实例交互的。
+通过本课程的学习，可以了解 Spark 中 RDD、DataFrame 和 DataSet 的区别和联系。在实验中使用 RDD 和 DataSet 分别实现 word count 来展示的 Spark RDD 的简单操作，并通过 DataSet 读写 MySQL 实例展示了如何使用 Spark 的 DataSet API 和 SequoiaDB-MySQL 实例交互。
