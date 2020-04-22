@@ -33,21 +33,21 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
 
 #### 打开项目
 
-打开object-java项目
+打开object-java项目。
 
 ![image-20200414091915064](https://doc.shiyanlou.com/courses/1737/1207281/79e3fad2d27f14cfcbc94eadd646d88d-0)
 
 #### 打开 Package
 
-打开lesson3_s3ObjectMetadata包，在该Package完成后续课程
+打开 lesson3_s3ObjectMetadata 包，在该 Package 完成后续课程
 
 ![image-20200414130200381](https://doc.shiyanlou.com/courses/1737/1207281/979a09b4ad85545df79a300adeb65425-0)
 
 ## 设置元数据
 
-在将文件上传为S3对象时，可以在上传的同时设定元数据参数，然后再上传。
+在将文件上传为 S3 对象时，可以在上传的同时设定元数据参数，然后再上传。
 
-1）双击打开 ObjectMetadataUtil类，在setMetadata()函数内找到行**TODO 设置对象元数据**
+1）双击打开 ObjectMetadataUtil 类，在 setMetadata() 函数内找到行**TODO 设置对象元数据**
 
 ![image-20200418182740385](https://doc.shiyanlou.com/courses/1737/1207281/30eeeb1146ef269b55e0b31de23431b5-0)
 
@@ -76,9 +76,9 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
 
 ## 查看元数据
 
-在一个已有的S3实例中，可以通过getObjectMetadata(String str,String str1)函数获得指定对象的元数据对象。
+在一个已有的 S3 实例中，可以通过 getObjectMetadata(String str,String str1) 函数获得指定对象的元数据对象。
 
-1）双击打开 ObjectMetadataUtil类，找到queryMetadata()函数内行**TODO 查询对象元数据**
+1）双击打开 ObjectMetadataUtil 类，找到 queryMetadata() 函数内行**TODO 查询对象元数据**
 
 ![image-20200418182849402](https://doc.shiyanlou.com/courses/1737/1207281/03b31e659ac5ee5dc1dc711d6c9f66e0-0)
 
@@ -105,7 +105,7 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
 
 ## 执行代码
 
-1）鼠标移动到屏幕左边ObjectMetadataTest类，右键点击，出现如图所示的选项条，左键单击**Edit 'ObjectMetadataTest'**选项
+1）鼠标移动到屏幕左边 ObjectMetadataTest 类，右键点击，出现如图所示的选项条，左键单击**Edit 'ObjectMetadataTest'**选项
 
 ![image-20200414005415883](https://doc.shiyanlou.com/courses/1737/1207281/5aa784d9a86d1bcfc46b2db1870d1712-0)
 
@@ -113,7 +113,7 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
 
 ![image-20200414011543183](https://doc.shiyanlou.com/courses/1737/1207281/9b0e9a0733b4efd0cf05edaedfbc6a05-0)
 
-3）鼠标移动到屏幕左边ObjectMetadataTest类上，右键点击，出现如图所示的选项条，左键单击**Run 'ObjectMetadataTest'**选项
+3）鼠标移动到屏幕左边 ObjectMetadataTest 类上，右键点击，出现如图所示的选项条，左键单击**Run 'ObjectMetadataTest'**选项
 
 ![image-20200414005608353](https://doc.shiyanlou.com/courses/1737/1207281/be73c5860b9238a4b2ac502165809309-0)
 
