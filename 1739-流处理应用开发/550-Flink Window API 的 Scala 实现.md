@@ -38,11 +38,13 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson5 packge
+
 打开 com.sequoiadb.lesson.flink.lesson5_window，在该 package 中完成本课程。注意：包在 scala 源码包下。
 
 ![1739-550-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/0f42e9ee90ae9f503a5e223ad6490b3a-0)
@@ -90,8 +92,6 @@ Flink内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）�
 会话窗口不重叠，没有固定的开始和结束时间。当较长时间没有数据输入时窗口结束。
 
 ![1739-540-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/860e8fee3c9bf459fef816d959c59f59-0)
-
-
 
 ## Tumbling Count Window 的实现
 
