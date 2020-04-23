@@ -54,23 +54,25 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
 2）将下方代码粘贴到 TODO ~ TODO END区域内。
 
 ```java
-    //Get the S3 connection
-    AmazonS3 s3 = this.getS3();
-    //Create a bucket to use
-    s3.createBucket(bucketName);
-    //Create file input stream
-    File file = new File("/opt/sequoiadb/version.conf");
-    InputStream inputStream = new FileInputStream(file);
-    //Get metadata object
-    ObjectMetadata objectMetadata = new ObjectMetadata();
-    //Set metadata properties
-    objectMetadata.setContentLength(file.length());
-    objectMetadata.setContentLanguage("CH");
-    objectMetadata.setContentEncoding("utf8");
-    objectMetadata.setContentType("text/plain");
-    //Save the uploaded file as an object and set the object metadata
-    s3.putObject(bucketName,objectName,inputStream,objectMetadata);
+//Get the S3 connection
+AmazonS3 s3 = this.getS3();
+//Create a bucket to use
+s3.createBucket(bucketName);
+//Create file input stream
+File file = new File("/opt/sequoiadb/version.conf");
+InputStream inputStream = new FileInputStream(file);
+//Get metadata object
+ObjectMetadata objectMetadata = new ObjectMetadata();
+//Set metadata properties
+objectMetadata.setContentLength(file.length());
+objectMetadata.setContentLanguage("CH");
+objectMetadata.setContentEncoding("utf8");
+objectMetadata.setContentType("text/plain");
+//Save the uploaded file as an object and set the object metadata
+s3.putObject(bucketName,objectName,inputStream,objectMetadata);
 ```
+
+
 
 ## 查看元数据
 
@@ -87,7 +89,7 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
 AmazonS3 s3 = this.getS3();
 //Get metadata object of the specified object
 ObjectMetadata objectMetadata =
-	s3.getObjectMetadata(bucketName,objectName);
+    s3.getObjectMetadata(bucketName,objectName);
 //Get metadata properties
 String contentLanguage = objectMetadata.getContentLanguage();
 String contentEncoding = objectMetadata.getContentEncoding();
