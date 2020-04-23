@@ -36,11 +36,13 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson4 packge
+
 打开 com.sequoiadb.lesson.flink.lesson4_window，在该 package 中完成本课程。
 
 ![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/ee95192e8a987d3fc8ed46aa5c47456b-0)
@@ -371,7 +373,6 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 执行结果如下图，可以看到 keyBy 后的数据。
 
 ![1739-540-00029.png](https://doc.shiyanlou.com/courses/1739/1207281/7152003910cf3119484a2c464e06e00c-0)
-
 
 #### 在 keyedStream 上使用 Window 
 
@@ -737,8 +738,6 @@ resultData = transData.assignTimestampsAndWatermarks(
     }
 });
 ```
-
-
 
 #### 类型转换
 
