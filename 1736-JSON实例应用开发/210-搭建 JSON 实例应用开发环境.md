@@ -21,7 +21,7 @@ SequoiaDB 巨杉数据库为应用提供通过 SDK 驱动进行数据库操作�
 - 用户通过 IDEA 编辑器编写 Java 源码
 - 实验相关核心代码，可从文档中的代码示例粘贴到项目指定文件的 TODO 标记处
 - 通过编译、运行 Java 代码，操作 SequoiaDB 数据库 JSON 实例
-
+ 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/7b1731fc121e3b460dcd9841eb0218a6-0)
 
 #### 实验环境
