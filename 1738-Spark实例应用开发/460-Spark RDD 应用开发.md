@@ -59,15 +59,15 @@ DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解�
 
 如图所示找到当前实验使用的程序所在 Package
 
-![1738-460-04](https://doc.shiyanlou.com/courses/1738/1207281/368eebd5c824a5f029eb3b546b98abcc-0)
+![1738-460-04](https://doc.shiyanlou.com/courses/1738/1207281/f5e5baa583c84a7986af6b6185d6c25c-0)
 
 #### Maven 依赖
 
 如图所示找到 pom.xml 文件：
 
-![1738-410-pom](https://doc.shiyanlou.com/courses/1738/1207281/2096e77f8ff05283b1b51e9f5182b861-0)
+![pom](https://doc.shiyanlou.com/courses/1738/1207281/4474b7a73c5469e7315fc9a153d73ccc-0)
 
-在 pom.xml 中可以找到当前实验需要用到的 Maven 依赖：
+在 pom.xml 文件中可以找到当前实验使用到的 Maven 依赖：
 
 ![1738-460-05](https://doc.shiyanlou.com/courses/1738/1207281/72ddb27afd9118ddef82ca7aa3d56d39-0)
 
@@ -83,7 +83,7 @@ DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解�
 
 如图所示找到 com.sequoiadb.lesson.spark.lesson6_rdd.RDDWordCount 类：
 
-![1738-460-07](https://doc.shiyanlou.com/courses/1738/1207281/ab74a6c6c542fc3499d75ffbd6701a25-0)
+![1738-460-07](https://doc.shiyanlou.com/courses/1738/1207281/b4532ac0a94a9538b0b50cb16f44406a-0)
 
 #### 程序代码
 
@@ -109,15 +109,15 @@ System.out.println(counts.collect());
 
 * 右键点击 RDDMainTest 类选择 Create/Edit 主函数
 
-  ![1738-460-09](https://doc.shiyanlou.com/courses/1738/1207281/489c9cb5aae86e649e1b75ee16e56851-0)
+  ![1738-460-09](https://doc.shiyanlou.com/courses/1738/1207281/e4084e1fd69f8345051730f975a418f5-0)
 
 * 编辑主函数参数为 rddwordcount
 
-  ![1738-460-10](https://doc.shiyanlou.com/courses/1738/1207281/49469dd2cd345c2c9cf25d8c915957c1-0)
+  ![1738-460-10](https://doc.shiyanlou.com/courses/1738/1207281/214ce912c68e9c3de70fbd41d2f882cb-0)
 
 * 右键点击 RDDMainTest 类选择 Run 主函数
 
-  ![1738-460-11](https://doc.shiyanlou.com/courses/1738/1207281/63ee2a98da8fc84982ed02dfbbcb17cc-0)
+  ![1738-460-11](https://doc.shiyanlou.com/courses/1738/1207281/e005d3350e527c9cb9a457474741c1df-0)
 
 * 运行结果如下：
 
@@ -131,7 +131,7 @@ System.out.println(counts.collect());
 
 如图所示找到 com.sequoiadb.lesson.spark.lesson6_rdd.SqlWordCount 类：
 
-![1738-460-13](https://doc.shiyanlou.com/courses/1738/1207281/80b5a138387d32aa0c99614d13e933b7-0)
+![1738-460-13](https://doc.shiyanlou.com/courses/1738/1207281/c017e40ffbab17d262b37dc1cec9c627-0)
 
 #### 程序代码
 
@@ -166,15 +166,15 @@ result.show();
 
 * 右键点击 RDDMainTest 类选择 Create/Edit 主函数
 
-  ![1738-460-15](https://doc.shiyanlou.com/courses/1738/1207281/bffafe4a59c7e7939f1c4a7f979f5909-0)
+  ![1738-460-15](https://doc.shiyanlou.com/courses/1738/1207281/bcf7028851fe9fcdb6bd9d74858f9fa2-0)
 
 * 编辑主函数参数为 sqlwordcount
 
-  ![1738-460-16](https://doc.shiyanlou.com/courses/1738/1207281/26216dc59fbafe16bc655d96cf0e565b-0)
+  ![1738-460-16](https://doc.shiyanlou.com/courses/1738/1207281/5ac0a1a2e55aee4ddb51b75ad7ebd94d-0)
 
 * 右键点击 RDDMainTest 类选择 Run 主函数
 
-  ![1738-460-17](https://doc.shiyanlou.com/courses/1738/1207281/e9ddfe74749b4e7c8791bed5e036767b-0)
+  ![1738-460-17](https://doc.shiyanlou.com/courses/1738/1207281/67fd16474719b3a6fd71dbfb79d094ee-0)
 
 * 运行结果如下：
 
@@ -188,7 +188,7 @@ result.show();
 
 如图所示找到 com.sequoiadb.lesson.spark.lesson6_rdd.TableOperation 类：
 
-![1738-460-19](https://doc.shiyanlou.com/courses/1738/1207281/112bff919da30ce93dbb6267c277e924-0)
+![1738-460-19](https://doc.shiyanlou.com/courses/1738/1207281/abe4b22f10bffbc9bfcc84e1f2620c66-0)
 
 #### 创建 SparkSession
 
@@ -271,15 +271,15 @@ sparkSession.close();
 
 * 右键点击 RDDMainTest 类选择 Create/Edit 主函数
 
-  ![1738-460-24](https://doc.shiyanlou.com/courses/1738/1207281/33c27b7fd421e4af27df43bf19580654-0)
+  ![1738-460-24](https://doc.shiyanlou.com/courses/1738/1207281/cd84332bb32a66da6d74908b03af8662-0)
 
 * 编辑主函数参数为 tableoperation
 
-  ![1738-460-25](https://doc.shiyanlou.com/courses/1738/1207281/adfdb0bd6896196d1966590733bc0c75-0)
+  ![1738-460-25](https://doc.shiyanlou.com/courses/1738/1207281/ab48d7311f63d55f98e644ae4dc5fd19-0)
 
 * 右键点击 RDDMainTest 类选择 Run 主函数
 
-  ![1738-460-26](https://doc.shiyanlou.com/courses/1738/1207281/3493016e6f0f84ad89ca798e1925e91e-0)
+  ![1738-460-26](https://doc.shiyanlou.com/courses/1738/1207281/88e528e3319081ece5f68422682145ae-0)
 
 * 运行结果如下：
 
