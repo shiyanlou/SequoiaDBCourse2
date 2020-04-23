@@ -4,7 +4,7 @@ version: 1.0
 ---
 
 ## 课程介绍
-
+ 
 本实验为 Flink Window API Scala 版本的实现，与 Java 版的讲述相同，如果不感兴趣可以跳到下一小节。
 
 本实验将带领您了解与学习 Flink 中 Window，Time 以及 Watermark 机制。
