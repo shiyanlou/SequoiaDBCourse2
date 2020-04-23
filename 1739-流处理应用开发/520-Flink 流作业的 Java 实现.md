@@ -31,22 +31,22 @@ version: 1.0
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
-#### 打开 flink-developer 项目
-打开 flink-developer 项目，在该课程中完成本试验。
+#### 打开 scdd-flink 项目
+打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson2 packge
-打开 com.sequoiadb.scdd.lesson2_word_count ，在该 package 中完成本课程。
+打开 com.sequoiadb.lesson.flink.lesson2_word_count ，在该 package 中完成本课程。
 
-![1739-520-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/c6df278d4353c03ac992972f49d311d1-0)
+![1739-520-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/dd1ccd9e7af745a1dce408c679d08ebf-0)
 
 
 #### 认识依赖
 
 打开 pom.xml 文件，认识依赖。
 
-![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/c8177f5490e581cd3a59c689b65f9143-0)
+![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
 
 本案例使用了 flink 的 runtime 依赖 flink-core 和流作业开发依赖 flink-streaming-java 包。
 ![1739-520-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/874953cf1510ccc9a14a15d2fd0f689b-0)
@@ -57,13 +57,13 @@ version: 1.0
 
 在当前包下，打开类 WordCountMain
 
-![1739-520-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/bc95c345870df4ee91a4921858025104-0)
+![1739-520-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/cce5779376008f80afe450f58baf69c0-0)
 
 #### 运行程序
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序
 
-![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/3bd650d98a39ad86a74825302015f618-0)
+![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
 #### 查看结果
 
@@ -115,7 +115,7 @@ flatMapData = dataStreamSource.flatMap(new FlatMapFunction<String, String>() {
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序
 
-![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/3bd650d98a39ad86a74825302015f618-0)
+![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
 可以看到在每个数据行上仅有一个单词。
 
@@ -157,7 +157,7 @@ filterData = dataStream.filter(new FilterFunction<String>() {
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
-![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/3bd650d98a39ad86a74825302015f618-0)
+![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
 可以看到数据中已经没有“java”单词了。
 
@@ -208,7 +208,7 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
-![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/3bd650d98a39ad86a74825302015f618-0)
+![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
 
 可以看到每个数据行上都是一个 Tuple2，包含一个单词和1。
@@ -248,7 +248,7 @@ sumData = tupleData.keyBy(0).sum(1);
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序
 
-![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/3bd650d98a39ad86a74825302015f618-0)
+![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
 
 可以看到单词统计的结果。
