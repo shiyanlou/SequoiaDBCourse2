@@ -16,7 +16,7 @@ version: 1.0
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
 详细了解 SequoiaDB 巨杉数据库系统架构：
-
+ 
 - [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
@@ -32,15 +32,16 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson2 packge
+
 打开 com.sequoiadb.lesson.flink.lesson2_word_count ，在该 package 中完成本课程。
 
 ![1739-520-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/dd1ccd9e7af745a1dce408c679d08ebf-0)
-
 
 #### 认识依赖
 
@@ -72,7 +73,7 @@ version: 1.0
 ![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/da5c2a4f975c9d36254f9cddd9476ca3-0)
 
 ## flatmap 算子
-
+ 
 #### flatmap 算子的作用
 
 flatmap 算子是 Transformation 的其中一种。该算子接收一个 DataStream 对象，返回一个 DataStream 对象，它在每个数据行上被调用一次，可以将一个数据行转换为多个数据行。
@@ -171,7 +172,6 @@ filterData = dataStream.filter(new FilterFunction<String>() {
 filterData = dataStream.filter(i -> !i.equals("java"));
 ```
 
-
 ## map算子
 
 #### map算子的作用
@@ -203,7 +203,6 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
 });
 ```
 
-
 #### 查看数据的结果
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
@@ -214,8 +213,6 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
 可以看到每个数据行上都是一个 Tuple2，包含一个单词和1。
 
 ![1739-520-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/975df71ddf869638717272b792d48273-0)
-
-
 
 ## keyBy 与 sum 算子
 

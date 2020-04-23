@@ -72,8 +72,6 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
     s3.putObject(bucketName,objectName,inputStream,objectMetadata);
 ```
 
-
-
 ## 查看元数据
 
 在一个已有的 S3 实例中，可以通过 getObjectMetadata(String str,String str1) 函数获得指定对象的元数据对象。
@@ -85,22 +83,22 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进�
 2）将下方代码粘贴到 TODO ~ TODO END区域内。
 
 ```java
-        //Get the S3 connection
-        AmazonS3 s3 = this.getS3();
-        //Get metadata object of the specified object
-        ObjectMetadata objectMetadata =
-        				s3.getObjectMetadata(bucketName,objectName);
-        //Get metadata properties
-        String contentLanguage = objectMetadata.getContentLanguage();
-        String contentEncoding = objectMetadata.getContentEncoding();
-        String contentType = objectMetadata.getContentType();
-		//Print metadata properties
-        System.out.println("contentLanguage:"+contentLanguage);
-        System.out.println("contentEncoding:"+contentEncoding);
-        System.out.println("contentType:"+contentType);
-		//Clean up the environment
-        s3.deleteObject(bucketName,objectName);
-        s3.deleteBucket(bucketName);
+//Get the S3 connection
+AmazonS3 s3 = this.getS3();
+//Get metadata object of the specified object
+ObjectMetadata objectMetadata =
+	s3.getObjectMetadata(bucketName,objectName);
+//Get metadata properties
+String contentLanguage = objectMetadata.getContentLanguage();
+String contentEncoding = objectMetadata.getContentEncoding();
+String contentType = objectMetadata.getContentType();
+//Print metadata properties
+System.out.println("contentLanguage:"+contentLanguage);
+System.out.println("contentEncoding:"+contentEncoding);
+System.out.println("contentType:"+contentType);
+//Clean up the environment
+s3.deleteObject(bucketName,objectName);
+s3.deleteBucket(bucketName);
 ```
 
 ## 执行代码

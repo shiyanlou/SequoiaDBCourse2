@@ -9,8 +9,6 @@ SequoiaFS文件系统是基于FUSE在Linux系统下实现的一套文件系统�
 
 下面为其基本逻辑结构图：
 
-
-
 ![img](http://doc.sequoiadb.com/cn/index/Public/Home/images/302/sequoiafs/model.png)
 
 #### SequoiaFS 开发简介
@@ -58,8 +56,6 @@ SequoiaFS 支持通用文件系统API，使用 Java IO 类对 SequoiaFS 的挂�
 1）双击打开 SequoiaFSWrite 类，找到 main() 方法内行 **TODO  通过java api 写入数据**。
 
 ![image-20200415013416784](https://doc.shiyanlou.com/courses/1737/1207281/8bf47c3fce31ae205234af2281eecbfd-0)
-
-
 
 2）将下方代码粘贴到 TODO ~ TODO END区域。
 

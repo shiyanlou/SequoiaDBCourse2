@@ -4,7 +4,7 @@ version: 1.0
 ---
 
 ## 课程介绍
-
+ 
 本实验为 Flink 流作业 Scala 版本的实现，与 Java 版的讲述相同，如果不感兴趣可以跳到下一小节。
 
 本实验将带领您学习 Flink 的常用算子的使用，帮助您快速入门；同时学习如何将工程打包发布到集群环境。本实验采用经典案例 WordCount 单词统计进行演示。
@@ -34,15 +34,16 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson3 packge
+
 打开 com.sequoiadb.lesson.flink.lesson3_word_count，在该 package 中完成本课程。注意：该包位于 scala 源码包下。
 
 ![1730-530-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/0fd4e6295ec707993e09e044c0e24998-0)
-
 
 #### 认识依赖
 
@@ -275,6 +276,7 @@ com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
 在对应的 Task Manager 中可以查看到当前作业的执行结果。
 
 ![1739-520-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/fe9f48d360016724607850fdb35387f9-0)
+
 ## Flink 工程打包与参数的获取（可选）
 
 编写的程序在提交到集群后的 jar 如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink 同样支持动态参数的获取，下面来改造一下吧。
