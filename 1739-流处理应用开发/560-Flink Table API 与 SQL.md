@@ -38,11 +38,13 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson6 packge
+
 打开 com.sequoiadb.lesson.flink.lesson6_table ，在该 package 中完成本课程。
 
 ![1739-560-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/d9ac2d8b7f74f7fed908551c04e4ef6d-0)
@@ -56,8 +58,6 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 本案例新增了flink table的驱动包。
 
 ![1739-560-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/d66701bcb93d7343fb94b9269a243b3c-0)
-
-
 
 ## Table 的简介
 
