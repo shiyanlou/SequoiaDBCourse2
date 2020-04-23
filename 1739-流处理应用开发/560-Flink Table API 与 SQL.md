@@ -4,7 +4,7 @@ version: 1.0
 ---
 
 ## 课程介绍
-
+ 
 本实验将带领您了解与学习 Flink Table API 与 Flink SQL。
 
 Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
