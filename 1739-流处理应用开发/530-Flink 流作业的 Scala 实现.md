@@ -241,11 +241,11 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 点击 maven 侧边栏中的 package 打包。
 
-![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/63114ba459947ae84b120802661be94c-0)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/818235d78cdcfc4ffffe654cf621f74b-0)
 
 打包成功后 jar 包会在当前项目目录的 target 目录下。
 
-![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/5c71f5421c834b0c51693d4f3a03726e-0)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/16c046a2a4611d6170dd2a7595a781de-0)
 
 #### 提交到集群环境
 
@@ -254,19 +254,19 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
 
-![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/065a67dd2edca2ff0d97f1df1c0a6242-0)
+![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/8e6df7ea80e5358c21e5f3a115ad60d7-0)
 
 上传成功后，选择刚刚上传好的 jar。
 
-![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/c79098a0c0b369cc233e84f323abcd95-0)
+![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/8483eeb5b276e5322275cba39410d2d7-0)
 
 添加入口类的引用（如下），点击 submit 提交当前作业。
 
 ```xml
-com.sequoiadb.flink.scdd.lesson3_word_count.WordCountMain
+com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
 ```
 
-![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/cf55c8e6662a34c69965a2f51d15f936-0)
+![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/1ac844cc1599ef05d63aa2372877a6b8-0)
 
 任务成功提交后，发现已经在运行，并且可以在 UI 界面上看到程序的 Dataflow。
 
@@ -299,7 +299,7 @@ val lineData: DataStream[String] = env.addSource(new RandomSource(lineNum))
 
 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
 
-![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/d9787373b031a95f80d0933c993fc02a-0)
+![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/2838685e3213c8f792a2d7e04c5d9d33-0)
 
 ## 总结
 

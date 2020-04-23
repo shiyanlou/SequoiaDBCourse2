@@ -136,7 +136,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 以上示例为 SequoiadbSource 的使用，需要构建一个 Option，包含巨杉数据库的连接信息。而且由于数据库中录入数据无法像消息队列做到时间态的有序，其还需要一个时间字段名用于构建流，该字段值必须是时间戳类型。
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
@@ -176,7 +176,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 });
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
@@ -202,7 +202,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 resultData = dataStream.countWindowAll(100);
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
@@ -214,7 +214,7 @@ resultData = dataStream.countWindowAll(100);
 
 
 
-#### 聚合结果
+#### 聚合计算
 
 使用 reduce 对数据进行聚合求和，此处将的聚合结果为 Tuple2<Double, Integer>，分别表示总金额和总交易量。
 
@@ -902,3 +902,14 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 选中集合 " VIRTUAL_BANK.LESSON_4_TIME" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-540-00054.png](https://doc.shiyanlou.com/courses/1739/1207281/4bd9fda8c03528446b35226d907ec2a0-0)
+
+## 总结
+
+本小节为 Flink 学习提升篇，讲述了 Flink 的时间概念与 Window 的概念及使用，Watermark 机制的了解与使用。
+
+**知识点**
+
+- Window 的概念及 Flink 中提供的 Window 是按照什么规则划分的
+- Time 的概念
+- 多种 Window 的使用
+- Watermark 的使用

@@ -10,7 +10,7 @@ version: 1.0
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1 个 Flink 节点、1 个引擎协调节点，1 个编目节点与 3 个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
@@ -18,7 +18,7 @@ version: 1.0
 -  [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为 1.9.2。
 
 ## 打开项目
 
@@ -45,7 +45,7 @@ version: 1.0
 
 Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边界和有边界数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。
 
-通俗来讲 Flink 是一个框架（为我们实现了大量复杂逻辑，让我们实现功能更加简单），也是一个分布式处理引擎（ Flink 支持分布式并行计算）；同时 Flink 可以做批处理（可以理解为有界的流）也可以做流处理；而整个计算过程中每个时间点的任务状态都可以被保存下来，一旦任务失败可以退回到某个时间点而不是全部重来一遍。Flink可以运行在 Yarn, K8S, Apache Mesos 或独立集群中，可适配到多种现有环境，其基于内存的计算并且可以部署任意规模的集群，小到个人PC虚拟机，大到 AWS 的超大分布式集群处理海量应用数据。
+通俗来讲 Flink 是一个框架（为我们实现了大量复杂逻辑，让我们实现功能更加简单），也是一个分布式处理引擎（ Flink 支持分布式并行计算）；同时 Flink 可以做批处理（可以理解为有界的流）也可以做流处理；而整个计算过程中每个时间点的任务状态都可以被保存下来，一旦任务失败可以退回到某个时间点而不是全部重来一遍。Flink可以运行在 Yarn, K8S, Apache Mesos 或独立集群中，可适配到多种现有环境，其基于内存的计算并且可以部署任意规模的集群，小到个人 PC 机，大到 AWS 的超大分布式集群处理海量应用数据。
 
 
 
@@ -53,24 +53,24 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 ![1739-510-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/e97d07fb063c8e68e7935e6901d5561f-0)
 
-从这里可以看到常见的项目分析流程，首先数据（可以是业务数据，日志，物联网，点击行为等）直接进入或经转一些存储设备后进入 Flink ；Flink 通常用于事件驱动型应用处理，流批处理与 ETL 场景。其可运行在 k8s，Yarn，Mesos 等资源调度平台，状态可存储在 HDFS，S3，NFS 等存储平台；最终数据结果可落地到多种平台。
+从这里可以看到常见的项目分析流程，首先数据（可以是业务数据，日志，物联网，点击行为等）直接进入或经转一些存储设备后进入 Flink ；Flink 通常用于事件驱动型应用处理，流批处理与 ETL 场景。其可运行在 K8S，Yarn，Mesos 等资源调度平台，状态可存储在 HDFS，S3，NFS 等存储平台；最终数据结果可落地到多种平台。
 
 ## Flink 的特点
 
 #### 为什么要用 Flink
 
-使用 Flink的原因很多，最重要的有两个原因
+使用 Flink 的原因很多，最重要的有两个原因
 
 - Flink EventTime 的支持与灵活的窗口
 - Exactly once 语义保证
 
-这里简单解释一下，后续会专门去了解这些概念的含义与其实现原理。EventTime 是数据产生的时间，例如在日志收集系统中，日志A产生的时间是 12:00 整，而日志B产生的时间为 12:01。但是由于日志发送网络波动等原因，导致系统在 12:03 收到了日志 B，12:04收到了日志 A，我们发现日志产生的顺序和我们收到日志的顺序是不一致的，但是我们想按照日志产生的顺序去处理日志，这个日志产生的时间在 Flink 中就叫做 EventTime。而通常情况下在一个流上做一些统计操作是没有意义的，因为流没有尽头，所以 Flink 内置了多种窗口，各种窗口各种功能。而由于 Flink 支持状态管理，可以保证所有数据处理且仅处理一次，这就是 Exactly once 语义。
+这里简单解释一下，后续会专门去了解这些概念的含义与其实现原理。EventTime 是数据产生的时间，例如在日志收集系统中，日志A产生的时间是 12:00 整，而日志B产生的时间为 12:01。但是由于日志发送网络波动等原因，导致系统在 12:03 收到了日志 B，12:04 收到了日志 A，我们发现日志产生的顺序和我们收到日志的顺序是不一致的，但是我们想按照日志产生的顺序去处理日志，这个日志产生的时间在 Flink 中就叫做 EventTime。而通常情况下在一个流上做一些统计操作是没有意义的，因为流没有尽头，所以 Flink 内置了多种窗口，各种窗口各种功能。而由于 Flink 支持状态管理，可以保证所有数据处理且仅处理一次，这就是 Exactly once 语义。
 
-#### Flink API 抽象级别
+#### Flink 整体架构
 
 ![1739-510-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/8394551203320de27a40de2e3350d92d-0)
 
-从上图中可以看到，Flink 的核心（通常情况下我们称之为 Runtime ）可运行在常见的资源环境中，如本地 JVM，集群和云平台中。其基础API可以看到分为用于流场景的 DataStream 与批场景的 DataSet 的，基于这两种 API，Flink 又抽象出 Table API 与 CEP 和 ML 等高级接口，本次课程只演示 DataStream API 和 Table API 的使用。
+从上图中可以看到，Flink 的核心（途中的 Core 层，通常情况下称之为 Runtime ）可运行在常见的资源环境中，如本地 JVM，集群和云平台中。其基础 API 可以看到分为用于流场景的 DataStream 与批场景的 DataSet，基于这两种 API，Flink 又抽象出 Table API 与 CEP 和 ML 等高级接口，本次课程只演示 DataStream API 和 流场景中的 Table API 的使用。
 
 #### Flink 的执行流程
 
@@ -111,11 +111,11 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 env = StreamExecutionEnvironment.getExecutionEnvironment();
 ```
 
-#### 使用Source获取DataStream
+#### 使用 Source 获取 DataStream
 
-Source算子用于产生一个DataStream。
+Source 算子用于产生一个 DataStream。
 
-在当前类中找到source方法，找到 TODO code 2。
+在当前类中找到 source 方法，找到 TODO code 2。
 
 ![1739-510-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/32ed6ddaadd3f81b6bc750954c8bc443-0)
 
@@ -126,11 +126,11 @@ Source算子用于产生一个DataStream。
 dataSource = env.addSource(new RandomSource());
 ```
 
-#### Transformation的使用
+#### Transformation 的使用
 
-Transformation可以对数据做转换操作，代码中的算子使用规则详见下一小节，此处仅做演示。
+Transformation 可以对数据做转换操作，代码中的算子使用规则详见下一小节，此处仅做演示。
 
-在当前类中找到transformate方法，找到 TODO code 3。
+在当前类中找到 transformate 方法，找到 TODO code 3。
 
 ![1739-510-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/0d49f28ca8e0fd4357420eed919f8d25-0)
 
@@ -157,11 +157,11 @@ SingleOutputStreamOperator<Tuple2<String, Integer>> mapData = filterData.map(new
 sumData = mapData.keyBy(0).sum(1);
 ```
 
-#### Sink算子的使用
+#### Sink 算子的使用
 
 使用Sink将结果输出到控制台。此处使用的print方法实则调用了一个ConsoleSink，会将结果sink到控制台。
 
-在当前类中找到sink方法，找到 TODO code 4。
+在当前类中找到 sink 方法，找到 TODO code 4。
 
 ![1739-510-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/28415686da76f4eb482f3d6b62168cd7-0)
 
