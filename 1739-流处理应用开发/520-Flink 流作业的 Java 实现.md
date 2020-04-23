@@ -32,15 +32,16 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson2 packge
+
 打开 com.sequoiadb.lesson.flink.lesson2_word_count ，在该 package 中完成本课程。
 
 ![1739-520-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/dd1ccd9e7af745a1dce408c679d08ebf-0)
-
 
 #### 认识依赖
 
@@ -171,7 +172,6 @@ filterData = dataStream.filter(new FilterFunction<String>() {
 filterData = dataStream.filter(i -> !i.equals("java"));
 ```
 
-
 ## map算子
 
 #### map算子的作用
@@ -203,7 +203,6 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
 });
 ```
 
-
 #### 查看数据的结果
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
@@ -214,8 +213,6 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
 可以看到每个数据行上都是一个 Tuple2，包含一个单词和1。
 
 ![1739-520-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/975df71ddf869638717272b792d48273-0)
-
-
 
 ## keyBy 与 sum 算子
 

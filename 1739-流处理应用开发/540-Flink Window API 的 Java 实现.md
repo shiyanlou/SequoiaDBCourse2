@@ -36,11 +36,13 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson4 packge
+
 打开 com.sequoiadb.lesson.flink.lesson4_window，在该 package 中完成本课程。
 
 ![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/ee95192e8a987d3fc8ed46aa5c47456b-0)
@@ -89,8 +91,6 @@ Flink 内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）
 会话窗口不重叠，没有固定的开始和结束时间。当较长时间没有数据输入时窗口结束。
 
 ![1739-540-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/860e8fee3c9bf459fef816d959c59f59-0)
-
-
 
 ## Tumbling Count Window 的实现
 
@@ -146,8 +146,6 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 ![1739-540-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/e23bf77cd113f104628361d07e00ac68-0)
 
-
-
 #### map 算子的使用
 
 使用 map 算子对流上的数据类型进行转换，该方法中接收一个 DataStrem<BSONObject>，返回一个DataStream<Tuple2<Double, Integer>>。
@@ -186,8 +184,6 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 ![1739-540-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/0ade0cf2f5ee1cd09976d4b6126f110c-0)
 
-
-
 #### Window 划分
 
 使用 windowAll 算子对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个 AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow> 对象，泛型表示 Window 中的数据类型以及Window 的引用，在 CountWindow 中引用是一个全局的 Window 对象。
@@ -211,8 +207,6 @@ resultData = dataStream.countWindowAll(100);
 执行结果如下图，可以看到每个 window 中的数据。
 
 ![1739-540-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/8ec48326ee3ca316aad3a26c74965824-0)
-
-
 
 #### 聚合结果
 
@@ -344,7 +338,6 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 ![1739-540-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/f4d425616da28b8b44427cc623ffe276-0)
 
-
 #### 分组
 
 keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<Tuple3<String, Double, Integer>, String> 对象，泛型中包含数据行和一个分组字段值。
@@ -380,7 +373,6 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 执行结果如下图，可以看到 keyBy 后的数据。
 
 ![1739-540-00029.png](https://doc.shiyanlou.com/courses/1739/1207281/7152003910cf3119484a2c464e06e00c-0)
-
 
 #### 在 keyedStream 上使用 Window 
 
@@ -458,7 +450,6 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 执行结果如下图，可以看到数据库中的原始数据。
 
 ![1739-540-00031.png](https://doc.shiyanlou.com/courses/1739/1207281/3639aa7bd79ed91a36ce90cc93b08d50-0)
-
 
 ## Sliding Count Window 的实现
 
@@ -747,8 +738,6 @@ resultData = transData.assignTimestampsAndWatermarks(
     }
 });
 ```
-
-
 
 #### 类型转换
 

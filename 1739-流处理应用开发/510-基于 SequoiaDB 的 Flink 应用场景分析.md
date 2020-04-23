@@ -10,6 +10,7 @@ version: 1.0
 #### 请点击右侧选择使用的实验环境
  
 #### 部署架构：
+
 本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
@@ -19,6 +20,7 @@ version: 1.0
 * [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
+
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
 
 ## 打开项目
@@ -30,15 +32,16 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
+
 打开 scdd-flink 项目，在该项目中完成本实验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson1 packge
+
 打开 com.sequoiadb.lesson.flink.lesson1_intro  packge ，在该 package 中完成本课程。
 
 ![1739-510-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/33379a63a7db9a70550495c7d03cfb05-0)
-
 
 ## Flink 简介
 
@@ -47,8 +50,6 @@ version: 1.0
 Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边界和有边界数据流上进行有状态的计算。Flink 能在所有常见集群环境中运行，并能以内存速度和任意规模进行计算。
 
 通俗来讲 Flink 是一个框架（为我们实现了大量复杂逻辑，让我们实现功能更加简单），也是一个分布式处理引擎（ Flink 支持分布式并行计算）；同时 Flink 可以做批处理（可以理解为有界的流）也可以做流处理；而整个计算过程中每个时间点的任务状态都可以被保存下来，一旦任务失败可以退回到某个时间点而不是全部重来一遍。Flink可以运行在 Yarn, K8S, Apache Mesos 或独立集群中，可适配到多种现有环境，其基于内存的计算并且可以部署任意规模的集群，小到个人PC虚拟机，大到 AWS 的超大分布式集群处理海量应用数据。
-
-
 
 #### Flink的应用场景
 
@@ -94,8 +95,6 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 在当前工程包下打开类 IntroDemoMain。
 
 ![1739-510-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/55be1976762224fb898c1a672547d98c-0)
-
-
 
 #### 获取执行环境
 
@@ -198,10 +197,6 @@ env.execute("flink intro demo");
 统计结果如下图。
 
 ![1739-510-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/163c12ef2d70f6ed685be00c38991234-0)
-
-
-
-
 
 ## SequoiaDB在流场景中的应用
 
