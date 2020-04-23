@@ -4,9 +4,9 @@ version: 1.0
 ---
 
 ## 课程介绍
- 
+
 本实验将带领您了解与学习 Flink 中 Window，Time 以及 Watermark 机制。
- 
+
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
@@ -36,13 +36,11 @@ version: 1.0
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
-
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson4 packge
-
 打开 com.sequoiadb.lesson.flink.lesson4_window，在该 package 中完成本课程。
 
 ![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/ee95192e8a987d3fc8ed46aa5c47456b-0)
@@ -92,6 +90,8 @@ Flink 内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）
 
 ![1739-540-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/860e8fee3c9bf459fef816d959c59f59-0)
 
+
+
 ## Tumbling Count Window 的实现
 
 本案例通过 Tumbling Count Window 统计一个交易流水中每100次交易中的总交易额。
@@ -136,7 +136,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 以上示例为 SequoiadbSource 的使用，需要构建一个 Option，包含巨杉数据库的连接信息。而且由于数据库中录入数据无法像消息队列做到时间态的有序，其还需要一个时间字段名用于构建流，该字段值必须是时间戳类型。
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
@@ -145,6 +145,8 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 执行结果如下图，可以看到数据库中的原始数据。
 
 ![1739-540-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/e23bf77cd113f104628361d07e00ac68-0)
+
+
 
 #### map 算子的使用
 
@@ -174,7 +176,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 });
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
@@ -183,6 +185,8 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 执行结果如下图，可以看到一个Tuple2，包含交易额和1。
 
 ![1739-540-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/0ade0cf2f5ee1cd09976d4b6126f110c-0)
+
+
 
 #### Window 划分
 
@@ -198,7 +202,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 resultData = dataStream.countWindowAll(100);
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
@@ -208,7 +212,9 @@ resultData = dataStream.countWindowAll(100);
 
 ![1739-540-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/8ec48326ee3ca316aad3a26c74965824-0)
 
-#### 聚合结果
+
+
+#### 聚合计算
 
 使用 reduce 对数据进行聚合求和，此处将的聚合结果为 Tuple2<Double, Integer>，分别表示总金额和总交易量。
 
@@ -338,6 +344,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 ![1739-540-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/f4d425616da28b8b44427cc623ffe276-0)
 
+
 #### 分组
 
 keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<Tuple3<String, Double, Integer>, String> 对象，泛型中包含数据行和一个分组字段值。
@@ -373,6 +380,7 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 执行结果如下图，可以看到 keyBy 后的数据。
 
 ![1739-540-00029.png](https://doc.shiyanlou.com/courses/1739/1207281/7152003910cf3119484a2c464e06e00c-0)
+
 
 #### 在 keyedStream 上使用 Window 
 
@@ -450,6 +458,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 执行结果如下图，可以看到数据库中的原始数据。
 
 ![1739-540-00031.png](https://doc.shiyanlou.com/courses/1739/1207281/3639aa7bd79ed91a36ce90cc93b08d50-0)
+
 
 ## Sliding Count Window 的实现
 
@@ -739,6 +748,8 @@ resultData = transData.assignTimestampsAndWatermarks(
 });
 ```
 
+
+
 #### 类型转换
 
 通过 map 算子获取到交易名，交易金额。
@@ -891,3 +902,14 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 选中集合 " VIRTUAL_BANK.LESSON_4_TIME" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-540-00054.png](https://doc.shiyanlou.com/courses/1739/1207281/4bd9fda8c03528446b35226d907ec2a0-0)
+
+## 总结
+
+本小节为 Flink 学习提升篇，讲述了 Flink 的时间概念与 Window 的概念及使用，Watermark 机制的了解与使用。
+
+**知识点**
+
+- Window 的概念及 Flink 中提供的 Window 是按照什么规则划分的
+- Time 的概念
+- 多种 Window 的使用
+- Watermark 的使用

@@ -5,13 +5,13 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领您学习flink的常用算子的使用，帮助您快速入门；同时学习如何将工程打包发布到集群环境。本实验采用经典案例WordCount 单词统计进行演示。
+本实验将带领您学习 Flink 的常用算子的使用，帮助您快速入门；同时学习如何将工程打包发布到集群环境。本实验采用经典案例WordCount 单词统计进行演示。
 
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1 个 Flink节点、1 个引擎协调节点，1 个编目节点与 3 个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
@@ -21,7 +21,7 @@ version: 1.0
 
 #### 实验环境
 
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink 版本为1.9.2。
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink 版本为 1.9.2。
 
 ## 打开项目
 
@@ -49,7 +49,7 @@ version: 1.0
 
 ![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
 
-本案例使用了 flink 的 runtime 依赖 flink-core 和流作业开发依赖 flink-streaming-java 包。
+本案例使用了 Flink 的 Runtime 依赖 flink-core 和流作业开发依赖 flink-streaming-java 包。
 ![1739-520-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/874953cf1510ccc9a14a15d2fd0f689b-0)
 
 ## 查看原始数据格式
@@ -287,11 +287,11 @@ sumData = keyedData.reduce((t1, t2) -> Tuple2.of(t1.f0, t1.f1 + t2.f1));
 
 点击 maven 侧边栏中的 package 打包。
 
-![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/63114ba459947ae84b120802661be94c-0)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/818235d78cdcfc4ffffe654cf621f74b-0)
 
 打包成功后 jar 包会在当前项目目录的 target 目录下。
 
-![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/5c71f5421c834b0c51693d4f3a03726e-0)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/16c046a2a4611d6170dd2a7595a781de-0)
 
 #### 提交到集群环境
 
@@ -299,19 +299,19 @@ sumData = keyedData.reduce((t1, t2) -> Tuple2.of(t1.f0, t1.f1 + t2.f1));
 
 可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
 
-![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/065a67dd2edca2ff0d97f1df1c0a6242-0)
+![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/8e6df7ea80e5358c21e5f3a115ad60d7-0)
 
 上传成功后，选择刚刚上传好的 jar。
 
-![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/c79098a0c0b369cc233e84f323abcd95-0)
+![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/8483eeb5b276e5322275cba39410d2d7-0)
 
 添加入口类的引用（如下），点击 submit 提交当前作业。
 
 ```xml
-com.sequoiadb.flink.scdd.lesson2_word_count.WordCountMain
+com.sequoiadb.lesson.flink.lesson2_word_count.WordCountMain
 ```
 
-![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/cf55c8e6662a34c69965a2f51d15f936-0)
+![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/1ac844cc1599ef05d63aa2372877a6b8-0)
 
 任务成功提交后，发现已经在运行，并且可以在 UI 界面上看到程序的 Dataflow。
 
@@ -345,7 +345,7 @@ DataStreamSource<String> lineData = env.addSource(new RandomSource(lineNum));
 
 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
 
-![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/d9787373b031a95f80d0933c993fc02a-0)
+![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/2838685e3213c8f792a2d7e04c5d9d33-0)
 
 ## 总结
 

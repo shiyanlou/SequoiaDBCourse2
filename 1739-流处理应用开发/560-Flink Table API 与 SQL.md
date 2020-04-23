@@ -4,16 +4,16 @@ version: 1.0
 ---
 
 ## 课程介绍
- 
+
 本实验将带领您了解与学习 Flink Table API 与 Flink SQL。
 
-Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
+Flink Table 是 Flink 中的高级 API, Table API 将大大降低开发Flink程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
 
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink 节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1 个 Flink 节点、1 个引擎协调节点，1 个编目节点与 3 个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
@@ -23,7 +23,7 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 
 #### 实验环境
 
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为 1.9.2。
 
 本实验中使用了 flink-connect-sequoiadb 依赖（Flink 连接 SequoiaDB 驱动包），该依赖来自巨杉开源社区。
 
@@ -38,13 +38,11 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
 #### 打开 scdd-flink 项目
-
 打开 scdd-flink 项目，在该课程中完成本试验。
 
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson6 packge
-
 打开 com.sequoiadb.lesson.flink.lesson6_table ，在该 package 中完成本课程。
 
 ![1739-560-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/d9ac2d8b7f74f7fed908551c04e4ef6d-0)
@@ -55,9 +53,11 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 
 ![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
 
-本案例新增了flink table的驱动包。
+本案例新增了 Flink Table 的驱动包。
 
 ![1739-560-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/d66701bcb93d7343fb94b9269a243b3c-0)
+
+
 
 ## Table 的简介
 
@@ -520,3 +520,14 @@ tbEnv.sqlUpdate(
 选中集合 "VIRTUAL_BANK.LESSON_6_SQL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-560-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/ff8ef65a1b5fd01ff7763ad009be3d4f-0)
+
+## 总结
+
+本小节是对 Flink Table 和 Flink SQL的学习，学习如何从现有的 DataStream 中创建 Table，如何通过描述器注册 Table，通过 DDL 注册 Table，以及如何在 Flink Table API 中使用 Watermark。
+
+**知识点**
+
+- Flink Table API  的了解
+- Flink Table 常见的三种创建方式
+- Flink SQL 中的常见函数及语法的使用
+- Flink Table API 中Watermark 的使用
