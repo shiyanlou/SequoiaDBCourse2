@@ -37,19 +37,24 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
-#### 打开 flink-developer 项目
-打开 flink-developer 项目，在该课程中完成本试验。
+#### 打开 scdd-flink 项目
+打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson6 packge
-打开 com.sequoiadb.flink.scdd.lesson6_table ，在该 package 中完成本课程。
+打开 com.sequoiadb.lesson.flink.lesson6_table ，在该 package 中完成本课程。
 
-![1739-560-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/8da2d09a94a1c75ba2c70342ec16c7f3-0)
+![1739-560-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/d9ac2d8b7f74f7fed908551c04e4ef6d-0)
 
 #### 认识依赖
 
-查看 pom.xml 文件，认识下列依赖。本案例新增了flink table的驱动包。
+打开 pom.xml 文件，认识依赖。
+
+![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
+
+本案例新增了flink table的驱动包。
+
 ![1739-560-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/d66701bcb93d7343fb94b9269a243b3c-0)
 
 
@@ -84,7 +89,7 @@ Table 的使用需要依赖于table的执行环境，table的执行环境可以�
 
 在当前包下，打开类 CreateTableFromDataStreamMain 
 
-![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/93610689ea1667f04c9db3e463ba04c6-0)
+![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/d7b32cd9daaeb7de0135c3301909c1bc-0)
 
 #### 常见 SQL 算子
 
@@ -158,7 +163,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 通过在当前类文件上右键 > Run 'CreateTableFromDataStreamMain.main()' 运行该 Flink 程序。
 
-![1739-560-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/937f1de18e6772d9f0887caabb65432a-0)
+![1739-560-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/6bbbdd54be8487835091af979f4a7322-0)
 
 查看结果。
 
@@ -172,7 +177,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 在当前包下，打开类 CreateTableByConnectTableSourceMain 
 
-![1739-560-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/d8bfee1316715692b09b738ba8269f2e-0)
+![1739-560-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/12826533fd38450196b4c0179e24fdbf-0)
 
 #### 通过描述器创建一个 Source 表
 
@@ -260,7 +265,7 @@ tbEnv.sqlUpdate(
 
 通过在当前类文件上右键 > Run 'CreateTableByConnectTableSourceMain.main()' 运行该 Flink 程序。
 
-![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/954f646639b519256fc2b7262402357f-0)
+![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/71c5938a1ecf6268a8c97703ee3660fe-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_CONNECT 集合下。
 
@@ -288,7 +293,7 @@ tbEnv.sqlUpdate(
 
 打开类 CreateTableByDDLMain
 
-![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/f9164f40d2b38d658d8d7c5708dba55a-0)
+![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/71c5938a1ecf6268a8c97703ee3660fe-0)
 
 #### 创建 Source 表
 
@@ -378,7 +383,7 @@ tbEnv.sqlUpdate(
 
 通过在当前类文件上右键 > Run 'CreateTableByDDLMain.main()' 运行该 Flink 程序。
 
-![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/702cef0700359287d448cbee0e0aab34-0)
+![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/972eb681725f8c68a894c6a6b937f740-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_DDL 集合下。
 
@@ -402,7 +407,7 @@ tbEnv.sqlUpdate(
 
 打开类 ExecuteSqlWithWatermakerAndWindowMain
 
-![1739-560-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/042069c9598290fb4feb8903dc14a470-0)
+![1739-560-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/6b45ef42369e2125919eddb6168b47b2-0)
 
 #### 使用描述器中定义一个使用 EventTime 和 Watermark
 
@@ -496,7 +501,7 @@ tbEnv.sqlUpdate(
 
 通过在当前类文件上右键 > Run 'ExecuteSqlWithWatermakerAndWindowMain.main()' 运行该 Flink 程序。
 
-![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/4896c1688098596aa7559ef4fc86b3d4-0)
+![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/be8fc8acb0cfe1e6a89d93a7444eb0a3-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_SQL 集合下。
 

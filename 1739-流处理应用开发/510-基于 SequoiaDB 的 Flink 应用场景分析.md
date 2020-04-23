@@ -28,15 +28,15 @@ version: 1.0
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
-#### 打开 flink-developer 项目
-打开 flink-developer 项目，在该项目中完成本实验。
+#### 打开 scdd-flink 项目
+打开 scdd-flink 项目，在该项目中完成本实验。
 
-![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson1 packge
-打开 com.sequoiadb.scdd.lesson1_intro  packge ，在该 package 中完成本课程。
+打开 com.sequoiadb.lesson.flink.lesson1_intro  packge ，在该 package 中完成本课程。
 
-![1739-510-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/387eaa42ccc334912afc2fa1279aa2fe-0)
+![1739-510-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/33379a63a7db9a70550495c7d03cfb05-0)
 
 
 ## Flink 简介
@@ -92,7 +92,7 @@ Apache Flink 是一个开源框架和分布式处理引擎，可用于在无边�
 
 在当前工程包下打开类 IntroDemoMain。
 
-![1739-510-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/0078aed5a79cdf6e72d42beb520ade1e-0)
+![1739-510-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/55be1976762224fb898c1a672547d98c-0)
 
 
 
@@ -190,7 +190,7 @@ env.execute("flink intro demo");
 
 通过在当前类上右键单击 > 左键单击 Run 'IntroDemoMain.main'  运行该 Flink 程序。
 
-![1739-510-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/92cad176fcb88a7485c6a3bc93740c55-0)
+![1739-510-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/85a0bec4cf2695a1fda6074e47375710-0)
 
 #### 执行结果
 
