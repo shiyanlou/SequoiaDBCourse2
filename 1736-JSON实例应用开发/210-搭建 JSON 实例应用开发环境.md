@@ -72,11 +72,11 @@ POM 文件位置：
 
 #### 操作步骤
 
-4) 打开指定的 Java 源文件。
+1) 打开指定的 Java 源文件。
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/5ae44f6f66f90d16e94455cd4f9b0fb0-0)
 
-5) 复制以下代码样例。样例中会创建一个数据库链接，然后使用链接获取数据库的数据组信息，通过这种方式验证数据库的连通性。每次使用完数据库链接，都需要在 finally 代码块中将链接关闭。
+2) 复制以下代码样例。样例中会创建一个数据库链接，然后使用链接获取数据库的数据组信息，通过这种方式验证数据库的连通性。每次使用完数据库链接，都需要在 finally 代码块中将链接关闭。
 
 JsonUtil.formatPrint 方法为本次实验封装好用于格式化打印 JSON 字符串的工具类，此处不做赘述。用户想深入了解，可点开源码查看。此方法只是为了控制台打印出更方便用户直观查看的数据格式，对查询结果集无任何影响。
 
@@ -98,7 +98,7 @@ try {
 }
 ```
 
-6) 将代码样例粘贴到 Connection 类 connect 方法 code 1 的 TODO ~ TODO END 位置区间内。
+3) 将代码样例粘贴到 Connection 类 connect 方法 code 1 的 TODO ~ TODO END 位置区间内。
 
 ![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/9276ed582d6a2800e961cbd91724fc7f-0)
 
@@ -106,15 +106,15 @@ try {
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/b3788903f77d576fb0ec36119cc14012-0)
 
-7) 右键点击 BaseMainTest 类，创建/编辑主类运行环境。
+4) 右键点击 BaseMainTest 类，创建/编辑主类运行环境。
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/711ca74b3745f643ae3d3c90b7df6912-0)
 
-8) 配置 Configuration 页中的 Program arguments 选项，写入指定的参数 connect，点击”OK“。
+5) 配置 Configuration 页中的 Program arguments 选项，写入指定的参数 connect，点击”OK“。
 
 ![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/92654200ea5f6c60ba2675e471281325-0) 
 
-9) 右键点击 BaseMainTest 类，运行主程序。
+6) 右键点击 BaseMainTest 类，运行主程序。
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/3379a6374114e3d5d99f54681797e281-0)
 
