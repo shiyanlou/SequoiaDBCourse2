@@ -34,13 +34,13 @@ Spark Streaming 在工作过程中，实时地接收输入的数据流，并将�
 
 打开 IDEA 代码开发工具
 
-![1738-470-03](https://doc.shiyanlou.com/courses/1738/1207281/bc1af44ba494781b1ad66820d670c2bc-0)
+![1738-410-07](https://doc.shiyanlou.com/courses/1738/1207281/72397a857808ab74f01b042f07ea0a27-0)
 
 #### 打开 SCDD-Spark 项目
 
 选择 Spark 课程项目
 
-![1738-470-04](https://doc.shiyanlou.com/courses/1738/1207281/cbcfa7406656330373ad8cb0e65fd45a-0)
+![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/6d46a0bb22fac49997e6606ec1a128ab-0)
 
 #### 打开当前实验的 Package
 

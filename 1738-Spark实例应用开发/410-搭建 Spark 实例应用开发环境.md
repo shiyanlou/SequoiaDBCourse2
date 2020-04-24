@@ -35,11 +35,11 @@ Spark 使用 Scala 语言实现，具有易用性的特点，除 Scala 以外，
 
 ![1738-410-06](https://doc.shiyanlou.com/courses/1738/1207281/ff2754d609aba12340efeb27ce0645bb-0)
 
-Spark 具有访问多种外部数据源的特性。在 SequoiaDB 分布式存储架构中，Spark 可以像访问 MySQL 数据库那样访问 SequoiaDB 分布式存储的 MySQL 实例，也可以通过 SequoiaDB 的 Spark 连接器直接访问底层的 SequoiaDB 存储集群。
+Spark 具有访问多种外部数据源的特性。在 SequoiaDB 分布式存储架构中，Spark 通过 SequoiaSQL-MySQL 实例间接访问 SequoiaDB 存储集群，也可以通过 SequoiaDB 的 Spark 连接驱动直接访问底层的 SequoiaDB 存储集群。
 
 **Spark SQL**
 
-Spark SQL 是 Spark 用于处理结构化数据的组件。可以通过 SQL API 和 DataSet API 两种方式和 Spark SQL 进行交互。在本课程的实验 1 至实验 5 中将介绍 SQL API 的方式和 Spark SQL 交互，可以通过 Hive JDBC 的方式访问 Spark SQL 并提交 SQL。通过 DataSet API 和 Spark SQL 交互的方式将在后续的实验 6 中进行介绍。
+Spark SQL 是 Spark 用于处理结构化数据的组件。可以通过 SQL API 和 DataSet API 两种方式和 Spark SQL 进行交互。在本课程的实验 1 至实验 5 中将介绍 SQL API 的方式和 Spark SQL 交互，Spark SQL 使用的 Thrift JDBC server 和 Hive 的 HiveServer2 是一致的，因此可以通过 Hive JDBC 的方式访问 Spark SQL 并提交 SQL。通过 DataSet API 和 Spark SQL 交互的方式将在后续的实验 6 中进行介绍。
 
 #### 实验环境
 
@@ -58,19 +58,25 @@ Spark SQL 是 Spark 用于处理结构化数据的组件。可以通过 SQL API 
 
 打开 IDEA 代码开发工具
 
-![1738-410-07](https://doc.shiyanlou.com/courses/1738/1207281/5fd8d1853074d843bc97ac1cb8b0b581-0)
+![1738-410-07](https://doc.shiyanlou.com/courses/1738/1207281/72397a857808ab74f01b042f07ea0a27-0)
 
 #### 打开 SCDD-Spark 项目
 
 选择 Spark 课程项目
 
-![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/a7ab357431f711205346b87965a988ba-0)
+![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/6d46a0bb22fac49997e6606ec1a128ab-0)
 
 #### 项目结构
 
 项目结构如下图所示：
 
 ![1738-410-项目结构](https://doc.shiyanlou.com/courses/1738/1207281/e8476df32f148ad489acc8deb1c45f45-0)
+
+#### 打开当前实验的 Package
+
+如图所示找到当前实验使用的程序所在 Package：
+
+![1738-410-package](https://doc.shiyanlou.com/courses/1738/1207281/7ce97772f05bfab651a9368a0128f464-0)
 
 #### Maven 依赖
 
@@ -84,7 +90,7 @@ Spark SQL 是 Spark 用于处理结构化数据的组件。可以通过 SQL API 
 
 ## Hive JDBC 代码
 
-编写通过 JDBC 连接 Spark SQL 进行数据操作的代码，在后文的样例程序中会调用本节定义的方法。在之后的课程中使用到 HiveUtil 类时会调用已有的该类，代码内容和本节叙述一致，将不再赘述。
+编写通过 Hive JDBC 连接 Spark SQL 进行数据操作的代码，在后文的样例程序中会调用本节定义的方法。在之后的课程中使用到 HiveUtil 类时会调用已有的该类，代码内容和本节叙述一致，将不再赘述。
 
 #### 打开 HiveUtil 类
 
