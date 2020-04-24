@@ -4,7 +4,7 @@ version: 1.0
 ---
 
 ## 课程介绍
- 
+
 本实验为 Flink Window API Scala 版本的实现，与 Java 版的讲述相同，如果不感兴趣可以跳到下一小节。
 
 本实验将带领您了解与学习 Flink 中 Window，Time 以及 Watermark 机制。
@@ -160,8 +160,7 @@ resultData = env.addSource(new SequoiadbSource(option, "create_time"));
 将下列代码粘贴到 TODO code 2区间内。
 
 ```scala
-resultData = transData.map(obj => (obj.get("money")
-         .asInstanceOf[BSONDecimal].toBigDecimal.doubleValue(), 1))
+resultData = transData.map(obj => (obj.get("money"), 1))
 ```
 
 #### 查看结果
@@ -285,10 +284,7 @@ resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 将下列代码粘贴到 TODO code 2区间内。
 
 ```scala
-resultData = transData.map(obj => {
-    (obj.get("trans_name").asInstanceOf[String], obj.get("money").
-     asInstanceOf[BSONDecimal].toBigDecimal.doubleValue, 1)
-})
+resultData = transData.map(obj => (obj.get("trans_name"), obj.get("money"), 1))
 ```
 
 #### 查看结果
@@ -437,10 +433,7 @@ resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 将下列代码粘贴到 TODO code 2区间内。
 
 ```scala
-resultData = value.map(obj => {
-      Trans(obj.get("trans_name").asInstanceOf[String],
-        obj.get("money").asInstanceOf[BSONDecimal].toBigDecimal.doubleValue(), 1)
-    })
+resultData = value.map(obj => Trans(obj.get("trans_name"), obj.get("money"), 1))
 ```
 
 #### 分组
@@ -683,10 +676,7 @@ resultData = value.assignTimestampsAndWatermarks(new AssignerWithPeriodicWaterma
 将下列代码粘贴到 TODO code 3区间内。
 
 ```scala
- resultData = value.map(obj => {
-     (obj.get("trans_name").asInstanceOf[String], obj.get("money")
-      .asInstanceOf[BSONDecimal].toBigDecimal.doubleValue, 1)
- })
+ resultData = value.map(obj => (obj.get("trans_name"), obj.get("money"), 1))
 ```
 
 #### 分组

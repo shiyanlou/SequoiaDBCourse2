@@ -11,7 +11,7 @@ version: 1.0
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1 个 Flink节点、1 个引擎协调节点，1 个编目节点与 3 个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
@@ -21,9 +21,9 @@ version: 1.0
 
 #### 实验环境
 
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink 版本为1.9.2。
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink 版本为 1.9.2。
 
-本实验中使用了 flink-connect-sequoiadb 依赖（ Flink 连接 SequoiaDB驱动包），该依赖来自巨杉开源社区。
+本实验中使用了 flink-connect-sequoiadb 依赖（ Flink 连接 SequoiaDB 驱动包），该依赖来自巨杉开源社区。
 
 * [下载地址](https://github.com/chaochaoc/flink-connector-sequoiadb/)
 
