@@ -1,14 +1,24 @@
 ---
-
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉MySQL的执行计划和CASE表达式
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉 MySQL 的执行计划和 CASE 表达式。
 
 #### 请点击右侧选择使用的实验环境
+
+#### 部署架构：
+
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 SequoiaSQL-MySQL 数据库实例节点、1个引擎协调节点，1个编目节点与3个数据节点。
+
+![图片描述](https://doc.shiyanlou.com/courses/1469/1207281/8d88e6faed223a26fcdc66fa2ef8d3c5)
+
+详细了解 SequoiaDB 巨杉数据库系统架构：
+
+- [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
 
@@ -18,29 +28,29 @@ version: 1.0
 
 **执行计划**
 
-我们知道，不管是哪种数据库，或者是哪种数据库引擎，在对一条SQL语句进行执行的过程中都会做很多相关的优化，对于查询语句，最重要的优化方式就是使用索引。而执行计划，就是显示数据库引擎对于SQL语句的执行的详细情况，其中包含了是否使用索引，使用什么索引，使用的索引的相关信息等。
+我们知道，不管是哪种数据库，或者是哪种数据库引擎，在对一条 SQL 语句进行执行的过程中都会做很多相关的优化，对于查询语句，最重要的优化方式就是使用索引。而执行计划，就是显示数据库引擎对于 SQL 语句的执行的详细情况，其中包含了是否使用索引，使用什么索引，使用的索引的相关信息等。
 
 **CASE表达式**
 
-CASE表达式是一个流程控制结构，用在在SELECT、WHERE等语句中根据条件动态构造内容。
+CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句中根据条件动态构造内容。
 
 ## 打开项目
 
 #### 打开idea
 
-打开idea代码开发工具
+打开 idea 代码开发工具
 
 ![1735-110-1.png](https://doc.shiyanlou.com/courses/1735/1207281/6f87a8c93937c3c51f6d4839559de710-0)
 
 #### 打开SSQL-MySQL项目
 
-打开SSQL-MySQL项目，在该课程中完成后续试验
+打开 SSQL-MySQL 项目，在该课程中完成后续试验
 
 ![1735-110-13.png](https://doc.shiyanlou.com/courses/1735/1207281/40a9e7b6fbd5c3853dc09f69d0a06c86-0)
 
 #### 打开lesson6_explainAndCase包
 
-打开lesson6_explainAndCase packge，在该packge中完成后续课程。
+打开 lesson6_explainAndCase packge，在该 packge 中完成后续课程
 
 ![1735-160-1.png](https://doc.shiyanlou.com/courses/1735/1207281/68397f159f4e8f581e42d2e680ba7182-0)
 
@@ -62,25 +72,34 @@ CASE表达式是一个流程控制结构，用在在SELECT、WHERE等语句中�
 | filtered      | 存储引擎返回的数据在server层过滤后,剩下多少满足查询的记录数量的比例 |
 | extra         | 包含不适合在其他列中显式但十分重要的额外信息                 |
 
-> **select_type**常见和常用的值有如下几种：
->
-> SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT 从UNION表获取结果的SELECT
->
-> **type**包含的类型包括如下几种，从最好到最差依次是：
->
-> system > const > eq_ref > ref > range > index > all
->
+**select_type **常见和常用的值有如下几种：
+
+SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT  从 UNION 表获取结果的 SELECT
+
+**type **包含的类型包括如下几种，从最好到最差依次是：
+
+system > const > eq_ref > ref > range > index > all
 
 #### 查看执行计划
 
-查看select * from employee的执行计划
+查看 select * from employee 的执行计划
 
-打开ExplainTest.java，修改第16行run1方法中的TODO
+1）打开 ExplainTest.java
+
+![1735-160-100.png](https://doc.shiyanlou.com/courses/1735/1207281/9ec03de3a77511ff6c2268a53ec148d2-0)
+
+2）修改 run1 方法的 TODO code 1中代码为
+
+![1735-160-101.png](https://doc.shiyanlou.com/courses/1735/1207281/6f0df8090b504a1a930ad26e9fa73ac5-0)
 
 ```java
+//创建一个 Statement 对象来将 SQL 语句发送到数据库
 stmt = conn.createStatement();
-String sql3 = "explain select * from employee where ename ='Parto'";
+//编写 sql
+String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename ='Parto'";
+//执行 sql
 rs = stmt.executeQuery(sql3);
+//遍历查询结果
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -89,34 +108,50 @@ while (rs.next()) {
 }
 ```
 
-右键ExplainAndCaseMainTest，选择Edit修改参数为explain
+3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit ' ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
-右键ExplainAndCaseMainTest，选择Run，运行代码
+4）修改参数为 explain
+
+![1735-160-102.png](https://doc.shiyanlou.com/courses/1735/1207281/4e7c1572d80a4a28d3b1fc8f17b9aafe-0)
+
+5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-查看结果为：
+6）查看结果
 
 | id   | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra                                                        |
 | ---- | ----------- | -------- | ---------- | ---- | ------------- | ---- | ------- | ---- | ---- | -------- | ------------------------------------------------------------ |
 | 1    | SIMPLE      | employee | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 6    | 16.67    | Using where with pushed condition (`mysqlTest`.`employee`.`ename` = 'Parto') |
 
-> 在MySQL 5.7，可以查看select，delete，insert，replace和update语句的执行计划。
+> 在 MySQL 5.7，可以查看 select，delete，insert，replace 和 update 语句的执行计划。
 
 ## 创建索引，改变执行计划
 
-为表employee的列ename创建索引，再次查看执行计划
+为表 employee 的列 ename 创建索引，再次查看执行计划。
 
-打开ExplainTest.java，修改第11行run2方法中的TODO
+1）打开 ExplainTest.java
+
+![1735-160-103.png](https://doc.shiyanlou.com/courses/1735/1207281/8275599d562ba91722acae96f50d2ada-0)
+
+2）修改 run2 方法的 TODO code 2中代码为
+
+![1735-160-104.png](https://doc.shiyanlou.com/courses/1735/1207281/4b66506e44bf4cff8401aff101dc0f9e-0)
 
 ```java
+//创建一个 Statement 对象来将 SQL 语句发送到数据库
 stmt = conn.createStatement();
-String sql = "alter table employee add index(ename)";
+//编写 sql 修改索引
+String sql = "ALTER TABLE employee ADD INDEX(ename)";
+//执行 sql
 stmt.executeUpdate(sql);
-String sql3 = "explain select * from employee where ename = 'Parto'";
+//编写 sql 查看执行计划
+String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename = 'Parto'";
+//执行 sql
 rs = stmt.executeQuery(sql3);
+//遍历查询结果
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -125,15 +160,19 @@ while (rs.next()) {
 }
 ```
 
-右键ExplainAndCaseMainTest，选择Edit修改参数为alterExplain
+3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
-右键ExplainAndCaseMainTest，选择Run，运行代码
+4）修改参数为 alterExplain
+
+![1735-160-105.png](https://doc.shiyanlou.com/courses/1735/1207281/930834f84b44925bd8be6bebc485a8ec-0)
+
+5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-查看结果为：
+6）查看结果
 
 | id   | select_type | table    | partitions | type | possible_keys | key   | key_len | ref   | rows | filtered | Extra |
 | ---- | ----------- | -------- | ---------- | ---- | ------------- | ----- | ------- | ----- | ---- | -------- | ----- |
@@ -141,9 +180,9 @@ while (rs.next()) {
 
 ## Case表达式
 
-MySQL CASE表达式是一个流程控制结构，用在在SELECT、WHERE等语句中根据条件动态构造内容。
+MySQL CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句中根据条件动态构造内容。
 
-MySQL的CASE表达式有2种形式，一种更像是编程语言当中的CASE语句，拿一个给定的值（变量）跟一系列特定的值作比较,称之为CASE类型。另一种则更像是编程语言中的if语句，当满足某些条件的时候取特定值，称之为IF类型。
+MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CASE 语句，拿一个给定的值（变量）跟一系列特定的值作比较,称之为 CASE 类型。另一种则更像是编程语言中的if语句，当满足某些条件的时候取特定值，称之为 IF 类型。
 
 #### case类型
 
@@ -157,22 +196,32 @@ WHEN compare_value_2 THEN result_2
 ELSE result END
 ```
 
-此情况下，拿value与各个compare_value比较，相等时取对应的值，都不相等时取最后的result。
+此情况下，拿 value 与各个 compare_value 比较，相等时取对应的值，都不相等时取最后的 result。
 
-打开ExplainTest.java，修改第17行run1方法中的TODO
+1）打开 CaseTest.java
+
+![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
+
+2）修改 run1 方法的 TODO code 1中代码为
+
+![1735-160-107.png](https://doc.shiyanlou.com/courses/1735/1207281/6f819f33f5e945aacfd331379ae06f5c-0)
 
 ```java
+//创建一个 Statement 对象来将 SQL 语句发送到数据库
 stmt = conn.createStatement();
-String sql3 = "SELECT ename,\n" +
-    "    CASE ename\n" +
-    "        WHEN 'Parto' THEN 'P'\n" +
-    "        WHEN 'Georgi' THEN 'G'\n" +
-    "        WHEN 'Chirs' THEN 'C'\n" +
-    "        ELSE 'XX'\n" +
+//编写 sql
+String sql3 = "SELECT ename," +
+    "    CASE ename" +
+    "        WHEN 'Parto' THEN 'P'" +
+    "        WHEN 'Georgi' THEN 'G'" +
+    "        WHEN 'Chirs' THEN 'C'" +
+    "        ELSE 'XX'" +
     "    END AS mark\n" +
-    "FROM\n" +
+    "FROM" +
     "    employee";
+//执行 sql
 rs = stmt.executeQuery(sql3);
+//遍历查询结果
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -181,26 +230,25 @@ while (rs.next()) {
 }
 ```
 
-右键ExplainAndCaseMainTest，选择Edit修改参数为caseTest
+3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
-右键ExplainAndCaseMainTest，选择Run，运行代码
+4）修改参数为 caseTest
+
+![1735-160-108.png](https://doc.shiyanlou.com/courses/1735/1207281/3fdcfa4f5beff758cc5f20993a300bd2-0)
+
+5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-查看结果为：
+6）查看结果
 
-​			Georgi	G	
-​			Bezalel	XX	
-​			Parto	P		
-​			Chirs	C	
-​			Kyoichi	XX	
-​			Anneke	XX
+![1735-160-109.png](https://doc.shiyanlou.com/courses/1735/1207281/6b359abf43d45435dcf84aed550bdee2-0)
 
 #### IF类型
 
-此类型的CASE表达式如下：
+此类型的 CASE 表达式如下：
 
 ```sql
 CASE
@@ -210,21 +258,31 @@ WHEN condition_2 THEN result_2
 ELSE result END
 ```
 
-此时自上而下根据condition判断，取对应的值，都不满足的时候取最后的result。
+此时自上而下根据 condition 判断，取对应的值，都不满足的时候取最后的 result 。
 
-打开ExplainTest.java，修改第11行run2方法中的TODO
+1）打开 CaseTest.java
+
+![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
+
+2）修改 run2 方法的 TODO code 2中代码为
+
+![1735-160-110.png](https://doc.shiyanlou.com/courses/1735/1207281/ec5d580130e237290e5429fc15ff6cd1-0)
 
 ```java
+//创建一个 Statement 对象来将 SQL 语句发送到数据库
 stmt = conn.createStatement();
-String sql3 = "SELECT \n" +
-    "    *\n" +
-    "FROM\n" +
+//编写 sql
+String sql = "SELECT " +
+    "    *" +
+    "FROM" +
     "    employee\n" +
-    "ORDER BY (CASE\n" +
-    "    WHEN empno IS NULL THEN age\n" +
+    "ORDER BY (CASE" +
+    "    WHEN empno IS NULL THEN age" +
     "    ELSE empno\n" +
     "END);";
-rs = stmt.executeQuery(sql3);
+//执行 sql
+rs = stmt.executeQuery(sql);
+//遍历查询结果
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -232,20 +290,20 @@ while (rs.next()) {
     System.out.println();
 }
 ```
-右键ExplainAndCaseMainTest，选择Edit修改参数为caseIfTest
+
+3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
-右键ExplainAndCaseMainTest，选择Run，运行代码
+4）修改参数为 caseIfTest
+
+![1735-160-111.png](https://doc.shiyanlou.com/courses/1735/1207281/5fdf9ec88a87828d8c43248e671991d2-0)
+
+5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-查看结果为：
+6）查看结果
 
-​			10001	Georgi	48	
-​			10002	Bezalel	21	
-​			10003	Parto	33	
-​			10004	Chirs	40	
-​			10005	Kyoichi	23	
-​			10006	Anneke	19	
+![1735-160-112.png](https://doc.shiyanlou.com/courses/1735/1207281/07b4f8133371392ced4117ff24d405da-0)
 

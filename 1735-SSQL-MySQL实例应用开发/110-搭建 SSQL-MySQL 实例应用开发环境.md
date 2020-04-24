@@ -2,12 +2,11 @@
 show: step
 version: 1.0 
 
-
 ---
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉并搭建 SSQL-MySQL 开发环境。
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉并搭建 SSQL-MySQL 开发环境
 
 #### 请点击右侧选择使用的实验环境
 
@@ -105,16 +104,17 @@ conn.close();
 >
 > 粘贴方法如下：
 >
-> - 点击代码框右上角的 copy 图标
-> - 选择实验界面左边的 “剪切板”
+> * 点击代码框右上角的 copy 图标
+>
+> * 选择实验界面左边的 “剪切板”
 >
 > ![paste1](https://doc.shiyanlou.com/courses/1738/1207281/7745e7378b70a60ad6073262f05762ec-0)
 >
-> - 在弹出的“在线环境剪切板”中粘贴复制的代码内容
+> * 在弹出的“在线环境剪切板”中粘贴复制的代码内容
 >
 > ![paste2](https://doc.shiyanlou.com/courses/1738/1207281/6b477101feb04b1db73e8f893ba3b334-0)
 >
-> - 在实验环境中到对应的位置粘贴
+> * 在实验环境中到对应的位置粘贴
 >
 > ![paste3](https://doc.shiyanlou.com/courses/1738/1207281/14482e482cde033e4f78cca144abdcee-0)
 
