@@ -9,7 +9,7 @@ version: 1.0
 
 #### SequoiaS3 开发简介
 
-SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK为进行S3操作。
+SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过AWS SDK进行S3操作。
 
 #### 实验流程简述：
 

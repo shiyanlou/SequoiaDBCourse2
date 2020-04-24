@@ -47,13 +47,13 @@ DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解�
 
 打开 IDEA 代码开发工具
 
-![1738-460-02](https://doc.shiyanlou.com/courses/1738/1207281/da25b7d1777ca6eb909a4afa05c95fe7-0)
+![1738-410-07](https://doc.shiyanlou.com/courses/1738/1207281/72397a857808ab74f01b042f07ea0a27-0)
 
 #### 打开 SCDD-Spark 项目
 
 选择 Spark 课程项目
 
-![1738-460-03](https://doc.shiyanlou.com/courses/1738/1207281/24aaf448f76d9e2e61a59a6dc44aa507-0)
+![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/6d46a0bb22fac49997e6606ec1a128ab-0)
 
 #### 打开当前实验的 Package
 
