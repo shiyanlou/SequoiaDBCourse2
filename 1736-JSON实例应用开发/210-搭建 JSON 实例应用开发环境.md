@@ -118,11 +118,11 @@ try {
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/3379a6374114e3d5d99f54681797e281-0)
 
-在 IDEA 输出窗口查看运行效果。
+7) 在 IDEA 输出窗口查看运行效果。
 
 ![// TODO 贴图](https://doc.shiyanlou.com/courses/1736/1207281/4f5f062cc4adaf1d4fc970936a6ca054-0)
 
-双击放大控制台输出窗口，查看详细输出信息。
+8) 双击放大控制台输出窗口，查看详细输出信息。
 
 ![](https://doc.shiyanlou.com/courses/1736/1207281/9cb655d55310e713fcbb089d4763b8bc-0)
 
