@@ -86,7 +86,7 @@ put.close();
 
 ![image-20200415193806468](https://doc.shiyanlou.com/courses/1737/1207281/94ffd505eff6f66ed8b396965c4c0eda-0)
 
-3）通过可视化界面进入 /opt/sequoiafs/mountpoint/ 目录，查看文件已被写入到sequoiafs中，同时查看文件内容。
+3）通过可视化界面进入/opt/sequoiafs/mountpoint/目录，查看文件已被写入到sequoiafs中，同时查看文件内容。
 
 ![image-20200415200958485](https://doc.shiyanlou.com/courses/1737/1207281/790fb7b0e8332734f3ae4e11c030c385-0)
 
@@ -119,7 +119,7 @@ put.close();
 
 #### 执行代码
 
-1）鼠标移动到屏幕左边 SequoiaFSWrite 类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项。
+1）鼠标移动到屏幕左边 SequoiaFSRead 类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项。
 
 ![image-20200415014035554](https://doc.shiyanlou.com/courses/1737/1207281/04777d9aa3321edbd0005ec52535d519-0)
 

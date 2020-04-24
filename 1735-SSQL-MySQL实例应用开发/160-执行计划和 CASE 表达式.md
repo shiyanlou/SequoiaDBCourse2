@@ -1,7 +1,7 @@
 ---
-
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
@@ -196,7 +196,7 @@ String sql3 = "SELECT ename," +
     "        WHEN 'Georgi' THEN 'G'" +
     "        WHEN 'Chirs' THEN 'C'" +
     "        ELSE 'XX'" +
-    "    END AS mark" +
+    "    END AS mark\n" +
     "FROM" +
     "    employee";
 //执行 sql
@@ -252,10 +252,10 @@ stmt = conn.createStatement();
 String sql = "SELECT " +
     "    *" +
     "FROM" +
-    "    employee" +
+    "    employee\n" +
     "ORDER BY (CASE" +
     "    WHEN empno IS NULL THEN age" +
-    "    ELSE empno" +
+    "    ELSE empno\n" +
     "END);";
 //执行 sql
 rs = stmt.executeQuery(sql);
@@ -267,6 +267,7 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
 3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
