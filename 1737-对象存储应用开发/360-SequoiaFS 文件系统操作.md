@@ -41,13 +41,13 @@ SequoiaFS文件系统是基于FUSE在Linux系统下实现的一套文件系统�
 
 打开 object-java 项目。
 
-![image-20200414091915064](https://doc.shiyanlou.com/courses/1737/1207281/79e3fad2d27f14cfcbc94eadd646d88d-0)
+![image-20200414091915064](https://doc.shiyanlou.com/courses/1737/1207281/8fae6ec098d2e1f9a431636f6f919ad8-0)
 
 #### 打开 Package
 
-打开 lesson6_seuqoiaFS 包，在该Package完成后续课程
+打开 lesson6_seuqoiaFS 包，在该Package完成后续课程。
 
-![image-20200415012112580](https://doc.shiyanlou.com/courses/1737/1207281/e3140fed5e89bbf16fd3ce31c6297f24-0)
+![image-20200422180054863](https://doc.shiyanlou.com/courses/1737/1207281/75dc18d192031b8ed0a1b44c95c79a69-0)
 
 ## 在SequoiaFS上写入文件
 
@@ -55,7 +55,7 @@ SequoiaFS 支持通用文件系统API，使用 Java IO 类对 SequoiaFS 的挂�
 
 #### 代码编写
 
-1）双击打开 SequoiaFSWrite 类，找到 main() 方法内行 **TODO  通过java api 写入数据**
+1）双击打开 SequoiaFSWrite 类，找到 main() 方法内行 **TODO  通过java api 写入数据**。
 
 ![image-20200415013416784](https://doc.shiyanlou.com/courses/1737/1207281/8bf47c3fce31ae205234af2281eecbfd-0)
 
@@ -64,21 +64,21 @@ SequoiaFS 支持通用文件系统API，使用 Java IO 类对 SequoiaFS 的挂�
 2）将下方代码粘贴到 TODO ~ TODO END区域。
 
 ```java
-    InputStream put = new FileInputStream("/home/sdbadmin/sequoiadb.txt");
-    OutputStream out  = new FileOutputStream("/opt/sequoiafs/mountpoint/sequoiadb.txt");
-    byte[] cbuf = new byte[1024];
-    int len = 1024;
-    //How many bytes of file are read at a time
-    while((len = put.read(cbuf))!= -1){
-        out.write(cbuf,0,len);
-        out.flush();
-    }
-    put.close();
+InputStream put = new FileInputStream("/home/sdbadmin/sequoiadb.txt");
+OutputStream out  = new FileOutputStream("/opt/sequoiafs/mountpoint/sequoiadb.txt");
+byte[] cbuf = new byte[1024];
+int len = 1024;
+//How many bytes of file are read at a time
+while((len = put.read(cbuf))!= -1){
+    out.write(cbuf,0,len);
+    out.flush();
+}
+put.close();
 ```
 
 #### 执行代码
 
-1）鼠标移动到屏幕左边 SequoiaFSWrite 类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项
+1）鼠标移动到屏幕左边 SequoiaFSWrite 类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项。
 
 ![image-20200415013625601](https://doc.shiyanlou.com/courses/1737/1207281/17be31c6f7fcbd90a079e7a0465a9e24-0)
 
@@ -96,7 +96,7 @@ SequoiaFS 支持通用文件系统API，使用 Java IO 类对 SequoiaFS 的挂�
 
 #### 代码编写
 
-1）双击打开 SequoiaFSWrite 类，找到main()方法内行 **TODO  通过java api 读取数据**
+1）双击打开 SequoiaFSWrite 类，找到main()方法内行 **TODO  通过java api 读取数据。**
 
 ![image-20200415013904075](https://doc.shiyanlou.com/courses/1737/1207281/bb01ba093d96700045ec6a27d6449262-0)
 
@@ -104,7 +104,7 @@ SequoiaFS 支持通用文件系统API，使用 Java IO 类对 SequoiaFS 的挂�
 
 ```java
 //Get the file input stream
-InputStreamReader put = new InputStreamReader(new FileInputStream("/opt/sequoiafs/mountpoint/version.conf"), "utf-8");
+InputStreamReader put = new InputStreamReader(new FileInputStream("/opt/sequoiafs/mountpoint/sequoiadb.txt"), "utf-8");
 
 char[] cbuf = new char[1024];
 
@@ -119,7 +119,7 @@ put.close();
 
 #### 执行代码
 
-1）鼠标移动到屏幕左边 SequoiaFSWrite 类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项
+1）鼠标移动到屏幕左边 SequoiaFSWrite 类，右键点击，出现如图所示的选项条，左键单击**Edit 'SequoiaFSWrite'**选项。
 
 ![image-20200415014035554](https://doc.shiyanlou.com/courses/1737/1207281/04777d9aa3321edbd0005ec52535d519-0)
 
@@ -127,3 +127,6 @@ put.close();
 
 ![image-20200415201106328](https://doc.shiyanlou.com/courses/1737/1207281/08e91c5ef3cdc80a1b18d93eb3f37bf2-0)
 
+## 总结
+
+在本节课中，我们通过通用的 Java IO 流，对挂载的 SequoiaFS 目录进行了文件写入和文件读取，证明了通过 SequoiaFS 挂载的目录的可用性。

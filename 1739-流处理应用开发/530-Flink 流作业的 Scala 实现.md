@@ -4,7 +4,7 @@ version: 1.0
 ---
 
 ## 课程介绍
-
+ 
 本实验为 Flink 流作业 Scala 版本的实现，与 Java 版的讲述相同，如果不感兴趣可以跳到下一小节。
 
 本实验将带领您学习 Flink 的常用算子的使用，帮助您快速入门；同时学习如何将工程打包发布到集群环境。本实验采用经典案例 WordCount 单词统计进行演示。
@@ -33,22 +33,23 @@ version: 1.0
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
-#### 打开 flink-developer 项目
-打开 flink-developer 项目，在该课程中完成本试验。
+#### 打开 scdd-flink 项目
 
-![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
+打开 scdd-flink 项目，在该课程中完成本试验。
+
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson3 packge
-打开 com.sequoiadb.scdd.lesson3_word_count，在该 package 中完成本课程。注意：该包位于 scala 源码包下。
 
-![1730-530-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/4f9788c0136df45e1312bc4cd911acaf-0)
+打开 com.sequoiadb.lesson.flink.lesson3_word_count，在该 package 中完成本课程。注意：该包位于 scala 源码包下。
 
+![1730-530-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/0fd4e6295ec707993e09e044c0e24998-0)
 
 #### 认识依赖
 
 打开 pom.xml 文件，认识依赖。
 
-![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/c8177f5490e581cd3a59c689b65f9143-0)
+![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
 
 本案例使用了 Flink 的 Runtime 依赖 flink-core 和流作业 Scala 开发依赖 flink-streaming-scala 包。
 
@@ -60,13 +61,13 @@ version: 1.0
 
 在当前包下，打开类 WordCountMain。
 
-![1730-530-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/ac7f94c25e627be26f98111e28c39431-0)
+![1730-530-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/e7952672e981d664fdc68fb81b7fa3f1-0)
 
 #### 运行程序
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
-![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
+![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
 #### 查看结果
 
@@ -99,7 +100,7 @@ flatmapData = dataStream.flatMap(_.split(" "))
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
-![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
+![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
 可以看到在每个数据行上仅有一个单词。
 
@@ -130,7 +131,7 @@ filterData = dataStream.filter(!_.equals("java"))
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
-![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
+![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
 可以看到数据中已经没有“java”单词了。
 
@@ -161,7 +162,7 @@ mapData = dataStream.map((_, 1))
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
-![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
+![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
 可以看到每个数据行上都是一个元组，包含一个单词和1
 
@@ -200,7 +201,7 @@ sumData = dataStream.keyBy(0).sum(1)
 
 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
-![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/984b8f0bd0d930cb4e4fa0313be4e3be-0)
+![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
 可以看到单词统计的结果。
 
@@ -241,11 +242,11 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 点击 maven 侧边栏中的 package 打包。
 
-![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/63114ba459947ae84b120802661be94c-0)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/818235d78cdcfc4ffffe654cf621f74b-0)
 
 打包成功后 jar 包会在当前项目目录的 target 目录下。
 
-![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/5c71f5421c834b0c51693d4f3a03726e-0)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/16c046a2a4611d6170dd2a7595a781de-0)
 
 #### 提交到集群环境
 
@@ -254,19 +255,19 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
 
-![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/065a67dd2edca2ff0d97f1df1c0a6242-0)
+![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/8e6df7ea80e5358c21e5f3a115ad60d7-0)
 
 上传成功后，选择刚刚上传好的 jar。
 
-![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/c79098a0c0b369cc233e84f323abcd95-0)
+![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/8483eeb5b276e5322275cba39410d2d7-0)
 
 添加入口类的引用（如下），点击 submit 提交当前作业。
 
 ```xml
-com.sequoiadb.flink.scdd.lesson3_word_count.WordCountMain
+com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
 ```
 
-![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/cf55c8e6662a34c69965a2f51d15f936-0)
+![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/1ac844cc1599ef05d63aa2372877a6b8-0)
 
 任务成功提交后，发现已经在运行，并且可以在 UI 界面上看到程序的 Dataflow。
 
@@ -275,6 +276,7 @@ com.sequoiadb.flink.scdd.lesson3_word_count.WordCountMain
 在对应的 Task Manager 中可以查看到当前作业的执行结果。
 
 ![1739-520-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/fe9f48d360016724607850fdb35387f9-0)
+
 ## Flink 工程打包与参数的获取（可选）
 
 编写的程序在提交到集群后的 jar 如果想修改某些参数，需要重新打包。但是这很明显大大增加了不必要的工作量，Flink 同样支持动态参数的获取，下面来改造一下吧。
@@ -299,7 +301,7 @@ val lineData: DataStream[String] = env.addSource(new RandomSource(lineNum))
 
 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
 
-![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/d9787373b031a95f80d0933c993fc02a-0)
+![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/2838685e3213c8f792a2d7e04c5d9d33-0)
 
 ## 总结
 

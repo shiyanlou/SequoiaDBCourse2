@@ -7,13 +7,13 @@ version: 1.0
 
 本实验将带领您了解与学习 Flink Table API 与 Flink SQL。
 
-Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
+Flink Table 是 Flink 中的高级 API, Table API 将大大降低开发Flink程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
 
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink 节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1 个 Flink 节点、1 个引擎协调节点，1 个编目节点与 3 个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
@@ -23,7 +23,7 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 
 #### 实验环境
 
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为1.9.2。
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎为 3.4 版本，Flink版本为 1.9.2。
 
 本实验中使用了 flink-connect-sequoiadb 依赖（Flink 连接 SequoiaDB 驱动包），该依赖来自巨杉开源社区。
 
@@ -37,19 +37,24 @@ Flink Table 是 Flink 中的高级API, Table API 将大大降低开发Flink程�
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
-#### 打开 flink-developer 项目
-打开 flink-developer 项目，在该课程中完成本试验。
+#### 打开 scdd-flink 项目
+打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson6 packge
-打开 com.sequoiadb.flink.scdd.lesson6_table ，在该 package 中完成本课程。
+打开 com.sequoiadb.lesson.flink.lesson6_table ，在该 package 中完成本课程。
 
-![1739-560-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/8da2d09a94a1c75ba2c70342ec16c7f3-0)
+![1739-560-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/d9ac2d8b7f74f7fed908551c04e4ef6d-0)
 
 #### 认识依赖
 
-查看 pom.xml 文件，认识下列依赖。本案例新增了flink table的驱动包。
+打开 pom.xml 文件，认识依赖。
+
+![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
+
+本案例新增了 Flink Table 的驱动包。
+
 ![1739-560-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/d66701bcb93d7343fb94b9269a243b3c-0)
 
 
@@ -84,7 +89,7 @@ Table 的使用需要依赖于table的执行环境，table的执行环境可以�
 
 在当前包下，打开类 CreateTableFromDataStreamMain 
 
-![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/93610689ea1667f04c9db3e463ba04c6-0)
+![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/d7b32cd9daaeb7de0135c3301909c1bc-0)
 
 #### 常见 SQL 算子
 
@@ -158,7 +163,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 通过在当前类文件上右键 > Run 'CreateTableFromDataStreamMain.main()' 运行该 Flink 程序。
 
-![1739-560-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/937f1de18e6772d9f0887caabb65432a-0)
+![1739-560-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/6bbbdd54be8487835091af979f4a7322-0)
 
 查看结果。
 
@@ -172,7 +177,7 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 在当前包下，打开类 CreateTableByConnectTableSourceMain 
 
-![1739-560-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/d8bfee1316715692b09b738ba8269f2e-0)
+![1739-560-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/12826533fd38450196b4c0179e24fdbf-0)
 
 #### 通过描述器创建一个 Source 表
 
@@ -260,7 +265,7 @@ tbEnv.sqlUpdate(
 
 通过在当前类文件上右键 > Run 'CreateTableByConnectTableSourceMain.main()' 运行该 Flink 程序。
 
-![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/954f646639b519256fc2b7262402357f-0)
+![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/71c5938a1ecf6268a8c97703ee3660fe-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_CONNECT 集合下。
 
@@ -288,7 +293,7 @@ tbEnv.sqlUpdate(
 
 打开类 CreateTableByDDLMain
 
-![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/f9164f40d2b38d658d8d7c5708dba55a-0)
+![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/71c5938a1ecf6268a8c97703ee3660fe-0)
 
 #### 创建 Source 表
 
@@ -378,7 +383,7 @@ tbEnv.sqlUpdate(
 
 通过在当前类文件上右键 > Run 'CreateTableByDDLMain.main()' 运行该 Flink 程序。
 
-![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/702cef0700359287d448cbee0e0aab34-0)
+![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/972eb681725f8c68a894c6a6b937f740-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_DDL 集合下。
 
@@ -402,7 +407,7 @@ tbEnv.sqlUpdate(
 
 打开类 ExecuteSqlWithWatermakerAndWindowMain
 
-![1739-560-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/042069c9598290fb4feb8903dc14a470-0)
+![1739-560-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/6b45ef42369e2125919eddb6168b47b2-0)
 
 #### 使用描述器中定义一个使用 EventTime 和 Watermark
 
@@ -496,7 +501,7 @@ tbEnv.sqlUpdate(
 
 通过在当前类文件上右键 > Run 'ExecuteSqlWithWatermakerAndWindowMain.main()' 运行该 Flink 程序。
 
-![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/4896c1688098596aa7559ef4fc86b3d4-0)
+![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/be8fc8acb0cfe1e6a89d93a7444eb0a3-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_SQL 集合下。
 
@@ -515,3 +520,14 @@ tbEnv.sqlUpdate(
 选中集合 "VIRTUAL_BANK.LESSON_6_SQL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-560-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/ff8ef65a1b5fd01ff7763ad009be3d4f-0)
+
+## 总结
+
+本小节是对 Flink Table 和 Flink SQL的学习，学习如何从现有的 DataStream 中创建 Table，如何通过描述器注册 Table，通过 DDL 注册 Table，以及如何在 Flink Table API 中使用 Watermark。
+
+**知识点**
+
+- Flink Table API  的了解
+- Flink Table 常见的三种创建方式
+- Flink SQL 中的常见函数及语法的使用
+- Flink Table API 中Watermark 的使用

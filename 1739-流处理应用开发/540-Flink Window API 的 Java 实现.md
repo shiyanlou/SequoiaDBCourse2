@@ -35,21 +35,21 @@ version: 1.0
 
 ![1739-510-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/c5a12bc733b440ce265298eb3cc4a715-0)
 
-#### 打开 flink-developer 项目
-打开 flink-developer 项目，在该课程中完成本试验。
+#### 打开 scdd-flink 项目
+打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/99b152f08db639b9d163676a09b7102e-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson4 packge
-打开 com.sequoiadb.flink.scdd.lesson4_window，在该 package 中完成本课程。
+打开 com.sequoiadb.lesson.flink.lesson4_window，在该 package 中完成本课程。
 
-![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/fc0819b8e1c521dff7cd9c578e453398-0)
+![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/ee95192e8a987d3fc8ed46aa5c47456b-0)
 
 #### 认识依赖
 
 打开 pom.xml 文件，认识依赖。
 
-![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/c8177f5490e581cd3a59c689b65f9143-0)
+![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
 
 本案例新增了 Flink 连接 SequoiaDB 的驱动包。
 
@@ -100,7 +100,7 @@ Flink 内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）
 
 在当前包下，打开类 TumblingCountWindowMain
 
-![1739-540-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/e3287d6c7d800c2f108b940ba4000c7e-0)
+![1739-540-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/9d9504ea0a5fcf5c26534be64fe59009-0)
 
 #### 原始数据的了解
 
@@ -136,11 +136,11 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 以上示例为 SequoiadbSource 的使用，需要构建一个 Option，包含巨杉数据库的连接信息。而且由于数据库中录入数据无法像消息队列做到时间态的有序，其还需要一个时间字段名用于构建流，该字段值必须是时间戳类型。
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/83617d1fa1ab77f38247868bd0cd7b17-0)
+![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
 执行结果如下图，可以看到数据库中的原始数据。
 
@@ -176,11 +176,11 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 });
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/83617d1fa1ab77f38247868bd0cd7b17-0)
+![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
 执行结果如下图，可以看到一个Tuple2，包含交易额和1。
 
@@ -202,11 +202,11 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 resultData = dataStream.countWindowAll(100);
 ```
 
-#### 查看数据的结果
+#### 查看结果
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/83617d1fa1ab77f38247868bd0cd7b17-0)
+![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
 执行结果如下图，可以看到每个 window 中的数据。
 
@@ -214,7 +214,7 @@ resultData = dataStream.countWindowAll(100);
 
 
 
-#### 聚合结果
+#### 聚合计算
 
 使用 reduce 对数据进行聚合求和，此处将的聚合结果为 Tuple2<Double, Integer>，分别表示总金额和总交易量。
 
@@ -247,7 +247,7 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/83617d1fa1ab77f38247868bd0cd7b17-0)
+![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
 查看结果，可以得到每100次的交易额。
 
@@ -261,7 +261,7 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 在当前包下，打开类 TumblingTimeWindowMain
 
-![1739-540-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/491d0cda3aca588ab10545802d44986f-0)
+![1739-540-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/1db81a75ce684e443c5ed193c06c2dc6-0)
 
 #### 原始数据的了解
 
@@ -300,7 +300,7 @@ sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 
 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/8828f84eb18a05a8d583c98863688eb9-0)
+![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
 执行结果如下图，可以看到数据库中的原始数据。
 
@@ -338,7 +338,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/8828f84eb18a05a8d583c98863688eb9-0)
+![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
 执行结果如下图，可以看到转换后的 Tuple 数据。
 
@@ -375,7 +375,7 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 
 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/8828f84eb18a05a8d583c98863688eb9-0)
+![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
 执行结果如下图，可以看到 keyBy 后的数据。
 
@@ -400,7 +400,7 @@ resultData = keyedData.timeWindow(Time.seconds(5));
 
 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/8828f84eb18a05a8d583c98863688eb9-0)
+![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
 执行结果如下图，可以看到每个 window 内的数据。
 
@@ -453,7 +453,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/8828f84eb18a05a8d583c98863688eb9-0)
+![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
 执行结果如下图，可以看到数据库中的原始数据。
 
@@ -468,7 +468,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 在当前包下，打开类 SlidingCountWindowMain
 
-![1739-540-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/1c6d4f95d452503e3406cf36a86a4a30-0)
+![1739-540-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/36724e26a8ae89df74d254343d6f0425-0)
 
 #### SequoiadbSource 的使用
 
@@ -622,7 +622,7 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 
 通过在当前类文件上右键 > Run 'SlidingCountWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00040.png](https://doc.shiyanlou.com/courses/1739/1207281/d37e874540ed0c7ee764a2be9454aa14-0)
+![1739-540-00040.png](https://doc.shiyanlou.com/courses/1739/1207281/d671b8f16167e4ebca4030c533ede644-0)
 
 通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
 
@@ -683,7 +683,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 在当前包下，打开类 SlidingTimeWindowWithWatermarkerMain
 
-![1739-540-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/2d1de7951ccb944541f8a17f5bbdaf33-0)
+![1739-540-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/e1961710ce9954e94c244fcbfcecd1f0-0)
 
 #### SequoiadbSource 的使用
 
@@ -883,7 +883,7 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 
 通过在当前类文件上右键 > Run 'SlidingCountWindowMain.main()' 运行该 Flink 程序。
 
-![1739-540-00048.png](https://doc.shiyanlou.com/courses/1739/1207281/a8e6d8f8475fc663a77a6820841f4a6f-0)
+![1739-540-00048.png](https://doc.shiyanlou.com/courses/1739/1207281/d8d526d33648d5270d4d5fe00f76c684-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_4_TIME 集合下。
 
@@ -902,3 +902,14 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 选中集合 " VIRTUAL_BANK.LESSON_4_TIME" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-540-00054.png](https://doc.shiyanlou.com/courses/1739/1207281/4bd9fda8c03528446b35226d907ec2a0-0)
+
+## 总结
+
+本小节为 Flink 学习提升篇，讲述了 Flink 的时间概念与 Window 的概念及使用，Watermark 机制的了解与使用。
+
+**知识点**
+
+- Window 的概念及 Flink 中提供的 Window 是按照什么规则划分的
+- Time 的概念
+- 多种 Window 的使用
+- Watermark 的使用
