@@ -96,7 +96,7 @@ SequoiaFS 支持通用文件系统API，使用 Java IO 类对 SequoiaFS 的挂�
 
 #### 代码编写
 
-1）双击打开 SequoiaFSWrite 类，找到main()方法内行 **TODO  通过java api 读取数据。**
+1）双击打开 SequoiaFSRead 类，找到main()方法内行 **TODO  通过java api 读取数据。**
 
 ![image-20200415013904075](https://doc.shiyanlou.com/courses/1737/1207281/bb01ba093d96700045ec6a27d6449262-0)
 
