@@ -1,7 +1,7 @@
 ---
+
 show: step
 version: 1.0 
-
 ---
 
 ## 课程介绍
@@ -88,9 +88,11 @@ system > const > eq_ref > ref > range > index > all
 
 ![1735-160-100.png](https://doc.shiyanlou.com/courses/1735/1207281/9ec03de3a77511ff6c2268a53ec148d2-0)
 
-2）修改 run1 方法的 TODO code 1中代码为
+2）在 run1 方法中找到 TODO code 1
 
 ![1735-160-101.png](https://doc.shiyanlou.com/courses/1735/1207281/6f0df8090b504a1a930ad26e9fa73ac5-0)
+
+3）将下方代码粘贴到 TODO code 1 区域内
 
 ```java
 //创建一个 Statement 对象来将 SQL 语句发送到数据库
@@ -108,19 +110,19 @@ while (rs.next()) {
 }
 ```
 
-3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit ' ExplainAndCase...main()'
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit ' ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
-4）修改参数为 explain
+5）修改参数为 explain
 
 ![1735-160-102.png](https://doc.shiyanlou.com/courses/1735/1207281/4e7c1572d80a4a28d3b1fc8f17b9aafe-0)
 
-5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-6）查看结果
+7）查看结果
 
 | id   | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra                                                        |
 | ---- | ----------- | -------- | ---------- | ---- | ------------- | ---- | ------- | ---- | ---- | -------- | ------------------------------------------------------------ |
@@ -136,9 +138,11 @@ while (rs.next()) {
 
 ![1735-160-103.png](https://doc.shiyanlou.com/courses/1735/1207281/8275599d562ba91722acae96f50d2ada-0)
 
-2）修改 run2 方法的 TODO code 2中代码为
+2）在 run2 方法中找到 TODO code 2
 
 ![1735-160-104.png](https://doc.shiyanlou.com/courses/1735/1207281/4b66506e44bf4cff8401aff101dc0f9e-0)
+
+3）将下方代码粘贴到 TODO code 2 区域内
 
 ```java
 //创建一个 Statement 对象来将 SQL 语句发送到数据库
@@ -164,11 +168,11 @@ while (rs.next()) {
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
-4）修改参数为 alterExplain
+5）修改参数为 alterExplain
 
 ![1735-160-105.png](https://doc.shiyanlou.com/courses/1735/1207281/930834f84b44925bd8be6bebc485a8ec-0)
 
-5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
@@ -202,9 +206,11 @@ ELSE result END
 
 ![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
 
-2）修改 run1 方法的 TODO code 1中代码为
+2）在 run1 方法中找到 TODO code 1
 
 ![1735-160-107.png](https://doc.shiyanlou.com/courses/1735/1207281/6f819f33f5e945aacfd331379ae06f5c-0)
+
+3）将下方代码粘贴到 TODO code 1 区域内
 
 ```java
 //创建一个 Statement 对象来将 SQL 语句发送到数据库
@@ -230,7 +236,7 @@ while (rs.next()) {
 }
 ```
 
-3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
@@ -238,11 +244,11 @@ while (rs.next()) {
 
 ![1735-160-108.png](https://doc.shiyanlou.com/courses/1735/1207281/3fdcfa4f5beff758cc5f20993a300bd2-0)
 
-5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-6）查看结果
+7）查看结果
 
 ![1735-160-109.png](https://doc.shiyanlou.com/courses/1735/1207281/6b359abf43d45435dcf84aed550bdee2-0)
 
@@ -264,9 +270,11 @@ ELSE result END
 
 ![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
 
-2）修改 run2 方法的 TODO code 2中代码为
+2）在 run2 方法中找到 TODO code 2
 
 ![1735-160-110.png](https://doc.shiyanlou.com/courses/1735/1207281/ec5d580130e237290e5429fc15ff6cd1-0)
+
+3）将下方代码粘贴到 TODO code 2 区域内
 
 ```java
 //创建一个 Statement 对象来将 SQL 语句发送到数据库
@@ -290,20 +298,19 @@ while (rs.next()) {
     System.out.println();
 }
 ```
-
-3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
 
-4）修改参数为 caseIfTest
+5）修改参数为 caseIfTest
 
 ![1735-160-111.png](https://doc.shiyanlou.com/courses/1735/1207281/5fdf9ec88a87828d8c43248e671991d2-0)
 
-5）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
 ![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
 
-6）查看结果
+7）查看结果
 
 ![1735-160-112.png](https://doc.shiyanlou.com/courses/1735/1207281/07b4f8133371392ced4117ff24d405da-0)
 
