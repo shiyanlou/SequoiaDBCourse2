@@ -6,7 +6,7 @@ version: 1.0
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉并搭建 SSQL-MySQL 开发环境
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉并搭建 MySQL 开发环境
 
 #### 请点击右侧选择使用的实验环境
 
@@ -337,5 +337,7 @@ while (rs.next()) {
 
 ![1735-110-12.png](https://doc.shiyanlou.com/courses/1735/1207281/3d09511576c5cc29ad873cd970f3210f-0)
 
+## 总结
 
+本课程讲述了 MySQL 开发环境的搭建：配置 JDBC 连接、配置连接池，以及间要概述了MySQL的常用函数。
 

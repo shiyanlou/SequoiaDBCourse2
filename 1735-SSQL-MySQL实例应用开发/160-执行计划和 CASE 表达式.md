@@ -1,7 +1,7 @@
 ---
-
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
@@ -24,16 +24,6 @@ version: 1.0
 
 课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎以及 SequoiaSQL-MySQL 实例均为 3.4 版本。
 
-#### 概述
-
-**执行计划**
-
-我们知道，不管是哪种数据库，或者是哪种数据库引擎，在对一条 SQL 语句进行执行的过程中都会做很多相关的优化，对于查询语句，最重要的优化方式就是使用索引。而执行计划，就是显示数据库引擎对于 SQL 语句的执行的详细情况，其中包含了是否使用索引，使用什么索引，使用的索引的相关信息等。
-
-**CASE表达式**
-
-CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句中根据条件动态构造内容。
-
 ## 打开项目
 
 #### 打开idea
@@ -52,9 +42,11 @@ CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句�
 
 打开 lesson6_explainAndCase packge，在该 packge 中完成后续课程
 
-![1735-160-1.png](https://doc.shiyanlou.com/courses/1735/1207281/68397f159f4e8f581e42d2e680ba7182-0)
+![1735-160-114.png](https://doc.shiyanlou.com/courses/1735/1207281/dacc54584f6f36fadbc8063fa1304d1b-0)
 
 ## 查看和理解执行计划
+
+我们知道，不管是哪种数据库，或者是哪种数据库引擎，在对一条 SQL 语句进行执行的过程中都会做很多相关的优化，对于查询语句，最重要的优化方式就是使用索引。而执行计划，就是显示数据库引擎对于 SQL 语句的执行的详细情况，其中包含了是否使用索引，使用什么索引，使用的索引的相关信息等。
 
 #### 执行计划说明
 
@@ -112,7 +104,7 @@ while (rs.next()) {
 
 4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit ' ExplainAndCase...main()'
 
-![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
 5）修改参数为 explain
 
@@ -120,7 +112,7 @@ while (rs.next()) {
 
 6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
-![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
 7）查看结果
 
@@ -166,7 +158,7 @@ while (rs.next()) {
 
 3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
-![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
 5）修改参数为 alterExplain
 
@@ -174,7 +166,7 @@ while (rs.next()) {
 
 6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
-![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
 6）查看结果
 
@@ -182,7 +174,7 @@ while (rs.next()) {
 | ---- | ----------- | -------- | ---------- | ---- | ------------- | ----- | ------- | ----- | ---- | -------- | ----- |
 | 1    | SIMPLE      | employee | NULL       | ref  | ename         | ename | 515     | const | 1    | 100.00   | NULL  |
 
-## Case表达式
+## CASE表达式
 
 MySQL CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句中根据条件动态构造内容。
 
@@ -192,13 +184,15 @@ MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CAS
 
 此类型的语句结构如下：
 
-```sql
-CASE value
-WHEN compare_value_1 THEN result_1
-WHEN compare_value_2 THEN result_2
-…
-ELSE result END
-```
+> CASE value
+>
+> WHEN compare_value_1 THEN result_1
+>
+> WHEN compare_value_2 THEN result_2
+>
+> …
+>
+> ELSE result END
 
 此情况下，拿 value 与各个 compare_value 比较，相等时取对应的值，都不相等时取最后的 result。
 
@@ -238,7 +232,7 @@ while (rs.next()) {
 
 4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
-![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
 4）修改参数为 caseTest
 
@@ -246,7 +240,7 @@ while (rs.next()) {
 
 6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
-![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
 7）查看结果
 
@@ -256,13 +250,15 @@ while (rs.next()) {
 
 此类型的 CASE 表达式如下：
 
-```sql
-CASE
-WHEN condition_1 THEN result_1
-WHEN condition_2 THEN result_2
-…
-ELSE result END
-```
+> CASE
+>
+> WHEN condition_1 THEN result_1
+>
+> WHEN condition_2 THEN result_2
+>
+> …
+>
+> ELSE result END
 
 此时自上而下根据 condition 判断，取对应的值，都不满足的时候取最后的 result 。
 
@@ -298,9 +294,10 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
 4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
-![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
 5）修改参数为 caseIfTest
 
@@ -308,9 +305,13 @@ while (rs.next()) {
 
 6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
-![1735-160-4.png](https://doc.shiyanlou.com/courses/1735/1207281/77bb75762b84ba37651230f85f55d780-0)
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
 7）查看结果
 
 ![1735-160-112.png](https://doc.shiyanlou.com/courses/1735/1207281/07b4f8133371392ced4117ff24d405da-0)
+
+## 总结
+
+通过本课程学会了如何查看和理解执行计划，以及 MySQL 中 两种类型 Case 表达式的使用。通过查看执行计划可以查看 SQL 语句的执行的详细情况，使用 CASE 表达式可以在 SELECT、WHERE 等语句中根据条件动态构造内容。
 
