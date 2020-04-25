@@ -48,15 +48,15 @@ version: 1.0
 
 在 idea 操作数据库，可以通过 JDBC 配置相关连接属性连接 MySQL 数据库。  
 
-#### 配置连接属性
-
 1）打开 JdbcDEV.java 类
 
 ![1735-110-3.png](https://doc.shiyanlou.com/courses/1735/1207281/1b614ee23c8c3d4d02a218eaf34a81ae-0)
 
+2）在 run 方法中找到 TODO code 1
+
 ![1735-110-100.png](https://doc.shiyanlou.com/courses/1735/1207281/8e430ac3fd55a63cc6e22c95f8a81fc3-0)
 
-2）使用 JDBC 配置连接信息，查询 employee 表的代码如下：
+3）将下方代码粘贴到 TODO code 1 区域内，使用 JDBC 配置连接信息，查询 employee 表
 
 ```java
 // MySQL 用户名
@@ -96,10 +96,6 @@ stmt.close();
 conn.close();
 ```
 
-3）复制代码，修改 TODO code 1 中的内容，配置连接信息，查询employee表
-
-![1735-110-14.png](https://doc.shiyanlou.com/courses/1735/1207281/6d6cc3c5a8e1111b4c7c6962e1c57de8-0)
-
 > **说明**
 >
 > 粘贴方法如下：
@@ -118,21 +114,19 @@ conn.close();
 >
 > ![paste3](https://doc.shiyanlou.com/courses/1738/1207281/14482e482cde033e4f78cca144abdcee-0)
 
-## 执行JdbcDEV
-
-1）右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
+4）右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
 
 ![1735-110-101.png](https://doc.shiyanlou.com/courses/1735/1207281/fc34dacc10ff53011b7ec40e8ea43139-0)
 
-2）修改参数为 jdbcDEV 
+5）修改参数为 jdbcDEV 
 
 ![1735-110-102.png](https://doc.shiyanlou.com/courses/1735/1207281/b4a1b171602f99831497de1b8a562e8e-0)
 
-3）再次右键 EnvBuildingMainTest.java 选择 Run 'EnvBuildingMai....main()' ，执行代码
+6）再次右键 EnvBuildingMainTest.java 选择 Run 'EnvBuildingMai....main()' ，执行代码
 
 ![1735-110-103.png](https://doc.shiyanlou.com/courses/1735/1207281/881fe8a941501d044636e14c37817517-0)
 
-4）查看结果：
+7）查看结果：
 
 ![1735-110-6.png](https://doc.shiyanlou.com/courses/1735/1207281/6bf4e7b063c2f2e01bda3bf5d938da79-0)
 
@@ -156,9 +150,11 @@ C3P0 是一个开源的 JDBC 连接池，它实现了数据源与 JNDI 绑定，
 
 ![1735-110-20.png](https://doc.shiyanlou.com/courses/1735/1207281/97298ef854fd62d400633e8103656036-0)
 
-2）创建 C3P0 的 ComboPooledDataSource 对象，配置数据库连接信息，在第23行TODO code 1中添加如下代码
+2）在 UtilsC3P0类的最下方 找到 TODO code 1
 
 ![1735-110-104.png](https://doc.shiyanlou.com/courses/1735/1207281/1aafd4dfca2c3905371268a0446086d5-0)
+
+3）将下方代码粘贴到 TODO code 1 区域内，创建 C3P0 的 ComboPooledDataSource 对象，配置数据库连接信息
 
 ```java
 private static ComboPooledDataSource dataSource=new ComboPooledDataSource();
@@ -179,11 +175,11 @@ static {
 }
 ```
 
-![1735-110-105.png](https://doc.shiyanlou.com/courses/1735/1207281/2c5cd4c0aa257825d759a60b4934d267-0)
-
-3）获取数据库连接，在 getConnection 方法17行的 TODO code 2 中添加如下代码
+4）在 getConnection 方法中找到 TODO code 2
 
 ![1735-110-106.png](https://doc.shiyanlou.com/courses/1735/1207281/38c00217fc3706f1cdbdc64ed2457488-0)
+
+5）将下方代码粘贴到 TODO code 2 区域内，获取数据库连接
 
 ```java
 try {
@@ -194,11 +190,11 @@ try {
 }
 ```
 
-![1735-110-107.png](https://doc.shiyanlou.com/courses/1735/1207281/c79fa0a8e8e2ba0eec23e51d9455a5b1-0)
-
-4）释放资源，在 close 方法10行的 TODO code 3 中添加如下代码
+6）在 close 方法中找到 TODO code 3
 
 ![1735-110-108.png](https://doc.shiyanlou.com/courses/1735/1207281/f25ec01797a964d324019b3afe31d1c7-0)
+
+7）将下方代码粘贴到 TODO code 3 区域内，释放资源
 
 ```java
 if (rs!=null){
@@ -232,9 +228,11 @@ if (conn!=null){
 
 ![1735-110-110.png](https://doc.shiyanlou.com/courses/1735/1207281/e149ac2fb587538051af4f3cb7ee0055-0)
 
-2）验证连接池，修改 run 方法第8行的 TODO code 1
+2）在 run 方法中找到 TODO code 1
 
 ![1735-110-111.png](https://doc.shiyanlou.com/courses/1735/1207281/7bbf5a2d1f1625a1e276ad9600bd584d-0)
+
+3）将下方代码粘贴到 TODO code 1 区域内，验证连接池
 
 ```java
 Connection conn = null;
@@ -270,19 +268,19 @@ try {
 
 ![1735-110-117.png](https://doc.shiyanlou.com/courses/1735/1207281/85dc747df7bd975a695d7cafe077d01a-0)
 
-3）执行代码，右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
+4）执行代码，右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
 
 ![1735-110-9.png](https://doc.shiyanlou.com/courses/1735/1207281/4f2e6e8dde86ee4694fc668ba569240d-0)
 
-4）修改参数为 testUtilsC3P0
+5）修改参数为 testUtilsC3P0
 
 ![1735-110-113.png](https://doc.shiyanlou.com/courses/1735/1207281/1c9c7d8d7a4987681bd78aa903700e12-0)
 
-5）右键 EnvBuildingMainTest.java，选择 Run 'EnvBuildingMai....main()'，运行代码
+6）右键 EnvBuildingMainTest.java，选择 Run 'EnvBuildingMai....main()'，运行代码
 
 ![1735-110-11.png](https://doc.shiyanlou.com/courses/1735/1207281/bca48948ed03e3e6abf5d55307ba2c1f-0)
 
-6）查看结果
+7）查看结果
 
 ![1735-110-8.png](https://doc.shiyanlou.com/courses/1735/1207281/f4509b033025bf54cfb6f85831e89999-0)
 
@@ -298,9 +296,11 @@ MySQL 有很多实用的内置函数，这里简单举例 NOW 函数讲解，更
 
 ![1735-110-114.png](https://doc.shiyanlou.com/courses/1735/1207281/43146f014c728fdf97a1ca4dd70eac5c-0)
 
-2）使用 now 函数获取当前日期时间，修改 run 方法第8行TODO code 1中的代码为：
+2）在 run 方法中找到 TODO code 1
 
 ![1735-110-115.png](https://doc.shiyanlou.com/courses/1735/1207281/29565eea603d7d55dac7bc8c952a11da-0)
+
+3）将下方代码粘贴到 TODO code 1 区域内，使用 now 函数获取当前日期时间
 
 ```java
 //编写获取当前日期时间的SQL语句
@@ -321,19 +321,19 @@ while (rs.next()) {
 
 ![1735-110-116.png](https://doc.shiyanlou.com/courses/1735/1207281/6b5cd3969b848df469845f4c4fa950f3-0)
 
-3）修改参数，右键 EnvBuildingMainTest.java，选择Edit 'EnvBuildingMain....main()'
+4）修改参数，右键 EnvBuildingMainTest.java，选择Edit 'EnvBuildingMain....main()'
 
 ![1735-110-9.png](https://doc.shiyanlou.com/courses/1735/1207281/4f2e6e8dde86ee4694fc668ba569240d-0)
 
-4）修改参数为 function
+5）修改参数为 function
 
 ![1735-110-10.png](https://doc.shiyanlou.com/courses/1735/1207281/b84401ee488c773a4baa449b67b17977-0)
 
-5）执行代码，右键 EnvBuildingMainTest.java，选择 Run 'EnvBuildingMai....main()'，运行代码
+6）执行代码，右键 EnvBuildingMainTest.java，选择 Run 'EnvBuildingMai....main()'，运行代码
 
 ![1735-110-11.png](https://doc.shiyanlou.com/courses/1735/1207281/bca48948ed03e3e6abf5d55307ba2c1f-0)
 
-6）查看结果
+7）查看结果
 
 ![1735-110-12.png](https://doc.shiyanlou.com/courses/1735/1207281/3d09511576c5cc29ad873cd970f3210f-0)
 
