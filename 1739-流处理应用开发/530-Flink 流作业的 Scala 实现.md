@@ -85,11 +85,11 @@ flatmap 算子是 Transformation 的其中一种。该算子接收一个 DataStr
 
 flatmap 算子中需传入一个函数或 FlatmapFunction 对象，简单的操作一般传入函数。
 
-在当前类中找到 flatmap 方法，找到 TODO code 1。
+1) 在当前类中找到 flatmap 方法，找到 TODO code 1。
 
 ![1730-530-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/66074b54e9c56eee316eba1454b72304-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```scala
 // "_" means each data row
@@ -98,11 +98,11 @@ flatmapData = dataStream.flatMap(_.split(" "))
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
 ![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
-可以看到在每个数据行上仅有一个单词。
+2) 可以看到在每个数据行上仅有一个单词。
 
 ![1739-520-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/be28584578c4520b5c2d20d42ed96652-0)
 
@@ -116,11 +116,11 @@ filter 算子是 Transformation 的其中一种。该算子在每个数据行上
 
 现在想把数据行中“java”单词去掉。
 
-在当前类中找到 filter 方法，找到 TODO code 2。
+1) 在当前类中找到 filter 方法，找到 TODO code 2。
 
 ![1730-530-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/3f66e4fb6aed19821cbfefdc098248f2-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```scala
 // Remove the word "java"
@@ -129,11 +129,11 @@ filterData = dataStream.filter(!_.equals("java"))
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
 ![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
-可以看到数据中已经没有“java”单词了。
+2) 可以看到数据中已经没有“java”单词了。
 
 ![1739-520-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/473bb94278cfcff09c763af4dec5ff32-0)
 
@@ -147,11 +147,11 @@ map 算子也是 Transformation 的其中一种。map算子同样在每个数据
 
 本实验中使用了 Scala 中的元组类型，用一对小括号表示，可以理解为能保存不同数据类型的列表。同时在 map 算子的输出结果中添加了一个整数1，表示当前记录的单词数。
 
-在当前类中找到 map 方法，找到 TODO code 3。
+1) 在当前类中找到 map 方法，找到 TODO code 3。
 
 ![1730-530-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/b944a8e6b1211f6280b35e6dcc666e6f-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```scala
 // Convert data into tuples. 1 means there is a word in the current data row.
@@ -160,11 +160,11 @@ mapData = dataStream.map((_, 1))
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
 ![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
-可以看到每个数据行上都是一个元组，包含一个单词和1
+2) 可以看到每个数据行上都是一个元组，包含一个单词和1
 
 ![1739-520-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/975df71ddf869638717272b792d48273-0)
 
@@ -186,11 +186,11 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 
 在 DataStream 的泛型为元组时，可以通过下标索引进行 keyBy 与 sum，当前实验使用第一个字段进行分组，对第二个字段进行求和。
 
-在当前类中找到 sum 方法，找到 TODO code 4。
+1) 在当前类中找到 sum 方法，找到 TODO code 4。
 
 ![1730-530-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/bb8085cb74ec1085393190530ccf4c25-0)
 
-将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4区间内。
 
 ```scala
 // Users can group by the first field (words) in the tuple, and sum the second field (number of words).
@@ -199,11 +199,11 @@ sumData = dataStream.keyBy(0).sum(1)
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
 ![1730-530-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/b527fd0f3f17108ffcdbd2dd726d56a7-0)
 
-可以看到单词统计的结果。
+2) 可以看到单词统计的结果。
 
 ![1739-520-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/e86809b9ec06de067b157e0fed498ef1-0)
 
@@ -217,11 +217,11 @@ reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。�
 
 上述示例中使用了 sum 进行求和，但是如果有较为复杂的需求（如求平均值等）则必须使用 reduce 算子，此处同样使用 reduce 算子实现求和逻辑。
 
-在当前类中找到 reduce 方法，找到 TODO code 5。
+1) 在当前类中找到 reduce 方法，找到 TODO code 5。
 
 ![1730-530-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/bfe6c441cda36101d2d4c501260544d6-0)
 
-将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5区间内。
 
 ```scala
 // x and y respectively represent two pieces of data. The output is the words in x, and the number is the sum of the words in x and y.
@@ -240,28 +240,28 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 #### 项目打包
 
-点击 maven 侧边栏中的 package 打包。
+1) 点击 maven 侧边栏中的 package 打包。
 
 ![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/818235d78cdcfc4ffffe654cf621f74b-0)
 
-打包成功后 jar 包会在当前项目目录的 target 目录下。
+2) 打包成功后 jar 包会在当前项目目录的 target 目录下。
 
 ![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/16c046a2a4611d6170dd2a7595a781de-0)
 
 #### 提交到集群环境
 
 
-通过浏览器打开 localhost:9091进入FlinkUI，默认端口8081，实验环境由于端口冲突改为了9091。
+通过浏览器打开 http://localhost:9091 进入FlinkUI，默认端口8081，实验环境由于端口冲突改为了9091。
 
-可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
+1) 可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
 
 ![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/8e6df7ea80e5358c21e5f3a115ad60d7-0)
 
-上传成功后，选择刚刚上传好的 jar。
+2) 上传成功后，选择刚刚上传好的 jar。
 
 ![1739-520-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/8483eeb5b276e5322275cba39410d2d7-0)
 
-添加入口类的引用（如下），点击 submit 提交当前作业。
+3) 添加入口类的引用（如下），点击 submit 提交当前作业。
 
 ```xml
 com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
@@ -269,11 +269,11 @@ com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
 
 ![1739-520-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/1ac844cc1599ef05d63aa2372877a6b8-0)
 
-任务成功提交后，发现已经在运行，并且可以在 UI 界面上看到程序的 Dataflow。
+4) 任务成功提交后，发现已经在运行，并且可以在 UI 界面上看到程序的 Dataflow。
 
 ![1739-520-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/d62689be889e598eb78ddd1685e036fe-0)
 
-在对应的 Task Manager 中可以查看到当前作业的执行结果。
+5) 在对应的 Task Manager 中可以查看到当前作业的执行结果。
 
 ![1739-520-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/fe9f48d360016724607850fdb35387f9-0)
 
@@ -283,7 +283,7 @@ com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
 
 #### 参数获取
 
-首先可以在 main 函数的 TODO code 6添加下列代码。
+1) 首先可以在 main 函数的 TODO code 6添加下列代码。
 
 ```scala
 // Transfer args to ParameterTool, and the ParameterTool can help us parse parameters
@@ -292,14 +292,14 @@ val tool = ParameterTool.fromArgs(args)
 val lineNum = tool.getInt("lineNum", 10)
 ```
 
-lineNum 便是入的函数，需要通过 RandomSource 的构造器传入该值。
+2) lineNum 便是入的函数，需要通过 RandomSource 的构造器传入该值。
 
 ```scala
 // Modify the method to get data
 val lineData: DataStream[String] = env.addSource(new RandomSource(lineNum))
 ```
 
-接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
+3) 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
 
 ![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/2838685e3213c8f792a2d7e04c5d9d33-0)
 
