@@ -115,17 +115,17 @@ env = StreamExecutionEnvironment.getExecutionEnvironment();
 >
 > 粘贴方法如下：
 >
-> 1) 点击代码框右上角的 copy 图标
+> 1) 点击代码框右上角的 copy 图标。
 >
-> 2) 选择实验界面左边的 “剪切板”
+> 2) 选择实验界面左边的 “剪切板”。
 >
 > ![1739-510-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/b60842a0c9d54018612e1dd416de2de2-0)
 >
-> 3) 在弹出的“在线环境剪切板”中粘贴复制的代码内容
+> 3) 在弹出的“在线环境剪切板”中粘贴复制的代码内容。
 >
 > ![1739-510-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/f49b6f5673aea1b247782c104d891775-0)
 >
-> 4) 在实验环境中到对应的位置粘贴
+> 4) 在实验环境中到对应的位置粘贴。
 >
 > ![1739-510-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/a51f74dc4b779556fef4754f9cd55abe-0)
 
