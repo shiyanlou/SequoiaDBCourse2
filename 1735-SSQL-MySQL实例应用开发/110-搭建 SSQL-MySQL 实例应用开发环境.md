@@ -337,5 +337,7 @@ while (rs.next()) {
 
 ![1735-110-12.png](https://doc.shiyanlou.com/courses/1735/1207281/3d09511576c5cc29ad873cd970f3210f-0)
 
+## 总结
 
+本课程讲述了 MySQL 开发环境的搭建：配置 JDBC 连接、配置连接池，以及间要概述了MySQL的常用函数。
 
