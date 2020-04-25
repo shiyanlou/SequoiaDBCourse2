@@ -115,11 +115,11 @@ Flink 内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）
 
 SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
-在当前类中找到 source 方法，找到 TODO code 1。
+1) 在当前类中找到 source 方法，找到 TODO code 1。
 
 ![1739-540-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/f7164d9248b4a40b43c84a04e7851188-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
  // Build the connection Option
@@ -138,11 +138,11 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
-执行结果如下图，可以看到数据库中的原始数据。
+2) 执行结果如下图，可以看到数据库中的原始数据。
 
 ![1739-540-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/e23bf77cd113f104628361d07e00ac68-0)
 
@@ -152,11 +152,11 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 使用 map 算子对流上的数据类型进行转换，该方法中接收一个 DataStrem<BSONObject>，返回一个DataStream<Tuple2<Double, Integer>>。
 
-在当前类中找到 map 方法，找到 TODO code 2。
+1) 在当前类中找到 map 方法，找到 TODO code 2。
 
 ![1739-540-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/c9a7bda90dfe07a668b29b9c97ee4d71-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 resultData = dataStream.map(new MapFunction<BSONObject, 
@@ -178,11 +178,11 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
-执行结果如下图，可以看到一个Tuple2，包含交易额和1。
+2) 执行结果如下图，可以看到一个Tuple2，包含交易额和1。
 
 ![1739-540-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/0ade0cf2f5ee1cd09976d4b6126f110c-0)
 
@@ -192,11 +192,11 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 使用 windowAll 算子对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个 AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow> 对象，泛型表示 Window 中的数据类型以及Window 的引用，在 CountWindow 中引用是一个全局的 Window 对象。
 
-在当前类中找到 window 方法，找到 TODO code 3。
+1) 在当前类中找到 window 方法，找到 TODO code 3。
 
 ![1739-540-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/16282209430a53f55310f78f012b51b9-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 resultData = dataStream.countWindowAll(100);
@@ -204,11 +204,11 @@ resultData = dataStream.countWindowAll(100);
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
-执行结果如下图，可以看到每个 window 中的数据。
+2) 执行结果如下图，可以看到每个 window 中的数据。
 
 ![1739-540-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/8ec48326ee3ca316aad3a26c74965824-0)
 
@@ -218,11 +218,11 @@ resultData = dataStream.countWindowAll(100);
 
 使用 reduce 对数据进行聚合求和，此处将的聚合结果为 Tuple2<Double, Integer>，分别表示总金额和总交易量。
 
-在当前类中找到 reduce 方法，找到 TODO code 4。
+1) 在当前类中找到 reduce 方法，找到 TODO code 4。
 
 ![1739-540-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/b2a580498eb129de61e91a2e5a98d8f0-0)
 
-将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4区间内。
 
 ```java
 resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
@@ -245,11 +245,11 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingCountWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
-查看结果，可以得到每100次的交易额。
+2) 查看结果，可以得到每100次的交易额。
 
 ![1739-540-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/db766aedb59b4e37e52ac9b9a32adb78-0)
 
@@ -277,11 +277,11 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 通过 SequoiadbSource 完成 soucre 函数。
 
-在当前类中找到source方法，找到 TODO code 1。
+1) 在当前类中找到source方法，找到 TODO code 1。
 
 ![1739-540-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/f7164d9248b4a40b43c84a04e7851188-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 // Build the connection Option
@@ -298,11 +298,11 @@ sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 
 #### 查看数据的结果
 
-通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
-执行结果如下图，可以看到数据库中的原始数据。
+2) 执行结果如下图，可以看到数据库中的原始数据。
 
 ![1739-540-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/72df04f6eff7b1ef6109ad022febdb65-0)
 
@@ -310,11 +310,11 @@ sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 
 通过 map 算子获取到交易名，交易金额，将 BSONObject 转换为 Tuple2。
 
-在当前类中找到 map 方法，找到 TODO code 2。
+1) 在当前类中找到 map 方法，找到 TODO code 2。
 
 ![1739-540-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/cee36b88cbd6eaef2e966493fd215f68-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 resultData = dataStream.map(new MapFunction<BSONObject, 
@@ -336,11 +336,11 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 #### 查看数据的结果
 
-通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
-执行结果如下图，可以看到转换后的 Tuple 数据。
+2) 执行结果如下图，可以看到转换后的 Tuple 数据。
 
 ![1739-540-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/f4d425616da28b8b44427cc623ffe276-0)
 
@@ -349,11 +349,11 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<Tuple3<String, Double, Integer>, String> 对象，泛型中包含数据行和一个分组字段值。
 
-在当前类中找到 keyBy 方法，找到 TODO code 3。
+1) 在当前类中找到 keyBy 方法，找到 TODO code 3。
 
 ![1739-540-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/2e3e037fda160e01cf98f4770adeac5e-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 resultData = dataStream.keyBy(new KeySelector<Tuple3<String, 
@@ -373,11 +373,11 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 
 #### 查看数据的结果
 
-通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
-执行结果如下图，可以看到 keyBy 后的数据。
+2) 执行结果如下图，可以看到 keyBy 后的数据。
 
 ![1739-540-00029.png](https://doc.shiyanlou.com/courses/1739/1207281/7152003910cf3119484a2c464e06e00c-0)
 
@@ -386,11 +386,11 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 
 本案例使用时间进行划分窗口，窗口大小为5秒。
 
-在当前类中找到 window 方法，找到 TODO code 4。
+1) 在当前类中找到 window 方法，找到 TODO code 4。
 
 ![1739-540-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/d275091a4deb598c5183e0ed955f77ea-0)
 
-将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4区间内。
 
 ```java
 resultData = keyedData.timeWindow(Time.seconds(5));
@@ -398,11 +398,11 @@ resultData = keyedData.timeWindow(Time.seconds(5));
 
 #### 查看数据的结果
 
-通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
-执行结果如下图，可以看到每个 window 内的数据。
+2) 执行结果如下图，可以看到每个 window 内的数据。
 
 ![1739-540-00030.png](https://doc.shiyanlou.com/courses/1739/1207281/4428b3fb3dec83b8b305c8dc96aad420-0)
 
@@ -410,11 +410,11 @@ resultData = keyedData.timeWindow(Time.seconds(5));
 
 通过聚合算子求出每个时间窗口中的交易名称，总交易额，总交易量，以及每个 Window 的结束时间。
 
-在当前类中找到 reduce 方法，找到 TODO code 5。
+1) 在当前类中找到 reduce 方法，找到 TODO code 5。
 
 ![1739-540-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/61599f1275974a8b1ec520e8d5fff992-0)
 
-将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5区间内。
 
 ```java
 resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>,
@@ -451,11 +451,11 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/f2ec9c244f44d3a579be8057f2a8db8e-0)
 
-执行结果如下图，可以看到数据库中的原始数据。
+2) 执行结果如下图，可以看到数据库中的原始数据。
 
 ![1739-540-00031.png](https://doc.shiyanlou.com/courses/1739/1207281/3639aa7bd79ed91a36ce90cc93b08d50-0)
 
@@ -474,11 +474,11 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 通过 SequoiadbSource 完成 soucre 函数。
 
-在当前类中找到 source 方法，找到 TODO code 1。
+1) 在当前类中找到 source 方法，找到 TODO code 1。
 
 ![1739-540-00032.png](https://doc.shiyanlou.com/courses/1739/1207281/6526850ac7593429e146909e5de60f3a-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 // Build the connection Option
@@ -497,11 +497,11 @@ dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 
 通过 map 算子获取到交易名，交易金额。
 
-在当前类中找到 map 方法，找到 TODO code 2。
+1) 在当前类中找到 map 方法，找到 TODO code 2。
 
 ![1739-540-00033.png](https://doc.shiyanlou.com/courses/1739/1207281/ab1930232c44546c994c7906fb5bf479-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 resultData = transData.map(new MapFunction<BSONObject, 
@@ -519,11 +519,11 @@ resultData = transData.map(new MapFunction<BSONObject,
 
 keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<Tuple3<String, Double, Integer>, Tuple> 对象，泛型中包含数据行和一个 Tuple 类型的分组字段值。
 
-在当前类中找到 keyBy 方法，找到 TODO code 3。
+1) 在当前类中找到 keyBy 方法，找到 TODO code 3。
 
 ![1739-540-00034.png](https://doc.shiyanlou.com/courses/1739/1207281/aa4d4272509c73e3dba23aa9a77ba8ae-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 resultData = moneyData.keyBy(0);
@@ -533,11 +533,11 @@ resultData = moneyData.keyBy(0);
 
 案例中使用 Sliding Count Window，窗口大小100，滑动步长50。
 
-在当前类中找到 countWindow 方法，找到 TODO code 4。
+1) 在当前类中找到 countWindow 方法，找到 TODO code 4。
 
 ![1739-540-00035.png](https://doc.shiyanlou.com/courses/1739/1207281/2dccb4e928ba65a1cc9dd86fc275add9-0)
 
-将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4区间内。
 
 ```java
 resultData = keyedData.countWindow(100, 50);
@@ -547,11 +547,11 @@ resultData = keyedData.countWindow(100, 50);
 
 使用 reduce 对数据进行聚合求和，此处将的聚合结果为 Tuple3<String, Double, Integer>，分别表示交易名称，总金额和总交易量。
 
-在当前类中找到 reduce 方法，找到 TODO code 5。
+1) 在当前类中找到 reduce 方法，找到 TODO code 5。
 
 ![1739-540-00036.png](https://doc.shiyanlou.com/courses/1739/1207281/c32e4fd41ed54dad3b7f7d6c52a0dc4e-0)
 
-将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5区间内。
 
 ```java
 resultData = countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer>, Tuple2<String, Double>, Tuple, GlobalWindow>() {
@@ -580,11 +580,11 @@ resultData = countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer
 
 将元组转换为 BSONObject。
 
-在当前类中找到 toBson 方法，找到 TODO code 6。
+1) 在当前类中找到 toBson 方法，找到 TODO code 6。
 
 ![1739-540-00037.png](https://doc.shiyanlou.com/courses/1739/1207281/a0404c382030559ebe7c634150ec0554-0)
 
-将下列代码粘贴到 TODO code 6区间内。
+2) 将下列代码粘贴到 TODO code 6区间内。
 
 ```java
 bsonData = dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() {
@@ -600,11 +600,11 @@ bsonData = dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() 
 
 #### 通过 SequoiadbSink 完成 sink 函数
 
-在当前类中找到 sink 方法，找到 TODO code 7。
+1) 在当前类中找到 sink 方法，找到 TODO code 7。
 
 ![1739-540-00038.png](https://doc.shiyanlou.com/courses/1739/1207281/b1c0daf8380263a94bdc5a4df71e74b3-0)
 
-将下列代码粘贴到 TODO code 7区间内。
+2) 将下列代码粘贴到 TODO code 7区间内。
 
 ```java
 // Build the connection Option
@@ -620,23 +620,23 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'SlidingCountWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'SlidingCountWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00040.png](https://doc.shiyanlou.com/courses/1739/1207281/d671b8f16167e4ebca4030c533ede644-0)
 
-通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+2) 通过浏览器打开 http://localhost:8000 进入SequoiaDB SAC管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
-点击数据菜单选择 "SequoiaDB" 分布式存储。
+3) 点击数据菜单选择 "SequoiaDB" 分布式存储。
 
 ![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
 
-选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+4) 选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
 
 ![1739-540-00051.png](https://doc.shiyanlou.com/courses/1739/1207281/04a886778192931973bb12550c5f91ec-0)
 
-选中集合 "VIRTUAL_BANK.LESSON_4_COUNT" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+5) 选中集合 "VIRTUAL_BANK.LESSON_4_COUNT" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-540-00039.png](https://doc.shiyanlou.com/courses/1739/1207281/f12fe61a1c93cb641e6de523a2de7805-0)
 
@@ -689,11 +689,11 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 通过 SequoiadbSource 完成 soucre 函数。
 
-在当前类中找到 source 方法，找到 TODO code 1。
+1) 在当前类中找到 source 方法，找到 TODO code 1。
 
 ![1739-540-00052.png](https://doc.shiyanlou.com/courses/1739/1207281/3a4d450dae3c12d3ea232489e587a597-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 // Build the connection Option
@@ -712,11 +712,11 @@ dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 
 向流中添加watermark。
 
-在当前类中找到watermark方法，找到 TODO code 2。
+1) 在当前类中找到watermark方法，找到 TODO code 2。
 
 ![1739-540-00041.png](https://doc.shiyanlou.com/courses/1739/1207281/ea5a238dcbfca55eed9e9e2bb5829a9f-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 resultData = transData.assignTimestampsAndWatermarks(
@@ -754,11 +754,11 @@ resultData = transData.assignTimestampsAndWatermarks(
 
 通过 map 算子获取到交易名，交易金额。
 
-在当前类中找到 map 方法，找到 TODO code 3。
+1) 在当前类中找到 map 方法，找到 TODO code 3。
 
 ![1739-540-00042.png](https://doc.shiyanlou.com/courses/1739/1207281/55097a6cacc42f0ed9380c9100ab66f8-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 resultData = transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
@@ -773,11 +773,11 @@ resultData = transData.map(new MapFunction<BSONObject, Tuple3<String, Double, In
 
 keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<Tuple3<String, Double, Integer>, Tuple> 对象，泛型中包含数据行和一个 Tuple 类型的分组字段值。
 
-在当前类中找到 keyBy 方法，找到 TODO code 4。
+1) 在当前类中找到 keyBy 方法，找到 TODO code 4。
 
 ![1739-540-00043.png](https://doc.shiyanlou.com/courses/1739/1207281/ab125603aaba9aadbcfb8cc45fd03e9d-0)
 
-将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4区间内。
 
 ```java
 resultData = dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, 
@@ -793,11 +793,11 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>,
 
 此处使用了 SlidingEventTimeWindow，窗口大小为5秒，滑动步长为2秒。
 
-在当前类中找到 window 方法，找到 TODO code 5。
+1) 在当前类中找到 window 方法，找到 TODO code 5。
 
 ![1739-540-00044.png](https://doc.shiyanlou.com/courses/1739/1207281/3faae3b2a5b351d0c339b9b23946f1a7-0)
 
-将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5区间内。
 
 ```java
 resultData = keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(2)));
@@ -807,11 +807,11 @@ resultData = keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time
 
 本例在聚合时使用了 process 算子，该算子与 apply 作用一致，区别在于 process 中可以获取到上下文对象。
 
-在当前类中找到 reduce 方法，找到 TODO code 6。
+1) 在当前类中找到 reduce 方法，找到 TODO code 6。
 
 ![1739-540-00045.png](https://doc.shiyanlou.com/courses/1739/1207281/7e3393f451be7fda1684a2e23603f977-0)
 
-将下列代码粘贴到 TODO code 6区间内。
+2) 将下列代码粘贴到 TODO code 6区间内。
 
 ```java
 resultData = windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {
@@ -841,11 +841,11 @@ resultData = windowedStream.process(new ProcessWindowFunction<Tuple3<String, Dou
 
 将 POJO 转换为 BSONObject。
 
-在当前类中找到 toBson 方法，找到 TODO code 7。
+1) 在当前类中找到 toBson 方法，找到 TODO code 7。
 
 ![1739-540-00046.png](https://doc.shiyanlou.com/courses/1739/1207281/a71d0ef20411209ca897aa747a1f4303-0)
 
-将下列代码粘贴到 TODO code 7区间内。
+2) 将下列代码粘贴到 TODO code 7区间内。
 
 ```java
 resultData = dataStream.map(new MapFunction<Result, BSONObject>() {
@@ -863,11 +863,11 @@ resultData = dataStream.map(new MapFunction<Result, BSONObject>() {
 
 #### 通过 SequoiadbSink 完成 sink 函数
 
-在当前类中找到 sink 方法，找到 TODO code 8。
+1) 在当前类中找到 sink 方法，找到 TODO code 8。
 
 ![1739-540-00047.png](https://doc.shiyanlou.com/courses/1739/1207281/b08939f58e1ed7cb15d24624a117d06c-0)
 
-将下列代码粘贴到 TODO code 8区间内。
+2) 将下列代码粘贴到 TODO code 8区间内。
 
 ```java
 SequoiadbOption option = SequoiadbOption.bulider()
@@ -881,25 +881,25 @@ streamSink = dataStream.addSink(new SequoiadbSink(option));
 ```
 #### 查看结果
 
-通过在当前类文件上右键 > Run 'SlidingCountWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'SlidingCountWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-540-00048.png](https://doc.shiyanlou.com/courses/1739/1207281/d8d526d33648d5270d4d5fe00f76c684-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_4_TIME 集合下。
 
-通过浏览器打开 localhost:8000 进入 SequoiaDB SAC 管理界面。
+2) 通过浏览器打开 http://localhost:8000 进入 SequoiaDB SAC 管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
-点击数据菜单选择 "SequoiaDB" 分布式存储。
+3) 点击数据菜单选择 "SequoiaDB" 分布式存储。
 
 ![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
 
-选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+4) 选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
 
 ![1739-540-00053.png](https://doc.shiyanlou.com/courses/1739/1207281/ff1a4d90f401bfada78ef3d705e79c09-0)
 
-选中集合 " VIRTUAL_BANK.LESSON_4_TIME" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+5) 选中集合 " VIRTUAL_BANK.LESSON_4_TIME" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-540-00054.png](https://doc.shiyanlou.com/courses/1739/1207281/4bd9fda8c03528446b35226d907ec2a0-0)
 

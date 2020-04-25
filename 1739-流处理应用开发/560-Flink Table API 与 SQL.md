@@ -104,11 +104,11 @@ Table 的使用需要依赖于table的执行环境，table的执行环境可以�
 
 本案例中已存在一个 DataStream<Tuple2<String, Integer>>，格式为（'单词', 1）。tbEnv.fromDataStream 函数接收两个参数，分别为 DataStream 与一个字符串，表示字段名，多个字段用逗号分隔。
 
-在当前类中找到 createTableFromDataStream 方法，找到 TODO code 1。
+1) 在当前类中找到 createTableFromDataStream 方法，找到 TODO code 1。
 
 ![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/cfc89fac14d9e8f6f14c14756ac88021-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 table = tbEnv.fromDataStream(wordData, "name, num");
@@ -118,11 +118,11 @@ table = tbEnv.fromDataStream(wordData, "name, num");
 
 SQL 算子的用途与标准sql中关键字一致。
 
-在当前类中找到 select 方法，找到 TODO code 2。
+1) 在当前类中找到 select 方法，找到 TODO code 2。
 
 ![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/b4677408557dd40313997bf67b6ad933-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 /**
@@ -148,11 +148,11 @@ resultTable = initTable.as("word, num")         // Rename field
 - 要点二：由于使用了 groupby 算子，返回时必须使用 toRetractStream。
 - 要点三：toRetractStream 返回一个 RetractStream 对象，实则就是一个在每个时间上均带有布尔类型的的DataStream。该布尔值为 false 时表示当前事件需要被删除。
 
-在当前类中找到 converTable2DataStream 方法，找到 TODO code 3。
+1) 在当前类中找到 converTable2DataStream 方法，找到 TODO code 3。
 
 ![1739-560-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/9f323afc171e9e56a0cd255b658ac41a-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
@@ -161,11 +161,11 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'CreateTableFromDataStreamMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'CreateTableFromDataStreamMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/6bbbdd54be8487835091af979f4a7322-0)
 
-查看结果。
+2) 查看结果。
 
 ![1739-560-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/55a4b46011b5ebfcf0facdda51edeee7-0)
 
@@ -181,11 +181,11 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 #### 通过描述器创建一个 Source 表
 
-在当前类中找到 createSourceTable 方法，找到 TODO code 1。
+1) 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
 ![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/cfd849d76dff56c152a418a8325a671a-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 tbEnv.connect(
@@ -213,11 +213,11 @@ tbEnv.connect(
 
 #### 通过描述器创建一个 Sink 表
 
-在当前类中找到 createSinkTable 方法，找到 TODO code 2。
+1) 在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
 ![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/2e8504672439a12fecaf8a46c91439d2-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 tbEnv.connect(
@@ -244,11 +244,11 @@ tbEnv.connect(
 
 编写 sql 统计结果并将结果输出到巨杉数据库，统计每种交易的交易总额。
 
-在当前类中找到 select 方法，找到 TODO code 3。
+1) 在当前类中找到 select 方法，找到 TODO code 3。
 
 ![1739-560-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/8e7324917ce37f3921d500e485d0ecc3-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
 tbEnv.sqlUpdate(
@@ -263,25 +263,25 @@ tbEnv.sqlUpdate(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'CreateTableByConnectTableSourceMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'CreateTableByConnectTableSourceMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/71c5938a1ecf6268a8c97703ee3660fe-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_CONNECT 集合下。
 
-通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+2) 通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
-点击数据菜单选择 "SequoiaDB" 分布式存储。
+3) 点击数据菜单选择 "SequoiaDB" 分布式存储。
 
 ![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
 
-选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+4) 选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
 
 ![1739-560-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/92c5204482abf40ee31401742534cffc-0)
 
-选中集合 "VIRTUAL_BANK.LESSON_6_CONNECT" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+5) 选中集合 "VIRTUAL_BANK.LESSON_6_CONNECT" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-560-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/ace404bcb5c1f55401ad8898e3cba7ea-0)
 
@@ -293,17 +293,17 @@ tbEnv.sqlUpdate(
 
 打开类 CreateTableByDDLMain
 
-![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/71c5938a1ecf6268a8c97703ee3660fe-0)
+![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/c027ce46fea55c55b5c60ff2eb992fd7-0)
 
 #### 创建 Source 表
 
 通过 DDL 创建 Flink Source 表。
 
-在当前类中找到 createSourceTable 方法，找到 TODO code 1。
+1) 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
 ![1739-560-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/c968ddd8227ffe9eecd70a65a24e0c0d-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 tbEnv.sqlUpdate(
@@ -332,11 +332,11 @@ tbEnv.sqlUpdate(
 
 通过 DDL 创建 Flink Sink 表。
 
-在当前类中找到 createSinkTable 方法，找到 TODO code 2。
+1) 在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
 ![1739-560-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/371431aad08d2f54c49c301f9fd10359-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 tbEnv.sqlUpdate(
@@ -362,11 +362,11 @@ tbEnv.sqlUpdate(
 
 执行统计，统计每种交易的交易总额。
 
-在当前类中找到 select 方法，找到 TODO code 3。
+1) 在当前类中找到 select 方法，找到 TODO code 3。
 
 ![1739-560-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/2c849f8a89a7c3d5375543d7df2355e4-0)
 
-将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```java
  tbEnv.sqlUpdate(
@@ -381,25 +381,25 @@ tbEnv.sqlUpdate(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'CreateTableByDDLMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'CreateTableByDDLMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/972eb681725f8c68a894c6a6b937f740-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_DDL 集合下。
 
-通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+2) 通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
-点击数据菜单选择 "SequoiaDB" 分布式存储。
+3) 点击数据菜单选择 "SequoiaDB" 分布式存储。
 
 ![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
 
-选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+4) 选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
 
 ![1739-560-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/24aa8965ff2e2f7cf7b1861c86f5f8fe-0)
 
-选中集合 "VIRTUAL_BANK.LESSON_6_DDL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+5) 选中集合 "VIRTUAL_BANK.LESSON_6_DDL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-560-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/28767f91758cddabc6b25a097a763076-0)
 
@@ -413,11 +413,11 @@ tbEnv.sqlUpdate(
 
 使用描述器定义一个使用 EventTime 和 Watermark 的 Source 表。
 
-在当前类中找到 createSourceTable 方法，找到 TODO code 1。
+1) 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
 ![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/e5e8fee33b633dec50236b09dd8edec9-0)
 
-将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
 // Connection table via descriptor
@@ -474,11 +474,11 @@ tbEnv.connect(
 
 执行统计，统计每种交易的交易总额。
 
-在当前类中找到 select 方法，找到 TODO code 2。
+1) 在当前类中找到 select 方法，找到 TODO code 2。
 
 ![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/25bbe70a395a238ba5f7a2f960cdffce-0)
 
-将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```java
 // Execute sql data statistics
@@ -499,25 +499,25 @@ tbEnv.sqlUpdate(
 
 #### 执行当前作业
 
-通过在当前类文件上右键 > Run 'ExecuteSqlWithWatermakerAndWindowMain.main()' 运行该 Flink 程序。
+1) 通过在当前类文件上右键 > Run 'ExecuteSqlWithWatermakerAndWindowMain.main()' 运行该 Flink 程序。
 
 ![1739-560-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/be8fc8acb0cfe1e6a89d93a7444eb0a3-0)
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_SQL 集合下。
 
-通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+2) 通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
-点击数据菜单选择 "SequoiaDB" 分布式存储。
+3) 点击数据菜单选择 "SequoiaDB" 分布式存储。
 
 ![1739-540-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/4e240fc768dd2c562e1f1ad7c5e68600-0)
 
-选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
+4) 选择集合选项卡， 在搜索栏输入集合空间名 "VIRTUAL_BANK" ，查找该集合空间下的所有集合。
 
 ![1739-560-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/916fff7511e8486026d51f0ad1829fab-0)
 
-选中集合 "VIRTUAL_BANK.LESSON_6_SQL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
+5) 选中集合 "VIRTUAL_BANK.LESSON_6_SQL" 点击右侧的 "浏览数据"，可以看到当前集合中的所有数据。
 
 ![1739-560-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/ff8ef65a1b5fd01ff7763ad009be3d4f-0)
 
