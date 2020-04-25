@@ -58,7 +58,7 @@ POM 文件位置：
 
 3) 打开指定的 Package，在该 Package 中完成后续课程。
 
-![](https://doc.shiyanlou.com/courses/1736/1207281/9da7f0dbe07eb7e7fb0544207438855e-0)
+![](https://doc.shiyanlou.com/courses/1736/1207281/50e18621215da838ae890d87938b10e6-0)
 
 ## 通过 Java SDK 进行数据库连接
 
