@@ -1,7 +1,7 @@
 ---
-
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
@@ -184,13 +184,11 @@ MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CAS
 
 此类型的语句结构如下：
 
-```sql
-CASE value
-WHEN compare_value_1 THEN result_1
-WHEN compare_value_2 THEN result_2
-…
-ELSE result END
-```
+> CASE value
+> WHEN compare_value_1 THEN result_1
+> WHEN compare_value_2 THEN result_2
+> …
+> ELSE result END
 
 此情况下，拿 value 与各个 compare_value 比较，相等时取对应的值，都不相等时取最后的 result。
 
@@ -248,13 +246,11 @@ while (rs.next()) {
 
 此类型的 CASE 表达式如下：
 
-```sql
-CASE
-WHEN condition_1 THEN result_1
-WHEN condition_2 THEN result_2
-…
-ELSE result END
-```
+> CASE
+> WHEN condition_1 THEN result_1
+> WHEN condition_2 THEN result_2
+> …
+> ELSE result END
 
 此时自上而下根据 condition 判断，取对应的值，都不满足的时候取最后的 result 。
 
@@ -290,6 +286,7 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
 4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-2.png](https://doc.shiyanlou.com/courses/1735/1207281/2f6af365d654535be294e83cf3c5c717-0)
