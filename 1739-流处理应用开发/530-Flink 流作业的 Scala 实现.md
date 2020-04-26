@@ -290,16 +290,10 @@ com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
 val tool = ParameterTool.fromArgs(args)
 // Get an integer value by name. 10 is the default value, and the default value is enabled if the parameter is not found.
 val lineNum = tool.getInt("lineNum", 10)
+source = new RandomSource(lineNum)
 ```
 
-2) lineNum 便是入的函数，需要通过 RandomSource 的构造器传入该值。
-
-```scala
-// Modify the method to get data
-val lineData: DataStream[String] = env.addSource(new RandomSource(lineNum))
-```
-
-3) 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
+2) 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
 
 ![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/2838685e3213c8f792a2d7e04c5d9d33-0)
 
