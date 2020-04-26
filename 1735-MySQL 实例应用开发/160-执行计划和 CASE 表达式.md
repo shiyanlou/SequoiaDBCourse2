@@ -1,11 +1,12 @@
 ---
+
 show: step
 version: 1.0 
 ---
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉 MySQL 的视图和触发器。
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉 MySQL 的执行计划和 CASE 表达式。
 
 #### 请点击右侧选择使用的实验环境
 
@@ -37,58 +38,73 @@ version: 1.0
 
 ![1587923287299](https://doc.shiyanlou.com/courses/1735/1207281/2e66fe621bc8196ead5a7141c8125db4-0)
 
-#### 打开lesson8_viewAndTrigger包
+#### 打开lesson6_explainAndCase包
 
-打开 lesson8_viewAndTrigger packge，在该 packge 中完成后续课程
+打开 lesson6_explainAndCase packge，在该 packge 中完成后续课程
 
 ![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
 
-## 创建、删除、查看视图
+## 查看和理解执行计划
 
-视图是虚拟的表。与包含数据的表不一样，视图只包含使用时动态检索数据的查询。
+我们知道，不管是哪种数据库，或者是哪种数据库引擎，在对一条 SQL 语句进行执行的过程中都会做很多相关的优化，对于查询语句，最重要的优化方式就是使用索引。而执行计划，就是显示数据库引擎对于 SQL 语句的执行的详细情况，其中包含了是否使用索引，使用什么索引，使用的索引的相关信息等。
 
-创建视图
+#### 执行计划说明
 
-> CREATE [OR REPLACE] VIEW 视图名(列1，列2...)
->
-> AS SELECT (列1，列2...)
->
-> FROM ...;
->
-> [WITH [CASCADED|LOCAL] CHECK OPTION]
+| 字段          | 说明                                                         |
+| ------------- | ------------------------------------------------------------ |
+| id            | 查询的执行顺序号                                             |
+| select_type   | 查询类型                                                     |
+| table         | 当前执行的表                                                 |
+| type          | 查询使用了那种类型                                           |
+| possible_keys | 显示可能应用在这张表中的索引，一个或多个。                   |
+| key           | 实际使用的索引                                               |
+| key_len       | 表示索引中使用的字节数                                       |
+| ref           | 显示索引的那一列被使用了                                     |
+| rows          | 根据表统计信息及索引选用情况，大致估算出找到所需的记录所需要读取的行数 |
+| filtered      | 存储引擎返回的数据在server层过滤后,剩下多少满足查询的记录数量的比例 |
+| extra         | 包含不适合在其他列中显式但十分重要的额外信息                 |
 
-删除视图
+**select_type **常见和常用的值有如下几种：
 
-> DROP VIEW viewname;
+SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT  从 UNION 表获取结果的 SELECT
 
-查看视图
+**type **包含的类型包括如下几种，从最好到最差依次是：
 
-> DESC viewname;
+system > const > eq_ref > ref > range > index > all
 
-#### 创建视图
+#### 查看执行计划
 
-基于数据库表 employee，创建视图 employee_view，使用 create view 命令
+查看 select * from employee 的执行计划
 
-1）打开 ViewTest.java
+1）打开 ExplainTest.java
 
-![1735-180-100.png](https://doc.shiyanlou.com/courses/1735/1207281/62f1644e89e7e2963e3dba655849867f-0)
+![1735-160-100.png](https://doc.shiyanlou.com/courses/1735/1207281/9ec03de3a77511ff6c2268a53ec148d2-0)
 
-2）在 createView 方法中找到行 TODO code 1
+2）在 run1 方法中找到 TODO code 1
 
-![1735-180-101.png](https://doc.shiyanlou.com/courses/1735/1207281/b2e72d87abdb252b814bf56653ddd0be-0)
+![1735-160-101.png](https://doc.shiyanlou.com/courses/1735/1207281/6f0df8090b504a1a930ad26e9fa73ac5-0)
 
-3）将下方代码粘贴到 TODO code 1 区域内，创建视图 employee_view ，视图数据来源于 employee表
+3）将下方代码粘贴到 TODO code 1 区域内，查看 select * from employee 的执行计划
 
 ```java
 // Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
+// Write sql
+String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename ='Parto'";
 // Execute sql
-stmt.executeUpdate("CREATE OR REPLACE VIEW employee_view AS SELECT * FROM employee;");
+rs = stmt.executeQuery(sql3);
+// Traverse the query results
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
 ```
 
 代码粘贴结果如图所示：
 
-![1735-180-1000.png](https://doc.shiyanlou.com/courses/1735/1207281/e754c986b24a1a46583fbc0ec27282da-0)
+![1735-160-1000.png](https://doc.shiyanlou.com/courses/1735/1207281/a91a6463ac9d24c4d77c694ab240c0b2-0)
 
 > **说明**
 >
@@ -108,43 +124,130 @@ stmt.executeUpdate("CREATE OR REPLACE VIEW employee_view AS SELECT * FROM employ
 >
 > ![paste3](https://doc.shiyanlou.com/courses/1738/1207281/14482e482cde033e4f78cca144abdcee-0)
 
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit ' ExplainAndCase...main()'
 
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
-4）修改参数为 createView
+5）修改参数为 explain
 
-![1735-180-102.png](https://doc.shiyanlou.com/courses/1735/1207281/2a5d5a970667e6693347bc2305de8992-0)
+![1735-160-102.png](https://doc.shiyanlou.com/courses/1735/1207281/4e7c1572d80a4a28d3b1fc8f17b9aafe-0)
 
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
 7）查看结果
 
-![1735-180-103.png](https://doc.shiyanlou.com/courses/1735/1207281/baf508eaa3ac7e61fcc4e9c5b351ff2f-0)
+| id   | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra                                                        |
+| ---- | ----------- | -------- | ---------- | ---- | ------------- | ---- | ------- | ---- | ---- | -------- | ------------------------------------------------------------ |
+| 1    | SIMPLE      | employee | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 6    | 16.67    | Using where with pushed condition (`mysqlTest`.`employee`.`ename` = 'Parto') |
 
-#### 查看视图数据
+> 在 MySQL 5.7，可以查看 select，delete，insert，replace 和 update 语句的执行计划。
 
-查看视图 employee_view 的数据
+## 创建索引，改变执行计划
 
-1）打开 ViewTest.java
+为表 employee 的列 ename 创建索引，再次查看执行计划。
 
-![1735-180-100.png](https://doc.shiyanlou.com/courses/1735/1207281/62f1644e89e7e2963e3dba655849867f-0)
+1）打开 ExplainTest.java
 
-2）在 queryView 方法中找到 TODO code 2
+![1735-160-103.png](https://doc.shiyanlou.com/courses/1735/1207281/8275599d562ba91722acae96f50d2ada-0)
 
-![1735-180-104.png](https://doc.shiyanlou.com/courses/1735/1207281/abc5cfc2a9ad62d57f0db12b5e01f62e-0)
+2）在 run2 方法中找到 TODO code 2
 
-3）将下方代码粘贴到 TODO code 2 区域内，查看视图 employee_view 数据
+![1735-160-104.png](https://doc.shiyanlou.com/courses/1735/1207281/4b66506e44bf4cff8401aff101dc0f9e-0)
+
+3）将下方代码粘贴到 TODO code 2 区域内，为表 employee 的列 ename 创建索引，再次查看执行计划，发现执行计划改变
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql to modify index
+String sql = "ALTER TABLE employee ADD INDEX(ename)";
+// Execute sql
+stmt.executeUpdate(sql);
+// Write SQL to view the execution plan
+String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename = 'Parto'";
+// Execute sql
+rs = stmt.executeQuery(sql3);
+// Traverse the query results
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-160-1001.png](https://doc.shiyanlou.com/courses/1735/1207281/be9a63a4ba92d4810527c6693db38b16-0)
+
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
+
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
+
+5）修改参数为 alterExplain
+
+![1735-160-105.png](https://doc.shiyanlou.com/courses/1735/1207281/930834f84b44925bd8be6bebc485a8ec-0)
+
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
+
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
+
+7）查看结果
+
+| id   | select_type | table    | partitions | type | possible_keys | key   | key_len | ref   | rows | filtered | Extra |
+| ---- | ----------- | -------- | ---------- | ---- | ------------- | ----- | ------- | ----- | ---- | -------- | ----- |
+| 1    | SIMPLE      | employee | NULL       | ref  | ename         | ename | 515     | const | 1    | 100.00   | NULL  |
+
+## CASE表达式
+
+MySQL CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句中根据条件动态构造内容。
+
+MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CASE 语句，拿一个给定的值（变量）跟一系列特定的值作比较,称之为 CASE 类型。另一种则更像是编程语言中的if语句，当满足某些条件的时候取特定值，称之为 IF 类型。
+
+#### case类型
+
+此类型的语句结构如下：
+
+> CASE value
+>
+> WHEN compare_value_1 THEN result_1
+>
+> WHEN compare_value_2 THEN result_2
+>
+> …
+>
+> ELSE result END
+
+此情况下，拿 value 与各个 compare_value 比较，相等时取对应的值，都不相等时取最后的 result。
+
+1）打开 CaseTest.java
+
+![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
+
+2）在 run1 方法中找到 TODO code 1
+
+![1735-160-107.png](https://doc.shiyanlou.com/courses/1735/1207281/6f819f33f5e945aacfd331379ae06f5c-0)
+
+3）将下方代码粘贴到 TODO code 1 区域内，CASE 表达式，当 ename 为 ‘Parto’ 时，显示为 ‘P’，不符合 WHEN 条件的 ，显示为 ‘XX’
 
 ```java
 // Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
 // Write sql
-String sql = "SELECT * FROM employee_view";
+String sql3 = "SELECT ename," +
+    "    CASE ename" +
+    "        WHEN 'Parto' THEN 'P'" +
+    "        WHEN 'Georgi' THEN 'G'" +
+    "        WHEN 'Chirs' THEN 'C'" +
+    "        ELSE 'XX'" +
+    "    END AS mark\n" +
+    "FROM" +
+    "    employee";
 // Execute sql
-rs = stmt.executeQuery(sql);
+rs = stmt.executeQuery(sql3);
+// Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -155,403 +258,65 @@ while (rs.next()) {
 
 代码粘贴结果如图所示：
 
-![1735-180-1001.png](https://doc.shiyanlou.com/courses/1735/1207281/41c0284c4ec56e6386c5e2db89542b53-0)
+![1735-160-1002.png](https://doc.shiyanlou.com/courses/1735/1207281/27c3cb2fd3c4d1c90de88adc5c4200ea-0)
 
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
-5）修改参数为 queryView
+4）修改参数为 caseTest
 
-![1735-180-105.png](https://doc.shiyanlou.com/courses/1735/1207281/a05678809168f5b4c4ad483937e53a58-0)
+![1735-160-108.png](https://doc.shiyanlou.com/courses/1735/1207281/3fdcfa4f5beff758cc5f20993a300bd2-0)
 
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-106.png](https://doc.shiyanlou.com/courses/1735/1207281/c6bbc26e52555cf679b7cc1405daaacd-0)	
-
-#### 删除视图
-
-删除视图 employee_view
-
-1）打开 ViewTest.java
-
-![1735-180-100.png](https://doc.shiyanlou.com/courses/1735/1207281/62f1644e89e7e2963e3dba655849867f-0)
-
-2）在 queryView 方法中找到 TODO code 3
-
-![1735-180-107.png](https://doc.shiyanlou.com/courses/1735/1207281/f33f7e29dd42537568d48db1ac71b8a8-0)
-
-3）将下方代码粘贴到 TODO code 3，删除视图 employee_view
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Execute
-stmt.executeUpdate("DROP VIEW employee_view;");
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1002.png](https://doc.shiyanlou.com/courses/1735/1207281/892ce7e35bd95236ecd162159c869095-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 dropView
-
-![1735-180-108.png](https://doc.shiyanlou.com/courses/1735/1207281/72f40d624b910cc0e54d947aae480384-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
 7）查看结果
 
-![1735-180-109.png](https://doc.shiyanlou.com/courses/1735/1207281/821d2efae85536f4dc7c9b17533e1225-0)
+![1735-160-109.png](https://doc.shiyanlou.com/courses/1735/1207281/6b359abf43d45435dcf84aed550bdee2-0)
 
-## 更新、修改视图
+#### IF类型
 
-本节讲述视图的更新和修改。
+此类型的 CASE 表达式如下：
 
-#### 更新视图
+> CASE
+>
+> WHEN condition_1 THEN result_1
+>
+> WHEN condition_2 THEN result_2
+>
+> …
+>
+> ELSE result END
 
-更新修改视图里的记录，利用 update 命令
+此时自上而下根据 condition 判断，取对应的值，都不满足的时候取最后的 result 。
 
-1）打开 ViewTest.java
+1）打开 CaseTest.java
 
-![1735-180-100.png](https://doc.shiyanlou.com/courses/1735/1207281/62f1644e89e7e2963e3dba655849867f-0)
+![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
 
-2）在 updateView 方法中找到 TODO code 4
+2）在 run2 方法中找到 TODO code 2
 
-![1735-180-110.png](https://doc.shiyanlou.com/courses/1735/1207281/774292259e96ded26fa86d3c9c09c2e9-0)
+![1735-160-110.png](https://doc.shiyanlou.com/courses/1735/1207281/ec5d580130e237290e5429fc15ff6cd1-0)
 
-3）将下方代码粘贴到 TODO code 4，更新修改视图里的记录
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Execute sql
-stmt.executeUpdate("UPDATE employee_view SET age = 38 WHERE ENAME = 'Georgi';");
-String sql = "SELECT * FROM employee_view where ename = 'Georgi'";
-rs = stmt.executeQuery(sql);
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1003.png](https://doc.shiyanlou.com/courses/1735/1207281/438385c634e826765798399efb966308-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 updateView
-
-![1735-180-111.png](https://doc.shiyanlou.com/courses/1735/1207281/cd5b33d064849437af6811c7ec189ffc-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-112.png](https://doc.shiyanlou.com/courses/1735/1207281/578eee4a8e8321454cf772aa09aa5252-0)
-
-#### 修改视图
-
-使用 ALTER 语句修改视图，让视图只存储 employee 表的 ename 和 age 字段
-
-1）打开 ViewTest.java
-
-![1735-180-100.png](https://doc.shiyanlou.com/courses/1735/1207281/62f1644e89e7e2963e3dba655849867f-0)
-
-2）在 alterView 方法中找到 TODO code 5
-
-![1735-180-113.png](https://doc.shiyanlou.com/courses/1735/1207281/6fcb2de990c0159d71e64ae43d8ab4fd-0)
-
-3）将下方代码粘贴到 TODO code 5 区域内，使用 ALTER 语句修改视图，让视图只存储 employee 表的 ename 和 age 字段
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Write modify view of sql
-String sql1 ="ALTER VIEW employee_view AS SELECT ename,age FROM employee;";
-// Execute sql
-stmt.executeUpdate(sql1);
-// Write query view of sql
-String sql2 = "SELECT * FROM employee_view";
-rs = stmt.executeQuery(sql2);
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1004.png](https://doc.shiyanlou.com/courses/1735/1207281/f0aa4f8948478601346e7735211da631-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 alterView
-
-![1735-180-114.png](https://doc.shiyanlou.com/courses/1735/1207281/9349f21352f09ccaae47983a260d3bf5-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-115.png](https://doc.shiyanlou.com/courses/1735/1207281/3b19a8782cd7e3545e522325b05dce72-0)
-
-## 查询所有视图
-
-本节讲解查看 MySQL 的所有视图。
-
-1）打开 ViewTest.java
-
-![1735-180-100.png](https://doc.shiyanlou.com/courses/1735/1207281/62f1644e89e7e2963e3dba655849867f-0)
-
-2）在 showView 方法中找到 TODO code 6
-
-![1735-180-116.png](https://doc.shiyanlou.com/courses/1735/1207281/fbc245dd4585f04abea60126c18617c2-0)
-
-3）将下方代码粘贴到 TODO code 6 区域内，查看所有视图
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Write sql to check all views
-String sql = "SHOW TABLE STATUS WHERE COMMENT='view';";
-rs = stmt.executeQuery(sql);
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1005.png](https://doc.shiyanlou.com/courses/1735/1207281/c1d74b509c5104d3b95176b6e5cbf292-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 showView
-
-![1735-180-117.png](https://doc.shiyanlou.com/courses/1735/1207281/1c3f2f1208c62436e49b71bce9f0f5e3-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-118.png](https://doc.shiyanlou.com/courses/1735/1207281/1ab8d5840e550aceb738cde47438ea72-0)
-
-## 创建 INSERT 触发器
-
-INSERT 触发器在 INSERT 语句执行之前或之后执行。需要知道以下几点：
-
-- 在 INSERT 触发器代码内，可引用一个名为 NEW 的虚拟表，访问被插入的行；
-- 在 BEFORE INSERT 触发器中, NEW 中的值也可以被更新（允许更改被插入的值）；
-- 对于 AUTO_INCREMENT 列，NEW 在 INSERT 执行之前包含0，在 INSERT 执行之后包含新的自动生成值。
-
-创建一个 INSERT 触发器
-
-1）打开 TriggerTest.java
-
-![1735-180-119.png](https://doc.shiyanlou.com/courses/1735/1207281/faa8f0582f57b85896eb28c5e4d4b404-0)
-
-2）在 createInsertTrigger 方法中找到 TODO code 1
-
-![1735-180-120.png](https://doc.shiyanlou.com/courses/1735/1207281/c7c76254ea1df9415783e8a29b3b3070-0)
-
-3）将下方代码粘贴到 TODO code 1 区域内，创建一个 INSERT 触发器，当 employee 进行 INSERT 时，添加 ‘Employee added’ 到 @result
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Execute sql to create insert trigger
-stmt.executeUpdate("CREATE TRIGGER newemployee AFTER INSERT ON employee FOR EACH ROW SELECT 'Employee added' INTO @result;");
-// Execute SQL to insert data
-stmt.executeUpdate("INSERT INTO employee VALUES(10007,'Bob',22);");
-// Write sql to check whether the trigger takes effect
-String sql = "SELECT @result;";
-rs = stmt.executeQuery(sql);
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1006.png](https://doc.shiyanlou.com/courses/1735/1207281/c7acb13d13aee28fe8a483553b09cb86-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 createInsertTrigger
-
-![1735-180-121.png](https://doc.shiyanlou.com/courses/1735/1207281/8217570569c41d031e836f16a0427eac-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-122.png](https://doc.shiyanlou.com/courses/1735/1207281/05071d575ca8e25550026b0e5330afd5-0)
-
-## 创建 UPDATE 触发器
-
-创建一个 update 触发器，当 employee 表 UPDATE 时，将 ‘Employee updated’  添加到 @result 中。
-
-1）打开 TriggerTest.java
-
-![1735-180-119.png](https://doc.shiyanlou.com/courses/1735/1207281/faa8f0582f57b85896eb28c5e4d4b404-0)
-
-2）在 createUpdateTrigger 方法中找到 TODO code 2
-
-![1735-180-123.png](https://doc.shiyanlou.com/courses/1735/1207281/82bb3e26044f79fc15393cbafe1b51a0-0)
-
-3）将下方代码粘贴到 TODO code 2 区域内，创建一个 UPDATE 触发器，当 employee 进行 UPDATE 时，添加 ‘Employee updated’ 到 @result
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Execute sql to create update trigger
-stmt.executeUpdate("CREATE TRIGGER updateemployee BEFORE UPDATE ON employee FOR EACH ROW SELECT 'Employee updated' INTO @result;");
-// Execute sql to update data
-stmt.executeUpdate("update employee set ename = 'Chiruis' where empno = 10004;");
-// Write sql to check whether the trigger takes effect
-String sql = "SELECT @result;";
-rs = stmt.executeQuery(sql);
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1007.png](https://doc.shiyanlou.com/courses/1735/1207281/325dac19ed09bf18030b2a1b4d1a4744-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 createUpdateTrigger
-
-![1735-180-124.png](https://doc.shiyanlou.com/courses/1735/1207281/6ff7e35c68c2c314478f0fc0be0ab5dc-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-125.png](https://doc.shiyanlou.com/courses/1735/1207281/0c1a4f8c64cb6990e99f6fd84da9ef4b-0)
-
-## 创建 DELETE 触发器
-
-创建一个 DELETE 触发器，当 employee 表 DELETE 时，将 ‘Employee deleted’  添加到 @result 中。
-
-1）打开 TriggerTest.java
-
-![1735-180-119.png](https://doc.shiyanlou.com/courses/1735/1207281/faa8f0582f57b85896eb28c5e4d4b404-0)
-
-2）在 createDeleteTrigger 方法中找到 TODO code 3
-
-![1735-180-126.png](https://doc.shiyanlou.com/courses/1735/1207281/48175a08a1b4b70c353d439db0a59284-0)
-
-3）将下方代码粘贴到 TODO code 3 区域内，创建一个 DELETE 触发器，当 employee 进行 DELETE 时，添加 ‘Employee deleted’ 到 @result
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Write sql to create delete trigger
-stmt.executeUpdate("CREATE TRIGGER deleteemployee BEFORE DELETE ON employee FOR EACH ROW SELECT 'Employee deleted' INTO @result;");
-stmt.executeUpdate("DELETE FROM employee WHERE empno = 10002;");
-String sql = "SELECT @result;";
-rs = stmt.executeQuery(sql);
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1008.png](https://doc.shiyanlou.com/courses/1735/1207281/6431b9f798858281e1cea380c12aee9f-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 createDeleteTrigger
-
-![1735-180-127.png](https://doc.shiyanlou.com/courses/1735/1207281/2be6e8752cfc1d55f3081d651331e215-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-128.png](https://doc.shiyanlou.com/courses/1735/1207281/caae3ab717a8df48c74f3d07a1adac4f-0)
-
-## 触发器查询、删除
-
-本节讲述触发器的查询和删除。
-
-#### 触发器查询
-
-查看 MySQL 中全部的触发器
-
-1）打开 TriggerTest.java
-
-![1735-180-119.png](https://doc.shiyanlou.com/courses/1735/1207281/faa8f0582f57b85896eb28c5e4d4b404-0)
-
-2）在 showTrigger 方法中找到 TODO code 4
-
-![1735-180-129.png](https://doc.shiyanlou.com/courses/1735/1207281/a5afc4ec6d14960efe6c1a373c67d5f5-0)
-
-3）将下方代码粘贴到 TODO code 4 区域内，查看触发器
+3）将下方代码粘贴到 TODO code 2 区域内，查询表 employee，当 empno 字段为 null 时，按 age 排序，其余情况按 empno 排序
 
 ```java
 // Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
 // Write sql
-String sql = "show triggers;";
+String sql = "SELECT " +
+    "    *" +
+    "FROM" +
+    "    employee\n" +
+    "ORDER BY (CASE" +
+    "    WHEN empno IS NULL THEN age" +
+    "    ELSE empno\n" +
+    "END);";
 // Execute sql
 rs = stmt.executeQuery(sql);
+// Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -562,74 +327,25 @@ while (rs.next()) {
 
 代码粘贴结果如图所示：
 
-![1735-180-1009.png](https://doc.shiyanlou.com/courses/1735/1207281/3404751912d0c025e63ae3c09b7650d7-0)
+![1735-160-1003.png](https://doc.shiyanlou.com/courses/1735/1207281/e1706664c74c1d24c21260fcbe3e1e67-0)
 
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
+![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
-5）修改参数为 showTrigger
+5）修改参数为 caseIfTest
 
-![1735-180-130.png](https://doc.shiyanlou.com/courses/1735/1207281/001d8e2410c095ab704c9b2ddc5eb519-0)
+![1735-160-111.png](https://doc.shiyanlou.com/courses/1735/1207281/5fdf9ec88a87828d8c43248e671991d2-0)
 
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
+6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
 
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
-
-7）查看结果
-
-![1735-180-131.png](https://doc.shiyanlou.com/courses/1735/1207281/c26178c922a3b6940f871b014c1c049f-0)
-
-#### 触发器删除
-
-删除触发器 updateemployee
-
-1）打开 TriggerTest.java
-
-![1735-180-119.png](https://doc.shiyanlou.com/courses/1735/1207281/faa8f0582f57b85896eb28c5e4d4b404-0)
-
-2）在 deleteTrigger 方法中找到 TODO code 5
-
-![1735-180-132.png](https://doc.shiyanlou.com/courses/1735/1207281/d884dd7e937b46498192a2ece4c33aaa-0)
-
-3）将下方代码粘贴到 TODO code 5 区域内，删除触发器 updateemployee
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Execute the delete trigger of sql
-stmt.executeUpdate("DROP TRIGGER updateemployee;");
-// Write the view trigger of sql
-String sql = "SHOW triggers;";
-rs = stmt.executeQuery(sql);
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-180-1010.png](https://doc.shiyanlou.com/courses/1735/1207281/072043efa16b34a97c138a1d49676754-0)
-
-4）修改参数，右键 ViewAndTriggerMainTest.java，选择 Edit 'ViewAndTrigger...main()'
-
-![1735-180-2.png](https://doc.shiyanlou.com/courses/1735/1207281/b96e7e82654e43fc0c06df6211c93efc-0)
-
-5）修改参数为 deleteTrigger
-
-![1735-180-133.png](https://doc.shiyanlou.com/courses/1735/1207281/f180283f3d22a1a0eeb5df691be76e85-0)
-
-6）执行代码，右键 ViewAndTriggerMainTest.java，选择 Run 'ViewAndTrigger.main()'，运行代码
-
-![1735-180-4.png](https://doc.shiyanlou.com/courses/1735/1207281/85a5b06640269cd3054ced44d35e8a27-0)
+![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
 7）查看结果
 
-![1735-180-134.png](https://doc.shiyanlou.com/courses/1735/1207281/a02fdd84dc9897139a4c0a9579b82d18-0)
+![1735-160-112.png](https://doc.shiyanlou.com/courses/1735/1207281/07b4f8133371392ced4117ff24d405da-0)
 
 ## 总结
 
-通过本课程的学习，可以学会 MySQL 中视图的创建、删除、更新，以及触发器的创建、删除、查询。
+通过本课程学会了如何查看和理解执行计划，以及 MySQL 中 两种类型 Case 表达式的使用。通过查看执行计划可以查看 SQL 语句的执行的详细情况，使用 CASE 表达式可以在 SELECT、WHERE 等语句中根据条件动态构造内容。
+
