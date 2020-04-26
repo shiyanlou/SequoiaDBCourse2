@@ -89,7 +89,7 @@ flatmap 算子中需要传递一个对象，该对象有两个泛型，分别为
 2) 将下列代码粘贴到 TODO code 1区间内。
 
 ```java
-flatMapData = dataStreamSource.flatMap(new FlatMapFunction<String, String>() {
+flatMapData = dataStream.flatMap(new FlatMapFunction<String, String>() {
   /**
    * Execute once on each data row and it can output multiple data
    * @param s Raw data
@@ -325,23 +325,17 @@ com.sequoiadb.lesson.flink.lesson2_word_count.WordCountMain
 
 #### 参数获取
 
-1) 首先可以在 main 函数的开头 TODO code 6添加下列代码。
+1) 首先可以 getSource 函数 TODO code 6 中添加下列代码。
 
 ```java
 // Transfer args to ParameterTool, and the ParameterTool can help us parse parameters
 ParameterTool tool = ParameterTool.fromArgs(args);
 // Get an integer value by name. 10 is the default value, and the default value is enabled if the parameter is not found
 int lineNum = tool.getInt("lineNum", 10);
+source = new RandomSource(lineNum);
 ```
 
-2) lineNum 便是入的函数，需要通过 RandomSource 的构造器传入该值，此处修改当前类main函数中添加 Source的代码部分。
-
-```java
-// Modify the method to get data, and add the construction parameter lineNum
-DataStreamSource<String> lineData = env.addSource(new RandomSource(lineNum));
-```
-
-3) 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
+2) 接下来将 jar 重新上传到集群，在提交作业时，在参数行添加参数。
 
 ![1739-520-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/2838685e3213c8f792a2d7e04c5d9d33-0)
 
