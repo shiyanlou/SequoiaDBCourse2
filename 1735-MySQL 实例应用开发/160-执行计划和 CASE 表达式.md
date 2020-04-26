@@ -1,12 +1,11 @@
 ---
-
 show: step
 version: 1.0 
 ---
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉 MySQL 的执行计划和 CASE 表达式。
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉MySQL 常用函数。
 
 #### 请点击右侧选择使用的实验环境
 
@@ -38,61 +37,37 @@ version: 1.0
 
 ![1587923287299](https://doc.shiyanlou.com/courses/1735/1207281/2e66fe621bc8196ead5a7141c8125db4-0)
 
-#### 打开lesson6_explainAndCase包
+#### 打开lesson7_function包
 
-打开 lesson6_explainAndCase packge，在该 packge 中完成后续课程
+打开 lesson7_function packge，在该 packge 中完成后续课程
 
 ![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
 
-## 查看和理解执行计划
+## 字符串检索函数
 
-我们知道，不管是哪种数据库，或者是哪种数据库引擎，在对一条 SQL 语句进行执行的过程中都会做很多相关的优化，对于查询语句，最重要的优化方式就是使用索引。而执行计划，就是显示数据库引擎对于 SQL 语句的执行的详细情况，其中包含了是否使用索引，使用什么索引，使用的索引的相关信息等。
+#### find_in_set(str,strlist)
 
-#### 执行计划说明
+假如字符串 str 在由 N 子链组成的字符串列表 strlist 中，则返回值的范围在 1 到 N 之间。一个字符串列表就是一个由一些被‘,’符号分开的自链组成的字符串。如果第一个参数是一个常数字符串，而第二个是 type SET 列，则    FIND_IN_SET()  函数被优化，使用比特计算。如果 str 不在 strlist 或 strlist 为空字符串，则返回值为 0 。如任意一个参数为 NULL，则返回值为 NULL。这个函数在第一个参数包含一个逗号(‘,’)时将无法正常运行。返回值为 str 在strlist中的位置，从1开始计数。
 
-| 字段          | 说明                                                         |
-| ------------- | ------------------------------------------------------------ |
-| id            | 查询的执行顺序号                                             |
-| select_type   | 查询类型                                                     |
-| table         | 当前执行的表                                                 |
-| type          | 查询使用了那种类型                                           |
-| possible_keys | 显示可能应用在这张表中的索引，一个或多个。                   |
-| key           | 实际使用的索引                                               |
-| key_len       | 表示索引中使用的字节数                                       |
-| ref           | 显示索引的那一列被使用了                                     |
-| rows          | 根据表统计信息及索引选用情况，大致估算出找到所需的记录所需要读取的行数 |
-| filtered      | 存储引擎返回的数据在server层过滤后,剩下多少满足查询的记录数量的比例 |
-| extra         | 包含不适合在其他列中显式但十分重要的额外信息                 |
+检索mysql在字符串列表 'oracle,sql server,mysql,db2' 中的位置
 
-**select_type **常见和常用的值有如下几种：
+1）打开 FunctionTest.java
 
-SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT  从 UNION 表获取结果的 SELECT
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
 
-**type **包含的类型包括如下几种，从最好到最差依次是：
+2）在 findInSet 方法中找到 TODO code 1
 
-system > const > eq_ref > ref > range > index > all
+![1735-170-101.png](https://doc.shiyanlou.com/courses/1735/1207281/bf2a2d1c4f8bfea126c05bebc091f4de-0)
 
-#### 查看执行计划
-
-查看 select * from employee 的执行计划
-
-1）打开 ExplainTest.java
-
-![1735-160-100.png](https://doc.shiyanlou.com/courses/1735/1207281/9ec03de3a77511ff6c2268a53ec148d2-0)
-
-2）在 run1 方法中找到 TODO code 1
-
-![1735-160-101.png](https://doc.shiyanlou.com/courses/1735/1207281/6f0df8090b504a1a930ad26e9fa73ac5-0)
-
-3）将下方代码粘贴到 TODO code 1 区域内，查看 select * from employee 的执行计划
+3）将下方代码粘贴到 TODO code 1 区域内，检索mysql在字符串列表 'oracle,sql server,mysql,db2' 中的位置
 
 ```java
 // Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
 // Write sql
-String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename ='Parto'";
+String sql = "SELECT FIND_IN_SET('mysql','oracle,sql server,mysql,db2');";
 // Execute sql
-rs = stmt.executeQuery(sql3);
+rs = stmt.executeQuery(sql);
 // Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
@@ -103,8 +78,7 @@ while (rs.next()) {
 ```
 
 代码粘贴结果如图所示：
-
-![1735-160-1000.png](https://doc.shiyanlou.com/courses/1735/1207281/a91a6463ac9d24c4d77c694ab240c0b2-0)
+![1735-170-1000.png](https://doc.shiyanlou.com/courses/1735/1207281/c7b8f492340bba914cbde80eb823da6c-0)
 
 > **说明**
 >
@@ -124,199 +98,45 @@ while (rs.next()) {
 >
 > ![paste3](https://doc.shiyanlou.com/courses/1738/1207281/14482e482cde033e4f78cca144abdcee-0)
 
-4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit ' ExplainAndCase...main()'
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
 
-![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
 
-5）修改参数为 explain
+5）修改参数为 findInSet
 
-![1735-160-102.png](https://doc.shiyanlou.com/courses/1735/1207281/4e7c1572d80a4a28d3b1fc8f17b9aafe-0)
+![1735-170-102.png](https://doc.shiyanlou.com/courses/1735/1207281/71a400be765ada308c70f510dce8eca9-0)
 
-6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
 
-![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
-
-7）查看结果
-
-| id   | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra                                                        |
-| ---- | ----------- | -------- | ---------- | ---- | ------------- | ---- | ------- | ---- | ---- | -------- | ------------------------------------------------------------ |
-| 1    | SIMPLE      | employee | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 6    | 16.67    | Using where with pushed condition (`mysqlTest`.`employee`.`ename` = 'Parto') |
-
-> 在 MySQL 5.7，可以查看 select，delete，insert，replace 和 update 语句的执行计划。
-
-## 创建索引，改变执行计划
-
-为表 employee 的列 ename 创建索引，再次查看执行计划。
-
-1）打开 ExplainTest.java
-
-![1735-160-103.png](https://doc.shiyanlou.com/courses/1735/1207281/8275599d562ba91722acae96f50d2ada-0)
-
-2）在 run2 方法中找到 TODO code 2
-
-![1735-160-104.png](https://doc.shiyanlou.com/courses/1735/1207281/4b66506e44bf4cff8401aff101dc0f9e-0)
-
-3）将下方代码粘贴到 TODO code 2 区域内，为表 employee 的列 ename 创建索引，再次查看执行计划，发现执行计划改变
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Write sql to modify index
-String sql = "ALTER TABLE employee ADD INDEX(ename)";
-// Execute sql
-stmt.executeUpdate(sql);
-// Write SQL to view the execution plan
-String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename = 'Parto'";
-// Execute sql
-rs = stmt.executeQuery(sql3);
-// Traverse the query results
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-160-1001.png](https://doc.shiyanlou.com/courses/1735/1207281/be9a63a4ba92d4810527c6693db38b16-0)
-
-4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
-
-![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
-
-5）修改参数为 alterExplain
-
-![1735-160-105.png](https://doc.shiyanlou.com/courses/1735/1207281/930834f84b44925bd8be6bebc485a8ec-0)
-
-6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
-
-![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
 
 7）查看结果
 
-| id   | select_type | table    | partitions | type | possible_keys | key   | key_len | ref   | rows | filtered | Extra |
-| ---- | ----------- | -------- | ---------- | ---- | ------------- | ----- | ------- | ----- | ---- | -------- | ----- |
-| 1    | SIMPLE      | employee | NULL       | ref  | ename         | ename | 515     | const | 1    | 100.00   | NULL  |
+![1735-170-103.png](https://doc.shiyanlou.com/courses/1735/1207281/a9e3dea677531a9dc9d803d2a5030704-0)
 
-## CASE表达式
+#### locate(substr,str)  / position(substr IN str) 
 
-MySQL CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句中根据条件动态构造内容。
+这两个函数都是返回子串 substr 在字符串 str 中第一次出现的位置。如果子串 substr 在 str 中不存在，返回值为0。
 
-MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CASE 语句，拿一个给定的值（变量）跟一系列特定的值作比较,称之为 CASE 类型。另一种则更像是编程语言中的if语句，当满足某些条件的时候取特定值，称之为 IF 类型。
+检索 SQL 在字符串中第一次出现的位置
 
-#### case类型
+1）打开 FunctionTest.java
 
-此类型的语句结构如下：
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
 
-> CASE value
->
-> WHEN compare_value_1 THEN result_1
->
-> WHEN compare_value_2 THEN result_2
->
-> …
->
-> ELSE result END
+2）在 locate 方法中找到 TODO code 2
 
-此情况下，拿 value 与各个 compare_value 比较，相等时取对应的值，都不相等时取最后的 result。
+![1735-170-104.png](https://doc.shiyanlou.com/courses/1735/1207281/1d20cbb4b90f532c58fb7303312ef1fa-0)
 
-1）打开 CaseTest.java
-
-![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
-
-2）在 run1 方法中找到 TODO code 1
-
-![1735-160-107.png](https://doc.shiyanlou.com/courses/1735/1207281/6f819f33f5e945aacfd331379ae06f5c-0)
-
-3）将下方代码粘贴到 TODO code 1 区域内，CASE 表达式，当 ename 为 ‘Parto’ 时，显示为 ‘P’，不符合 WHEN 条件的 ，显示为 ‘XX’
+3）将下方代码粘贴到 TODO code 2 区域内，检索 SQL 在字符串中第一次出现的位置
 
 ```java
 // Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
 // Write sql
-String sql3 = "SELECT ename," +
-    "    CASE ename" +
-    "        WHEN 'Parto' THEN 'P'" +
-    "        WHEN 'Georgi' THEN 'G'" +
-    "        WHEN 'Chirs' THEN 'C'" +
-    "        ELSE 'XX'" +
-    "    END AS mark\n" +
-    "FROM" +
-    "    employee";
-// Execute sql
-rs = stmt.executeQuery(sql3);
-// Traverse the query results
-while (rs.next()) {
-    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
-        System.out.print(rs.getString(i)+"\t");
-    }
-    System.out.println();
-}
-```
-
-代码粘贴结果如图所示：
-
-![1735-160-1002.png](https://doc.shiyanlou.com/courses/1735/1207281/27c3cb2fd3c4d1c90de88adc5c4200ea-0)
-
-4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
-
-![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
-
-4）修改参数为 caseTest
-
-![1735-160-108.png](https://doc.shiyanlou.com/courses/1735/1207281/3fdcfa4f5beff758cc5f20993a300bd2-0)
-
-6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
-
-![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
-
-7）查看结果
-
-![1735-160-109.png](https://doc.shiyanlou.com/courses/1735/1207281/6b359abf43d45435dcf84aed550bdee2-0)
-
-#### IF类型
-
-此类型的 CASE 表达式如下：
-
-> CASE
->
-> WHEN condition_1 THEN result_1
->
-> WHEN condition_2 THEN result_2
->
-> …
->
-> ELSE result END
-
-此时自上而下根据 condition 判断，取对应的值，都不满足的时候取最后的 result 。
-
-1）打开 CaseTest.java
-
-![1735-160-106.png](https://doc.shiyanlou.com/courses/1735/1207281/8a1dd6618fb9b35fda2061292a78ffc6-0)
-
-2）在 run2 方法中找到 TODO code 2
-
-![1735-160-110.png](https://doc.shiyanlou.com/courses/1735/1207281/ec5d580130e237290e5429fc15ff6cd1-0)
-
-3）将下方代码粘贴到 TODO code 2 区域内，查询表 employee，当 empno 字段为 null 时，按 age 排序，其余情况按 empno 排序
-
-```java
-// Create a Statement object to send SQL statements to the database
-stmt = conn.createStatement();
-// Write sql
-String sql = "SELECT " +
-    "    *" +
-    "FROM" +
-    "    employee\n" +
-    "ORDER BY (CASE" +
-    "    WHEN empno IS NULL THEN age" +
-    "    ELSE empno\n" +
-    "END);";
+String sql = "SELECT POSITION('SQL' IN 'hello SSQL-MySQL')";
 // Execute sql
 rs = stmt.executeQuery(sql);
-// Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -327,25 +147,624 @@ while (rs.next()) {
 
 代码粘贴结果如图所示：
 
-![1735-160-1003.png](https://doc.shiyanlou.com/courses/1735/1207281/e1706664c74c1d24c21260fcbe3e1e67-0)
+![1735-170-1001.png](https://doc.shiyanlou.com/courses/1735/1207281/70d79f6127314b2bb5fdc6653fb7ca29-0)
 
-4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
 
-![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
 
-5）修改参数为 caseIfTest
+5）修改参数为 locate
 
-![1735-160-111.png](https://doc.shiyanlou.com/courses/1735/1207281/5fdf9ec88a87828d8c43248e671991d2-0)
+![1735-170-105.png](https://doc.shiyanlou.com/courses/1735/1207281/2630bf862abfa38b30b9b4e9fc6e338d-0)
 
-6）执行代码，右键 ExplainAndCaseMainTest.java，选择 Run 'ExplainAndCase...main()'，运行代码
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
 
-![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
 
 7）查看结果
 
-![1735-160-112.png](https://doc.shiyanlou.com/courses/1735/1207281/07b4f8133371392ced4117ff24d405da-0)
+![1735-170-106.png](https://doc.shiyanlou.com/courses/1735/1207281/b0226874e2d3b031bca22db86f1407b1-0)
+
+## 字符串处理函数
+
+常用的字符串处理函数有如下几种
+
+| 函数                            | 说明                                                         | 例子                                  |
+| ------------------------------- | ------------------------------------------------------------ | ------------------------------------- |
+| LOWER(column\|str)              | 将字符串参数值转换为全小写字母后返回                         | SELECT lower('SQL Course') ;          |
+| UPPER(column\|str)              | 将字符串参数值转换为全大写字母后返回                         | SELECT upper('SQL Course') ;          |
+| CONCAT(col\|str1,col\|str2,...) | 将多个字符串参数首尾相连后返回                               | SELECT concat('My', 'S', 'QL');       |
+| LENGTH(str)                     | 返回字符串的存储长度                                         | SELECT length('text'),length('你好'); |
+| TRIM()                          | 去掉字符两端的空格                                           | SELECT trim('bar ') ;                 |
+| REPEAT(str,count)               | 将字符串str重复count次后返回                                 | SELECT repeat('MySQL', 3);            |
+| REVERSE(str)                    | 将字符串str反转后返回                                        | SELECT reverse('abc');                |
+| SUBSTR(str,pos[,len])           | 从源字符串str中的指定位置pos开始取一个字串并返回。len指定子串的长度，如果省略则一直取到字符串的末尾。该函数是函数SUBSTRING()的同义词。len为负值表示从源字符串的尾部开始取起 | SELECT substring('hello world',5);    |
+
+#### Lower（）
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 lower 方法中找到 TODO code 3
+
+![1735-170-107.png](https://doc.shiyanlou.com/courses/1735/1207281/45866deb2059cb46a7b4322562583da0-0)
+
+3）将下方代码粘贴到 TODO code 3 区域内，将 ’SQL Course‘ 转换为小写
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT LOWER('SQL Course')";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1002.png](https://doc.shiyanlou.com/courses/1735/1207281/3a7044014b1845ff8efa3510e5683173-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 lower
+
+![1735-170-108.png](https://doc.shiyanlou.com/courses/1735/1207281/2207bb6d38531eedbe4c2d108faa5bcb-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-109.png](https://doc.shiyanlou.com/courses/1735/1207281/4b659d3d5932ad29c5751b24aa16149b-0)
+
+## 聚合函数
+
+聚合数据通常不是存储在数据表中，而是通过对数据表中符合条件的数据进行聚合计算得出。
+
+例如，由于 orderDetails 表仅存储每个项目的数量和价格，因此您无法通过从 orderdetails 表直接查询获得每个订单的总金额。您必须为每个订单查询项目的数量和价格，并计算订单的总额。
+
+要在查询中执行此类计算，就要使用聚合函数了。
+
+根据定义，聚合函数对一组值执行计算并返回单个值。
+
+MySQL 提供了许多聚合函数，包括 AVG，COUNT，SUM，MIN，MAX 等。除 COUNT 函数外，其它聚合函数在执行计算时会忽略 NULL 值。
+
+常用的聚合函数有如下几种：
+
+| 函数    | 说明                 |
+| ------- | -------------------- |
+| AVG()   | 计算一组值的平均值   |
+| COUNT() | 返回表中的行数       |
+| SUM()   | 返回一组值的总和     |
+| MAX()   | 返回一组值中的最大值 |
+| MIN()   | 返回一组值中的最小值 |
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 avg 方法中找到 TODO code 4
+
+![1735-170-110.png](https://doc.shiyanlou.com/courses/1735/1207281/897c7517e3ac69b59bdeaba6c278b7f9-0)
+
+3）将下方代码粘贴到 TODO code 4 区域内，查询表 products 中 vend_price 的平均值
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT AVG(vend_price) FROM products;";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1003.png](https://doc.shiyanlou.com/courses/1735/1207281/7ed3a309589413eef4ae2bf289d23400-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 avg
+
+![1735-170-111.png](https://doc.shiyanlou.com/courses/1735/1207281/5709be5569806a642c7f66615acacd16-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-112.png](https://doc.shiyanlou.com/courses/1735/1207281/1ad0e92462d29572ca7a7b54c13b4179-0)
+
+
+
+## 常用日期时间函数
+
+常用的日期时间函数有如下几种：
+
+| 函数                              | 说明                                         |
+| --------------------------------- | -------------------------------------------- |
+| CURDATE()                         | 返回当前日期                                 |
+| CURTIME()                         | 返回当前时间                                 |
+| NOW()                             | 返回当前的日期和时间                         |
+| UNIX_TIMESTAMP(date)              | 返回日期date的UNIX时间戳                     |
+| FROM_UNIXTIME                     | 返回UNIX时间戳的日期值                       |
+| WEEK(date)                        | 返回日期date为一年中的第几周                 |
+| YEAR(date)                        | 返回日期date的年份                           |
+| HOUR(time)                        | 返回time的小时值                             |
+| MINUTE(time)                      | 返回time的分钟值                             |
+| MONTHNAME(date)                   | 返回date的月份名                             |
+| DATE_FORMAT(date,fmt)             | 返回按字符串fmt格式化日期date值              |
+| DATE_ADD(date,INTERVAL expr type) | 返回一个日期或时间值加上一个时间间隔的时间值 |
+| DATEDIFF(expr,expr2)              | 返回起始时间expr和结束时间expr2之间的天数    |
+
+#### 函数 CURDATE() , CURTIME() , NOW() , UNIX_TIMESTAMP()
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 dateFunction1 方法中找到 TODO code 5
+
+![1735-170-113.png](https://doc.shiyanlou.com/courses/1735/1207281/4251eba91a7a276775ec61e189cc8094-0)
+
+3）将下方代码粘贴到 TODO code 5 区域内，使用函数  CURDATE() , CURTIME() , NOW() , UNIX_TIMESTAMP()，返回当前日期、当前时间、当前的日期和时间、日期 ‘2020-4-1’ 的 UNIX 时间戳
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "select CURDATE(),CURTIME(),UNIX_TIMESTAMP('2020-4-1') AS unix_timestamp,NOW();";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1004.png](https://doc.shiyanlou.com/courses/1735/1207281/bd36a901e1e7b40f6a3305f742ee02ed-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 dateFunction1
+
+![1735-170-114.png](https://doc.shiyanlou.com/courses/1735/1207281/a9f2b09c923c8fa0d76840c308c3e72f-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-115.png](https://doc.shiyanlou.com/courses/1735/1207281/801692788555f9171c74bbefe1018c86-0)
+
+#### 函数 WEEK(date) , YEAR(date) , FROM_UNIXTIME()
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 dateFunction2  方法中找到 TODO code 6
+
+![1735-170-116.png](https://doc.shiyanlou.com/courses/1735/1207281/b1dd1d79d05c1771d4e5b0e5bc46ae83-0)
+
+3）将下方代码粘贴到 TODO code 6 区域内，返回日期 ‘2020-04-01‘  为一年中的第几周、返回日期 ‘2020-04-01’ 的年份、返回 ’1585670400’ 时间戳的日期值
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT WEEK('2020-04-01'),YEAR('2020-04-01'),FROM_UNIXTIME('1585670400');";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1005.png](https://doc.shiyanlou.com/courses/1735/1207281/c8c9a52633fa5453a4d9daed1c19be24-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 dateFunction2
+
+![1735-170-117.png](https://doc.shiyanlou.com/courses/1735/1207281/779b71367b344c2739e11c0a5f006823-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-118.png](https://doc.shiyanlou.com/courses/1735/1207281/9033bd22e627da41c5cc2ec4ce80e08c-0)	
+
+#### 函数 HOUR() , MINUTE() , MONTHNAME()
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 dateFunction3 方法中找到 TODO code 7
+
+![1735-170-119.png](https://doc.shiyanlou.com/courses/1735/1207281/166fbaaa61f0487602d5ee5c929ce8b5-0)
+
+3）将下方代码粘贴到 TODO code 7 区域内，返回 ‘17:21:33’ 的小时值、返回 ’‘17:21:33’‘ 的分钟值、返回 ’2020-04-01‘ 的月份名
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT HOUR('17:21:33'),MINUTE('17:21:33'),MONTHNAME('2020-04-01');";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1006.png](https://doc.shiyanlou.com/courses/1735/1207281/95721646fc1d26a98acefe94e1f9f8a9-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 dateFunction3
+
+![1735-170-120.png](https://doc.shiyanlou.com/courses/1735/1207281/ac85eee760d05576e9ac2308a20cdffc-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-121.png](https://doc.shiyanlou.com/courses/1735/1207281/bc0f4bcbb4bf96dc1c9ee56a930a78d3-0)
+
+#### 函数 DATE_FORMAT(date,fmt) , DATE_ADD(date,INTERVAL expr type) , DATEDIFF(expr,expr2)
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 dateFunction4 方法中找到 TODO code 8
+
+![1735-170-122.png](https://doc.shiyanlou.com/courses/1735/1207281/f896eb980df54db4405a7e78cc16f2e8-0)
+
+3）将下方代码粘贴到 TODO code 8 区域内，返回按字符串fmt格式化日期date值、返回一个日期或时间值加上一个时间间隔的时间值、返回起始时间和结束时间之间的天数
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT DATE_FORMAT(NOW(),'%d %b %y'),DATE_ADD(now(),INTERVAL 1 DAY),DATEDIFF('2020-01-14 14:32:59','2020-01-02');";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1007.png](https://doc.shiyanlou.com/courses/1735/1207281/f389eae18b21eef73b88eb182cd51428-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 dateFunction4
+
+![1735-170-123.png](https://doc.shiyanlou.com/courses/1735/1207281/bbf4d440f8e19db2c69aa84490142747-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-124.png](https://doc.shiyanlou.com/courses/1735/1207281/1153dc31211c073359dbb490ab79575c-0)
+
+## 系统信息函数
+
+常用的系统信息函数有如下几种：
+
+| 函数             | 说明                           |
+| ---------------- | ------------------------------ |
+| VERSION()        | 返回数据库的版本号             |
+| CONNECTION_ID    | 返回服务器的连接数             |
+| DATABASE()       | 返回当前数据库名               |
+| USER()           | 返回当前用户                   |
+| CHARSET(str)     | 返回字符串str的字符集          |
+| COLLATION(str)   | 返回字符串str的字符排列方式    |
+| LAST_INSERT_ID() | 返回最近生成的AUTO_INCREMENT值 |
+
+#### 函数 VERSION() , USER() , DATABASE() , CHARSET(str)
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 systemFunction1 方法中找到 TODO code 9
+
+![1735-170-125.png](https://doc.shiyanlou.com/courses/1735/1207281/43bfbaa182ab5439b196038f15a81da0-0)
+
+3）将下方代码粘贴到 TODO code 9 区域内，返回当前数据库名、版本号、用户名、字符串 ’abc‘ 的字符集
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT DATABASE(),VERSION(),USER(),CHARSET('abc')";
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1008.png](https://doc.shiyanlou.com/courses/1735/1207281/f55bf77f5e3b71dd3c03dbaed51584ba-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 systemFunction1
+
+![1735-170-126.png](https://doc.shiyanlou.com/courses/1735/1207281/f25cfe37b81e7198e416e284adb6fe59-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-127.png](https://doc.shiyanlou.com/courses/1735/1207281/5b7d90b3f5815910ce665759637cc7b3-0)
+
+#### 函数 LAST_INSERT_ID(),CONNECTION_ID,COLLATION(str)
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 systemFunction2 方法中找到 TODO code 10
+
+![1735-170-128.png](https://doc.shiyanlou.com/courses/1735/1207281/8542e2c3224b1b52efdd2c3a4208c903-0)
+
+3）将下方代码粘贴到 TODO code 10 区域内，返回最近生成的AUTO_INCREMENT值、返回服务器的连接数、返回字符串 ’abc‘ 的字符排列方式
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT LAST_INSERT_ID(),CONNECTION_ID(),COLLATION('abc')";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1009.png](https://doc.shiyanlou.com/courses/1735/1207281/edaf5eb66de1f206a841d0f09ce1ac05-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 systemFunction2
+
+![1735-170-129.png](https://doc.shiyanlou.com/courses/1735/1207281/554e6234fb561ac875c9540a41f182ef-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-130.png](https://doc.shiyanlou.com/courses/1735/1207281/29311e2b672a1a01a86aaf08f70373ce-0)
+
+## 加密函数
+
+加密，顾名思义就是对某些重要的东西进行一定必要的保护。MySQL 数据库对外也提供了三种加密的函数，其中两种是不可逆的，一种是可逆的。
+
+#### PASSWORD(str) 加密
+
+经常用于对用户注册的密码进行加密处理。 Password(str) 加密函数是不可逆的。
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 encryptionFunction1 方法中找到 TODO code 11
+
+![1735-170-131.png](https://doc.shiyanlou.com/courses/1735/1207281/bc633e9c98817af21f31ccd4d88ef4cc-0)
+
+3）将下方代码粘贴到 TODO code 11 区域内，使用 PASSWORD() 加密字符串 abcd
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT PASSWORD('abcd')";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1010.png](https://doc.shiyanlou.com/courses/1735/1207281/c2ee48bfee31ecf75d9596977791017b-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 encryptionFunction1
+
+![1735-170-132.png](https://doc.shiyanlou.com/courses/1735/1207281/65b84d974c5579d9f90d98c88dd06b74-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-133.png](https://doc.shiyanlou.com/courses/1735/1207281/e0ef59d0947f963874fa2184f64c00d5-0)
+
+#### MD5(str)加密
+
+经常用于对普通的数据进行加密。MD5 函数是将一个任意长度的字符串变换成一个一定长的十六进制数字串。MD5(str) 加密函数是不可逆的。
+
+经常用于对用户注册的密码进行加密处理。Password(str) 加密函数是不可逆的。
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 encryptionFunction2 方法中找到 TODO code 12
+
+![1735-170-134.png](https://doc.shiyanlou.com/courses/1735/1207281/b82cd1b4f231c6cc99925b061d99bbbe-0)
+
+3）将下方代码粘贴到 TODO code 12 区域内，使用 MD5() 加密字符串 abcd
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+String sql = "SELECT MD5('abcd')";
+// Execute sql
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1011.png](https://doc.shiyanlou.com/courses/1735/1207281/443d91c903198006764e23115279f716-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 encryptionFunction2
+
+![1735-170-135.png](https://doc.shiyanlou.com/courses/1735/1207281/558c90a230d521217fd07c4f62e007e9-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-136.png](https://doc.shiyanlou.com/courses/1735/1207281/3b33e4bab4e857887c8909d59010e534-0)
+
+#### ENCODE("被加密字符串","加密字符串")函数加密
+
+加密的结果是一个二进制数，必须使用 blob 类型的字段来保护它。
+
+1）打开 FunctionTest.java
+
+![1735-170-100.png](https://doc.shiyanlou.com/courses/1735/1207281/6a7adaa4946b801213c5977119c0e899-0)
+
+2）在 encryptionFunction3 方法中找到 TODO code 13
+
+![1735-170-137.png](https://doc.shiyanlou.com/courses/1735/1207281/b97e54ef36156a3072ba5ddba74d6cb7-0)
+
+3）将下方代码粘贴到 TODO code 13 区域内，使用 ENCODE() 加密
+
+```java
+// Create a Statement object to send SQL statements to the database
+stmt = conn.createStatement();
+// Write sql
+stmt.executeUpdate("INSERT INTO lobTab VALUES(4,'jerry',encode('this is a file','key'));");
+// Execute sql
+String sql = "select * from lobTab where id = 4";
+rs = stmt.executeQuery(sql);
+while (rs.next()) {
+    for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
+        System.out.print(rs.getString(i)+"\t");
+    }
+    System.out.println();
+}
+```
+
+代码粘贴结果如图所示：
+
+![1735-170-1012.png](https://doc.shiyanlou.com/courses/1735/1207281/cf2c79cf88eacdf370ccad31d19957d3-0)
+
+4）修改参数，右键 FuncMainTest.java，选择 Edit 'FuncMainTest.main()'
+
+![1735-170-2.png](https://doc.shiyanlou.com/courses/1735/1207281/5cd407fbd3dffd3fabfe207c125c7885-0)
+
+5）修改参数为 encryptionFunction3
+
+![1735-170-138.png](https://doc.shiyanlou.com/courses/1735/1207281/00aa0538b53efab4407a6dacbbd81d45-0)
+
+6）执行代码，右键 FuncMainTest.java，选择 Run 'FuncMainTest.main()'，运行代码
+
+![1735-170-4.png](https://doc.shiyanlou.com/courses/1735/1207281/ea1f5fd331e8ab8cefc03184452e8723-0)
+
+7）查看结果
+
+![1735-170-139.png](https://doc.shiyanlou.com/courses/1735/1207281/fb41fc41c9fbbef4d73d9244fd740173-0)
 
 ## 总结
 
-通过本课程学会了如何查看和理解执行计划，以及 MySQL 中 两种类型 Case 表达式的使用。通过查看执行计划可以查看 SQL 语句的执行的详细情况，使用 CASE 表达式可以在 SELECT、WHERE 等语句中根据条件动态构造内容。
-
+MySQL 数据库中提供了很丰富的函数。MySQL 函数包括数学函数、字符串函数、日期和时间函数、条件判断函数、系统信息函数、加密函数、格式化函数等。通过这些函数，可以简化用户的操作。例如，字符串连接函数可以很方便的将多个字符串连接在一起。通过本课程的学习，我们熟悉了字符串检索函数、字符串处理函数、聚合函数、日期时间函数、系统信息函数、加密函数的使用。
