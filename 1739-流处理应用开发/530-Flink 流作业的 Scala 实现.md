@@ -83,11 +83,11 @@ flatmap 算子是 Transformation 的其中一种。该算子接收一个 DataStr
 
 #### flatmap算子的使用
 
-flatmap 算子中需传入一个函数或 FlatmapFunction 对象，简单的操作一般传入函数。
+flatmap 算子中需传入一个函数或 FlatmapFunction 对象，简单的操作一般传入函数。在该函数中完成数据的压扁操作，即将一个包含多个单词的数据行转换为包含一个单词的多个数据行。
 
 1) 在当前类中找到 flatmap 方法，找到 TODO code 1。
 
-![1730-530-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/66074b54e9c56eee316eba1454b72304-0)
+![1730-530-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/2b0e049dc0f9da65b3d1b8429d435df9-0)
 
 2) 将下列代码粘贴到 TODO code 1区间内。
 
@@ -95,6 +95,9 @@ flatmap 算子中需传入一个函数或 FlatmapFunction 对象，简单的操�
 // "_" means each data row
 flatmapData = dataStream.flatMap(_.split(" "))
 ```
+3) 粘贴代码后完整代码块如图所示。
+
+![1730-530-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/712f146211acda9ffb1814dd136d8468-0)
 
 #### 查看结果
 
@@ -118,7 +121,7 @@ filter 算子是 Transformation 的其中一种。该算子在每个数据行上
 
 1) 在当前类中找到 filter 方法，找到 TODO code 2。
 
-![1730-530-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/3f66e4fb6aed19821cbfefdc098248f2-0)
+![1730-530-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/5653a5a88c431c49adfbb1c5f94819c7-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
@@ -126,6 +129,10 @@ filter 算子是 Transformation 的其中一种。该算子在每个数据行上
 // Remove the word "java"
 filterData = dataStream.filter(!_.equals("java"))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1730-530-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/812d99fe5526544aad19ea994b61b54c-0)
 
 #### 查看结果
 
@@ -149,7 +156,7 @@ map 算子也是 Transformation 的其中一种。map算子同样在每个数据
 
 1) 在当前类中找到 map 方法，找到 TODO code 3。
 
-![1730-530-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/b944a8e6b1211f6280b35e6dcc666e6f-0)
+![1730-530-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/cd53556af66c9c3ff57fc00f2bf38734-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
@@ -157,6 +164,10 @@ map 算子也是 Transformation 的其中一种。map算子同样在每个数据
 // Convert data into tuples. 1 means there is a word in the current data row.
 mapData = dataStream.map((_, 1))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1730-530-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/897b5ce7a0c7efe487edabafe9f2cddd-0)
 
 #### 查看结果
 
@@ -188,7 +199,7 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 
 1) 在当前类中找到 sum 方法，找到 TODO code 4。
 
-![1730-530-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/bb8085cb74ec1085393190530ccf4c25-0)
+![1730-530-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/3e7e8965a536975a249cea5fb89eb996-0)
 
 2) 将下列代码粘贴到 TODO code 4区间内。
 
@@ -196,6 +207,10 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 // Users can group by the first field (words) in the tuple, and sum the second field (number of words).
 sumData = dataStream.keyBy(0).sum(1)
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1730-530-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/8b6b9fcb062af00faa5190abe7a0ca19-0)
 
 #### 查看结果
 
@@ -219,7 +234,7 @@ reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。�
 
 1) 在当前类中找到 reduce 方法，找到 TODO code 5。
 
-![1730-530-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/bfe6c441cda36101d2d4c501260544d6-0)
+![1730-530-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/423e277a6a5be4ce929923d54058cef7-0)
 
 2) 将下列代码粘贴到 TODO code 5区间内。
 
@@ -227,7 +242,6 @@ reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。�
 // x and y respectively represent two pieces of data. The output is the words in x, and the number is the sum of the words in x and y.
 sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 ```
-
 >Note:
 >
 >sum，reduce 等算子都属于聚合类算子，其必须使用在 KeyedStream 之上。
