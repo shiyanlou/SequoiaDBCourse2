@@ -84,7 +84,7 @@ flatmap 算子中需要传递一个对象，该对象有两个泛型，分别为
 
 1) 在当前类中找到 flatmap 方法，找到 TODO code 1。
 
-![1739-520-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/65b6cb33f8dc4be13ef4e5494f2d2069-0)
+![1739-520-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/1ee2009c64a07f8c679ba4771fa612ae-0)
 
 2) 将下列代码粘贴到 TODO code 1区间内。
 
@@ -107,6 +107,9 @@ flatMapData = dataStream.flatMap(new FlatMapFunction<String, String>() {
   }
 });
 ```
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-520-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/41a88a4b7ea08ea60d1652ea1751e219-0)
 
 > Note
 >
@@ -134,7 +137,7 @@ filter 算子是 Transformation 的其中一种。该算子在每个数据行上
 
 1) 在当前类中找到 filter 方法，找到 TODO code 2。
 
-![1739-520-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/8b75e2619afd10d3012c0be5ca3df0a1-0)
+![1739-520-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/5bfe6a67160803871fd8206443674b55-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
@@ -153,6 +156,10 @@ filterData = dataStream.filter(new FilterFunction<String>() {
     }
 });
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-520-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/6def6eee5ae600496dd88495d0eb782f-0)
 
 #### 查看数据的结果
 
@@ -184,7 +191,7 @@ map算子也是Transformation的其中一种。map算子同样在每个数据行
 
 1) 在当前类中找到map方法，找到 TODO code 3。
 
-![1739-520-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/36524684f1caa4c8b94f15621454751f-0)
+![1739-520-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/0ec1d13cb55a585d1c4da2cf67f79325-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
@@ -202,6 +209,10 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
     }
 });
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-520-00028.png](https://doc.shiyanlou.com/courses/1739/1207281/75b70eebf0d725855d5d21ba124339c2-0)
 
 #### 查看数据的结果
 
@@ -231,14 +242,18 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 
 1) 在当前类中找到 sum 方法，找到 TODO code 4。
 
-![1739-520-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/cf2eb7863f07d910a08d0f0b2ff901aa-0)
+![1739-520-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/3a37632b8aa29def11e657151da7fa08-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```java
 // When the generic type of DataStream is Tuple, users can directly sum keyBy through the subscript index.
 sumData = tupleData.keyBy(0).sum(1);
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-520-00029.png](https://doc.shiyanlou.com/courses/1739/1207281/7efae56011d2e7a3fd9cd54a0e616481-0)
 
 #### 查看数据的结果
 
@@ -283,13 +298,13 @@ sumData = keyedData.reduce((t1, t2) -> Tuple2.of(t1.f0, t1.f1 + t2.f1));
 
 #### 项目打包
 
-1) 点击 maven 侧边栏中的 package 打包。
+1) 点击左侧 maven 侧边栏中的 package 打包。
 
-![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/818235d78cdcfc4ffffe654cf621f74b-0)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/e3d7faf2c947fd333398331f97e7e88b-0)
 
 2) 打包成功后 jar 包会在当前项目目录的 target 目录下。
 
-![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/16c046a2a4611d6170dd2a7595a781de-0)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/62292845940832f75ebc9746099f1035-0)
 
 #### 提交到集群环境
 
@@ -332,6 +347,7 @@ com.sequoiadb.lesson.flink.lesson2_word_count.WordCountMain
 ParameterTool tool = ParameterTool.fromArgs(args);
 // Get an integer value by name. 10 is the default value, and the default value is enabled if the parameter is not found
 int lineNum = tool.getInt("lineNum", 10);
+// Input this value through the constructor of RandomSource
 source = new RandomSource(lineNum);
 ```
 

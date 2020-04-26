@@ -111,7 +111,7 @@ Flink 支持状态管理，在任务出现异常时可以将任务回退到之�
 
 ![1739-510-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/0929b3a2eaa926acf17ae32f043da872-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
 // Get the execution environment
@@ -147,7 +147,7 @@ Source算子用于产生一个DataStream。
 
 ![1739-510-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/7b713a9dbfebbc69b096f6f8d6997c18-0)
 
-2) 将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2 区间内。
 
 ```java
 // Generate some random data rows through RandomSource
@@ -166,7 +166,7 @@ Transformation可以对数据做转换操作，代码中的算子使用规则详
 
 ![1739-510-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/a255639bcab9df82398483643aecdda5-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内。
 
 ```java
 // Conversion the operator
@@ -201,7 +201,7 @@ sumData = mapData.keyBy(0).sum(1);
 
 ![1739-510-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/60d7ee96c9d74c42ef4398c46a9c7f4a-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```java
 sumData.print();
@@ -217,14 +217,18 @@ sumData.print();
 
 1) 在当前类中找到 exec 方法，找到 TODO code 5。
 
-![1739-510-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/b17f448e40546a199b9492c71d5cf895-0)
+![1739-510-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/3ae280970ea40ce4c03c7d86dce68106-0)
 
-2) 将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5 区间内。
 
 ```java
 // The parameter is the name of the current work
 env.execute("flink intro demo");
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-510-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/c87c3e27c68c6fa0cc0712f776eadd0d-0)
 
 #### 运行程序
 
@@ -242,11 +246,13 @@ env.execute("flink intro demo");
 
 SequoiaDB是国内首个自主知识产权、自主研发的金融级分布式NewSQL数据库。SequoiaDB支持标准SQL、事务操作、高并发、分布式、可扩展、与双引擎存储等特性，并已经作为商业化的数据库产品开源,SequoiaDB目前在银行、证券、政府等领域都有广泛的应用，SequoiaDB以其分布式、海量存储、高性能、可扩展等特性为个行业的客户提供了很好解决方案。
 
-Flink 流数据处理的性能以及吞吐量在实际运用中，可以达到很高的处理性能和吞吐量，尤其是在处理基于 EventTime 的数据加工以及统计的场景下。其高性能和高容错机制在流数据处理的过程中能够既保证数据处理性能又可以保证数据处理的质量。SequoiaDB 数据库以其分布式、高性能、高可用的海量数据存储、查询、管理等特点能够完美胜任流处理场景的业务需求。
+Flink 流数据处理的性能以及吞吐量在实际运用中，可以达到很高的处理性能和吞吐量，尤其是在处理基于 EventTime 的数据加工以及统计的场景下。其高性能和高容错机制在流数据处理的过程中能够既保证数据处理性能又可以保证数据处理的质量。
 
 ## 总结
 
 本小节作为 Flink 的入门了解章节，讲述了 Flink 的使用场景以及 Flink 的执行流程。
+
+SequoiaDB 数据库以其分布式、高性能、高可用的海量数据存储、查询、管理等特点能够完美胜任流处理场景的业务需求。
 
 **知识点**
 
