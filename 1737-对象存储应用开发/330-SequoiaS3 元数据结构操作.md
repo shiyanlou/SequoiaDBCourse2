@@ -125,7 +125,7 @@ s3.deleteBucket(bucketName);
 
 4）在屏幕下方查看结果输出，可以看到查询出了刚刚添加的对象元数据。
 
-![image-20200426120035273](E:\巨杉\s3\新建文件夹\image3\26-016.png)
+![image-20200426120035273](https://doc.shiyanlou.com/courses/1737/1207281/718d5b664d5b4a1d4b4343366b1fe1d6-0)
 
 ## 总结
 
