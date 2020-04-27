@@ -6,13 +6,13 @@ version: 1.0
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉并搭建 MySQL 开发环境
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉并搭建 MySQL 开发环境
 
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 SequoiaSQL-MySQL 数据库实例节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 MySQL 数据库实例节点、1个引擎协调节点，1个编目节点与3个数据节点。
 
 ![图片描述](https://doc.shiyanlou.com/courses/1469/1207281/8d88e6faed223a26fcdc66fa2ef8d3c5)
 
@@ -22,27 +22,27 @@ version: 1.0
 
 #### 实验环境
 
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎以及 SequoiaSQL-MySQL 实例均为 3.4 版本。
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎以及 MySQL 实例均为 3.4 版本。
 
 ## 打开项目
 
-#### 打开idea
+#### 打开 idea
 
 打开 idea 代码开发工具
 
 ![1735-110-1.png](https://doc.shiyanlou.com/courses/1735/1207281/6f87a8c93937c3c51f6d4839559de710-0)
 
-#### 打开SSQL-MySQL项目
+#### 打开 scdd-mysql 项目
 
-打开 SSQL-MySQL 项目，在该课程中完成后续试验
+打开 scdd-mysql 项目，在该课程中完成后续试验
 
-![1735-110-13.png](https://doc.shiyanlou.com/courses/1735/1207281/40a9e7b6fbd5c3853dc09f69d0a06c86-0)
+![1587923287299](https://doc.shiyanlou.com/courses/1735/1207281/2e66fe621bc8196ead5a7141c8125db4-0)
 
 #### 打开 lesson1_environmentBuilding 包
 
 打开 lesson1_environmentBuilding packge，在该 packge 中完成后续课程
 
-![1735-110-2.png](https://doc.shiyanlou.com/courses/1735/1207281/f5ec2ca3949feed5c2a1c22262fa7619-0)
+![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
 
 ## 配置JDBC连接属性
 
@@ -59,42 +59,46 @@ version: 1.0
 3）将下方代码粘贴到 TODO code 1 区域内，使用 JDBC 配置连接信息，查询 employee 表
 
 ```java
-// MySQL 用户名
+// MySQL username
 String user = "root";
-// MySQL 密码
+// MySQL password
 String password = "root";
-// MySQL 连接地址
+// MySQL connection address
 String url = "jdbc:mysql://sdbserver1:3306/mysqlTest?useSSL=false";
-//通过配置获取连接对象 conn
+// Get connection object conn through configuration
 Connection conn = DriverManager.getConnection(url, user, password);
-//创建一个 Statement 对象来将 SQL 语句发送到数据库
+// Create a Statement object to send SQL statements to the database
 Statement stmt = conn.createStatement();
-//获取结果集rs
+// Get the result set rs
 ResultSet rs = stmt.executeQuery("SELECT * FROM employee");
 boolean isHeaderPrint = false;
-//遍历结果集
+// Traverse the result set
 while (rs.next()) {
-    //获得表结构
+    // Get the table structure
     ResultSetMetaData md = rs.getMetaData();
-    //取得列数
+    // Get the number of rows
     int col_num = md.getColumnCount();
     if (!isHeaderPrint){
-        //遍历数据库字段名
+        // Traverse the database field names
         for (int i = 1; i  <= col_num; i++) {
             System.out.print(md.getColumnName(i) + "\t");
         }
         isHeaderPrint = true;
     }
     System.out.println();
-    //遍历每一行查到得信息
+    // Traverse each line to find the information
     for (int i = 1; i <= col_num; i++) {
         System.out.print(rs.getString(i) + "\t");
     }
 }
-//关闭 stmt 和 conn
+// Close stmt and conn
 stmt.close();
 conn.close();
 ```
+
+代码粘贴结果如图所示：
+
+![1735-110-1000.png](https://doc.shiyanlou.com/courses/1735/1207281/8948471d7b73447a8ea2f8cd55dc3bee-0)
 
 > **说明**
 >
@@ -102,7 +106,7 @@ conn.close();
 >
 > * 点击代码框右上角的 copy 图标
 >
-> * 选择实验界面左边的 “剪切板”
+> * 选择实验界面右边的 “剪切板”
 >
 > ![paste1](https://doc.shiyanlou.com/courses/1738/1207281/7745e7378b70a60ad6073262f05762ec-0)
 >
@@ -161,19 +165,23 @@ private static ComboPooledDataSource dataSource=new ComboPooledDataSource();
 
 static {
     try {
-        //设置注册驱动
+        // Set up the registered driver
         dataSource.setDriverClass("com.mysql.jdbc.Driver");
         //url
         dataSource.setJdbcUrl("jdbc:mysql://sdbserver1:3306/mysqlTest");
-        //数据库用户名
+        // Database username
         dataSource.setUser("root");
-        //数据库密码
+        // Database password
         dataSource.setPassword("root");
     } catch (Exception e) {
         e.printStackTrace();
     }
 }
 ```
+
+代码粘贴结果如图所示：
+
+![1735-110-1001.png](https://doc.shiyanlou.com/courses/1735/1207281/a9dd99f66876223bebecee5676e184ca-0)
 
 4）在 getConnection 方法中找到 TODO code 2
 
@@ -183,12 +191,16 @@ static {
 
 ```java
 try {
-    //获取连接
+    // Get connection
     conn = dataSource.getConnection();
 } catch (SQLException e) {
-    throw new RuntimeException("数据库连接失败"+e);
+    throw new RuntimeException("database conn error"+e);
 }
 ```
+
+代码粘贴结果如图所示：
+
+![1735-110-1002.png](https://doc.shiyanlou.com/courses/1735/1207281/f246b674640e20536714c3ee9071d28a-0)
 
 6）在 close 方法中找到 TODO code 3
 
@@ -199,28 +211,30 @@ try {
 ```java
 if (rs!=null){
     try {
-        rs.close();//归还 rs
+        rs.close();// Return rs
     } catch (SQLException e) {
         e.printStackTrace();
     }
 }
 if (stmt!=null){
     try {
-        stmt.close();//归还 stmt
+        stmt.close();//Return stmt
     } catch (SQLException e) {
         e.printStackTrace();
     }
 }
 if (conn!=null){
     try {
-        conn.close();//归还 conn
+        conn.close();//Return conn
     } catch (SQLException e) {
         e.printStackTrace();
     }
 }
 ```
 
-![1735-110-109.png](https://doc.shiyanlou.com/courses/1735/1207281/21395666a784c9d99ab1f71275cf7962-0)
+代码粘贴结果如图所示：
+
+![1735-110-1003.png](https://doc.shiyanlou.com/courses/1735/1207281/c32d912a1db8c4bf64ca48e570067007-0)
 
 ## 验证连接池
 
@@ -232,7 +246,7 @@ if (conn!=null){
 
 ![1735-110-111.png](https://doc.shiyanlou.com/courses/1735/1207281/7bbf5a2d1f1625a1e276ad9600bd584d-0)
 
-3）将下方代码粘贴到 TODO code 1 区域内，验证连接池
+3）将下方代码粘贴到 TODO code 1 区域内，验证连接池，查询 employee 表信息
 
 ```java
 Connection conn = null;
@@ -303,15 +317,15 @@ MySQL 有很多实用的内置函数，这里简单举例 NOW 函数讲解，更
 3）将下方代码粘贴到 TODO code 1 区域内，使用 now 函数获取当前日期时间
 
 ```java
-//编写获取当前日期时间的SQL语句
+// Write a SQL statement to get the current date and time
 String sql = "SELECT NOW();";
-//创建一个 Statement 对象来将 SQL 语句发送到数据库
+// Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
-//获取结果集
+// Get the result set
 rs = stmt.executeQuery(sql);
-//遍历结果集
+// Traverse the result set
 while (rs.next()) {
-    //遍历获取当前日期时间
+    // Traverse to get the current date and time
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
     }
@@ -319,7 +333,9 @@ while (rs.next()) {
 }
 ```
 
-![1735-110-116.png](https://doc.shiyanlou.com/courses/1735/1207281/6b5cd3969b848df469845f4c4fa950f3-0)
+代码粘贴结果如图所示：
+
+![1735-110-1004.png](https://doc.shiyanlou.com/courses/1735/1207281/715005f94c57110715b64787c17ec474-0)
 
 4）修改参数，右键 EnvBuildingMainTest.java，选择Edit 'EnvBuildingMain....main()'
 

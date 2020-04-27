@@ -1,18 +1,18 @@
 ---
+
 show: step
 version: 1.0 
-
 ---
 
 ## 课程介绍
 
-本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 SequoiaSQL-MySQL 实例的环境中，熟悉 MySQL 的执行计划和 CASE 表达式。
+本课程将带领您在已经部署 SequoiaDB 巨杉数据库引擎及创建了 MySQL 实例的环境中，熟悉 MySQL 的执行计划和 CASE 表达式。
 
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 SequoiaSQL-MySQL 数据库实例节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 MySQL 数据库实例节点、1个引擎协调节点，1个编目节点与3个数据节点。
 
 ![图片描述](https://doc.shiyanlou.com/courses/1469/1207281/8d88e6faed223a26fcdc66fa2ef8d3c5)
 
@@ -22,27 +22,27 @@ version: 1.0
 
 #### 实验环境
 
-课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎以及 SequoiaSQL-MySQL 实例均为 3.4 版本。
+课程使用的实验环境为 Ubuntu Linux 16.04 64 位版本。SequoiaDB 数据库引擎以及 MySQL 实例均为 3.4 版本。
 
 ## 打开项目
 
-#### 打开idea
+#### 打开 idea
 
 打开 idea 代码开发工具
 
 ![1735-110-1.png](https://doc.shiyanlou.com/courses/1735/1207281/6f87a8c93937c3c51f6d4839559de710-0)
 
-#### 打开SSQL-MySQL项目
+#### 打开 scdd-mysql 项目
 
-打开 SSQL-MySQL 项目，在该课程中完成后续试验
+打开 scdd-mysql 项目，在该课程中完成后续试验
 
-![1735-110-13.png](https://doc.shiyanlou.com/courses/1735/1207281/40a9e7b6fbd5c3853dc09f69d0a06c86-0)
+![1587923287299](https://doc.shiyanlou.com/courses/1735/1207281/2e66fe621bc8196ead5a7141c8125db4-0)
 
 #### 打开lesson6_explainAndCase包
 
 打开 lesson6_explainAndCase packge，在该 packge 中完成后续课程
 
-![1735-160-114.png](https://doc.shiyanlou.com/courses/1735/1207281/dacc54584f6f36fadbc8063fa1304d1b-0)
+![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
 
 ## 查看和理解执行计划
 
@@ -84,16 +84,16 @@ system > const > eq_ref > ref > range > index > all
 
 ![1735-160-101.png](https://doc.shiyanlou.com/courses/1735/1207281/6f0df8090b504a1a930ad26e9fa73ac5-0)
 
-3）将下方代码粘贴到 TODO code 1 区域内
+3）将下方代码粘贴到 TODO code 1 区域内，查看 select * from employee 的执行计划
 
 ```java
-//创建一个 Statement 对象来将 SQL 语句发送到数据库
+// Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
-//编写 sql
+// Write sql
 String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename ='Parto'";
-//执行 sql
+// Execute sql
 rs = stmt.executeQuery(sql3);
-//遍历查询结果
+// Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -101,6 +101,10 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
+代码粘贴结果如图所示：
+
+![1735-160-1000.png](https://doc.shiyanlou.com/courses/1735/1207281/a91a6463ac9d24c4d77c694ab240c0b2-0)
 
 4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit ' ExplainAndCase...main()'
 
@@ -134,20 +138,20 @@ while (rs.next()) {
 
 ![1735-160-104.png](https://doc.shiyanlou.com/courses/1735/1207281/4b66506e44bf4cff8401aff101dc0f9e-0)
 
-3）将下方代码粘贴到 TODO code 2 区域内
+3）将下方代码粘贴到 TODO code 2 区域内，为表 employee 的列 ename 创建索引，再次查看执行计划，发现执行计划改变
 
 ```java
-//创建一个 Statement 对象来将 SQL 语句发送到数据库
+// Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
-//编写 sql 修改索引
+// Write sql to modify index
 String sql = "ALTER TABLE employee ADD INDEX(ename)";
-//执行 sql
+// Execute sql
 stmt.executeUpdate(sql);
-//编写 sql 查看执行计划
+// Write SQL to view the execution plan
 String sql3 = "EXPLAIN SELECT * FROM employee WHERE ename = 'Parto'";
-//执行 sql
+// Execute sql
 rs = stmt.executeQuery(sql3);
-//遍历查询结果
+// Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -156,7 +160,11 @@ while (rs.next()) {
 }
 ```
 
-3）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
+代码粘贴结果如图所示：
+
+![1735-160-1001.png](https://doc.shiyanlou.com/courses/1735/1207281/be9a63a4ba92d4810527c6693db38b16-0)
+
+4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
 ![1735-160-115.png](https://doc.shiyanlou.com/courses/1735/1207281/c3769b1054271871856a48d07950d855-0)
 
@@ -168,7 +176,7 @@ while (rs.next()) {
 
 ![1735-160-113.png](https://doc.shiyanlou.com/courses/1735/1207281/91e311e849e293d14879285d2ace1852-0)
 
-6）查看结果
+7）查看结果
 
 | id   | select_type | table    | partitions | type | possible_keys | key   | key_len | ref   | rows | filtered | Extra |
 | ---- | ----------- | -------- | ---------- | ---- | ------------- | ----- | ------- | ----- | ---- | -------- | ----- |
@@ -204,12 +212,12 @@ MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CAS
 
 ![1735-160-107.png](https://doc.shiyanlou.com/courses/1735/1207281/6f819f33f5e945aacfd331379ae06f5c-0)
 
-3）将下方代码粘贴到 TODO code 1 区域内
+3）将下方代码粘贴到 TODO code 1 区域内，CASE 表达式，当 ename 为 ‘Parto’ 时，显示为 ‘P’，不符合 WHEN 条件的 ，显示为 ‘XX’
 
 ```java
-//创建一个 Statement 对象来将 SQL 语句发送到数据库
+// Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
-//编写 sql
+// Write sql
 String sql3 = "SELECT ename," +
     "    CASE ename" +
     "        WHEN 'Parto' THEN 'P'" +
@@ -219,9 +227,9 @@ String sql3 = "SELECT ename," +
     "    END AS mark\n" +
     "FROM" +
     "    employee";
-//执行 sql
+// Execute sql
 rs = stmt.executeQuery(sql3);
-//遍历查询结果
+// Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -229,6 +237,10 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
+代码粘贴结果如图所示：
+
+![1735-160-1002.png](https://doc.shiyanlou.com/courses/1735/1207281/27c3cb2fd3c4d1c90de88adc5c4200ea-0)
 
 4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
@@ -270,12 +282,12 @@ while (rs.next()) {
 
 ![1735-160-110.png](https://doc.shiyanlou.com/courses/1735/1207281/ec5d580130e237290e5429fc15ff6cd1-0)
 
-3）将下方代码粘贴到 TODO code 2 区域内
+3）将下方代码粘贴到 TODO code 2 区域内，查询表 employee，当 empno 字段为 null 时，按 age 排序，其余情况按 empno 排序
 
 ```java
-//创建一个 Statement 对象来将 SQL 语句发送到数据库
+// Create a Statement object to send SQL statements to the database
 stmt = conn.createStatement();
-//编写 sql
+// Write sql
 String sql = "SELECT " +
     "    *" +
     "FROM" +
@@ -284,9 +296,9 @@ String sql = "SELECT " +
     "    WHEN empno IS NULL THEN age" +
     "    ELSE empno\n" +
     "END);";
-//执行 sql
+// Execute sql
 rs = stmt.executeQuery(sql);
-//遍历查询结果
+// Traverse the query results
 while (rs.next()) {
     for (int i = 1; i <= rs.getMetaData().getColumnCount() ; i++) {
         System.out.print(rs.getString(i)+"\t");
@@ -294,6 +306,10 @@ while (rs.next()) {
     System.out.println();
 }
 ```
+
+代码粘贴结果如图所示：
+
+![1735-160-1003.png](https://doc.shiyanlou.com/courses/1735/1207281/e1706664c74c1d24c21260fcbe3e1e67-0)
 
 4）修改参数，右键 ExplainAndCaseMainTest.java，选择 Edit 'ExplainAndCase...main()'
 
