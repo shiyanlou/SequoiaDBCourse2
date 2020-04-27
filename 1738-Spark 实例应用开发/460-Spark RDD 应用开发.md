@@ -226,7 +226,7 @@ wordsCountBSON.saveToSequoiadb(
 
 7）查看运行结果。
 
-![1738-460-结果2](C:\Users\14620\Desktop\Spark开发课程\图片\lesson6\1738-460-结果2.jpg)
+![1738-460-结果2](https://doc.shiyanlou.com/courses/1738/1207281/2a809eb30eef1f603aa44e4bbb167bce-0)
 
 ## 读取 SequoiaDB 集合为 RDD
 
