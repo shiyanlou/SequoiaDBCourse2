@@ -283,7 +283,13 @@ reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。�
 
 ```java
 // The following code is only for demonstration. It has the same effect as the sum operator, and implementing one is fine.
-sumData = keyedData.reduce((t1, t2) -> Tuple2.of(t1.f0, t1.f1 + t2.f1));
+sumData = keyedData.reduce(new ReduceFunction<Tuple2<String, Integer>>() {
+    @Override
+    public Tuple2<String, Integer> reduce(Tuple2<String, Integer> t1, 
+                                          Tuple2<String, Integer> t2) throws Exception {
+        return Tuple2.of(t1.f0, t1.f1 + t2.f1);
+    }
+});
 ```
 
 >Note:
