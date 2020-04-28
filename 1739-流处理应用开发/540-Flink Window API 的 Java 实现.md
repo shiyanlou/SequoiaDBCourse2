@@ -498,7 +498,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 ## Sliding Count Window 的实现
 
-本案例使用 Sliding Count Window 统计一个交易流水中每中交易类型中100次交易的总交易额。
+本案例使用 Sliding Count Window 统计一个交易流水中每种交易类型中 100 次交易的总交易额。
 
 #### 打开类
 

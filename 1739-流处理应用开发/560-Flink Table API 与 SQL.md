@@ -106,13 +106,17 @@ Table 的使用需要依赖于table的执行环境，table的执行环境可以�
 
 1) 在当前类中找到 createTableFromDataStream 方法，找到 TODO code 1。
 
-![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/cfc89fac14d9e8f6f14c14756ac88021-0)
+![1739-560-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/e0e72b07c11d03efef9ff819e41314a8-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
 table = tbEnv.fromDataStream(wordData, "name, num");
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00029.png](https://doc.shiyanlou.com/courses/1739/1207281/111dce5137e9b0447ff83eb3cbe71c05-0)
 
 #### SQL 算子的使用
 
@@ -120,7 +124,7 @@ SQL 算子的用途与标准sql中关键字一致。
 
 1) 在当前类中找到 select 方法，找到 TODO code 2。
 
-![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/b4677408557dd40313997bf67b6ad933-0)
+![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/62282507776359442efbce087eed7733-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
@@ -140,6 +144,10 @@ resultTable = initTable.as("word, num")         // Rename field
     .select("word, sum(num)");                  // Sum
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00030.png](https://doc.shiyanlou.com/courses/1739/1207281/c3bf83491aedce6bc94ee994ec2a6c38-0)
+
 #### Table 转换为 DataStream
 
 当对table查询之后，向输出到控制台则需要将Table转换为DataStream
@@ -150,7 +158,7 @@ resultTable = initTable.as("word, num")         // Rename field
 
 1) 在当前类中找到 converTable2DataStream 方法，找到 TODO code 3。
 
-![1739-560-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/9f323afc171e9e56a0cd255b658ac41a-0)
+![1739-560-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/f6022a0c8047a45d13a9429b993619da-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
@@ -158,6 +166,10 @@ resultTable = initTable.as("word, num")         // Rename field
 dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
     new TypeHint<Tuple2<String, Integer>>() {}));
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00031.png](https://doc.shiyanlou.com/courses/1739/1207281/ba3a651ce1635e42fc73fc97dff907bf-0)
 
 #### 执行当前作业
 
@@ -183,9 +195,9 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 1) 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
-![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/cfd849d76dff56c152a418a8325a671a-0)
+![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/6b61d99b1ae2485c981ade8ad0172b8f-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
 tbEnv.connect(
@@ -211,13 +223,17 @@ tbEnv.connect(
 .registerTableSource("TRANSACTION_FLOW");              // Register as a data source table
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00032.png](https://doc.shiyanlou.com/courses/1739/1207281/eb980fea29f7393e35b89df4a4124a79-0)
+
 #### 通过描述器创建一个 Sink 表
 
 1) 在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
-![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/2e8504672439a12fecaf8a46c91439d2-0)
+![1739-560-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/002aa5017e8d8753c92b0489e9afad36-0)
 
-2) 将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2 区间内。
 
 ```java
 tbEnv.connect(
@@ -240,13 +256,17 @@ tbEnv.connect(
     .registerTableSink("LESSON_6_CONNECT");             // Register as a data source table
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00033.png](https://doc.shiyanlou.com/courses/1739/1207281/049dd8b8ca97a6f4d2dedb94f71999f0-0)
+
 #### 编写统计 SQL
 
 编写 sql 统计结果并将结果输出到巨杉数据库，统计每种交易的交易总额。
 
 1) 在当前类中找到 select 方法，找到 TODO code 3。
 
-![1739-560-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/8e7324917ce37f3921d500e485d0ecc3-0)
+![1739-560-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/f37d6887f9aa7581d710c1e0417cc6e0-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
@@ -260,6 +280,10 @@ tbEnv.sqlUpdate(
     "GROUP BY " +
    		"trans_name");
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00034.png](https://doc.shiyanlou.com/courses/1739/1207281/1f9c7075fe1311e4fc7398459c348ee5-0)
 
 #### 执行当前作业
 
@@ -301,7 +325,7 @@ tbEnv.sqlUpdate(
 
 1) 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
-![1739-560-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/c968ddd8227ffe9eecd70a65a24e0c0d-0)
+![1739-560-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/783d4a3a5261fd560530cf2f3296b075-0)
 
 2) 将下列代码粘贴到 TODO code 1区间内。
 
@@ -328,13 +352,17 @@ tbEnv.sqlUpdate(
     ")");
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00035.png](https://doc.shiyanlou.com/courses/1739/1207281/a56b7c182edb07209f9c56871595b52c-0)
+
 #### 创建 Sink 表
 
 通过 DDL 创建 Flink Sink 表。
 
 1) 在当前类中找到 createSinkTable 方法，找到 TODO code 2。
 
-![1739-560-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/371431aad08d2f54c49c301f9fd10359-0)
+![1739-560-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/9c46962ce3a93aa24d502bc4dcb15247-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
@@ -358,13 +386,17 @@ tbEnv.sqlUpdate(
     ")");
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00036.png](https://doc.shiyanlou.com/courses/1739/1207281/acb66440aa56eb9dc762440373ad6eff-0)
+
 #### 编写查询 SQL
 
 执行统计，统计每种交易的交易总额。
 
 1) 在当前类中找到 select 方法，找到 TODO code 3。
 
-![1739-560-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/2c849f8a89a7c3d5375543d7df2355e4-0)
+![1739-560-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/19d758219d637a8bc23233f32b53607d-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
@@ -378,6 +410,10 @@ tbEnv.sqlUpdate(
      "GROUP BY " +
      	"trans_name");
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00037.png](https://doc.shiyanlou.com/courses/1739/1207281/3688460e56a3540184c52c4b2d403a8b-0)
 
 #### 执行当前作业
 
@@ -415,7 +451,7 @@ tbEnv.sqlUpdate(
 
 1) 在当前类中找到 createSourceTable 方法，找到 TODO code 1。
 
-![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/e5e8fee33b633dec50236b09dd8edec9-0)
+![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/49a8bc5fc72da3f2c6a5f49cc0be50dc-0)
 
 2) 将下列代码粘贴到 TODO code 1区间内。
 
@@ -456,6 +492,10 @@ tbEnv.connect(
 .registerTableSource("TRANSACTION_FLOW");
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00038.png](https://doc.shiyanlou.com/courses/1739/1207281/40471f6d201212b00453b29071dff681-0)
+
 #### Flink SQL 中的函数
 
 - TUMBLE_START()
@@ -476,7 +516,7 @@ tbEnv.connect(
 
 1) 在当前类中找到 select 方法，找到 TODO code 2。
 
-![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/25bbe70a395a238ba5f7a2f960cdffce-0)
+![1739-560-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/fe8b919642bb84398011e37151aa9dfc-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
@@ -496,6 +536,10 @@ tbEnv.sqlUpdate(
         "trans_name )"
 );
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-560-00039.png](https://doc.shiyanlou.com/courses/1739/1207281/79fbdbfdc243f876ba3e54d67f2c1e4d-0)
 
 #### 执行当前作业
 

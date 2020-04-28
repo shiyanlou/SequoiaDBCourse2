@@ -254,13 +254,13 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 
 #### 项目打包
 
-1) 点击 maven 侧边栏中的 package 打包。
+1) 点击左侧 maven 侧边栏中的 package 打包。
 
-![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/818235d78cdcfc4ffffe654cf621f74b-0)
+![1739-520-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/e3d7faf2c947fd333398331f97e7e88b-0)
 
 2) 打包成功后 jar 包会在当前项目目录的 target 目录下。
 
-![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/16c046a2a4611d6170dd2a7595a781de-0)
+![1739-520-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/62292845940832f75ebc9746099f1035-0)
 
 #### 提交到集群环境
 

@@ -118,7 +118,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 1) 在当前类中找到 source 方法，找到 TODO code 1。
 
-![1739-550-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/641e1dc7d1dfd1da81f33e2221da7f95-0)
+![1739-550-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/50dab951277b61d57ec5e172fcdd0999-0)
 
 2) 将下列代码粘贴到 TODO code 1区间内。
 
@@ -136,6 +136,10 @@ resultData = env.addSource(new SequoiadbSource(option, "create_time"));
 ```
 
 以上示例为SequoiadbSource的使用，需要构建一个Option，包含巨杉数据库的连接信息。而且由于数据库中录入数据无法像消息队列做到时间态的有序，其还需要一个时间字段名用于构建流，该字段值必须是时间戳类型。
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00036.png](https://doc.shiyanlou.com/courses/1739/1207281/cf47a5ddb53ce0bc87c482293cb41e04-0)
 
 #### 查看原始数据格式
 
@@ -155,13 +159,17 @@ resultData = env.addSource(new SequoiadbSource(option, "create_time"));
 
 1) 在当前类中找到 map 方法，找到 TODO code 2。
 
-![1739-550-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/956666ea9d26dfa0d21037597e136f76-0)
+![1739-550-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/d6dab848e760bdc92484f70d50ba668b-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```scala
 resultData = transData.map(obj => (obj.get("money"), 1))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00037.png](https://doc.shiyanlou.com/courses/1739/1207281/a869abd61153cc15488a9822a1d1d8a8-0)
 
 #### 查看结果
 
@@ -179,13 +187,17 @@ resultData = transData.map(obj => (obj.get("money"), 1))
 
 1) 在当前类中找到windowAll方法，找到 TODO code 3。
 
-![1739-550-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/afe8ee26d1f61766f47407496b6aa33f-0)
+![1739-550-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/0e879fece2879849d0f0cc621e425aeb-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```scala
 resultData = moneyData.countWindowAll(100)
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00038.png](https://doc.shiyanlou.com/courses/1739/1207281/c6551a02eeb75f93114ceacb8775a3c5-0)
 
 #### 查看结果
 
@@ -203,13 +215,17 @@ resultData = moneyData.countWindowAll(100)
 
 1) 在当前类中找到reduce方法，找到 TODO code 4。
 
-![1739-550-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/e5ed5956860ff6a6a65da71004b76b11-0)
+![1739-550-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/337dff15d93b7935aae83ca0feb4a3cd-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```scala
 resultData = windowData.reduce((x, y) => (x._1 + y._1, x._2 + y._2))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00039.png](https://doc.shiyanlou.com/courses/1739/1207281/3c38a518d8156bc12e6e3bed46083b31-0)
 
 #### 查看结果
 
@@ -247,9 +263,9 @@ resultData = windowData.reduce((x, y) => (x._1 + y._1, x._2 + y._2))
 
 1) 在当前类中找到source方法，找到 TODO code 1。
 
-![1739-550-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/00e84d44017757a4922d1cd4d4931fd5-0)
+![1739-550-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/be04d61a70f4a34517c1cff5a7b02975-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```scala
 val option: SequoiadbOption = SequoiadbOption.bulider
@@ -262,6 +278,10 @@ val option: SequoiadbOption = SequoiadbOption.bulider
 // Add a data source to the current environment (SequoiadbSource needs to build a stream through the time field "create_time")
 resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00040.png](https://doc.shiyanlou.com/courses/1739/1207281/9fa88415baa6f899a35d3a52e76a67ab-0 )
 
 #### 查看结果
 
@@ -279,13 +299,17 @@ resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 
 1) 在当前类中找到map方法，找到 TODO code 2。
 
-![1739-550-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/a0ad1df2501c14d73114ec330bf5d9b5-0)
+![1739-550-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/79c8083234c2ad2aea828bf83fe53c9d-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
 ```scala
 resultData = transData.map(obj => (obj.get("trans_name"), obj.get("money"), 1))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00041.png](https://doc.shiyanlou.com/courses/1739/1207281/ac89f4f2f500a185301db9f27765fed1-0)
 
 #### 查看结果
 
@@ -303,13 +327,17 @@ keyBy算子通过元组的第一个字段（交易名“trans_name”）进行�
 
 1) 在当前类中找到keyBy方法，找到 TODO code 3。
 
-![1739-550-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/4461bc04452b5a44e66b079561d3c4bc-0)
+![1739-550-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/327074d34e59e840fe593a97d74a9cd3-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
 ```scala
 resultData = moneyData.keyBy(_._1)
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00042.png](https://doc.shiyanlou.com/courses/1739/1207281/5206b97eb58828ccefda03c09b9ea3ef-0)
 
 #### 查看结果
 
@@ -323,17 +351,21 @@ resultData = moneyData.keyBy(_._1)
 
 #### 在keyedStream上使用window
 
-本案例使用时间进行划分窗口，窗口大小为5秒。
+本案例使用时间进行划分窗口，窗口大小为 5 秒。
 
 1) 在当前类中找到window方法，找到 TODO code 4。
 
-![1739-550-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/94f2024eda9310e3d39967bc853411b4-0)
+![1739-550-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/acedfcf2d77060950d3a1e5e04cea573-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```scala
 resultData = keyedData.timeWindow(Time.seconds(5))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00043.png](https://doc.shiyanlou.com/courses/1739/1207281/8d4f38bacd83e640f9a67491a1f8464f-0)
 
 #### 查看结果
 
@@ -351,7 +383,7 @@ resultData = keyedData.timeWindow(Time.seconds(5))
 
 1) 在当前类中找到reduce方法，找到 TODO code 5。
 
-![1739-550-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/48b09cf13ec023604d516ef71a3007fb-0)
+![1739-550-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/3f9ca41a75a213a7c40f3e0ed0d1af58-0)
 
 2) 将下列代码粘贴到 TODO code 5区间内。
 
@@ -380,6 +412,10 @@ resultData = value.apply(new WindowFunction[(String, Double, Int),
 })
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00044.png](https://doc.shiyanlou.com/courses/1739/1207281/76fb57d31576ef102d14e0abc67fb7ee-0)
+
 #### 查看结果
 
 1) 通过在当前类文件上右键 > Run 'TumblingTimeWindowMain.main()' 运行该Flink程序。
@@ -392,7 +428,7 @@ resultData = value.apply(new WindowFunction[(String, Double, Int),
 
 ## Sliding Count Window 的实现
 
-本案例使用 Sliding Count Window 统计一个交易流水中每中交易类型中100次交易的总交易额。
+本案例使用 Sliding Count Window 统计一个交易流水中每种交易类型中 100 次交易的总交易额。
 
 #### 打开类
 
@@ -406,7 +442,7 @@ resultData = value.apply(new WindowFunction[(String, Double, Int),
 
 1) 在当前类中找到source方法，找到 TODO code 1。
 
-![1739-550-00031.png](https://doc.shiyanlou.com/courses/1739/1207281/6aa28f38f6d9ff26f732333e311bd744-0)
+![1739-550-00031.png](https://doc.shiyanlou.com/courses/1739/1207281/fb4ed5d4626982285621eabc2067ea03-0)
 
 2) 将下列代码粘贴到 TODO code 1区间内。
 
@@ -422,13 +458,17 @@ val option: SequoiadbOption = SequoiadbOption.bulider
 resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00045.png](https://doc.shiyanlou.com/courses/1739/1207281/bda43263fca235ae2f4a65e785a89ef0-0)
+
 #### 类型转换
 
 通过map算子获取到交易名，交易金额。
 
 1) 在当前类中找到map方法，找到 TODO code 2。
 
-![1739-550-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/39d976f96abdf39614a0f835017692e8-0)
+![1739-550-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/5f68c94aee2106b274fc03577cbe2689-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
@@ -436,13 +476,17 @@ resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 resultData = value.map(obj => Trans(obj.get("trans_name"), obj.get("money"), 1))
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00046.png](https://doc.shiyanlou.com/courses/1739/1207281/bc2a4b4a8b9572d2968111228e86867b-0)
+
 #### 分组
 
 keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tuple3<String, Double, Integer>, Tuple>对象，泛型中包含数据行和一个Tuple类型的分组字段值。
 
 1) 在当前类中找到keyBy方法，找到 TODO code 3。
 
-![1739-550-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/65292609e32a101e637f772ab62fda59-0)
+![1739-550-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/4916e43da1bb38b71edb30e2a9c81176-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
@@ -450,13 +494,17 @@ keyBy算子通过“trans_name”进行分组，keyBy返回一个KeyedStream<Tup
 resultData = value.keyBy("name")
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00048.png](https://doc.shiyanlou.com/courses/1739/1207281/94d0dc5357f1771d6884a14f47788899-0)
+
 #### 在keyedStream上使用window
 
 案例中使用Sliding Count Window，窗口大小100，滑动步长50。
 
 1) 在当前类中找到countWindow方法，找到 TODO code 4。
 
-![1739-550-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/21709dd0cc9d2a144c6b8500461b9489-0)
+![1739-550-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/37e830ee00429b61a6c16a7a27a9f0d4-0)
 
 2) 将下列代码粘贴到 TODO code 4区间内。
 
@@ -464,15 +512,19 @@ resultData = value.keyBy("name")
 resultData = value.countWindow(100, 50)
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/ac0ee57a41200626b1cb00f2c3da0c14-0)
+
 #### 聚合求和
 
 使用reduce对数据进行聚合求和，此处将的聚合结果为Tuple3<String, Double, Integer>，分别表示交易名称，总金额和总交易量。
 
 1) 在当前类中找到reduce方法，找到 TODO code 5。
 
-![1739-550-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/5f75ca3ced1d70ca44c7353f597d87fa-0)
+![1739-550-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/0ac2024f65f031e27923f8b3f03fed73-0)
 
-2) 将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5 区间内。
 
 ```scala
 resultData = value.apply(new WindowFunction[Trans, (String, Double), 
@@ -493,15 +545,19 @@ resultData = value.apply(new WindowFunction[Trans, (String, Double),
 })
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00050.png](https://doc.shiyanlou.com/courses/1739/1207281/8b7555380baf60989262a9e384dfec74-0)
+
 #### 将元组转换为BsonObject
 
 将元组转换为BSONObject。
 
 1) 在当前类中找到toBson方法，找到 TODO code 6。
 
-![1739-550-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/210d11a5f430deae6684b99abdbd5e00-0)
+![1739-550-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/704836fb8d47acf9330c45bf575c3ae7-0)
 
-2) 将下列代码粘贴到 TODO code 6区间内。
+2) 将下列代码粘贴到 TODO code 6 区间内。
 
 ```scala
 resultData = value.map(item => {
@@ -512,11 +568,15 @@ resultData = value.map(item => {
 })
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00051.png](https://doc.shiyanlou.com/courses/1739/1207281/1d52eeb6586d0193295615b0c8f7a635-0)
+
 #### 通过SequoiadbSink完成sink函数
 
 1) 在当前类中找到sink方法，找到 TODO code 7。
 
-![1739-550-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/8a7de5d001d13856577c8b4255856b56-0)
+![1739-550-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/0a0e00da7df38c8d9ac4c26a489f4fbd-0)
 
 2) 将下列代码粘贴到 TODO code 7区间内。
 
@@ -531,6 +591,10 @@ val option = SequoiadbOption.bulider
     .build
 streamSink = value.addSink(new SequoiadbSink(option))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00052.png](https://doc.shiyanlou.com/courses/1739/1207281/02f2a7e61745b2083e5f11dcc1dca7c0-0)
 
 #### 查看结果
 
@@ -607,7 +671,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 1) 在当前类中找到source方法，找到 TODO code 1。
 
-![1739-550-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/b1f5e0cb6b13a60abac31491d08a79d7-0)
+![1739-550-00053.png](https://doc.shiyanlou.com/courses/1739/1207281/9405e2fd15b3abdb5a3e5469cd92dcf2-0)
 
 2) 将下列代码粘贴到 TODO code 1区间内。
 
@@ -623,13 +687,17 @@ val option: SequoiadbOption = SequoiadbOption.bulider
 resultData = env.addSource(new SequoiadbSource(option, "create_time"))
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00054.png](https://doc.shiyanlou.com/courses/1739/1207281/e418b08fa2b3af96d48911c461237aa1-0)
+
 #### 添加Watermark
 
 向流中添加watermark。
 
 1) 在当前类中找到watermark方法，找到 TODO code 2。
 
-![1739-550-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/285a9ac61572378e30b4f723e8e1ca2d-0)
+![1739-550-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/89e252f6d12d7ebc7fbef62cb088e65e-0)
 
 2) 将下列代码粘贴到 TODO code 2区间内。
 
@@ -665,13 +733,17 @@ resultData = value.assignTimestampsAndWatermarks(new AssignerWithPeriodicWaterma
 })
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00055.png](https://doc.shiyanlou.com/courses/1739/1207281/51a56e4c8928a34f3d52d8707027259a-0)
+
 #### 类型转换
 
 通过map算子获取到交易名，交易金额。
 
 1) 在当前类中找到map方法，找到 TODO code 3。
 
-![1739-550-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/99724fec3692d2324b1abb5621d4065c-0)
+![1739-550-00056.png](https://doc.shiyanlou.com/courses/1739/1207281/e3f40fa00e05174bfba3df435737d6f8-0)
 
 2) 将下列代码粘贴到 TODO code 3区间内。
 
@@ -679,13 +751,17 @@ resultData = value.assignTimestampsAndWatermarks(new AssignerWithPeriodicWaterma
  resultData = value.map(obj => (obj.get("trans_name"), obj.get("money"), 1))
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00057.png](https://doc.shiyanlou.com/courses/1739/1207281/3a303895ae919f13c16cff0b8c7f808b-0)
+
 #### 分组
 
 keyBy算子通过“trans_name”进行分组，keyBy返回一个 KeyedStream[(String, Double, Int), String]对象，泛型中包含数据行和一个Tuple类型的分组字段值。
 
 1) 在当前类中找到keyBy方法，找到 TODO code 4。
 
-![1739-550-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/0f635dbbdc0f84be9cdd272198a5539c-0)
+![1739-550-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/ae4943c84dde91c3508a4e5dc5bb052f-0)
 
 2) 将下列代码粘贴到 TODO code 4区间内。
 
@@ -693,11 +769,15 @@ keyBy算子通过“trans_name”进行分组，keyBy返回一个 KeyedStream[(S
 resultData = value.keyBy(_._1)
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00058.png](https://doc.shiyanlou.com/courses/1739/1207281/d8c5b987d0f5b024195c36d9da6665a1-0)
+
 #### 在keyedStream上使用window
 
 1) 在当前类中找到window方法，找到 TODO code 5。
 
-![1739-550-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/8c9f60ad31838ceef630419b360a72f8-0)
+![1739-550-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/5c0bf5f02d484925a708c6c30280449b-0)
 
 2) 将下列代码粘贴到 TODO code 5区间内。
 
@@ -705,13 +785,17 @@ resultData = value.keyBy(_._1)
 resultData = value.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(2)))
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00059.png](https://doc.shiyanlou.com/courses/1739/1207281/24b880ce63939120d907167dd9abd1c9-0)
+
 #### 聚合求和
 
 1) 在当前类中找到reduce方法，找到 TODO code 6。
 
-![1739-550-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/cb64880218b6d7122c88b9a82500aed4-0)
+![1739-550-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/1a47b147aa79fad621c36bf0ebee4476-0)
 
-2) 将下列代码粘贴到 TODO code 6区间内。
+2) 将下列代码粘贴到 TODO code 6 区间内。
 
 ```scala
 resultData = value.process(new ProcessWindowFunction[(String, Double, Int), 
@@ -742,11 +826,15 @@ resultData = value.process(new ProcessWindowFunction[(String, Double, Int),
 })
 ```
 
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00060.png](https://doc.shiyanlou.com/courses/1739/1207281/998fbbab0b9a2d63d50cc4c955502009-0)
+
 #### 通过SequoiadbSink完成sink函数
 
 1) 在当前类中找到sink方法，找到 TODO code 7。
 
-![1739-550-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/8401c6aa441b14be2d1b933046836f7b-0)
+![1739-550-00027.png](https://doc.shiyanlou.com/courses/1739/1207281/5baf14ded18a67d008877cccdc792446-0)
 
 2) 将下列代码粘贴到 TODO code 7区间内。
 
@@ -760,6 +848,10 @@ val option = SequoiadbOption.bulider
     .build
 value.addSink(new SequoiadbSink(option))
 ```
+
+3) 粘贴代码后完整代码块如图所示。
+
+![1739-550-00061.png](https://doc.shiyanlou.com/courses/1739/1207281/f0fb64bf3634111adfdfd3d831b22aeb-0)
 
 #### 查看结果
 
