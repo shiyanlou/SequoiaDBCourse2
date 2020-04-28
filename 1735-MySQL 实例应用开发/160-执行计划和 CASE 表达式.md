@@ -64,11 +64,11 @@ version: 1.0
 | filtered      | 存储引擎返回的数据在server层过滤后,剩下多少满足查询的记录数量的比例 |
 | extra         | 包含不适合在其他列中显式但十分重要的额外信息                 |
 
-**select_type **常见和常用的值有如下几种：
+select_type 常见和常用的值有如下几种：
 
-SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT  从 UNION 表获取结果的 SELECT
+SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT
 
-**type **包含的类型包括如下几种，从最好到最差依次是：
+type 包含的类型包括如下几种，从最好到最差依次是：
 
 system > const > eq_ref > ref > range > index > all
 
