@@ -1,290 +1,281 @@
 ---
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
 
-本课程将介绍 Spark 的 RDD、DataSet 等有关概念，通过程序实现 word count 来简要说明 Spark RDD 操作。本章之前都是通过 SQL API 的方式实现 Spark 和 SequoiaDB 的交互，本章将通过简单的例子展示如何使用 Spark SQL 的 DataSet API 和 SequoiaSQL-MySQL 实例进行交互。
+本课程将介绍 Spark 的 RDD、DataSet 等有关概念，通过 scala 程序实现 word count 来简要说明 Spark RDD 操作。本章之前都是通过 SQL API 的方式实现 Spark 和 SequoiaDB 的交互，本章将通过简单的例子展示如何通过 RDD 实现 Spark 与 SequoiaDB 的交互。
 
-#### 知识点
+#### 请点击右侧选择使用的实验环境
 
-**RDD**
+#### 部署架构
 
-Resilient Distributed Dataset（弹性分布式数据集），是 Spark 的基本数据模型。通过 RDD 可以加强对数据以下几个方面的控制：
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：
 
-* 直接控制数据的共享
-* 指定数据存储到硬盘或内存
-* 控制数据的分区方法
-* 控制数据集上进行的操作
+* 1 个 SequoiaSQL-MySQL 数据库实例节点
+* 1 个引擎协调节点
+* 1 个编目节点
+* 3 个数据节点
 
-**DataFrame**
+![1738-410-06](https://doc.shiyanlou.com/courses/1738/1207281/ff2754d609aba12340efeb27ce0645bb-0)
 
-DataFrame 是一种以 RDD 为基础的分布式数据集。和 RDD 相比，DataFrame 除了记录数据内容以外，还记录了数据的结构：
+在当前实验的部署架构中，Spark 通过 MySQL 实例间接访问 SequoiaDB 存储集群，也可以通过 SequoiaDB 的 Spark 连接驱动直接访问底层的 SequoiaDB 存储集群。
 
-![1738-460-01](https://doc.shiyanlou.com/courses/1738/1207281/103159c31d74ee7026f6316ee1fb259b-0)
+详细了解 SequoiaDB 巨杉数据库系统架构：
 
-因此，Spark 在使用 DataFrame 时可以根据数据的 Schema 信息进行针对性的优化，提高运行效率。
-
-**DataSet**
-
-DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解析。而 Dataset 中，每一行是什么类型是不一定的。
+* [SequoiaDB 系统架构](http://doc.sequoiadb.com/cn/sequoiadb-cat_id-1519649201-edition_id-0)
 
 #### 实验环境
 
-当前实验的系统和软件环境如下：
-
-* Ubuntu 16.04.6 LTS
-* SequoiaDB version: 3.4
-* SequoiaSQL-MySQL version: 3.4
-* JDK version "1.8.0_172"
-* IntelliJ IDEA Community Version: 2019.3.4
-* Spark version: 2.4.3
+课程使用的系统环境为 Ubuntu 16.04.6 LTS 版本。SequoiaDB 数据库引擎以及 SequoiaSQL-MySQL 实例均为 3.4 版本。Spark 计算引擎为 3.4 版本。
 
 ## 打开项目
 
 #### 打开 IDEA
 
-打开 IDEA 代码开发工具
+1）打开 IDEA 代码开发工具。
 
 ![1738-410-07](https://doc.shiyanlou.com/courses/1738/1207281/72397a857808ab74f01b042f07ea0a27-0)
 
 #### 打开 SCDD-Spark 项目
 
-选择 Spark 课程项目
+2）打开 Spark 实验的项目，在该项目中完成所有实验步骤。
 
 ![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/6d46a0bb22fac49997e6606ec1a128ab-0)
 
-#### 打开当前实验的 Package
-
-如图所示找到当前实验使用的程序所在 Package
-
-![1738-460-04](https://doc.shiyanlou.com/courses/1738/1207281/f5e5baa583c84a7986af6b6185d6c25c-0)
-
 #### Maven 依赖
 
-如图所示找到 pom.xml 文件：
+实验环境中已经在 Maven 本地仓库添加了实验所需的依赖。当前实验使用到的 jar 包依赖以及依赖说明如下：
 
-![pom](https://doc.shiyanlou.com/courses/1738/1207281/4474b7a73c5469e7315fc9a153d73ccc-0)
+* spark-core_2.11-2.1.1.jar
 
-在 pom.xml 文件中可以找到当前实验使用到的 Maven 依赖：
+  Spark 核心 jar 包
 
-![1738-460-05](https://doc.shiyanlou.com/courses/1738/1207281/72ddb27afd9118ddef82ca7aa3d56d39-0)
+* spark-sql_2.11-2.1.1.jar
 
+  Spark SQL 组件 jar 包
 
+* spark-sequoiadb_2.11-3.2.4.jar
 
-## RDD 实现 word count
+  SequoiaDB 的 Spark 连接驱动
 
-程序将读取 txt 文件中的单词内容生成 RDD，并通过 RDD 的转换、合并等操作计算文本中出现的单词数量。txt 文件内容如下图所示：
+* sequoiadb-driver-3.2.1.jar
 
-![1738-460-06](https://doc.shiyanlou.com/courses/1738/1207281/264cd37a16e9df1b28ea05ef07b1caae-0)
+  SequoiaDB Java 驱动
 
-#### 打开 RDDWordCount  类
+* fastjson-1.2.58.jar
 
-如图所示找到 com.sequoiadb.lesson.spark.lesson6_rdd.RDDWordCount 类：
+  JSON 工具 jar 包
 
-![1738-460-07](https://doc.shiyanlou.com/courses/1738/1207281/b4532ac0a94a9538b0b50cb16f44406a-0)
+pom.xml 文件位置：
 
-#### 程序代码
+![1738-410-pom文件位置](https://doc.shiyanlou.com/courses/1738/1207281/822fa966b397b80c9eabbf0472eb52c4-0)
 
-```java
-// Create SparkContext
-SparkConf conf = new SparkConf().setAppName("wordcount").setMaster("local[*]");
-JavaSparkContext sc = new JavaSparkContext(conf);
-// Read file to generate RDD
-JavaRDD<String> lines = sc.textFile("src/main/resources/txt/words.txt");
-// Convert JavaRDD into key-value pairs. Key is word, and value is 1.
-JavaPairRDD<String, Integer> pairs = lines.mapToPair(s -> new Tuple2(s, 1));
-// The pair with the same key value is combined (the value is 1 and the sum is counted)
-JavaPairRDD<String, Integer> counts = pairs.reduceByKey((a, b) -> a + b);
-// Print the result
-System.out.println(counts.collect());
-```
+实验中使用到的 Maven 依赖如下：
 
-将上述代码粘贴至 RDDWordCount 类 countWord 方法的 TODO code1 注释区间内：
+![1738-460-maven](https://doc.shiyanlou.com/courses/1738/1207281/24bc06f328bddff35abd2d74a966c047-0)
 
-![1738-460-08](https://doc.shiyanlou.com/courses/1738/1207281/d8b35031f88a90c89d71b87a1f8d18bd-0)
+> **说明**
+>
+> spark-sequoiadb_2.11-3.2.4.jar 可以在 [SequoiaDB 巨杉数据库下载中心](http://download.sequoiadb.com/cn/driver) 获取。
 
-#### 运行程序
+#### 打开当前实验的 Package
 
-* 右键点击 RDDMainTest 类选择 Create/Edit 主函数
+3）如图所示找到当前实验程序所在 Package，在该 Package 中完成后续实验步骤：
 
-  ![1738-460-09](https://doc.shiyanlou.com/courses/1738/1207281/e4084e1fd69f8345051730f975a418f5-0)
+![1738-460-package](https://doc.shiyanlou.com/courses/1738/1207281/3415a3a31133a75480a6c49e2d93845d-0)
 
-* 编辑主函数参数为 rddwordcount
+## RDD word count
 
-  ![1738-460-10](https://doc.shiyanlou.com/courses/1738/1207281/214ce912c68e9c3de70fbd41d2f882cb-0)
+#### 概述
 
-* 右键点击 RDDMainTest 类选择 Run 主函数
+在进行本实验步骤前，需要了解 Spark 的数据模型：
 
-  ![1738-460-11](https://doc.shiyanlou.com/courses/1738/1207281/e005d3350e527c9cb9a457474741c1df-0)
+* RDD
 
-* 运行结果如下：
+  Resilient Distributed Dataset（弹性分布式数据集），是 Spark 的基本数据模型。
 
-  ![1738-460-12](https://doc.shiyanlou.com/courses/1738/1207281/689b73b0eac40d46b3a4e534aabff0c7-0)
+* DataFrame
 
-## Spark SQL 实现 word count
+  DataFrame 是一种以 RDD 为基础的分布式数据集。和 RDD 相比，DataFrame 除了记录数据内容以外，还记录了数据的结构：
 
-程序将写有单词的 txt 文件读取为 RDD，并自定义 schema 将其转化成为 DataSet，利用 Spark SQL 的特性将具有结构的数据集创建成为临时表，通过 group by 的方式分组 count 出各个单词的数量。
+  ![1738-460-01](https://doc.shiyanlou.com/courses/1738/1207281/103159c31d74ee7026f6316ee1fb259b-0)
 
-#### 打开 SqlWordCount 类
+  因此，Spark 在使用 DataFrame 时可以根据数据的 Schema 信息进行针对性的优化，提高运行效率
 
-如图所示找到 com.sequoiadb.lesson.spark.lesson6_rdd.SqlWordCount 类：
+* DataSet
 
-![1738-460-13](https://doc.shiyanlou.com/courses/1738/1207281/c017e40ffbab17d262b37dc1cec9c627-0)
+  DataFrame 也可以叫 Dataset[Row] ，每一行的类型是 Row，不进行解析。而 Dataset 中，每一行是什么类型是不一定的。
 
-#### 程序代码
+当前实验将读取读取 txt 文件中的单词内容生成 RDD，并通过 RDD 的转换、合并等操作计算文本中出现的单词数量。txt 文件位置以及内容如下图所示：
 
-```java
+![1738-460-txt](https://doc.shiyanlou.com/courses/1738/1207281/23881c0a94af75d3e123f4aa05b67557-0)
+
+#### 操作步骤
+
+1）打开 WordCount object。
+
+![1738-460-打开object](https://doc.shiyanlou.com/courses/1738/1207281/3003a197c66cf1d9f0b6cc60a53183dd-0)
+
+2）复制创建 SparkSession 代码。SparkSession 为 Spark SQL DataSet API 的入口。在创建 SparkSession 时需要指定 master（当前实验环境中 Spark 为单机部署故设置为 local）、appName（自定义 app 名）、以及有关的 config（sequoiadb.host 为必须配置，指定为 SequoiaDB 的主机名和协调节点名）。
+
+```scala
 // Create SparkSession
-SparkSession spark = SparkSession.builder().master("local[*]").appName("Spark").getOrCreate();
-// Read the file to generate RDD and convert it to JavaRDD
-JavaRDD<Row> rows = spark.read().text("src/main/resources/txt/words.txt").toJavaRDD();
-// Create an ArrayList that stores field types
-ArrayList<StructField> fields = new ArrayList<StructField>();
-// Create a field named word with StringType
-StructField wordField = DataTypes.createStructField("word", DataTypes.StringType, true);
-// Add this field to ArrayList
-fields.add(wordField);
-// Create a schema from an ArrayList that stores field names and field types
-StructType schema = DataTypes.createStructType(fields);
-// Specify the shema for the RDD read from the file, making it has a table structure
-Dataset<Row> wordCount = spark.createDataFrame(rows, schema);
-// Create DataSet as a temporary table
-wordCount.createOrReplaceTempView("wordcount");
-// Group query for temporary table to realize word count
-Dataset<Row> result = spark.sql("SELECT word,count(0) AS count FROM wordcount GROUP BY word");
-// Print the records
-result.show();
+sparkSession = SparkSession.builder()
+  .master("local[*]") // Specify master: local [*] means using available threads for calculation
+  .appName("word count") // Specify the app name
+  .config("spark.driver.allowMultipleContexts", true) // Configuration allows multiple SparkContext
+  .config("sequoiadb.host", "sdbserver1:11810") // Configure the host used by Spark to access SequoiaDB
+  .getOrCreate()
 ```
 
-将上述代码粘贴至 SqlWordCount 类 countWord 方法的 TODO code 2 注释区间内：
+3）将创建 SparkSession 代码粘贴至 WordCount object 方法的 TODO code 1 注释区间内。
 
-![1738-460-14](https://doc.shiyanlou.com/courses/1738/1207281/31cc2d56da5c30de1f934d3ef123d59c-0)
+![1738-460-TODO1](https://doc.shiyanlou.com/courses/1738/1207281/9f21c5bbf0ad314495689b76be82ccb7-0)
 
-#### 运行程序
+粘贴后完整代码如图：
 
-* 右键点击 RDDMainTest 类选择 Create/Edit 主函数
+![1738-460-DONE1](https://doc.shiyanlou.com/courses/1738/1207281/6fb7a3cec4fa4ceb641f78461b141e6b-0)
 
-  ![1738-460-15](https://doc.shiyanlou.com/courses/1738/1207281/bcf7028851fe9fcdb6bd9d74858f9fa2-0)
+4）复制通过 RDD 统计单词数代码。程序中将文件读取为 RDD，经过 map、reduceby 等操作转化成新的保存有单词个数统计信息的 RDD。运行程序后会将最终 RDD 打印到控制台。
 
-* 编辑主函数参数为 sqlwordcount
-
-  ![1738-460-16](https://doc.shiyanlou.com/courses/1738/1207281/5ac0a1a2e55aee4ddb51b75ad7ebd94d-0)
-
-* 右键点击 RDDMainTest 类选择 Run 主函数
-
-  ![1738-460-17](https://doc.shiyanlou.com/courses/1738/1207281/67fd16474719b3a6fd71dbfb79d094ee-0)
-
-* 运行结果如下：
-
-  ![1738-460-18](https://doc.shiyanlou.com/courses/1738/1207281/c99cfe5a246dc9c581e258f826580f12-0)
-
-## 通过 DataSet 读写 MySQL 实例表
-
-程序将 MySQL 实例的 employee 表读成 DataSet，将其创建成为临时表后分组查询统计男女职工的人数，并将统计结果保存为新的 DataSet。最后将保存有统计结果的 DataSet 写入到 MySQL 实例的新表中。
-
-#### 打开 TableOperation 类
-
-如图所示找到 com.sequoiadb.lesson.spark.lesson6_rdd.TableOperation 类：
-
-![1738-460-19](https://doc.shiyanlou.com/courses/1738/1207281/abe4b22f10bffbc9bfcc84e1f2620c66-0)
-
-#### 创建 SparkSession
-
-```java
-// Create SparkSession
-private static final SparkSession sparkSession = SparkSession.builder().master("local[*]").getOrCreate();
-// Global Dataset for using in different functions
-private static Dataset<Row> countBySex = null;
-private static Dataset<Row> employee = null;
+```scala
+// Read RDD from file
+var wordsRDD = sparkSession.sparkContext.textFile("src/main/resources/txt/words.txt")
+// Convert RDD to key-value pair; key is word and value is 1
+val wordsPairRDD = wordsRDD.map(f => (f, 1))
+// Combine elements with the same key name in wordsPairRDD
+wordsCountPair = wordsPairRDD.reduceByKey(_ + _)
 ```
 
-将上述代码粘贴至 TableOperation 类的 TODO code 3 注释区间内：
+5）将通过 RDD 统计单词数代码粘贴至 WordCount object 中 wordCount 方法的 TODO code 2 注释区间内。
 
-![1738-460-20](https://doc.shiyanlou.com/courses/1738/1207281/60c869fa5001ddf8bbb5745114688dbe-0)
+![1738-460-TODO2](https://doc.shiyanlou.com/courses/1738/1207281/5df4556396454368ebd2dc7dfb2344ae-0)
 
-#### 读取 employee 表
+粘贴后完整代码如图：
 
-```java
-// Create a dataset from a MySQL table
-employee = sparkSession.read()
-        .format("jdbc")//Connect using jdbc
-        .option("url", "jdbc:mysql://localhost:3306/sample?useSSL=false")// MySQL instance url
-        .option("dbtable", "sample.employee")// Database name and table name of the source table
-        .option("user", "root")// username
-        .option("password", "root")// password
-        .load();
-// Print the structure of table
-employee.printSchema();
-// Print the result set (partial)
-employee.show();
+![1738-460-DONE2](https://doc.shiyanlou.com/courses/1738/1207281/2be3eb7bfe7707d4e527c18cf16f774b-0)
+
+6）右键点击 WordCountMainTest object，选择 Create/Edit WordCountMainTest.main() 编辑主函数参数。
+
+![1738-460-编辑1](https://doc.shiyanlou.com/courses/1738/1207281/732112c752489330b752398c155e5070-0)
+
+7）编辑主函数参数为 wordcount。
+
+![1738-460-参数1](https://doc.shiyanlou.com/courses/1738/1207281/cddeafb334ab356d1ca8f3868fda30af-0)
+
+8）右键点击 WordCountMainTest object，选择 Run WordCountMainTest.main() 运行程序。
+
+![1738-460-运行1](https://doc.shiyanlou.com/courses/1738/1207281/89cb45388364c2838e80e0dd2dbde376-0)
+
+9）查看运行结果。
+
+![1738-460-结果1](https://doc.shiyanlou.com/courses/1738/1207281/b39ad6aafae1a3e2a19bf91e1b7ef0b9-0)
+
+## 将 RDD 写入 SequoiaDB
+
+#### 概述
+
+当前实验步骤中将介绍如何将 RDD 写入到 SequoiaDB 的集合中。
+
+#### 操作步骤
+
+1）打开 WordCount object。
+
+![1738-460-打开object](https://doc.shiyanlou.com/courses/1738/1207281/3003a197c66cf1d9f0b6cc60a53183dd-0)
+
+2）复制将 RDD 写入 SequoiaDB 代码。程序中将获取上一实验步骤中保存有单词数信息的 RDD，将其转换成适合 SequoiaDB 存储的 BSON 类型格式后，调用 SequoiaDB 的 Spark 连接驱动中的方法将 BSON 类型的 RDD 写入到 SequoiaDB 的集合中。运行程序时会调用封装好的方法打印 SequoiaDB 集合中的数据。
+
+```scala
+// Convert RDD into a format that suitable for SequoiaDB storage (BSON)
+var wordsCountBSON = wordsCountPair.map(f => {
+  var record: BSONObject = new BasicBSONObject()// Create BSONObject
+    .append("word", f._1.asInstanceOf[String])// Add word information to BSONObject
+    .append("count", f._2)// Add the number of words to BSONObject
+  record// Return record
+})
+// Write converted RDD to SequoiaDB
+wordsCountBSON.saveToSequoiadb(
+  "sdbserver1:11810", // Specify the coord node
+  "sample", // Specify collection space
+  "wordcount"// Specify collection
+)
 ```
 
-将上述代码粘贴至 TableOperation 类 readTable 方法的 TODO code 4 注释区间内：
+3）将复制的代码粘贴至 WordCount object 中 writeCollection 方法的 TODO code 3 注释区间内。
 
-![1738-460-21](https://doc.shiyanlou.com/courses/1738/1207281/6176ce0dd7b8b5b3fdccae6636322390-0)
+![1738-460-TODO3](https://doc.shiyanlou.com/courses/1738/1207281/888d75c28960c89ab71a35ab9b0f2097-0)
 
-#### 创建临时表
+粘贴后完整代码如图：
 
-```java
-// Create the data set employee read by Spark SQL as a temporary table
-employee.createOrReplaceTempView("employee");
-// Execute sql statement through sparksession
-countBySex = sparkSession.sql("SELECT sex,count(1) AS num FROM employee GROUP BY sex");
-// Print the structure of statistics table
-countBySex.printSchema();
-// Print the data of statistics table
-countBySex.show();
+![1738-460-DONE3](https://doc.shiyanlou.com/courses/1738/1207281/197d43e589f57a08c7e9080c307b73d8-0)
+
+4）右键点击 WordCountMainTest object，选择 Create/Edit WordCountMainTest.main() 编辑主函数参数。
+
+![1738-460-编辑1](https://doc.shiyanlou.com/courses/1738/1207281/732112c752489330b752398c155e5070-0)
+
+5）编辑主函数参数为 savetosdb。
+
+![1738-460-参数2](https://doc.shiyanlou.com/courses/1738/1207281/e8b5d9e0f58d110e932b075aecd534c7-0)
+
+6）右键点击 WordCountMainTest object，选择 Run WordCountMainTest.main() 运行程序。
+
+![1738-460-运行1](https://doc.shiyanlou.com/courses/1738/1207281/89cb45388364c2838e80e0dd2dbde376-0)
+
+7）查看运行结果。
+
+![1738-460-结果2](https://doc.shiyanlou.com/courses/1738/1207281/2a809eb30eef1f603aa44e4bbb167bce-0)
+
+## 读取 SequoiaDB 集合为 RDD
+
+#### 概述
+
+当前实验步骤将演示如何将 SequoiaDB 中的记录读取为 RDD。
+
+#### 操作步骤
+
+1）打开 WordCount object。
+
+![1738-460-打开object](https://doc.shiyanlou.com/courses/1738/1207281/3003a197c66cf1d9f0b6cc60a53183dd-0)
+
+2）复制读取 SequoiaDB 集合为 RDD 代码。程序中调用 SequoiaDB 的 Spark 连接驱动中的方法读取 SequoiaDB 集合为 RDD，并指定集合中需要的字段将其转换成新的 RDD。运行程序时将最终 RDD 到控制台。
+
+```scala
+// Read data from SequoiaDB to RDD
+val sdbRDD = sparkSession.sparkContext.loadFromSequoiadb(
+  "sample", // Collection space
+  "wordcount"// Collection
+)
+// Reassemble the word and count information in RDD into a new RDD
+sdbPairRDD = sdbRDD.map(f => (f.get("word"), f.get("count")))
 ```
 
-将上述代码粘贴至 TableOperation 类 tmpOperation 方法的 TODO code 5 注释区间内：
+3）将复制的代码粘贴至 WordCount object 中 readCollection 方法的 TODO code 4 注释区间内。
 
-![1738-460-22](https://doc.shiyanlou.com/courses/1738/1207281/b10b7091c67afc3ce8c2f9f5bb05e28d-0)
+![1738-460-TODO4](https://doc.shiyanlou.com/courses/1738/1207281/5253abe04754cc39a4502831b9732f97-0)
 
-#### 将统计结果集写入 MySQL 实例表
+粘贴后完整代码如图：
 
-```java
-// Delete the existing MySQL instance table
-MySQLUtil.dropTable("sexcount");
-// Write the statistical data set to the MySQL instance
-countBySex.write()
-        .format("jdbc")//Connect using jdbc
-        .option("url", "jdbc:mysql://sdbserver1:3306/sample?useSSL=false")// MySQL instance url
-        .option("dbtable", "sample.sexcount")// Database name and table name of the source table
-        .option("user", "root")// Username
-        .option("password", "root")// Password
-        .save();
-// Print the structure of MySQL instance table
-MySQLUtil.getData("desc sexcount");
-// Print the result set of MySQL instance table
-MySQLUtil.getData("select * from sexcount");
-// Close SparkSession
-sparkSession.close();
-```
+![1738-460-DONE4](https://doc.shiyanlou.com/courses/1738/1207281/49d25f6cee98d057288633f81dc09e8a-0)
 
-将上述代码粘贴至 TableOperation 类 writeTable 方法的 TODO code 6 注释区间内：
+4）右键点击 WordCountMainTest object，选择 Create/Edit WordCountMainTest.main() 编辑主函数参数。
 
-![1738-460-23](https://doc.shiyanlou.com/courses/1738/1207281/f877d50c6361f4cc18f2b9491c874ed5-0)
+![1738-460-编辑1](https://doc.shiyanlou.com/courses/1738/1207281/732112c752489330b752398c155e5070-0)
 
-#### 运行程序
+5）编辑主函数参数为 loadfromsdb。
 
-* 右键点击 RDDMainTest 类选择 Create/Edit 主函数
+![1738-460-参数3](https://doc.shiyanlou.com/courses/1738/1207281/0a10edf320b7dfafcb00de6045fe4d90-0)
 
-  ![1738-460-24](https://doc.shiyanlou.com/courses/1738/1207281/cd84332bb32a66da6d74908b03af8662-0)
+6）右键点击 WordCountMainTest object，选择 Run WordCountMainTest.main() 运行程序。
 
-* 编辑主函数参数为 tableoperation
+![1738-460-运行1](https://doc.shiyanlou.com/courses/1738/1207281/89cb45388364c2838e80e0dd2dbde376-0)
 
-  ![1738-460-25](https://doc.shiyanlou.com/courses/1738/1207281/ab48d7311f63d55f98e644ae4dc5fd19-0)
+7）查看运行结果。
 
-* 右键点击 RDDMainTest 类选择 Run 主函数
-
-  ![1738-460-26](https://doc.shiyanlou.com/courses/1738/1207281/88e528e3319081ece5f68422682145ae-0)
-
-* 运行结果如下：
-
-  ![1738-460-27](https://doc.shiyanlou.com/courses/1738/1207281/57993866339a6b42174d1ebf1ea3347e-0)
+![1738-460-结果3](https://doc.shiyanlou.com/courses/1738/1207281/9eb85970af18d4c3e4ce8dbc7ef45ac9-0)
 
 ## 总结
 
-通过本课程的学习，可以了解 Spark 中 RDD、DataFrame 和 DataSet 的区别和联系。在实验中使用 RDD 和 DataSet 分别实现 word count 来展示的 Spark RDD 的简单操作，并通过 DataSet 读写 MySQL 实例展示了如何使用 Spark 的 DataSet API 和 SequoiaDB-MySQL 实例交互。
+通过本课程的学习，可以了解 Spark 中 RDD、DataFrame 和 DataSet 的区别和联系。在实验中使用 RDD 实现了简单的 word count 来展示的 Spark RDD 的简单操作，并通过从 SequoiaDB 读写 RDD 的例子展示了如何使用 Spark 的 RDD 和 SequoiaDB 交互。
