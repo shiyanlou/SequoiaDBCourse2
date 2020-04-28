@@ -38,9 +38,9 @@ version: 1.0
 
 ![1587923287299](https://doc.shiyanlou.com/courses/1735/1207281/2e66fe621bc8196ead5a7141c8125db4-0)
 
-#### 打开lesson6_explainAndCase包
+#### 打开lesson6_explainandcase包
 
-打开 lesson6_explainAndCase packge，在该 packge 中完成后续课程
+打开 lesson6_explainandcase packge，在该 packge 中完成后续课程
 
 ![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
 
