@@ -173,7 +173,9 @@ Transformation可以对数据做转换操作，代码中的算子使用规则详
 SingleOutputStreamOperator<String> flatMapData = lineData.flatMap(new FlatMapFunction<String, String>() {
     @Override
     public void flatMap(String s, Collector<String> collector) throws Exception {
-        Arrays.stream(s.split(" ")).forEach(collector::collect);
+        for (String word : line.split(" ")) {
+            collector.collect(word);
+        }
     }
 });
 // Filter the operator 

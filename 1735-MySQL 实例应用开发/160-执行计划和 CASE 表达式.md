@@ -38,9 +38,9 @@ version: 1.0
 
 ![1587923287299](https://doc.shiyanlou.com/courses/1735/1207281/2e66fe621bc8196ead5a7141c8125db4-0)
 
-#### 打开lesson6_explainAndCase包
+#### 打开lesson6_explainandcase包
 
-打开 lesson6_explainAndCase packge，在该 packge 中完成后续课程
+打开 lesson6_explainandcase packge，在该 packge 中完成后续课程
 
 ![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
 
@@ -64,17 +64,17 @@ version: 1.0
 | filtered      | 存储引擎返回的数据在server层过滤后,剩下多少满足查询的记录数量的比例 |
 | extra         | 包含不适合在其他列中显式但十分重要的额外信息                 |
 
-**select_type **常见和常用的值有如下几种：
+select_type 常见和常用的值有如下几种：
 
-SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT  从 UNION 表获取结果的 SELECT
+SIMPLE、PRIMARY、SUBQUERY 、DERIVED、UNION 、UNION RESULT
 
-**type **包含的类型包括如下几种，从最好到最差依次是：
+type 包含的类型包括如下几种，从最好到最差依次是：
 
 system > const > eq_ref > ref > range > index > all
 
 #### 查看执行计划
 
-查看 select * from employee 的执行计划
+查看 SELECT * FROM employee 的执行计划
 
 1）打开 ExplainTest.java
 
@@ -84,7 +84,7 @@ system > const > eq_ref > ref > range > index > all
 
 ![1735-160-101.png](https://doc.shiyanlou.com/courses/1735/1207281/6f0df8090b504a1a930ad26e9fa73ac5-0)
 
-3）将下方代码粘贴到 TODO code 1 区域内，查看 select * from employee 的执行计划
+3）将下方代码粘贴到 TODO code 1 区域内，查看 SELECT * FROM employee 的执行计划
 
 ```java
 // Create a Statement object to send SQL statements to the database
@@ -124,7 +124,7 @@ while (rs.next()) {
 | ---- | ----------- | -------- | ---------- | ---- | ------------- | ---- | ------- | ---- | ---- | -------- | ------------------------------------------------------------ |
 | 1    | SIMPLE      | employee | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 6    | 16.67    | Using where with pushed condition (`mysqlTest`.`employee`.`ename` = 'Parto') |
 
-> 在 MySQL 5.7，可以查看 select，delete，insert，replace 和 update 语句的执行计划。
+> 在 MySQL 5.7，可以查看 SELECT，DELETE，INSERT，REPLACE 和 UPDATE 语句的执行计划。
 
 ## 创建索引，改变执行计划
 
@@ -186,7 +186,7 @@ while (rs.next()) {
 
 MySQL CASE 表达式是一个流程控制结构，用在在 SELECT、WHERE 等语句中根据条件动态构造内容。
 
-MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CASE 语句，拿一个给定的值（变量）跟一系列特定的值作比较,称之为 CASE 类型。另一种则更像是编程语言中的if语句，当满足某些条件的时候取特定值，称之为 IF 类型。
+MySQL 的 CASE 表达式有2种形式，一种更像是编程语言当中的 CASE 语句，拿一个给定的值（变量）跟一系列特定的值作比较,称之为 CASE 类型。另一种则更像是编程语言中的 if 语句，当满足某些条件的时候取特定值，称之为 IF 类型。
 
 #### case类型
 
