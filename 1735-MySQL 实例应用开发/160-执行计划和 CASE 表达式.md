@@ -124,7 +124,7 @@ while (rs.next()) {
 | ---- | ----------- | -------- | ---------- | ---- | ------------- | ---- | ------- | ---- | ---- | -------- | ------------------------------------------------------------ |
 | 1    | SIMPLE      | employee | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 6    | 16.67    | Using where with pushed condition (`mysqlTest`.`employee`.`ename` = 'Parto') |
 
-> 在 MySQL 5.7，可以查看 select，delete，insert，replace 和 update 语句的执行计划。
+> 在 MySQL 5.7，可以查看 SELECT，DELETE，INSERT，REPLACE 和 UPDATE 语句的执行计划。
 
 ## 创建索引，改变执行计划
 
