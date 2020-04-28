@@ -84,7 +84,7 @@ system > const > eq_ref > ref > range > index > all
 
 ![1735-160-101.png](https://doc.shiyanlou.com/courses/1735/1207281/6f0df8090b504a1a930ad26e9fa73ac5-0)
 
-3）将下方代码粘贴到 TODO code 1 区域内，查看 select * from employee 的执行计划
+3）将下方代码粘贴到 TODO code 1 区域内，查看 SELECT * FROM employee 的执行计划
 
 ```java
 // Create a Statement object to send SQL statements to the database
