@@ -74,7 +74,7 @@ system > const > eq_ref > ref > range > index > all
 
 #### 查看执行计划
 
-查看 select * from employee 的执行计划
+查看 SELECT * FROM employee 的执行计划
 
 1）打开 ExplainTest.java
 
