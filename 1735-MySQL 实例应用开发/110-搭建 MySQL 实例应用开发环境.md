@@ -2,6 +2,7 @@
 show: step
 version: 1.0 
 
+
 ---
 
 ## 课程介绍
@@ -50,7 +51,7 @@ version: 1.0
 
 1）打开 JdbcDEV.java 类
 
-![1735-110-3.png](https://doc.shiyanlou.com/courses/1735/1207281/1b614ee23c8c3d4d02a218eaf34a81ae-0)
+![1735-110-120.png](https://doc.shiyanlou.com/courses/1735/1207281/c09afa774d77128ecb1c65329a610e5d-0)
 
 2）在 run 方法中找到 TODO code 1
 
@@ -104,23 +105,22 @@ conn.close();
 >
 > 粘贴方法如下：
 >
-> * 点击代码框右上角的 copy 图标
->
-> * 选择实验界面右边的 “剪切板”
+> - 点击代码框右上角的 copy 图标
+> - 选择实验界面右边的 “剪切板”
 >
 > ![paste1](https://doc.shiyanlou.com/courses/1738/1207281/7745e7378b70a60ad6073262f05762ec-0)
 >
-> * 在弹出的“在线环境剪切板”中粘贴复制的代码内容
+> - 在弹出的“在线环境剪切板”中粘贴复制的代码内容
 >
 > ![paste2](https://doc.shiyanlou.com/courses/1738/1207281/6b477101feb04b1db73e8f893ba3b334-0)
 >
-> * 在实验环境中到对应的位置粘贴
+> - 在实验环境中到对应的位置粘贴
 >
 > ![paste3](https://doc.shiyanlou.com/courses/1738/1207281/14482e482cde033e4f78cca144abdcee-0)
 
 4）右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
 
-![1735-110-101.png](https://doc.shiyanlou.com/courses/1735/1207281/fc34dacc10ff53011b7ec40e8ea43139-0)
+![1735-110-118.png](https://doc.shiyanlou.com/courses/1735/1207281/d2a34472c4e021038d5f7443bcd368e3-0)
 
 5）修改参数为 jdbcDEV 
 
@@ -128,7 +128,7 @@ conn.close();
 
 6）再次右键 EnvBuildingMainTest.java 选择 Run 'EnvBuildingMai....main()' ，执行代码
 
-![1735-110-103.png](https://doc.shiyanlou.com/courses/1735/1207281/881fe8a941501d044636e14c37817517-0)
+![1735-110-119.png](https://doc.shiyanlou.com/courses/1735/1207281/ce564b103119e82ba8f6f1673a33c10b-0)
 
 7）查看结果：
 
@@ -152,7 +152,7 @@ C3P0 是一个开源的 JDBC 连接池，它实现了数据源与 JNDI 绑定，
 
 1）打开 C3P0 工具类 UtilsC3P0
 
-![1735-110-20.png](https://doc.shiyanlou.com/courses/1735/1207281/97298ef854fd62d400633e8103656036-0)
+![1735-110-121.png](https://doc.shiyanlou.com/courses/1735/1207281/d2fee49ff1d687da9f21880d168b77dc-0)
 
 2）在 UtilsC3P0类的最下方 找到 TODO code 1
 
@@ -240,7 +240,7 @@ if (conn!=null){
 
 1）打开验证连接池的 TestUtilsC3P0 类
 
-![1735-110-110.png](https://doc.shiyanlou.com/courses/1735/1207281/e149ac2fb587538051af4f3cb7ee0055-0)
+![1735-110-122.png](https://doc.shiyanlou.com/courses/1735/1207281/3faf52569f0216bceb47dfbc8a24c7d8-0)
 
 2）在 run 方法中找到 TODO code 1
 
@@ -284,7 +284,7 @@ try {
 
 4）执行代码，右键 EnvBuildingMainTest.java，选择 Edit 'EnvBuildingMai....main()'
 
-![1735-110-9.png](https://doc.shiyanlou.com/courses/1735/1207281/4f2e6e8dde86ee4694fc668ba569240d-0)
+![1735-110-118.png](https://doc.shiyanlou.com/courses/1735/1207281/d2a34472c4e021038d5f7443bcd368e3-0)
 
 5）修改参数为 testUtilsC3P0
 
@@ -292,7 +292,7 @@ try {
 
 6）右键 EnvBuildingMainTest.java，选择 Run 'EnvBuildingMai....main()'，运行代码
 
-![1735-110-11.png](https://doc.shiyanlou.com/courses/1735/1207281/bca48948ed03e3e6abf5d55307ba2c1f-0)
+![1735-110-119.png](https://doc.shiyanlou.com/courses/1735/1207281/ce564b103119e82ba8f6f1673a33c10b-0)
 
 7）查看结果
 
@@ -308,7 +308,7 @@ MySQL 有很多实用的内置函数，这里简单举例 NOW 函数讲解，更
 
 1）打开 FuncTest.java
 
-![1735-110-114.png](https://doc.shiyanlou.com/courses/1735/1207281/43146f014c728fdf97a1ca4dd70eac5c-0)
+![1735-110-123.png](https://doc.shiyanlou.com/courses/1735/1207281/21827351cc36fce5d34e1f7fc4ad5c4e-0)
 
 2）在 run 方法中找到 TODO code 1
 
@@ -339,7 +339,7 @@ while (rs.next()) {
 
 4）修改参数，右键 EnvBuildingMainTest.java，选择Edit 'EnvBuildingMain....main()'
 
-![1735-110-9.png](https://doc.shiyanlou.com/courses/1735/1207281/4f2e6e8dde86ee4694fc668ba569240d-0)
+![1735-110-118.png](https://doc.shiyanlou.com/courses/1735/1207281/d2a34472c4e021038d5f7443bcd368e3-0)
 
 5）修改参数为 function
 
@@ -347,7 +347,7 @@ while (rs.next()) {
 
 6）执行代码，右键 EnvBuildingMainTest.java，选择 Run 'EnvBuildingMai....main()'，运行代码
 
-![1735-110-11.png](https://doc.shiyanlou.com/courses/1735/1207281/bca48948ed03e3e6abf5d55307ba2c1f-0)
+![1735-110-119.png](https://doc.shiyanlou.com/courses/1735/1207281/ce564b103119e82ba8f6f1673a33c10b-0)
 
 7）查看结果
 
@@ -357,3 +357,4 @@ while (rs.next()) {
 
 本课程讲述了 MySQL 开发环境的搭建：配置 JDBC 连接、配置连接池，以及间要概述了MySQL的常用函数。
 
+  
