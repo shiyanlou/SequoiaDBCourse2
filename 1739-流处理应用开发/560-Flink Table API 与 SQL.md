@@ -5,9 +5,9 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领您了解与学习 Flink Table API 与 Flink SQL。
+本实验将介绍与演示 Flink Table API 与 Flink SQL。
 
-Flink Table 是 Flink 中的高级 API, Table API 将大大降低开发Flink程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
+Flink Table 是 Flink 中的高级 API, Table API 将大大降低开发 Flink 程序的难度。本实验将使用 Flink Table API 与 Flink SQL 来实现流作业的逻辑。
 
 #### 请点击右侧选择使用的实验环境
 
@@ -63,11 +63,11 @@ Flink Table 是 Flink 中的高级 API, Table API 将大大降低开发Flink程�
 
 #### Table 是什么
 
-Table 是一个逻辑概念，其映射具体的 DataStream 或 DataSet 。可以通过 sql 操作 Table 来达到操作具体的DataStream和DataSet。
+Table 是一个逻辑概念，其映射具体的 DataStream 或 DataSet 。可以通过 sql 操作 Table 来达到操作具体的DataStream 和 DataSet。
 
 #### Table 环境
 
-Table 的使用需要依赖于table的执行环境，table的执行环境可以通过现有的流环境进行创建
+Table 的使用需要依赖于 Table 的执行环境，Table 的执行环境可以通过现有的流环境进行创建。
 
 #### 如何创建一个表
 
@@ -79,7 +79,7 @@ Table 的使用需要依赖于table的执行环境，table的执行环境可以�
 
 #### TableDataStream 模式
 
-在 flink中，模式分为 Append, Retract 和 Upsert，Append 表示仅有查询。Retract 和 Upsert 将带有修改，每条数据均增加了一个Boolean字段。在 Retract 模式中，当该字段为 false 时，表示该条数据需要被删除。
+在 Flink 中，模式分为 Append, Retract 和 Upsert，Append 表示仅有查询。Retract 和 Upsert 将带有修改，每条数据均增加了一个 Boolean 字段。在 Retract 模式中，当该字段为 false 时，表示该条数据需要被删除。
 
 ## DataStream 与表的转换
 
@@ -87,7 +87,7 @@ Table 的使用需要依赖于table的执行环境，table的执行环境可以�
 
 #### 打开类
 
-在当前包下，打开类 CreateTableFromDataStreamMain 
+在当前包下，打开类 CreateTableFromDataStreamMain。
 
 ![1739-560-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/d7b32cd9daaeb7de0135c3301909c1bc-0)
 
@@ -126,7 +126,7 @@ SQL 算子的用途与标准sql中关键字一致。
 
 ![1739-560-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/62282507776359442efbce087eed7733-0)
 
-2) 将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2 区间内。
 
 ```java
 /**
@@ -150,7 +150,7 @@ resultTable = initTable.as("word, num")         // Rename field
 
 #### Table 转换为 DataStream
 
-当对table查询之后，向输出到控制台则需要将Table转换为DataStream
+当对table查询之后，向输出到控制台则需要将Table转换为DataStream。
 
 - 要点一：在此处需要传入一个 TypeInformation，描述一个具体 Flink 的对象类型，Flink 会将 Table 中的记录封装为该对象，此处为 Tuple2<String, Integer> 类型，当类型带有泛型时需要借助 TypeHint 对象辅助获取。
 - 要点二：由于使用了 groupby 算子，返回时必须使用 toRetractStream。
@@ -183,11 +183,11 @@ dataStream = tbEnv.toRetractStream(table, TypeInformation.of(
 
 ## 通过表描述器注册表
 
-本例将通过描述器创建 Source 表与 Sink 表，实现从巨杉数据库读入数据，经Flink统计后实时写入结果到巨杉数据库。统计一个交易流水表中的总交易额。
+本例将通过描述器创建 Source 表与 Sink 表，实现从巨杉数据库读入数据，经 Flink 统计后实时写入结果到巨杉数据库。统计一个交易流水表中的总交易额。
 
 #### 打开类
 
-在当前包下，打开类 CreateTableByConnectTableSourceMain 
+在当前包下，打开类 CreateTableByConnectTableSourceMain 。
 
 ![1739-560-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/12826533fd38450196b4c0179e24fdbf-0)
 
@@ -268,7 +268,7 @@ tbEnv.connect(
 
 ![1739-560-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/f37d6887f9aa7581d710c1e0417cc6e0-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内。
 
 ```java
 tbEnv.sqlUpdate(
@@ -293,7 +293,7 @@ tbEnv.sqlUpdate(
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_CONNECT 集合下。
 
-2) 通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+2) 通过浏览器打开 http://localhost:8000 进入 SequoiaDB SAC 管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
@@ -315,7 +315,7 @@ tbEnv.sqlUpdate(
 
 #### 打开类
 
-打开类 CreateTableByDDLMain
+打开类 CreateTableByDDLMain。
 
 ![1739-560-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/c027ce46fea55c55b5c60ff2eb992fd7-0)
 
@@ -398,7 +398,7 @@ tbEnv.sqlUpdate(
 
 ![1739-560-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/19d758219d637a8bc23233f32b53607d-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内。
 
 ```java
  tbEnv.sqlUpdate(
@@ -423,7 +423,7 @@ tbEnv.sqlUpdate(
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_DDL 集合下。
 
-2) 通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+2) 通过浏览器打开 http://localhost:8000 进入 SequoiaDB SAC 管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
@@ -441,7 +441,7 @@ tbEnv.sqlUpdate(
 
 ## Table API 中 Watermark 与 Window 的使用
 
-打开类 ExecuteSqlWithWatermakerAndWindowMain
+打开类 ExecuteSqlWithWatermakerAndWindowMain。
 
 ![1739-560-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/6b45ef42369e2125919eddb6168b47b2-0)
 
@@ -453,7 +453,7 @@ tbEnv.sqlUpdate(
 
 ![1739-560-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/49a8bc5fc72da3f2c6a5f49cc0be50dc-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
 // Connection table via descriptor
@@ -500,15 +500,15 @@ tbEnv.connect(
 
 - TUMBLE_START()
 
-  该函数表示获取翻滚窗口的开始时间，其中第一个参数表示事件的时间戳字段，第二个参数表示窗口的大小，使用INTETVAL指定一个时间间隔。如TUMBLE_START(rowtime, INTERVAL '5' SECOND)表示使用rowtime字段作为事件时间戳，获取窗口大小为5秒的翻滚窗口的窗口开始时间。此函数必须在GROUP BY TUMBLE(...) 才可以使用且TUMBLE_START函数的参数需要与TUMBLE函数参数完全一致。
+  该函数表示获取翻滚窗口的开始时间，其中第一个参数表示事件的时间戳字段，第二个参数表示窗口的大小，使用INTETVAL指定一个时间间隔。如 TUMBLE_START(rowtime, INTERVAL '5' SECOND) 表示使用 rowtime 字段作为事件时间戳，获取窗口大小为 5 秒的翻滚窗口的窗口开始时间。此函数必须在 GROUP BY TUMBLE(...) 才可以使用且 TUMBLE_START 函数的参数需要与 TUMBLE 函数参数完全一致。
 
 - TUMBLE()
 
-   窗口划分函数，表示使用翻滚窗口。第一个参数表示事件的时间戳字段，第二个参数表示窗口的大小，使用INTETVAL指定一个时间间隔。
+   窗口划分函数，表示使用翻滚窗口。第一个参数表示事件的时间戳字段，第二个参数表示窗口的大小，使用 INTETVAL 指定一个时间间隔。
 
 - DATA_FORMAT() 
 
-  该方法可以将时间戳格式化为固定格式的时间字符串。接收两个参数，第一个参数为一个Timestamp类型的字段名，为待转换的时间戳字段，第二个参数为格式化的字符串。
+  该方法可以将时间戳格式化为固定格式的时间字符串。接收两个参数，第一个参数为一个 Timestamp 类型的字段名，为待转换的时间戳字段，第二个参数为格式化的字符串。
 
 #### 编写 SQL
 
@@ -549,7 +549,7 @@ tbEnv.sqlUpdate(
 
 通过 SAC 查看结果数据，结果在 VIRTUAL_BANK.LESSON_6_SQL 集合下。
 
-2) 通过浏览器打开 localhost:8000 进入SequoiaDB SAC管理界面。
+2) 通过浏览器打开 http://localhost:8000 进入 SequoiaDB SAC 管理界面。
 
 ![1739-540-00049.png](https://doc.shiyanlou.com/courses/1739/1207281/b4c3578fcb61d5b65d87b2fc084f7a05-0)
 
