@@ -42,7 +42,7 @@ version: 1.0
 
 2）打开 Spark 实验的项目，在该项目中完成所有实验步骤。
 
-![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/6d46a0bb22fac49997e6606ec1a128ab-0)
+![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/5497d93bf19ee0442b4ae79b4cd8d39a-0)
 
 #### 项目结构
 
@@ -58,9 +58,11 @@ pom.xml 文件位置：
 
 ![1738-410-pom文件位置](https://doc.shiyanlou.com/courses/1738/1207281/9792106157a176f82acdaebf04961568-0)
 
-实验中使用到的 Maven 依赖如下：
+当前实验中使用到的 Maven 依赖如下：
 
-![1738-410-maven依赖](https://doc.shiyanlou.com/courses/1738/1207281/906e4e64d3978c2a824ccba0fa8ce56d-0)
+![1738-410-maven1](https://doc.shiyanlou.com/courses/1738/1207281/b0f437f18a0a276bbf404da17fef9a2c-0)
+
+![1738-410-maven2](https://doc.shiyanlou.com/courses/1738/1207281/3d62b4c63338baa02ce4337f029ff166-0)
 
 > **说明**
 >
