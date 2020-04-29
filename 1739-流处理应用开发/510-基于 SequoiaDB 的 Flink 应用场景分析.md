@@ -39,7 +39,7 @@ version: 1.0
 
 #### 打开 lesson1 packge
 
-打开 com.sequoiadb.lesson.flink.lesson1_intro  packge ，在该 package 中完成本课程。
+打开包 com.sequoiadb.lesson.flink.lesson1_intro ，在该 package 中完成本课程。
 
 ![1739-510-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/33379a63a7db9a70550495c7d03cfb05-0)
 
@@ -61,13 +61,13 @@ Flink 是一个框架，也是一个分布式处理引擎（ Flink 支持分布�
 
 #### 为什么要用 Flink
 
-使用 Flink的原因很多，最重要的有两个原因。
+使用 Flink的原因很多，最重要的有以下几个原因。
 
 - Flink EventTime 的支持
 - 灵活的窗口
 - Exactly once 语义保证
 
-在 Flink 中，每条数据被称为一个 Event （时间）。所谓 EventTime 是便是数据产生的时间，例如在日志收集系统中，日志 A 产生的时间是 12:00 整，而日志 B 产生的时间为 12:01。但是由于日志发送过程中网络波动等原因，导致系统在 12:03 收到了日志 B，12:04 收到了日志 A，此时发现日志产生的顺序和收到日志的顺序是不一致的，而 Flink 支持这种操作，可以通过事件产生的事件做处理。
+在 Flink 中，每条数据被称为一个 Event （时间）。所谓 EventTime 是便是数据产生的时间，例如在日志收集系统中，日志 A 产生的时间是 12:00 整，而日志 B 产生的时间为 12:01。但是由于日志发送过程中网络波动等原因，导致系统在 12:03 收到了日志 B，12:04 收到了日志 A，此时发现日志产生的顺序和收到日志的顺序是不一致的，而 Flink 支持通过事件产生的事件做处理。
 
 通常情况下在一个流上做一些统计操作是没有意义的，因为流没有尽头，所以 Flink 内置了多种窗口，各种窗口可以按照不同的规则将数据流切分到多个不同的桶中，以满足各种需求。
 
@@ -82,7 +82,7 @@ Flink 支持状态管理，在任务出现异常时可以将任务回退到之�
 #### Flink 的执行流程
 
 ![1739-510-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/5509b69c586de4f3cff7ddac390cf55c-0)
-这是 Flink 的工作流程，首先了解 Flink 中的基本角色。
+这是 Flink 的工作流程，首先了解一下 Flink 中的基本角色。
 
 - JobManager： 整个集群的 Master，负责接收客户端的消息和分配调度集群资源和分发任务给 TaskManager。
 - JobClient： 负责向 JobManager 发送请求，在提交作业时负责将 Flink Program 组装为一个 JobGraph 发给 JobManager。
@@ -93,7 +93,7 @@ Flink 支持状态管理，在任务出现异常时可以将任务回退到之�
 
 ## Flink Demo 示例
 
-为了帮助您更好的理解 Flink 的工作原理及开发流程，本小节将展示一个 Demo 示例，一个经典案例单词统计，统计原始数据行中各个单词出现的次数。本案例主要学习 Flink 流程序的主要流程，算子的具体使用见下一小节。
+为了更好的理解 Flink 的工作原理及开发流程，本小节将展示一个 Demo 示例，一个经典案例单词统计，统计原始数据行中各个单词出现的次数。本案例主要学习 Flink 流程序的主要流程，算子的具体使用见下一小节。
 
 一个 Flink 流程序中的主要流程为：获取流执行环境，使用 Source 添加数据源，使用 Transformation 算子对数据集进行转换操作，最终通过 Sink 将结果数据集输出到外部设备，流作业执行。
 
@@ -105,13 +105,13 @@ Flink 支持状态管理，在任务出现异常时可以将任务回退到之�
 
 #### 获取执行环境
 
-一个 Flink 程序由 Source，Transformation，Sink 三部分组成。首先需要获取到 Flink 的流作业的执行环境，添加转换逻辑。
+一个 Flink 程序由 Source，Transformation，Sink 三部分组成。首先需要获取到 Flink 的流作业的执行环境。
 
 1) 在当前类中找到 environment 方法，找到 TODO code 1。
 
 ![1739-510-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/0929b3a2eaa926acf17ae32f043da872-0)
 
-2) 将下列代码粘贴到 TODO code 1 区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内，该代码实现获取流作业的执行环境。
 
 ```java
 // Get the execution environment
@@ -143,11 +143,11 @@ env = StreamExecutionEnvironment.getExecutionEnvironment();
 
 Source算子用于产生一个DataStream。
 
-1) 在当前类中找到source方法，找到 TODO code 2。
+1) 在当前类中找到 source 方法，找到 TODO code 2。
 
 ![1739-510-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/7b713a9dbfebbc69b096f6f8d6997c18-0)
 
-2) 将下列代码粘贴到 TODO code 2 区间内。
+2) 将下列代码粘贴到 TODO code 2 区间内，当前代码段通过向流环境中添加数据源 RandomSource， 该数据源将每隔 1 秒向流中输入一条包含多个单词用空格连接的数据。
 
 ```java
 // Generate some random data rows through RandomSource
@@ -162,11 +162,11 @@ dataSource = env.addSource(new RandomSource());
 
 Transformation可以对数据做转换操作，代码中的算子使用规则详见下一小节，此处仅做演示。
 
-1) 在当前类中找到transformate方法，找到 TODO code 3。
+1) 在当前类中找到 transformate 方法，找到 TODO code 3。
 
 ![1739-510-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/a255639bcab9df82398483643aecdda5-0)
 
-2) 将下列代码粘贴到 TODO code 3 区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内，该代码段实现将数据进行切分转换之后统计每个单词出现的次数。
 
 ```java
 // Conversion the operator
@@ -197,9 +197,9 @@ sumData = mapData.keyBy(0).sum(1);
 
 #### Sink算子的使用
 
-使用Sink将结果输出到控制台。此处使用的print方法实则调用了一个ConsoleSink，会将结果sink到控制台。
+使用Sink将结果输出到控制台。此处使用的 print 方法实则调用了一个 ConsoleSink，会将结果 sink 到控制台，或者说输出到标准输出。
 
-1) 在当前类中找到sink方法，找到 TODO code 4。
+1) 在当前类中找到 sink 方法，找到 TODO code 4，该代码段实现将数据结果输出到标准输出。
 
 ![1739-510-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/60d7ee96c9d74c42ef4398c46a9c7f4a-0)
 
@@ -217,7 +217,7 @@ sumData.print();
 
 上述代码仅仅只是定义了一个流的转换逻辑，如果想让该流作业执行，还需要一个调用一个执行函数。
 
-1) 在当前类中找到 exec 方法，找到 TODO code 5。
+1) 在当前类中找到 exec 方法，找到 TODO code 5，该代码段将真正触发执行当前作业的数据处理流程。
 
 ![1739-510-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/3ae280970ea40ce4c03c7d86dce68106-0)
 
@@ -246,7 +246,7 @@ env.execute("flink intro demo");
 
 ## SequoiaDB在流场景中的应用
 
-SequoiaDB是国内首个自主知识产权、自主研发的金融级分布式NewSQL数据库。SequoiaDB支持标准SQL、事务操作、高并发、分布式、可扩展、与双引擎存储等特性，并已经作为商业化的数据库产品开源,SequoiaDB目前在银行、证券、政府等领域都有广泛的应用，SequoiaDB以其分布式、海量存储、高性能、可扩展等特性为个行业的客户提供了很好解决方案。
+SequoiaDB 是国内首个自主知识产权、自主研发的金融级分布式NewSQL 数据库。SequoiaDB 支持标准 SQL、事务操作、高并发、分布式、可扩展、与双引擎存储等特性，并已经作为商业化的数据库产品开源，SequoiaDB 目前在银行、证券、政府等领域都有广泛的应用，SequoiaDB 以其分布式、海量存储、高性能、可扩展等特性为个行业的客户提供了很好解决方案。
 
 Flink 流数据处理的性能以及吞吐量在实际运用中，可以达到很高的处理性能和吞吐量，尤其是在处理基于 EventTime 的数据加工以及统计的场景下。其高性能和高容错机制在流数据处理的过程中能够既保证数据处理性能又可以保证数据处理的质量。
 
