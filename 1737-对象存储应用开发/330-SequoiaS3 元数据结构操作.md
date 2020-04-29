@@ -84,7 +84,7 @@ s3.putObject(bucketName,objectName,inputStream,objectMetadata);
 
 ![image-20200422160225591](https://doc.shiyanlou.com/courses/1737/1207281/55a93138064f76b8f44a17711ea37c13-0)
 
-2）将下方代码粘贴到 TODO ~ TODO END区域内。
+2）将下方代码粘贴到 TODO ~ TODO END 区域内。
 
 ```java
 //Get the S3 connection
