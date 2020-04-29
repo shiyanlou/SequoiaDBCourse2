@@ -7,13 +7,13 @@ version: 1.0
 
 本实验为 Flink 流作业 Scala 版本的实现，与 Java 版的讲述相同，如果不感兴趣可以跳到下一小节。
 
-本实验将介绍 Flink 的常用算子的使用，帮快速入门；同时学习如何将工程打包发布到集群环境。本实验采用经典案例 WordCount 单词统计进行演示。
+本实验将使用 Scala 代码介绍 Flink 的常用算子的使用，Scala 代码相比 Java 而言，用于大数据处理场景中语法尤为简单，也被称为大数据处理的黄金语言。本实验采用经典案例 WordCount 单词统计进行演示。
 
 #### 请点击右侧选择使用的实验环境
 
 #### 部署架构：
 
-本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1个 Flink节点、1个引擎协调节点，1个编目节点与3个数据节点。
+本课程中 SequoiaDB 巨杉数据库的集群拓扑结构为三分区单副本，其中包括：1 个 Flink节点、1 个引擎协调节点，1 个编目节点与 3 个数据节点。
 
 ![1739-510-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/a8fa9ed16eda4d9d3ef1f521c7dabdeb-0)
 
@@ -41,7 +41,7 @@ version: 1.0
 
 #### 打开 lesson3 packge
 
-打开 com.sequoiadb.lesson.flink.lesson3_word_count，在该 package 中完成本课程。注意：该包位于 scala 源码包下。
+打开包 com.sequoiadb.lesson.flink.lesson3_word_count，在该 package 中完成本课程。注意：该包位于 scala 源码包下。
 
 ![1730-530-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/0fd4e6295ec707993e09e044c0e24998-0)
 

@@ -39,7 +39,7 @@ version: 1.0
 
 #### 打开 lesson2 packge
 
-打开 com.sequoiadb.lesson.flink.lesson2_word_count ，在该 package 中完成本课程。
+打开包 com.sequoiadb.lesson.flink.lesson2_word_count ，在该 package 中完成本课程。
 
 ![1739-520-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/dd1ccd9e7af745a1dce408c679d08ebf-0)
 
@@ -56,19 +56,19 @@ version: 1.0
 
 #### 打开类
 
-在当前包下，打开类 WordCountMain
+在当前包下，打开类 WordCountMain。
 
 ![1739-520-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/cce5779376008f80afe450f58baf69c0-0)
 
 #### 运行程序
 
-通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序
+通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
 ![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
 #### 查看结果
 
-执行结果如下图。可以看到是一些数据行，每行有多个单词构成，此时如果想要统计每个单词出现的次数首先需要使用该算子对数据行进行切分成单个单词的数据行。
+执行结果如下图。可以看到是一些数据行，每行有多个单词构成，用空格分隔。
 
 ![1739-520-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/da5c2a4f975c9d36254f9cddd9476ca3-0)
 
@@ -86,7 +86,7 @@ flatmap 算子中需要传递一个对象，该对象有两个泛型，分别为
 
 ![1739-520-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/1ee2009c64a07f8c679ba4771fa612ae-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1区间内，该代码段将会把每个数据行按空格切分为多个单词，并向下游输出每行包含一个单词的数据行。
 
 ```java
 flatMapData = dataStream.flatMap(new FlatMapFunction<String, String>() {
@@ -111,13 +111,13 @@ flatMapData = dataStream.flatMap(new FlatMapFunction<String, String>() {
 
 ![1739-520-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/41a88a4b7ea08ea60d1652ea1751e219-0)
 
-> Note
+> Note ：
 >
-> 此处请不要使用1.8中的函数式接口实现，由于其没有显式指定输出数据的类型会导致程序无法获取返回类型而抛出异常。
+> 此处请不要使用 1.8 中的函数式接口实现，由于其没有显式指定输出数据的类型会导致程序无法获取返回类型而抛出异常。
 
 #### 查看数据的结果
 
-1) 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序
+1) 通过在当前类文件上右键 > Run 'WordCountMain' 运行该 Flink 程序。
 
 ![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
@@ -133,13 +133,13 @@ filter 算子是 Transformation 的其中一种。该算子在每个数据行上
 
 #### filter 的使用
 
-现在想把数据行中 “java” 单词去掉。
+由于单词 "java" 与其他单词不属于同一类型，现想把数据行中 “java” 单词去掉则可以使用该算子。
 
 1) 在当前类中找到 filter 方法，找到 TODO code 2。
 
 ![1739-520-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/5bfe6a67160803871fd8206443674b55-0)
 
-2) 将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2区间内，该算子将过滤掉流中值为 "java" 的数据行。
 
 ```java
 // Filter the word "java"
@@ -167,33 +167,33 @@ filterData = dataStream.filter(new FilterFunction<String>() {
 
 ![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
-2) 可以看到数据中已经没有“java”单词了。
+2) 可以看到数据中已经没有单词 “java” 了。
 
 ![1739-520-00022.png](https://doc.shiyanlou.com/courses/1739/1207281/473bb94278cfcff09c763af4dec5ff32-0)
 
 #### 拓展提高（可选）
 
-本步骤为可选，由于在filter算子中，输入的数据类型与输出的数据类型一致，则该算子中可以使用函数式的写法。如果有兴趣，可将filter函数中修改为下列代码块后重新执行当前程序。
+本步骤为可选，由于在 filter 算子中，输入的数据类型与输出的数据类型一致，则该算子中可以使用函数式的写法。如果有兴趣，可将 filter 函数中修改为下列代码块后重新执行当前程序。
 
 ```java
 filterData = dataStream.filter(i -> !i.equals("java"));
 ```
 
-## map算子
+## map 算子
 
-#### map算子的作用
+#### map 算子的作用
 
-map算子也是Transformation的其中一种。map算子同样在每个数据行上被调用一次。值得注意的是与flatmap算子不同，map算子在一个数据行上的调用中仅能输出一个新的数据行，而flatmap可以输出多行（包含零）。
+map 算子也是 Transformation 的其中一种。map 算子同样在每个数据行上被调用一次。值得注意的是与flatmap 算子不同，map 算子在一个数据行上的调用中仅能输出一个新的数据行，而 flatmap 可以输出多行（包含零）。
 
-#### map算子的使用
+#### map 算子的使用
 
-本实验中使用了一个在Flink中的新的数据类型，Tuple(元组)可以理解为能保存不同数据类型的列表。同时在map算子的输出结果中添加了一个整数1，表示当前记录的单词数。
+本实验中使用了一个在 Flink 中的新的数据类型，Tuple (元组)可以理解为能保存不同数据类型的列表。同时在map 算子的输出结果中添加了一个整数1，表示当前记录的单词数。
 
-1) 在当前类中找到map方法，找到 TODO code 3。
+1) 在当前类中找到 map 方法，找到 TODO code 3。
 
 ![1739-520-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/0ec1d13cb55a585d1c4da2cf67f79325-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3区间内，该代码段将每个数据行上的数据转换为一个 Tuple2 ，其包含一个字符串类型的单词和整数型的值，表示当前行上的单词数量。
 
 ```java
 mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
@@ -220,7 +220,7 @@ mapData = dataStream.map(new MapFunction<String, Tuple2<String, Integer>>() {
 
 ![1739-520-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/4ebd94c9ae78606232977cce635c1f83-0)
 
-2) 可以看到每个数据行上都是一个 Tuple2，包含一个单词和1。
+2) 可以看到每个数据行上都是一个 Tuple2，包含一个单词和 1。
 
 ![1739-520-00013.png](https://doc.shiyanlou.com/courses/1739/1207281/975df71ddf869638717272b792d48273-0)
 
@@ -244,7 +244,7 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 
 ![1739-520-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/3a37632b8aa29def11e657151da7fa08-0)
 
-2) 将下列代码粘贴到 TODO code 4 区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内，该代码块按单词进行聚合，求和单词个数用以计算单词的出现次数。
 
 ```java
 // When the generic type of DataStream is Tuple, users can directly sum keyBy through the subscript index.
@@ -269,17 +269,17 @@ sumData = tupleData.keyBy(0).sum(1);
 
 #### reduce 算子的作用
 
-reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。其内部实现 reduce 方法，该方法有两个参数，代表两条数据，在该方法中需要实现两条数据的聚合规则。
+reduce 算子定义任意两个数据行合并为一个的数据行的逻辑。其内部实现 reduce 方法，该方法有两个参数，代表当前数据组内的任意两条数据，在该方法中需要定义内部每两条数据的聚合逻辑。
 
 #### reduce 算子的使用
 
 上述示例中使用了 sum 进行求和，但是如果有较为复杂的需求（如求平均值等）则必须使用 reduce 算子，此处同样使用 reduce 算子实现求和逻辑。
 
-在当前类中找到 reduce 方法，找到 TODO code 5。
+1) 在当前类中找到 reduce 方法，找到 TODO code 5。
 
 ![1739-520-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/25043e1d851d5f57cfdadb42441a5b83-0)
 
-将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5 区间内，该代码中定义了分组之后每个数据组内，Tuple2 的第二个值相加，第一个值取其中一条数据的原始值（在相同数据组内 Tuple2.f0 实际是相同的）。
 
 ```java
 // The following code is only for demonstration. It has the same effect as the sum operator, and implementing one is fine.
@@ -314,9 +314,9 @@ sumData = keyedData.reduce(new ReduceFunction<Tuple2<String, Integer>>() {
 
 #### 提交到集群环境
 
-通过浏览器打开 http://localhost:9091 进入FlinkUI，默认端口8081，实验环境由于端口冲突改为了9091。
+通过浏览器打开 http://localhost:9091 进入FlinkUI，默认端口 8081，实验环境由于端口冲突改为了 9091。
 
-1) 可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
+1) 可以通过 UI 界面 > submit new job > add new  首先上传本地 jar 包。 
 
 ![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/8e6df7ea80e5358c21e5f3a115ad60d7-0)
 
