@@ -5,7 +5,7 @@ version: 1.0
 
 ## 课程介绍
 
-本实验将带领了解与学习 Flink 中 Window，Time 以及 Watermark 机制。
+本实验介绍与演示 Flink 中 Window，Time 以及 Watermark 机制。
 
 #### 请点击右侧选择使用的实验环境
 
@@ -41,7 +41,7 @@ version: 1.0
 ![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
 
 #### 打开 lesson4 packge
-打开 com.sequoiadb.lesson.flink.lesson4_window，在该 package 中完成本课程。
+打开包 com.sequoiadb.lesson.flink.lesson4_window，在该 package 中完成本课程。
 
 ![1739-540-00008.png](https://doc.shiyanlou.com/courses/1739/1207281/ee95192e8a987d3fc8ed46aa5c47456b-0)
 
@@ -59,19 +59,19 @@ version: 1.0
 
 #### window 是什么
 
-Window 是处理无限流的核心。Window 将流分成有限大小的“桶”，可以在其上应用计算。Window 会按一定的规则将一个数据流进行切分成一个个小部分，可以在这些小部分上做批计算，以满足我们的多种需求。
+Window 是处理无限流的核心。Window 将流分成有限大小的“桶”，可以在其上应用计算。Window 会按一定的规则将一个数据流进行切分成一个个小部分，可以在这些小部分上做批计算，以满足业务的多种需求。
 
 #### 为什么要使用 Window 
 
-在实际使用 Flink 时，可能需要去统计一定范围的指标（如：每分钟进入 Flink 的数据量）。这种情况下使用整个流上的平均数是一个不太合理的选择，所以要将数据按照一定规则进行切分（也就是分成不同的桶）。在每个Window 上进行统计操作是更符合实际需要的。
+在实际使用 Flink 时，可能需要去统计一定范围的指标（如：每分钟进入 Flink 的数据量）。这种情况下使用整个流上的平均数是一个不太合理的选择，所以要将数据按照一定规则进行切分（也就是分成不同的桶）。在每个 Window 上进行统计操作是更符合实际需要的。
 
 #### Window 的使用
 
-Window 在 Flink 程序中使用时可以分为两类。第一类 keyed Window ，第二类是non-keyed Window 。即用在keyBy 算子之后，使用 window(...) 方法进行分桶，non-keyed 在 DataStream 使用 windowAll(...) 方法进行分桶。
+Window 在 Flink 程序中使用时可以分为两类。第一类 keyed Window ，第二类是 non-keyed Window 。即用在 keyBy 算子之后，使用 window(...) 方法进行分桶，non-keyed 在 DataStream 使用 windowAll(...) 方法进行分桶。
 
 ## Window 的划分规则
 
-Flink 内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）、Sliding Window（滑动窗口）、Session Window（会话窗口，本次课程不做实际练习）。
+Flink 内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）、Sliding Window（滑动窗口）、Session Window（会话窗口，本次课程不做演示）。
 
 #### 翻滚窗口
 
@@ -98,7 +98,7 @@ Flink 内部提供了三种 Window，分别是 Tumbling Window（翻滚窗口）
 
 #### 打开类
 
-在当前包下，打开类 TumblingCountWindowMain
+在当前包下，打开类 TumblingCountWindowMain。
 
 ![1739-540-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/9d9504ea0a5fcf5c26534be64fe59009-0)
 
@@ -119,7 +119,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 ![1739-540-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/c14b56f3053c93586f7027e8adc42dfe-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
  // Build the connection Option
@@ -160,7 +160,7 @@ SequoiadbSource 可以非常容易地从 SequoiaDB 中读取一个流。
 
 ![1739-540-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/1fee7f643a5b783769838098815adc82-0)
 
-2) 将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2 区间内。
 
 ```java
 resultData = dataStream.map(new MapFunction<BSONObject, 
@@ -190,7 +190,7 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 ![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
-2) 执行结果如下图，可以看到一个Tuple2，包含交易额和1。
+2) 执行结果如下图，可以看到一个 Tuple2，包含交易额和 1。
 
 ![1739-540-00020.png](https://doc.shiyanlou.com/courses/1739/1207281/0ade0cf2f5ee1cd09976d4b6126f110c-0)
 
@@ -198,13 +198,13 @@ resultData = dataStream.map(new MapFunction<BSONObject,
 
 #### Window 划分
 
-使用 windowAll 算子对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个 AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow> 对象，泛型表示 Window 中的数据类型以及Window 的引用，在 CountWindow 中引用是一个全局的 Window 对象。
+使用 windowAll 算子对流上数据进行分桶，此处使用翻滚计数窗口，窗口长度为100条，该算子返回一个 AllWindowedStream<Tuple2<Double, Integer>, GlobalWindow> 对象，泛型表示 Window 中的数据类型以及 Window 的引用，在 CountWindow 中引用是一个全局的 Window 对象。
 
 1) 在当前类中找到 window 方法，找到 TODO code 3。
 
 ![1739-540-00018.png](https://doc.shiyanlou.com/courses/1739/1207281/8448ba8bfdd5a345b3dde07ea4583234-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内。
 
 ```java
 resultData = dataStream.countWindowAll(100);
@@ -234,7 +234,7 @@ resultData = dataStream.countWindowAll(100);
 
 ![1739-540-00019.png](https://doc.shiyanlou.com/courses/1739/1207281/bb596fc813f02833b5965b7d939b92de-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```java
 resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
@@ -265,7 +265,7 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 ![1739-540-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/b3f9e687386bd8e7b61ca015eb5c00a9-0)
 
-2) 查看结果，可以得到每100次的交易额。
+2) 查看结果，可以得到每 100 次的交易额。
 
 ![1739-540-00014.png](https://doc.shiyanlou.com/courses/1739/1207281/db766aedb59b4e37e52ac9b9a32adb78-0)
 
@@ -275,13 +275,13 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 #### 打开类
 
-在当前包下，打开类 TumblingTimeWindowMain
+在当前包下，打开类 TumblingTimeWindowMain。
 
 ![1739-540-00011.png](https://doc.shiyanlou.com/courses/1739/1207281/1db81a75ce684e443c5ed193c06c2dc6-0)
 
 #### 原始数据的了解
 
-本案例中使用到了以下三个字段
+本案例中使用到了以下三个字段。
 
 | 字段名      | 字段类型  | 备注       |
 | ----------- | --------- | ---------- |
@@ -297,7 +297,7 @@ resultData = dataStream.reduce(new ReduceFunction<Tuple2<Double,
 
 ![1739-540-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/87e09fee95d48ff9394cc41c840ad4cb-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
 // Build the connection Option
@@ -334,7 +334,7 @@ sourceData = env.addSource(new SequoiadbSource(option, "create_time"));
 
 ![1739-540-00024.png](https://doc.shiyanlou.com/courses/1739/1207281/4d2cc0053dc3643d31ea505536892699-0)
 
-2) 将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2 区间内。
 
 ```java
 resultData = dataStream.map(new MapFunction<BSONObject, 
@@ -377,7 +377,7 @@ keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<
 
 ![1739-540-00025.png](https://doc.shiyanlou.com/courses/1739/1207281/d1d7dd44c141a64b7587975a34547558-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内。
 
 ```java
 resultData = dataStream.keyBy(new KeySelector<Tuple3<String, 
@@ -418,7 +418,7 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String,
 
 ![1739-540-00026.png](https://doc.shiyanlou.com/courses/1739/1207281/d5ae99a14930f8a20843131701cec068-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```java
 resultData = keyedData.timeWindow(Time.seconds(5));
@@ -502,7 +502,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 #### 打开类
 
-在当前包下，打开类 SlidingCountWindowMain
+在当前包下，打开类 SlidingCountWindowMain。
 
 ![1739-540-00015.png](https://doc.shiyanlou.com/courses/1739/1207281/36724e26a8ae89df74d254343d6f0425-0)
 
@@ -514,7 +514,7 @@ resultData = windowData.apply(new WindowFunction<Tuple3<String, Double, Integer>
 
 ![1739-540-00032.png](https://doc.shiyanlou.com/courses/1739/1207281/4304c9cdf3fa4c2c582eb3578da99545-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
 // Build the connection Option
@@ -541,7 +541,7 @@ dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 
 ![1739-540-00033.png](https://doc.shiyanlou.com/courses/1739/1207281/beaaf9c609ca4a4ba7a3ab8637334555-0)
 
-2) 将下列代码粘贴到 TODO code 2区间内。
+2) 将下列代码粘贴到 TODO code 2 区间内。
 
 ```java
 resultData = transData.map(new MapFunction<BSONObject, 
@@ -567,7 +567,7 @@ keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<
 
 ![1739-540-00034.png](https://doc.shiyanlou.com/courses/1739/1207281/d2610cd166171f74ac4cfe460deb0173-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内。
 
 ```java
 resultData = moneyData.keyBy(0);
@@ -603,7 +603,7 @@ resultData = keyedData.countWindow(100, 50);
 
 ![1739-540-00036.png](https://doc.shiyanlou.com/courses/1739/1207281/0d9d426567915ee032b2d3659130b0a8-0)
 
-2) 将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5 区间内。
 
 ```java
 resultData = countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer>, Tuple2<String, Double>, Tuple, GlobalWindow>() {
@@ -640,7 +640,7 @@ resultData = countWindow.apply(new WindowFunction<Tuple3<String, Double, Integer
 
 ![1739-540-00037.png](https://doc.shiyanlou.com/courses/1739/1207281/0affc0ffa1cb90e3317f5c575d6e3348-0)
 
-2) 将下列代码粘贴到 TODO code 6区间内。
+2) 将下列代码粘贴到 TODO code 6 区间内。
 
 ```java
 bsonData = dataStream.map(new MapFunction<Tuple2<String, Double>, BSONObject>() {
@@ -720,7 +720,7 @@ Flink 在流程序中支持不同的时间概念，下图为各个时间在整�
 
 #### Watermark 的概念
 
-Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用于处理乱序事件的手段。Watermark 是流的一部分，它维护一个时间戳，作为流中特殊的事件穿插在其中。它宣布事件的达到时间，这意味着当遇到Watermark 时将认为晚于其内部时间戳的事件已经全部到达。
+Watermark（水位线）是 Flink 中衡量事件时间进度的机制。也是用于处理乱序事件的手段。Watermark 是流的一部分，它维护一个时间戳，作为流中特殊的事件穿插在其中。它宣布事件的达到时间，这意味着当遇到 Watermark 时将认为晚于其内部时间戳的事件已经全部到达。
 
 ![1739-540-00005.png](https://doc.shiyanlou.com/courses/1739/1207281/fe11a3482860ce0ca2210541df1c0f47-0)
 
@@ -728,7 +728,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 ![1739-540-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/084bd88bce6705d90628b57123e0ee6a-0)
 
-在 Window 中，Watermark 的作用可从下图看出，当 Watermark 的值大于或等于 Window 结束时间时将触发Window 操作（当然当前 Window 中必须有数据存在）。
+在 Window 中，Watermark 的作用可从下图看出，当 Watermark 的值大于或等于 Window 结束时间时将触发 Window 操作（当然当前 Window 中必须有数据存在）。
 
 ![1739-540-00007.png](https://doc.shiyanlou.com/courses/1739/1207281/81094ea976c12aadfcb859953b7809c2-0)
 
@@ -745,7 +745,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 #### 打开类
 
-在当前包下，打开类 SlidingTimeWindowWithWatermarkerMain
+在当前包下，打开类 SlidingTimeWindowWithWatermarkerMain。
 
 ![1739-540-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/e1961710ce9954e94c244fcbfcecd1f0-0)
 
@@ -757,7 +757,7 @@ Watermark（水位线）是Flink中衡量事件时间进度的机制。也是用
 
 ![1739-540-00052.png](https://doc.shiyanlou.com/courses/1739/1207281/3535b322b4c6a0ee8e5fb174bbf82da9-0)
 
-2) 将下列代码粘贴到 TODO code 1区间内。
+2) 将下列代码粘贴到 TODO code 1 区间内。
 
 ```java
 // Build the connection Option
@@ -778,9 +778,9 @@ dataSource = env.addSource(new SequoiadbSource(option, "create_time"));
 
 #### 添加Watermark
 
-向流中添加watermark。
+向流中添加 Watermark。
 
-1) 在当前类中找到watermark方法，找到 TODO code 2。
+1) 在当前类中找到 watermark 方法，找到 TODO code 2。
 
 ![1739-540-00041.png](https://doc.shiyanlou.com/courses/1739/1207281/ee8a1858d1f13c8eecce03f3e75bffcf-0)
 
@@ -828,7 +828,7 @@ resultData = transData.assignTimestampsAndWatermarks(
 
 ![1739-540-00042.png](https://doc.shiyanlou.com/courses/1739/1207281/20429cb747e1cee393d6545e47e22148-0)
 
-2) 将下列代码粘贴到 TODO code 3区间内。
+2) 将下列代码粘贴到 TODO code 3 区间内。
 
 ```java
 resultData = transData.map(new MapFunction<BSONObject, Tuple3<String, Double, Integer>>() {
@@ -851,7 +851,7 @@ keyBy 算子通过“trans_name”进行分组，keyBy 返回一个 KeyedStream<
 
 ![1739-540-00043.png](https://doc.shiyanlou.com/courses/1739/1207281/3cd5e08b7af041e3222276062d03943d-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```java
 resultData = dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>, 
@@ -875,7 +875,7 @@ resultData = dataStream.keyBy(new KeySelector<Tuple3<String, Double, Integer>,
 
 ![1739-540-00044.png](https://doc.shiyanlou.com/courses/1739/1207281/3e6490f1f821fec715f4df1af7f2c78b-0)
 
-2) 将下列代码粘贴到 TODO code 5区间内。
+2) 将下列代码粘贴到 TODO code 5 区间内。
 
 ```java
 resultData = keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time.seconds(2)));
@@ -893,7 +893,7 @@ resultData = keyedStream.window(SlidingEventTimeWindows.of(Time.seconds(5), Time
 
 ![1739-540-00045.png](https://doc.shiyanlou.com/courses/1739/1207281/da520a2fe0b01a07d87ca5574d6c3de6-0)
 
-2) 将下列代码粘贴到 TODO code 6区间内。
+2) 将下列代码粘贴到 TODO code 6 区间内。
 
 ```java
 resultData = windowedStream.process(new ProcessWindowFunction<Tuple3<String, Double, Integer>, Result, String, TimeWindow>() {

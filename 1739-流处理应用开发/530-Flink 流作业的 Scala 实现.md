@@ -201,7 +201,7 @@ sum 算子接收一个 KeyedStream，可以对指定的字段进行求和操作�
 
 ![1730-530-00009.png](https://doc.shiyanlou.com/courses/1739/1207281/3e7e8965a536975a249cea5fb89eb996-0)
 
-2) 将下列代码粘贴到 TODO code 4区间内。
+2) 将下列代码粘贴到 TODO code 4 区间内。
 
 ```scala
 // Users can group by the first field (words) in the tuple, and sum the second field (number of words).
@@ -265,9 +265,9 @@ sumData = keyedData.reduce((x, y) => (x._1, x._2 + y._2))
 #### 提交到集群环境
 
 
-通过浏览器打开 http://localhost:9091 进入FlinkUI，默认端口8081，实验环境由于端口冲突改为了9091。
+通过浏览器打开 http://localhost:9091 进入 FlinkUI，默认端口8081，实验环境由于端口冲突改为了 9091。
 
-1) 可以通过UI界面 > submit new job > add new  首先上传本地 jar 包。 
+1) 可以通过 UI 界面 > submit new job > add new  首先上传本地 jar 包。 
 
 ![1739-520-00006.png](https://doc.shiyanlou.com/courses/1739/1207281/8e6df7ea80e5358c21e5f3a115ad60d7-0)
 
@@ -297,7 +297,7 @@ com.sequoiadb.lesson.flink.lesson3_word_count.WordCountMain
 
 #### 参数获取
 
-1) 首先可以在 main 函数的 TODO code 6添加下列代码。
+1) 首先可以在 main 函数的 TODO code 6 添加下列代码。
 
 ```scala
 // Transfer args to ParameterTool, and the ParameterTool can help us parse parameters
