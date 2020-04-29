@@ -5,7 +5,7 @@ version: 1.0
 
 ## 课程介绍
 
-SequoiaFS 文件系统是基于 FUSE 在 Linux 系统下实现的一套文件系统，支持通用的文件操作 API。SequoiaFS 利用 SequoiaDB 的元数据集合存储文件和目录的属性信息，LOB 对象存储文件的数据内容，从而实现了类似 NFS 分布式网络文件系统。用户可以将远程SequoiaDB 的某个目标集合通过映射的方式挂载到本地 FS 节点，在 FS 节点的挂载目录下实现通过通用文件系统 API 对文件和目录进行操作。
+SequoiaFS 文件系统是基于 FUSE 在 Linux 系统下实现的一套文件系统，支持通用的文件操作 API。SequoiaFS 利用 SequoiaDB 的元数据集合存储文件和目录的属性信息，LOB 对象存储文件的数据内容，从而实现了类似 NFS 分布式网络文件系统。用户可以将远程 SequoiaDB 的某个目标集合通过映射的方式挂载到本地 FS 节点，在 FS 节点的挂载目录下实现通过通用文件系统 API 对文件和目录进行操作。
 
 下面为其基本逻辑结构图：
 
@@ -59,7 +59,7 @@ SequoiaFS 支持通用文件系统 API，使用 Java IO 类对 SequoiaFS 的挂�
 
 ![1587951782938](https://doc.shiyanlou.com/courses/1737/1207281/b3196e9fef92149ed866c2d7f840ca77-0)
 
-2）将下方代码粘贴到 TODO ~ TODO END区域。
+2）将下方代码粘贴到 TODO ~ TODO END 区域。
 
 ```java
 InputStream put = new FileInputStream("/home/sdbadmin/sequoiadb.txt");
@@ -88,7 +88,7 @@ put.close();
 
 ![1587952116925](https://doc.shiyanlou.com/courses/1737/1207281/b60b51645c9d4797bc5415497615a4e5-0)
 
-3）回到桌面，双击打开Home文件夹，在地址行输入/opt/sequoiafs/mountpoint/，按 Enter 进入目录。
+3）回到桌面，双击打开 Home 文件夹，在地址行输入 /opt/sequoiafs/mountpoint/，按 Enter 进入目录。
 
 ![image-20200426172444745](https://doc.shiyanlou.com/courses/1737/1207281/1e3b58b5870854e9993342b7f7a9ffcd-0)
 
@@ -108,7 +108,7 @@ SequoiaFS 支持通用文件系统 API，使用 Java IO 类对 SequoiaFS 的挂�
 
 ![1587952211352](https://doc.shiyanlou.com/courses/1737/1207281/a393ba2f5efc78e3e2dce6151a966ec7-0)
 
-2）将下方代码粘贴到 TODO ~ TODO END区域。
+2）将下方代码粘贴到 TODO ~ TODO END 区域。
 
 ```java
 //Get the file input stream
