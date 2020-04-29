@@ -39,7 +39,7 @@ SequoiaDB 巨杉数据库兼容 AWS S3 接口。本节课将通过 AWS SDK 进�
 
 #### 打开 Package
 
-打开 lesson3_s3ObjectMetadata 包，在该 Package 完成后续课程。
+打开 lesson3_s3objectmetadata 包，在该 Package 完成后续课程。
 
 ![image-20200422175731680](https://doc.shiyanlou.com/courses/1737/1207281/731af69ea9de5d12763056bd1a422990-0)
 
@@ -84,7 +84,7 @@ s3.putObject(bucketName,objectName,inputStream,objectMetadata);
 
 ![image-20200422160225591](https://doc.shiyanlou.com/courses/1737/1207281/55a93138064f76b8f44a17711ea37c13-0)
 
-2）将下方代码粘贴到 TODO ~ TODO END区域内。
+2）将下方代码粘贴到 TODO ~ TODO END 区域内。
 
 ```java
 //Get the S3 connection
