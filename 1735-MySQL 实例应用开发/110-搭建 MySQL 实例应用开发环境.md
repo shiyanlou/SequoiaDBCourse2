@@ -2,7 +2,6 @@
 show: step
 version: 1.0 
 
-
 ---
 
 ## 课程介绍
@@ -43,7 +42,7 @@ version: 1.0
 
 打开 lesson1_environmentbuilding packge，在该 packge 中完成后续课程
 
-![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
+![1735-110-124.png](https://doc.shiyanlou.com/courses/1735/1207281/73a37e584ab3dd7691de702cc97bdae2-0)
 
 ## 配置JDBC连接属性
 
@@ -105,16 +104,17 @@ conn.close();
 >
 > 粘贴方法如下：
 >
-> - 点击代码框右上角的 copy 图标
-> - 选择实验界面右边的 “剪切板”
+> * 点击代码框右上角的 copy 图标
+>
+> * 选择实验界面右边的 “剪切板”
 >
 > ![paste1](https://doc.shiyanlou.com/courses/1738/1207281/7745e7378b70a60ad6073262f05762ec-0)
 >
-> - 在弹出的“在线环境剪切板”中粘贴复制的代码内容
+> * 在弹出的“在线环境剪切板”中粘贴复制的代码内容
 >
 > ![paste2](https://doc.shiyanlou.com/courses/1738/1207281/6b477101feb04b1db73e8f893ba3b334-0)
 >
-> - 在实验环境中到对应的位置粘贴
+> * 在实验环境中到对应的位置粘贴
 >
 > ![paste3](https://doc.shiyanlou.com/courses/1738/1207281/14482e482cde033e4f78cca144abdcee-0)
 
@@ -357,4 +357,3 @@ while (rs.next()) {
 
 本课程讲述了 MySQL 开发环境的搭建：配置 JDBC 连接、配置连接池，以及间要概述了MySQL的常用函数。
 
-  
