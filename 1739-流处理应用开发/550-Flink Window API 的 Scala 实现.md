@@ -62,7 +62,7 @@ version: 1.0
 
 #### Window 是什么
 
-Window 是处理无限流的核心。Window 将流分成有限大小的“桶”，可以在其上应用计算。Window 会按一定的规则将一个数据流进行切分成一个个小部分，可以在这些小部分上做批计算，以满足业务的多种需求。
+Window 是 Flink 流式处理中很重要的机制。Window 将流分成有限大小的“桶”，可以在其上应用计算。Window 会按一定的规则将一个数据流进行切分成一个个小部分，可以在这些小部分上做批计算，以满足业务的多种需求。
 
 #### 为什么要使用 Window
 
@@ -205,7 +205,7 @@ resultData = moneyData.countWindowAll(100)
 
 ![1739-550-00003.png](https://doc.shiyanlou.com/courses/1739/1207281/5102af5d6523eb20f3acd79587eae4fd-0)
 
-2) 执行结果如下图，可以看到每个 Window 中的数据。
+2) 执行结果如下图，可以看到每个 Window 中的数据。由于该数据源中模拟的是双十一当天的交易流水，一开始交易量非常大，随时间推移交易量大幅度下降，故此处会感觉 Window 中的数据输出会越来越慢， 这是正常情况。
 
 ![1739-540-00021.png](https://doc.shiyanlou.com/courses/1739/1207281/2c78a36653a1cae1ab491acee0c4daa4-0)
 
