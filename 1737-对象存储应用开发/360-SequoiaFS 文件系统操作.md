@@ -41,7 +41,7 @@ SequoiaFS 文件系统是基于 FUSE 在 Linux 系统下实现的一套文件系
 
 打开 scdd-object 项目。
 
-![image-20200414091915064](https://doc.shiyanlou.com/courses/1737/1207281/8fae6ec098d2e1f9a431636f6f919ad8-0)
+![image-20200414091915064](https://doc.shiyanlou.com/courses/1737/1207281/210d468fce9678c0a433d10690241553-0)
 
 #### 打开 Package
 
@@ -55,11 +55,15 @@ SequoiaFS 支持通用文件系统 API，使用 Java IO 类对 SequoiaFS 的挂�
 
 #### 代码编写
 
-1）双击打开 SequoiaFSWrite 类，找到 main() 方法内行 TODO  通过java api 写入数据。
+1）双击打开 SequoiaFSWrite 类。
+
+![image-20200501120520412](https://doc.shiyanlou.com/courses/1737/1207281/12a689cb386e12ba3334f02bd1a16596-0)
+
+2）在 SequoiaFSWrite 的 main() 方法内找到行 TODO  通过java api 写入数据。
 
 ![1587951782938](https://doc.shiyanlou.com/courses/1737/1207281/b3196e9fef92149ed866c2d7f840ca77-0)
 
-2）将下方代码粘贴到 TODO ~ TODO END 区域。
+3）将下方代码粘贴到 TODO ~ TODO END 区域。
 
 ```java
 InputStream put = new FileInputStream("/home/sdbadmin/sequoiadb.txt");
@@ -74,13 +78,13 @@ while((len = put.read(cbuf))!= -1){
 put.close();
 ```
 
-3）代码粘贴后如图所示。
+4）代码粘贴后如图所示。
 
 ![1587951885069](https://doc.shiyanlou.com/courses/1737/1207281/bd9994cba491e42b01b5fb0ffa3fbef1-0)
 
 #### 执行代码
 
-1）鼠标移动到屏幕左边 SequoiaFSWrite 类，右键点击，出现如图所示的选项条，左键单击 Edit 'SequoiaFSWrite' 选项。
+1）鼠标移动到屏幕左边 SequoiaFSWrite 类，右键点击，出现如图所示的选项条，左键单击 Edit 'SequoiaFSWrite.main()' 选项。
 
 ![image-20200426172014874](https://doc.shiyanlou.com/courses/1737/1207281/2a03c1bf11febcdc8b7e9b958ca20364-0)
 
@@ -104,11 +108,15 @@ SequoiaFS 支持通用文件系统 API，使用 Java IO 类对 SequoiaFS 的挂�
 
 #### 代码编写
 
-1）双击打开 SequoiaFSRead 类，找到 main() 方法内行 TODO  通过java api 读取数据。
+1）双击打开 SequoiaFSRead 类。
+
+![image-20200501120744902](https://doc.shiyanlou.com/courses/1737/1207281/046fc3857d97dbdabc0d9e223fe4b7f3-0)
+
+2）在 SequoiaFSRead 的 main() 方法内找到行 TODO  通过java api 读取数据。
 
 ![1587952211352](https://doc.shiyanlou.com/courses/1737/1207281/a393ba2f5efc78e3e2dce6151a966ec7-0)
 
-2）将下方代码粘贴到 TODO ~ TODO END 区域。
+3）将下方代码粘贴到 TODO ~ TODO END 区域。
 
 ```java
 //Get the file input stream
@@ -128,7 +136,7 @@ put.close();
 
 #### 执行代码
 
-1）鼠标移动到屏幕左边 SequoiaFSRead 类，右键点击，出现如图所示的选项条，左键单击 Edit 'SequoiaFSRead' 选项。
+1）鼠标移动到屏幕左边 SequoiaFSRead 类，右键点击，出现如图所示的选项条，左键单击 Edit 'SequoiaFSRead.main()' 选项。
 
 ![image-20200426175459509](https://doc.shiyanlou.com/courses/1737/1207281/e2fb51e72406d6ea444e504ab7516bf1-0)
 
