@@ -35,7 +35,7 @@ version: 1.0
 
 打开 scdd-flink 项目，在该项目中完成本实验。
 
-![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/84d747adb87eaf46047241556ef88d8d-0)
 
 #### 打开 lesson1 packge
 

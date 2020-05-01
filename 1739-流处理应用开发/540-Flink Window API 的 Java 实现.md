@@ -38,7 +38,7 @@ version: 1.0
 #### 打开 scdd-flink 项目
 打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/84d747adb87eaf46047241556ef88d8d-0)
 
 #### 打开 lesson4 packge
 打开包 com.sequoiadb.lesson.flink.lesson4_window，在该 package 中完成本课程。
@@ -53,7 +53,7 @@ version: 1.0
 
 本案例新增了 Flink 连接 SequoiaDB 的驱动包。
 
-![1739-540-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/6719e761e20edcdf9205b15252856610-0)
+![1739-540-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/74d8034dfd5930d2fa1077c3e3ddd27b-0)
 
 ## Window 简介
 

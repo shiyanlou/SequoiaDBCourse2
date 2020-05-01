@@ -37,13 +37,13 @@ version: 1.0
 
 打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/84d747adb87eaf46047241556ef88d8d-0)
 
 #### 打开 lesson3 packge
 
 打开包 com.sequoiadb.lesson.flink.lesson3_word_count，在该 package 中完成本课程。注意：该包位于 scala 源码包下。
 
-![1730-530-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/0fd4e6295ec707993e09e044c0e24998-0)
+![1730-530-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/7ceabd4cb1ed23cd6f1aa332ff1534d1-0)
 
 #### 认识依赖
 
@@ -53,7 +53,7 @@ version: 1.0
 
 本案例使用了 Flink 的 Runtime 依赖 flink-core 和流作业 Scala 开发依赖 flink-streaming-scala 包。
 
-![1730-530-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/8a4039344d1aa5cbe1c4a1de4fef8aba-0)
+![1730-530-00002.png](https://doc.shiyanlou.com/courses/1739/1207281/f89685e8eba55e3f1ee72f314dde9a48-0)
 
 ## 查看原始数据格式
 
