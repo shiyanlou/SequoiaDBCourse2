@@ -1,7 +1,7 @@
 ---
-
 show: step
 version: 1.0 
+
 ---
 
 ## 课程介绍
@@ -42,7 +42,7 @@ version: 1.0
 
 打开 lesson6_explainandcase packge，在该 packge 中完成后续课程
 
-![1587923393235](https://doc.shiyanlou.com/courses/1735/1207281/69545b5f00569e8ced7e73c1f028af35-0)
+![1735-160-116.png](https://doc.shiyanlou.com/courses/1735/1207281/0ea683714b243a1c94aed3a008c725ff-0)
 
 ## 查看和理解执行计划
 

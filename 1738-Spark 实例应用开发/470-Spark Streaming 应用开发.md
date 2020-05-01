@@ -42,7 +42,7 @@ version: 1.0
 
 2）打开 Spark 实验的项目，在该项目中完成所有实验步骤。
 
-![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/6d46a0bb22fac49997e6606ec1a128ab-0)
+![1738-410-08](https://doc.shiyanlou.com/courses/1738/1207281/5497d93bf19ee0442b4ae79b4cd8d39a-0)
 
 #### Maven 依赖
 
@@ -61,9 +61,11 @@ pom.xml 文件位置：
 
 ![1738-410-pom文件位置](https://doc.shiyanlou.com/courses/1738/1207281/822fa966b397b80c9eabbf0472eb52c4-0)
 
-实验中使用到的 Maven 依赖如下：
+当前实验中使用到的 Maven 依赖如下：
 
-![1738-470-06](https://doc.shiyanlou.com/courses/1738/1207281/35d7b9dc1a5dcdc2bbcddf9799a6a143-0)
+![1738-460-maven1](https://doc.shiyanlou.com/courses/1738/1207281/e52d8d1471e3ea4db14081776ad479fd-0)
+
+![1738-470-maven2](https://doc.shiyanlou.com/courses/1738/1207281/a233222c8c883e31c4d6cdff59d7921c-0)
 
 #### 打开当前实验的 Package
 
@@ -93,7 +95,7 @@ Spark Streaming 常被运用于实时流处理场景。
 
 ![1738-470-打开类](https://doc.shiyanlou.com/courses/1738/1207281/8900bda62b971c1cb99603c7b934b707-0)
 
-2）复制通过 Spark Streaming 统计指定端口输入单词数的程序代码。程序中将创建 StreamingContext 监听 sdbserver1 的 6789 端口，每间隔 10 秒收集一次时间段内端口输入的单词数生成 JavaDStream（相当于一个每次统计单词数的 RDD 的集合），和实验 6 中 RDD 的转化类似，可以将 JavaDStream 通过 map、reduce 等操作转化成最终的 JavaPairDStream（相当于保存有单词统计信息键值对 RDD 的集合）。程序运行期间会一致监听 6789 端口，持续打印 10 时间间隔内端口输入的单词数。
+2）复制通过 Spark Streaming 统计指定端口输入单词数的程序代码。程序中将创建 StreamingContext 监听 sdbserver1 的 6789 端口，每间隔 10 秒收集一次时间段内端口输入的单词数生成 JavaDStream（相当于一个每次统计单词数的 RDD 的集合），和实验 6 中 RDD 的转化类似，可以将 JavaDStream 通过 map、reduce 等操作转化成最终的 JavaPairDStream（相当于保存有单词统计信息键值对 RDD 的集合）。程序运行期间会持续监听 6789 端口，持续打印 10 时间间隔内端口输入的单词数。
 
 ```java
 // Configure master and appname of spark
@@ -146,9 +148,9 @@ try {
 
 5）点击 IDEA 控制台下方的 Terminal ，在 6789 端口下连续输入多个单词。
 
-![1738-470-输入单词](https://doc.shiyanlou.com/courses/1738/1207281/434b5c41b77e4694dadfd2c9574b4085-0)
+![1738-470-输入单词](https://doc.shiyanlou.com/courses/1738/1207281/85a55316bd032577d423d0b065fe862c-0)
 
-6）查看 Spark Streaming 统计单词数结果。
+6）点击 IDEA 控制台下方的 Run，查看 Spark Streaming 统计单词数结果。
 
 ![1738-470-运行结果](https://doc.shiyanlou.com/courses/1738/1207281/4e9ddbad29febd22a0bdd2d22fa591e4-0)
 
