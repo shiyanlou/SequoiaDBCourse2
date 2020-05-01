@@ -35,7 +35,7 @@ version: 1.0
 
 打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/84d747adb87eaf46047241556ef88d8d-0)
 
 #### 打开 lesson2 packge
 
@@ -50,7 +50,8 @@ version: 1.0
 ![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
 
 本案例使用了 Flink 的 Runtime 依赖 flink-core 和流作业开发依赖 flink-streaming-java 包。
-![1739-520-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/874953cf1510ccc9a14a15d2fd0f689b-0)
+
+![1739-520-00010.png](https://doc.shiyanlou.com/courses/1739/1207281/5fe242541e30bf0b68bdb7891c3e894d-0)
 
 ## 查看原始数据格式
 

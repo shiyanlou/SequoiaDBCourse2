@@ -41,13 +41,13 @@ version: 1.0
 
 打开 scdd-flink 项目，在该课程中完成本试验。
 
-![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/2b68951cb04a44566d0a7219ede54005-0)
+![1739-510-00017.png](https://doc.shiyanlou.com/courses/1739/1207281/84d747adb87eaf46047241556ef88d8d-0)
 
 #### 打开 lesson5 packge
 
 打开 com.sequoiadb.lesson.flink.lesson5_window，在该 package 中完成本课程。注意：包在 scala 源码包下。
 
-![1739-550-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/0f42e9ee90ae9f503a5e223ad6490b3a-0)
+![1739-550-00001.png](https://doc.shiyanlou.com/courses/1739/1207281/45d54d09978c974ad58452436b18a6af-0)
 
 #### 认识依赖
 
@@ -56,7 +56,7 @@ version: 1.0
 ![1739-520-00016.png](https://doc.shiyanlou.com/courses/1739/1207281/9b4833b8e0bc2160d90625911973ed4b-0)
 
 本案例新增了 Flink 连接 SequoiaDB 的驱动包。
-![1739-540-00012.png](https://doc.shiyanlou.com/courses/1739/1207281/6719e761e20edcdf9205b15252856610-0)
+![1739-550-00062.png](https://doc.shiyanlou.com/courses/1739/1207281/9f8121c63ce66fb6fed5675eff478ed7-0)
 
 ## Window 简介
 
