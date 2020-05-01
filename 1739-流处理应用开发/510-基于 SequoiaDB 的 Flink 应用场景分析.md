@@ -82,6 +82,7 @@ Flink 支持状态管理，在任务出现异常时可以将任务回退到之�
 #### Flink 的执行流程
 
 ![1739-510-00004.png](https://doc.shiyanlou.com/courses/1739/1207281/5509b69c586de4f3cff7ddac390cf55c-0)
+
 这是 Flink 的工作流程，首先了解一下 Flink 中的基本角色。
 
 - JobManager： 整个集群的 Master，负责接收客户端的消息和分配调度集群资源和分发任务给 TaskManager。
@@ -172,7 +173,7 @@ Transformation可以对数据做转换操作，代码中的算子使用规则详
 // Conversion the operator
 SingleOutputStreamOperator<String> flatMapData = lineData.flatMap(new FlatMapFunction<String, String>() {
     @Override
-    public void flatMap(String s, Collector<String> collector) throws Exception {
+    public void flatMap(String line, Collector<String> collector) throws Exception {
         for (String word : line.split(" ")) {
             collector.collect(word);
         }
