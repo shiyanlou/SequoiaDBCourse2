@@ -79,7 +79,7 @@ inputStream.close();
 
 4）粘贴后代码如图所示。
 
-![image-20200426155206949](https://doc.shiyanlou.com/courses/1737/1207281/1392b8e0bb8de6200dc86fdbc0fd2e82-0)
+![image-20200426155206949](https://doc.shiyanlou.com/courses/1737/1207281/7f510e1904e620dd5bee93859516cd1b-0)
 
 ## 查看元数据
 
