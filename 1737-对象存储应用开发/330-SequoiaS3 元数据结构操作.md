@@ -74,6 +74,7 @@ objectMetadata.setContentEncoding("utf8");
 objectMetadata.setContentType("text/plain");
 //Save the uploaded file as an object and set the object metadata
 s3.putObject(bucketName,objectName,inputStream,objectMetadata);
+inputStream.close();
 ```
 
 4）粘贴后代码如图所示。
