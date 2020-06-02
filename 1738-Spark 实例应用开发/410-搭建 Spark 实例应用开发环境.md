@@ -5,7 +5,7 @@ version: 1.0
 
 ## 课程介绍
 
-本课程将介绍 Spark 的技术架构，并在已经部署了 Spark 和 SequoiaDB 的环境中，通过简单的实验实现通过 JDBC 访问 Spark SQL 操作 SequoiaDB 中的数据。
+本课程将介绍 Spark 的技术架构，并在已经部署了 Spark 和 SequoiaDB 的环境中，通过简单的实验实现使用 JDBC 访问 Spark 操作 SequoiaDB 中的数据。
 
 #### 请点击右侧选择使用的实验环境
 
