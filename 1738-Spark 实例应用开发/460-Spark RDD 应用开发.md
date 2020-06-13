@@ -79,7 +79,7 @@ pom.xml 文件位置：
 
 ![1738-460-maven2](https://doc.shiyanlou.com/courses/1738/1207281/c9d72bc998cd4b5929ee95e509cf8271-0)
 
-![1738-410-maven2](https://doc.shiyanlou.com/courses/1738/1207281/3d62b4c63338baa02ce4337f029ff166-0)
+![1738-410-maven2](https://doc.shiyanlou.com/courses/1738/1207281/0b93cf135364f978faeba469c3cca528-0)
 
 ![1738-460-maven4](https://doc.shiyanlou.com/courses/1738/1207281/73495601a2f1cc48aca7e2a276c87fc7-0)
 
