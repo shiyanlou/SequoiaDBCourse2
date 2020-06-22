@@ -194,7 +194,7 @@ sumData = mapData.keyBy(0).sum(1);
 
 3) 粘贴代码后完整代码块如图所示。
 
-![1739-510-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/9776e042616c6f47f1d4ec0f923f296f-0)
+![1739-510-00023.png](https://doc.shiyanlou.com/courses/1739/1207281/53608929b98744b9913249aca92719f4-0)
 
 #### Sink算子的使用
 
